@@ -1,5 +1,10 @@
+<<<<<<< HEAD
 -- Project:   D:\Hackathon-Infineon\Hackaton.cydsn\Hackaton.cyprj
 -- Generated: 11/06/2025 14:10:54
+=======
+-- Project:   C:\Infineon\Hackathon-Infineon\Hackaton.cydsn\Hackaton.cyprj
+-- Generated: 11/06/2025 12:07:21
+>>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
 -- PSoC Creator  4.4
 
 ENTITY Hackaton IS

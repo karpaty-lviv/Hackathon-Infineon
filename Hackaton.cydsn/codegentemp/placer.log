@@ -6,7 +6,11 @@
 
 #Build Date:         Sep  9 2019 11:47:43
 
+<<<<<<< HEAD
 #File Generated:     Nov 6 2025 14:10:49
+=======
+#File Generated:     Nov 6 2025 12:07:12
+>>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
 
 #Purpose:            
 
@@ -14,7 +18,11 @@
 
 #***************************************************************************
 
+<<<<<<< HEAD
 Executing : C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\bin/sjplacer.exe --proj-name Hackaton --netlist-vh2 Hackaton_p.vh2 --arch p6_udb2x6 --arch-file C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\dev\arch/udbdsi2_2x6_12.cydata --ip-file C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\dev\psoc6/0/ip_blocks.cydata --rrg-file C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\dev\psoc6/0/route_arch-rrg.cydata --irq-file C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\dev\psoc6/0/irqconn.cydata --drq-file C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\dev\psoc6/0/triggerconn.cydata --dsi-conn-file C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\dev\psoc6/0/dsiconn.cydata --pins-file pins_43-SMT.xml --lib-file Hackaton_p.lib --sdc-file Hackaton.sdc --io-pcf Hackaton.pci --outdir .
+=======
+Executing : C:\MyApps\PSoC_Creator\PSoC Creator\4.4\PSoC Creator\bin/sjplacer.exe --proj-name Hackaton --netlist-vh2 Hackaton_p.vh2 --arch p6_udb2x6 --arch-file C:\MyApps\PSoC_Creator\PSoC Creator\4.4\PSoC Creator\dev\arch/udbdsi2_2x6_12.cydata --ip-file C:\MyApps\PSoC_Creator\PSoC Creator\4.4\PSoC Creator\dev\psoc6/0/ip_blocks.cydata --rrg-file C:\MyApps\PSoC_Creator\PSoC Creator\4.4\PSoC Creator\dev\psoc6/0/route_arch-rrg.cydata --irq-file C:\MyApps\PSoC_Creator\PSoC Creator\4.4\PSoC Creator\dev\psoc6/0/irqconn.cydata --drq-file C:\MyApps\PSoC_Creator\PSoC Creator\4.4\PSoC Creator\dev\psoc6/0/triggerconn.cydata --dsi-conn-file C:\MyApps\PSoC_Creator\PSoC Creator\4.4\PSoC Creator\dev\psoc6/0/dsiconn.cydata --pins-file pins_43-SMT.xml --lib-file Hackaton_p.lib --sdc-file Hackaton.sdc --io-pcf Hackaton.pci --outdir .
+>>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
 
 		Softjin Techologies Placer, Version 1.1
 
@@ -23,7 +31,11 @@ Build Date : Sep  9 2019	11:45:12
 D2004: Option and Settings Summary
 =============================================================
 Netlist vh2 file          - Hackaton_p.vh2
+<<<<<<< HEAD
 Architecture file         - C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\dev\arch/udbdsi2_2x6_12.cydata
+=======
+Architecture file         - C:\MyApps\PSoC_Creator\PSoC Creator\4.4\PSoC Creator\dev\arch/udbdsi2_2x6_12.cydata
+>>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
 Package                   - 
 Defparam file             - 
 SDC file                  - Hackaton.sdc
@@ -34,7 +46,11 @@ IO Placement file         - Hackaton.pci
 D2050: Starting reading inputs for placer
 =============================================================
 D2065: Reading netlist file : "Hackaton_p.vh2"
+<<<<<<< HEAD
 D2065: Reading arch file : "C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\dev\arch/udbdsi2_2x6_12.cydata"
+=======
+D2065: Reading arch file : "C:\MyApps\PSoC_Creator\PSoC Creator\4.4\PSoC Creator\dev\arch/udbdsi2_2x6_12.cydata"
+>>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
 D2051: Reading of inputs for placer completed successfully
 
 D2053: Starting placement of the design
@@ -69,5 +85,9 @@ D2088: Phase 8, elapsed time : 0.0 (sec)
 
 D2054: Placement of the design completed successfully
 
+<<<<<<< HEAD
 I2076: Total run-time: 0.2 sec.
+=======
+I2076: Total run-time: 0.5 sec.
+>>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
 
