@@ -1,4 +1,5 @@
 #include <project.h>
+#include <stdlib.h>
 
 #include "car.h"
 #include "music.h"
@@ -11,11 +12,13 @@
 // PID Gains - These values need tuning based on your robot's behavior
 #define PID_KP          500.0    // Proportional gain: responds to current error
 #define PID_KD          20    // Derivative gain: dampens oscillation
-#define PID_KI          0.0     // Integral gain: eliminates steady-state error
+#define PID_KI          0.0     // Integral gain: eliminates steady-state error'
+#define TANK_CORRECTION 600
 
 double pidKp = PID_KP;
 double pidKd = PID_KD;
 double pidKi = PID_KI;
+double tankCorrection = TANK_CORRECTION;
 
 // Motor control parameters
 #define BASE_SPEED      1000    // Base forward speed (range: -4000 to 4000)
@@ -24,12 +27,24 @@ double pidKi = PID_KI;
 uint16_t baseSpeed = BASE_SPEED;
 uint16_t maxCorrection = MAX_CORRECTION;
 
+// int16_t abs(int16_t x) {
+//     return (x > 0) ? x : -x;   
+// }
 
+int16_t sign(int16_t x) {
+    if (x == 0) {
+        return 0;
+    }
+    return (x > 0) ? 1 : -1;  
+}
 
 // PID state variables
 static double lastError = 0.0;
 static double integral = 0.0;
 static uint32_t lastTime = 0;
+
+// bool biased = false;
+
 
 // ===============================================================================
 // HELPER FUNCTION: Calculate line position from 7 sensor binary reading
@@ -47,9 +62,9 @@ static double calculateLinePosition(uint8_t sensors)
     // When line is to the LEFT:  negative position → turn LEFT
     // When line is to the RIGHT: positive position → turn RIGHT
     
-    static const int16_t weights[7] = {-3000, -2000, -1000, 0, 1000, 2000, 3000};
+    static const double weights[7] = {-3.0, -2.0, -1.0, 0.0, 1.5, 2.5, 3.5};
 
-    int32_t weightedSum = 0;
+    double weightedSum = 0.0;
     int activeCount = 0;
 
     // Calculate weighted average of active sensors
@@ -73,7 +88,7 @@ static double calculateLinePosition(uint8_t sensors)
     {
         // No line detected - use last error to guess direction
         // If robot was turning left (negative error), assume line is still left
-        return (lastError < 0) ? -3000.0 : 3000.0;
+        return (lastError < 0) ? -3.0 : 3.0;
     }
 }
 
@@ -263,10 +278,16 @@ static void followLine(void)
     //   → Left motor:  BASE_SPEED - (-correction) = SLOWER
     //   → Right motor: BASE_SPEED + (-correction) = FASTER
     //   → Result: Robot turns LEFT ✓
+    int16_t leftSpeed = 0;
+    int16_t rightSpeed = 0;
 
-
-    int16_t leftSpeed = baseSpeed + correction;
-    int16_t rightSpeed = baseSpeed - correction;
+    if (abs(correction) < tankCorrection) {
+        leftSpeed = baseSpeed + correction;
+        rightSpeed = baseSpeed - correction;
+    } else {
+        leftSpeed = (baseSpeed + abs(correction)) * sign(correction);
+        rightSpeed = -(baseSpeed + abs(correction)) * sign(correction);
+    }
 
     // Constrain speeds to valid range
     if (leftSpeed > 4000)   leftSpeed = 4000;
@@ -510,6 +531,9 @@ static void processCM4Command(enum cm4CommandList cmd)
                         break;
                     case 4:
                         pidKi = (double)value;
+                        break;
+                    case 5:
+                        tankCorrection = (double)value;
                         break;
                 }
             }
