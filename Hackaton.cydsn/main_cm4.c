@@ -25,22 +25,28 @@ static uint32_t lastTime = 0;
 // ===============================================================================
 // HELPER FUNCTION: Calculate line position from 7 sensor binary reading
 // ===============================================================================
-// Returns: Position from -3 (far left) to +3 (far right), 0 = centered
+// Returns: Position from -3000 (far left) to +3000 (far right), 0 = centered
 // Input: 7-bit value where each bit represents one sensor (1 = line detected)
-static int calculateLinePosition(uint8_t sensors)
+static double calculateLinePosition(uint8_t sensors)
 {
-    // Sensor weight array: left sensors are negative, right sensors are positive
-    // Sensor positions:  [0]  [1]  [2]  [3]  [4]  [5]  [6]
-    // Weights:           -3   -2   -1    0   +1   +2   +3
-    static const int8_t weights[7] = {-3, -2, -1, 0, 1, 2, 3};
+    // CRITICAL: Sensor weights must match physical layout!
+    // Assuming sensors are numbered left to right:
+    // Sensor positions:  [0]   [1]   [2]   [3]   [4]   [5]   [6]
+    //                   LEFT  LEFT  LEFT CENTER RIGHT RIGHT RIGHT
+    // Weights (×1000):  -3000 -2000 -1000   0   +1000 +2000 +3000
+    //
+    // When line is to the LEFT:  negative position → turn LEFT
+    // When line is to the RIGHT: positive position → turn RIGHT
+    
+    static const int16_t weights[7] = {-3000, -2000, -1000, 0, 1000, 2000, 3000};
 
-    int weightedSum = 0;
+    int32_t weightedSum = 0;
     int activeCount = 0;
 
     // Calculate weighted average of active sensors
     for (uint8_t i = 0; i < 7; i++)
     {
-        if (sensors & (1 << i))  // Check if sensor i detected the line
+        if (sensors & (1 << i))  // Check if sensor i detected the line (1 = black line)
         {
             weightedSum += weights[i];
             activeCount++;
@@ -51,12 +57,14 @@ static int calculateLinePosition(uint8_t sensors)
     // If no sensors detect line, return last known position
     if (activeCount > 0)
     {
-        return weightedSum / activeCount;
+        // FIXED: Use double division to avoid integer truncation!
+        return (double)weightedSum / (double)activeCount;
     }
     else
     {
         // No line detected - use last error to guess direction
-        return (lastError > 0) ? 3 : -3;
+        // If robot was turning left (negative error), assume line is still left
+        return (lastError < 0) ? -3000.0 : 3000.0;
     }
 }
 
@@ -65,7 +73,53 @@ static int calculateLinePosition(uint8_t sensors)
 // ===============================================================================
 // Calculates steering correction based on line position error
 // Returns: Correction value to adjust motor speeds
-static int16_t pidControl(int error, uint32_t currentTime)
+//
+// DETAILED EXPLANATION OF HOW THIS WORKS:
+// ========================================
+//
+// PID stands for: Proportional-Integral-Derivative controller
+// It's a feedback control loop that continuously calculates an error value
+// and applies corrections to minimize that error.
+//
+// INPUT:  error = current line position (where line is relative to center)
+//         currentTime = timestamp for calculating rate of change
+//
+// OUTPUT: correction = how much to adjust motor speeds (steering command)
+//
+// THE THREE TERMS:
+// ----------------
+//
+// 1. PROPORTIONAL (P):
+//    - pTerm = Kp × error
+//    - Responds to CURRENT error
+//    - Think: "How far off am I RIGHT NOW?"
+//    - Larger Kp = more aggressive steering response
+//    - If line is 1000 units right: pTerm = 40 × 1000 = 40000
+//    - This makes right motor slow down, left motor speed up → turn right
+//
+// 2. DERIVATIVE (D):
+//    - dTerm = Kd × (error - lastError) / deltaTime
+//    - Responds to RATE OF CHANGE of error
+//    - Think: "How fast am I approaching/leaving the line?"
+//    - Acts like a brake - dampens oscillation
+//    - If error was 1000, now it's 500 (decreasing):
+//      → D term is negative → reduces correction (prevents overshoot)
+//    - If error is increasing:
+//      → D term is positive → increases correction (aggressive response)
+//
+// 3. INTEGRAL (I):
+//    - iTerm = Ki × ∫(error × dt)
+//    - Responds to ACCUMULATED error over time
+//    - Think: "Have I been consistently off to one side?"
+//    - Eliminates steady-state error (persistent offset)
+//    - If robot always drifts slightly right:
+//      → Integral builds up → adds permanent left correction
+//
+// ANTI-WINDUP:
+//    - Limits integral to ±100 to prevent it from growing too large
+//    - Without this, integral could accumulate during startup and cause huge overshoots
+//
+static int16_t pidControl(double error, uint32_t currentTime)
 {
     // Calculate time difference in seconds
     double deltaTime = (currentTime - lastTime) / 1000.0;
@@ -76,31 +130,64 @@ static int16_t pidControl(int error, uint32_t currentTime)
         deltaTime = 0.001;
     }
 
-    // PID FORMULA IMPLEMENTATION:
-    // ---------------------------
-
-    // P-term: Proportional to current error
-    // Larger error = stronger correction
+    // ============================================================================
+    // PROPORTIONAL TERM: Reacts to current error
+    // ============================================================================
+    // If error = +1000 (line is 1000 units to the right):
+    //   pTerm = 40 × 1000 = 40000
+    //   → This will slow down right motor, speed up left → turn right ✓
+    //
+    // If error = -1000 (line is 1000 units to the left):
+    //   pTerm = 40 × (-1000) = -40000
+    //   → This will slow down left motor, speed up right → turn left ✓
+    
     double pTerm = PID_KP * error;
 
-    // I-term: Integral of error over time
-    // Accumulates past errors to eliminate steady-state offset
+    // ============================================================================
+    // INTEGRAL TERM: Accumulates error over time
+    // ============================================================================
+    // Adds up error × time to catch persistent biases
+    // Example: If robot consistently runs 100 units right:
+    //   integral grows: 100 + 100 + 100 + ... = large value
+    //   iTerm adds permanent left correction to compensate
+    
     integral += error * deltaTime;
 
     // Anti-windup: Limit integral to prevent excessive accumulation
+    // Without this limit, integral could grow huge during sharp turns
     if (integral > 100.0)  integral = 100.0;
     if (integral < -100.0) integral = -100.0;
 
     double iTerm = PID_KI * integral;
 
-    // D-term: Derivative (rate of change) of error
-    // Predicts future error and dampens oscillation
+    // ============================================================================
+    // DERIVATIVE TERM: Reacts to rate of change
+    // ============================================================================
+    // Calculates how fast error is changing
+    // If error is decreasing (we're correcting successfully):
+    //   → Derivative is negative → reduces total correction (prevents overshoot)
+    // If error is increasing (we're going more off-track):
+    //   → Derivative is positive → increases total correction (aggressive fix)
+    //
+    // Example with Kd = 20:
+    //   Previous error = 1000, current error = 500, deltaTime = 0.01s
+    //   dTerm = 20 × (500 - 1000) / 0.01 = 20 × (-500) / 0.01 = -1,000,000
+    //   → Large negative D-term reduces correction (we're getting closer, don't overshoot!)
+    
     double dTerm = PID_KD * (error - lastError) / deltaTime;
 
-    // Calculate total correction
+    // ============================================================================
+    // COMBINE ALL THREE TERMS
+    // ============================================================================
+    // Total correction = P + I + D
+    // P: reacts to current position
+    // I: corrects for persistent bias
+    // D: smooths the response and prevents oscillation
+    
     double correction = pTerm + iTerm + dTerm;
 
     // Limit correction to prevent excessive steering
+    // MAX_CORRECTION = 1500, so correction is clamped to [-1500, +1500]
     if (correction > MAX_CORRECTION)  correction = MAX_CORRECTION;
     if (correction < -MAX_CORRECTION) correction = -MAX_CORRECTION;
 
@@ -120,13 +207,27 @@ static void followLine(void)
     // Read 7 track sensors (returns 7-bit value)
     uint8_t sensors = Track_Read();
 
-    // Calculate line position: -3 (left) to +3 (right), 0 = centered
-    int position = calculateLinePosition(sensors);
+    // Calculate line position: -3000 (left) to +3000 (right), 0 = centered
+    double position = calculateLinePosition(sensors);
 
-    // Error is the deviation from center (target = 0)
-    // Positive error = line is to the right
-    // Negative error = line is to the left
-    int error = 0 - position;  // Target position is 0 (center)
+    // ============================================================================
+    // CRITICAL: Error Calculation
+    // ============================================================================
+    // error = position - target
+    //
+    // Target is 0 (we want line centered)
+    //
+    // If position = +1000 (line is to the RIGHT):
+    //   error = +1000 - 0 = +1000 (POSITIVE)
+    //   → Need to turn RIGHT to center the line
+    //   → Right motor slows down, left motor speeds up
+    //
+    // If position = -1000 (line is to the LEFT):
+    //   error = -1000 - 0 = -1000 (NEGATIVE)
+    //   → Need to turn LEFT to center the line
+    //   → Left motor slows down, right motor speeds up
+    
+    double error = position - 0;  // Target position is 0 (center)
 
     // Get current time for PID calculation
     uint32_t currentTime = Timing_GetMillisecongs();
@@ -134,14 +235,26 @@ static void followLine(void)
     // Calculate steering correction using PID
     int16_t correction = pidControl(error, currentTime);
 
+    // ============================================================================
     // Apply differential steering:
-    // - If line is to the RIGHT (negative error, positive correction):
-    //   Speed up left motors, slow down right motors (turn right)
-    // - If line is to the LEFT (positive error, negative correction):
-    //   Speed up right motors, slow down left motors (turn left)
+    // ============================================================================
+    //
+    // LEFT MOTOR  = BASE_SPEED - correction
+    // RIGHT MOTOR = BASE_SPEED + correction
+    //
+    // WHY THIS WAY:
+    // If correction is POSITIVE (line is to the right, need to turn right):
+    //   → Left motor:  BASE_SPEED - (+correction) = FASTER
+    //   → Right motor: BASE_SPEED + (+correction) = SLOWER
+    //   → Result: Robot turns RIGHT ✓
+    //
+    // If correction is NEGATIVE (line is to the left, need to turn left):
+    //   → Left motor:  BASE_SPEED - (-correction) = SLOWER
+    //   → Right motor: BASE_SPEED + (-correction) = FASTER
+    //   → Result: Robot turns LEFT ✓
 
-    int16_t leftSpeed = BASE_SPEED + correction;
-    int16_t rightSpeed = BASE_SPEED - correction;
+    int16_t leftSpeed = BASE_SPEED - correction;
+    int16_t rightSpeed = BASE_SPEED + correction;
 
     // Constrain speeds to valid range
     if (leftSpeed > 4000)   leftSpeed = 4000;
@@ -150,7 +263,7 @@ static void followLine(void)
     if (rightSpeed < -4000) rightSpeed = -4000;
 
     // Set motor speeds: Motor_Move(left_front, left_back, right_front, right_back)
-    Motor_Move(leftSpeed, leftSpeed, rightSpeed, rightSpeed);
+    Motor_Move(-leftSpeed, -leftSpeed, -rightSpeed, -rightSpeed);
 }
 
 /* Implement ISR for I2C_1 */
