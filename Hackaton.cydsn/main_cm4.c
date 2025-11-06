@@ -9,19 +9,22 @@
 // ===============================================================================
 
 // PID Gains - These values need tuning based on your robot's behavior
-#define PID_KP          40.0    // Proportional gain: responds to current error
-#define PID_KD          20.0    // Derivative gain: dampens oscillation
-#define PID_KI          0.5     // Integral gain: eliminates steady-state error
+#define PID_KP          500.0    // Proportional gain: responds to current error
+#define PID_KD          20    // Derivative gain: dampens oscillation
+#define PID_KI          0.0     // Integral gain: eliminates steady-state error
+
+double pidKp = PID_KP;
+double pidKd = PID_KD;
+double pidKi = PID_KI;
 
 // Motor control parameters
-#define BASE_SPEED      1500    // Base forward speed (range: -4000 to 4000)
-#define MAX_CORRECTION  1500    // Maximum steering correction value
+#define BASE_SPEED      1000    // Base forward speed (range: -4000 to 4000)
+#define MAX_CORRECTION  2000    // Maximum steering correction value
 
-static int16_t baseSpeed = BASE_SPEED;
-static int16_t maxCorrection = MAX_CORRECTION;
-static double pidKp = PID_KP;
-static double pidKd = PID_KD;
-static double pidKi = PID_KI;
+uint16_t baseSpeed = BASE_SPEED;
+uint16_t maxCorrection = MAX_CORRECTION;
+
+
 
 // PID state variables
 static double lastError = 0.0;
@@ -43,7 +46,7 @@ static double calculateLinePosition(uint8_t sensors)
     //
     // When line is to the LEFT:  negative position → turn LEFT
     // When line is to the RIGHT: positive position → turn RIGHT
-
+    
     static const int16_t weights[7] = {-3000, -2000, -1000, 0, 1000, 2000, 3000};
 
     int32_t weightedSum = 0;
@@ -73,6 +76,7 @@ static double calculateLinePosition(uint8_t sensors)
         return (lastError < 0) ? -3000.0 : 3000.0;
     }
 }
+
 
 // ===============================================================================
 // PID CONTROL FUNCTION
@@ -146,8 +150,8 @@ static int16_t pidControl(double error, uint32_t currentTime)
     // If error = -1000 (line is 1000 units to the left):
     //   pTerm = 40 × (-1000) = -40000
     //   → This will slow down left motor, speed up right → turn left ✓
-
-    double pTerm = PID_KP * error;
+    
+    double pTerm = pidKp * error;
 
     // ============================================================================
     // INTEGRAL TERM: Accumulates error over time
@@ -156,7 +160,7 @@ static int16_t pidControl(double error, uint32_t currentTime)
     // Example: If robot consistently runs 100 units right:
     //   integral grows: 100 + 100 + 100 + ... = large value
     //   iTerm adds permanent left correction to compensate
-
+    
     integral += error * deltaTime;
 
     // Anti-windup: Limit integral to prevent excessive accumulation
@@ -164,7 +168,8 @@ static int16_t pidControl(double error, uint32_t currentTime)
     if (integral > 100.0)  integral = 100.0;
     if (integral < -100.0) integral = -100.0;
 
-    double iTerm = PID_KI * integral;
+    double iTerm = pidKi * integral;
+
 
     // ============================================================================
     // DERIVATIVE TERM: Reacts to rate of change
@@ -179,8 +184,8 @@ static int16_t pidControl(double error, uint32_t currentTime)
     //   Previous error = 1000, current error = 500, deltaTime = 0.01s
     //   dTerm = 20 × (500 - 1000) / 0.01 = 20 × (-500) / 0.01 = -1,000,000
     //   → Large negative D-term reduces correction (we're getting closer, don't overshoot!)
-
-    double dTerm = PID_KD * (error - lastError) / deltaTime;
+    
+    double dTerm = pidKd * (error - lastError) / deltaTime;
 
     // ============================================================================
     // COMBINE ALL THREE TERMS
@@ -189,13 +194,13 @@ static int16_t pidControl(double error, uint32_t currentTime)
     // P: reacts to current position
     // I: corrects for persistent bias
     // D: smooths the response and prevents oscillation
-
+    
     double correction = pTerm + iTerm + dTerm;
 
     // Limit correction to prevent excessive steering
     // MAX_CORRECTION = 1500, so correction is clamped to [-1500, +1500]
-    if (correction > MAX_CORRECTION)  correction = MAX_CORRECTION;
-    if (correction < -MAX_CORRECTION) correction = -MAX_CORRECTION;
+    if (correction > maxCorrection)  correction = maxCorrection;
+    if (correction < -maxCorrection) correction = -maxCorrection;
 
     // Update state variables for next iteration
     lastError = error;
@@ -232,7 +237,7 @@ static void followLine(void)
     //   error = -1000 - 0 = -1000 (NEGATIVE)
     //   → Need to turn LEFT to center the line
     //   → Left motor slows down, right motor speeds up
-
+    
     double error = position - 0;  // Target position is 0 (center)
 
     // Get current time for PID calculation
@@ -259,8 +264,9 @@ static void followLine(void)
     //   → Right motor: BASE_SPEED + (-correction) = FASTER
     //   → Result: Robot turns LEFT ✓
 
-    int16_t leftSpeed = BASE_SPEED - correction;
-    int16_t rightSpeed = BASE_SPEED + correction;
+
+    int16_t leftSpeed = baseSpeed + correction;
+    int16_t rightSpeed = baseSpeed - correction;
 
     // Constrain speeds to valid range
     if (leftSpeed > 4000)   leftSpeed = 4000;
@@ -383,7 +389,7 @@ int main(void)
         if (CM4_isDataAvailableFromCM0()) {
             processIncomingIPCMessage(CM4_GetCM0Message());
         }
-
+ 
         // ========================================================================
         // LINE FOLLOWING - Execute PID control (only if motors enabled)
         // ========================================================================
@@ -396,6 +402,7 @@ int main(void)
             // Motors disabled - ensure they're stopped
             Motor_Move(0, 0, 0, 0);
         }
+
 
         // Blink Reg and blue LEDs based on timer
         //if((Timing_GetMillisecongs() - timeout) > 1000u)
@@ -496,13 +503,13 @@ static void processCM4Command(enum cm4CommandList cmd)
                         maxCorrection = value;
                         break;
                     case 2:
-                        pidKp = (double)value / 10.0;
+                        pidKp = (double)value;
                         break;
                     case 3:
-                        pidKd = (double)value / 10.0;
+                        pidKd = (double)value;
                         break;
                     case 4:
-                        pidKi = (double)value / 10.0;
+                        pidKi = (double)value;
                         break;
                 }
             }

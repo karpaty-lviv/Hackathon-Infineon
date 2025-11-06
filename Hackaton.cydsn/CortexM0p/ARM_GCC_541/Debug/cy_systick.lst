@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLdd6Gy.s 			page 1
-=======
-ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 1
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccjjKVEO.s 			page 1
 
 
    1              		.syntax unified
@@ -62,11 +58,7 @@ ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 1
   29:Generated_Source\PSoC6\pdl\drivers\peripheral\systick/cy_systick.c **** * - Associates the SysTick system vector with the callback functions
   30:Generated_Source\PSoC6\pdl\drivers\peripheral\systick/cy_systick.c **** * - Sets the SysTick clock by calling \ref Cy_SysTick_SetClockSource()
   31:Generated_Source\PSoC6\pdl\drivers\peripheral\systick/cy_systick.c **** * - Sets the SysTick reload interval by calling \ref Cy_SysTick_SetReload()
-<<<<<<< HEAD
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLdd6Gy.s 			page 2
-=======
-ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 2
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccjjKVEO.s 			page 2
 
 
   32:Generated_Source\PSoC6\pdl\drivers\peripheral\systick/cy_systick.c **** * - Clears the SysTick counter value by calling \ref Cy_SysTick_Clear()
@@ -126,11 +118,7 @@ ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 1
   86:Generated_Source\PSoC6\pdl\drivers\peripheral\systick/cy_systick.c **** void Cy_SysTick_Disable(void)
   87:Generated_Source\PSoC6\pdl\drivers\peripheral\systick/cy_systick.c **** {
   88:Generated_Source\PSoC6\pdl\drivers\peripheral\systick/cy_systick.c ****     Cy_SysTick_DisableInterrupt();
-<<<<<<< HEAD
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLdd6Gy.s 			page 3
-=======
-ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 3
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccjjKVEO.s 			page 3
 
 
   89:Generated_Source\PSoC6\pdl\drivers\peripheral\systick/cy_systick.c ****     SYSTICK_CTRL &= ~SysTick_CTRL_ENABLE_Msk;
@@ -190,11 +178,7 @@ ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 1
  143:Generated_Source\PSoC6\pdl\drivers\peripheral\systick/cy_systick.c ****     else
  144:Generated_Source\PSoC6\pdl\drivers\peripheral\systick/cy_systick.c ****     {
  145:Generated_Source\PSoC6\pdl\drivers\peripheral\systick/cy_systick.c ****         returnValue =  (cy_en_systick_clock_source_t) ((uint32_t) _FLD2VAL(CPUSS_SYSTICK_CTL_CLOCK_
-<<<<<<< HEAD
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLdd6Gy.s 			page 4
-=======
-ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 4
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccjjKVEO.s 			page 4
 
 
  146:Generated_Source\PSoC6\pdl\drivers\peripheral\systick/cy_systick.c ****     }
@@ -254,11 +238,7 @@ ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 1
  200:Generated_Source\PSoC6\pdl\drivers\peripheral\systick/cy_systick.c **** * The NULL is returned if the specified address in not initialized or incorrect
  201:Generated_Source\PSoC6\pdl\drivers\peripheral\systick/cy_systick.c **** * parameter is specified.
  202:Generated_Source\PSoC6\pdl\drivers\peripheral\systick/cy_systick.c **** *
-<<<<<<< HEAD
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLdd6Gy.s 			page 5
-=======
-ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 5
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccjjKVEO.s 			page 5
 
 
  203:Generated_Source\PSoC6\pdl\drivers\peripheral\systick/cy_systick.c **** *******************************************************************************/
@@ -318,11 +298,7 @@ ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 1
   17:Generated_Source\PSoC6\pdl\drivers\peripheral\systick/cy_systick.h **** 
   18:Generated_Source\PSoC6\pdl\drivers\peripheral\systick/cy_systick.h **** /**
   19:Generated_Source\PSoC6\pdl\drivers\peripheral\systick/cy_systick.h **** * \addtogroup group_arm_system_timer
-<<<<<<< HEAD
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLdd6Gy.s 			page 6
-=======
-ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 6
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccjjKVEO.s 			page 6
 
 
   20:Generated_Source\PSoC6\pdl\drivers\peripheral\systick/cy_systick.h **** * \{
@@ -382,11 +358,7 @@ ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 1
   74:Generated_Source\PSoC6\pdl\drivers\peripheral\systick/cy_systick.h **** *   <td rowspan="2">1.10</td>
   75:Generated_Source\PSoC6\pdl\drivers\peripheral\systick/cy_systick.h **** *     <td>Flattened the organization of the driver source code into the single 
   76:Generated_Source\PSoC6\pdl\drivers\peripheral\systick/cy_systick.h **** *         source directory and the single include directory.
-<<<<<<< HEAD
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLdd6Gy.s 			page 7
-=======
-ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 7
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccjjKVEO.s 			page 7
 
 
   77:Generated_Source\PSoC6\pdl\drivers\peripheral\systick/cy_systick.h **** *     </td>
@@ -446,11 +418,7 @@ ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 1
  131:Generated_Source\PSoC6\pdl\drivers\peripheral\systick/cy_systick.h **** /** \} group_systick_data_structures */
  132:Generated_Source\PSoC6\pdl\drivers\peripheral\systick/cy_systick.h **** 
  133:Generated_Source\PSoC6\pdl\drivers\peripheral\systick/cy_systick.h **** 
-<<<<<<< HEAD
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLdd6Gy.s 			page 8
-=======
-ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 8
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccjjKVEO.s 			page 8
 
 
  134:Generated_Source\PSoC6\pdl\drivers\peripheral\systick/cy_systick.h **** /**
@@ -510,11 +478,7 @@ ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 1
  188:Generated_Source\PSoC6\pdl\drivers\peripheral\systick/cy_systick.h **** * Enables the SysTick interrupt.
  189:Generated_Source\PSoC6\pdl\drivers\peripheral\systick/cy_systick.h **** *
  190:Generated_Source\PSoC6\pdl\drivers\peripheral\systick/cy_systick.h **** * \sideeffect Clears the SysTick count flag if it was set
-<<<<<<< HEAD
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLdd6Gy.s 			page 9
-=======
-ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 9
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccjjKVEO.s 			page 9
 
 
  191:Generated_Source\PSoC6\pdl\drivers\peripheral\systick/cy_systick.h **** *
@@ -574,11 +538,7 @@ ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 1
  245:Generated_Source\PSoC6\pdl\drivers\peripheral\systick/cy_systick.h **** 
  246:Generated_Source\PSoC6\pdl\drivers\peripheral\systick/cy_systick.h **** /*******************************************************************************
  247:Generated_Source\PSoC6\pdl\drivers\peripheral\systick/cy_systick.h **** * Function Name: Cy_SysTick_GetValue
-<<<<<<< HEAD
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLdd6Gy.s 			page 10
-=======
-ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 10
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccjjKVEO.s 			page 10
 
 
  248:Generated_Source\PSoC6\pdl\drivers\peripheral\systick/cy_systick.h **** ****************************************************************************//**
@@ -638,11 +598,7 @@ ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 1
   47              	.LVL0:
   48              	.L5:
  234:Generated_Source\PSoC6\pdl\drivers\peripheral\systick/cy_systick.c ****     {
-<<<<<<< HEAD
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLdd6Gy.s 			page 11
-=======
-ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 11
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccjjKVEO.s 			page 11
 
 
  235:Generated_Source\PSoC6\pdl\drivers\peripheral\systick/cy_systick.c ****         for (i=0u; i < CY_SYS_SYST_NUM_OF_CALLBACKS; i++)
@@ -702,11 +658,7 @@ ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 1
   71:Generated_Source\PSoC6\pdl\drivers\peripheral\systick/cy_systick.c ****     Cy_SysTick_EnableInterrupt();
   92              		.loc 1 71 0
   93              		.cfi_startproc
-<<<<<<< HEAD
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLdd6Gy.s 			page 12
-=======
-ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 12
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccjjKVEO.s 			page 12
 
 
   94              		@ args = 0, pretend = 0, frame = 0
@@ -766,11 +718,7 @@ ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 1
  143              	.LBE17:
  144              	.LBE16:
   89:Generated_Source\PSoC6\pdl\drivers\peripheral\systick/cy_systick.c **** }
-<<<<<<< HEAD
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLdd6Gy.s 			page 13
-=======
-ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 13
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccjjKVEO.s 			page 13
 
 
  145              		.loc 1 89 0
@@ -830,11 +778,7 @@ ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 1
  194 001e C022     		movs	r2, #192
  195 0020 9204     		lsls	r2, r2, #18
  196 0022 1040     		ands	r0, r2
-<<<<<<< HEAD
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLdd6Gy.s 			page 14
-=======
-ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 14
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccjjKVEO.s 			page 14
 
 
  197 0024 1860     		str	r0, [r3]
@@ -894,11 +838,7 @@ ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 1
  246 000e 8C50     		str	r4, [r1, r2]
   47:Generated_Source\PSoC6\pdl\drivers\peripheral\systick/cy_systick.c ****     {
  247              		.loc 1 47 0 discriminator 3
-<<<<<<< HEAD
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLdd6Gy.s 			page 15
-=======
-ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 15
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccjjKVEO.s 			page 15
 
 
  248 0010 0133     		adds	r3, r3, #1
@@ -958,11 +898,7 @@ ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 1
  295              		.size	Cy_SysTick_Init, .-Cy_SysTick_Init
  296              		.section	.text.Cy_SysTick_GetClockSource,"ax",%progbits
  297              		.align	2
-<<<<<<< HEAD
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLdd6Gy.s 			page 16
-=======
-ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 16
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccjjKVEO.s 			page 16
 
 
  298              		.global	Cy_SysTick_GetClockSource
@@ -1022,11 +958,7 @@ ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 1
  347              		.code	16
  348              		.thumb_func
  349              		.type	Cy_SysTick_SetCallback, %function
-<<<<<<< HEAD
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLdd6Gy.s 			page 17
-=======
-ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 17
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccjjKVEO.s 			page 17
 
 
  350              	Cy_SysTick_SetCallback:
@@ -1086,11 +1018,7 @@ ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 1
  397              		@ link register save eliminated.
  398              	.LVL24:
  208:Generated_Source\PSoC6\pdl\drivers\peripheral\systick/cy_systick.c ****     {
-<<<<<<< HEAD
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLdd6Gy.s 			page 18
-=======
-ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 18
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccjjKVEO.s 			page 18
 
 
  399              		.loc 1 208 0
@@ -1135,13 +1063,8 @@ ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 1
  431      00000000 
  432              		.text
  433              	.Letext0:
-<<<<<<< HEAD
  434              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\4.4\\psoc creator\\import\\gnu\\arm\\5.4.
  435              		.file 4 "c:\\program files (x86)\\cypress\\psoc creator\\4.4\\psoc creator\\import\\gnu\\arm\\5.4.
-=======
- 434              		.file 3 "c:\\myapps\\psoc_creator\\psoc creator\\4.4\\psoc creator\\import\\gnu\\arm\\5.4.1\\arm-n
- 435              		.file 4 "c:\\myapps\\psoc_creator\\psoc creator\\4.4\\psoc creator\\import\\gnu\\arm\\5.4.1\\arm-n
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  436              		.file 5 "Generated_Source\\PSoC6\\pdl\\drivers/peripheral/device/cy_device.h"
  437              		.file 6 "Generated_Source\\PSoC6\\pdl\\cmsis/include/core_cm0plus.h"
  438              		.file 7 "Generated_Source\\PSoC6\\pdl\\drivers/peripheral/syslib/cy_syslib.h"
@@ -1152,75 +1075,46 @@ ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 1
  443 0006 00000000 		.4byte	.Ldebug_abbrev0
  444 000a 04       		.byte	0x4
  445 000b 01       		.uleb128 0x1
-<<<<<<< HEAD
  446 000c F4060000 		.4byte	.LASF140
  447 0010 0C       		.byte	0xc
  448 0011 4F050000 		.4byte	.LASF141
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLdd6Gy.s 			page 19
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccjjKVEO.s 			page 19
 
 
  449 0015 68030000 		.4byte	.LASF142
-=======
- 446 000c FD060000 		.4byte	.LASF140
- 447 0010 0C       		.byte	0xc
- 448 0011 58050000 		.4byte	.LASF141
-ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 19
-
-
- 449 0015 81000000 		.4byte	.LASF142
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  450 0019 00000000 		.4byte	.Ldebug_ranges0+0
  451 001d 00000000 		.4byte	0
  452 0021 00000000 		.4byte	.Ldebug_line0
  453 0025 02       		.uleb128 0x2
  454 0026 01       		.byte	0x1
  455 0027 06       		.byte	0x6
-<<<<<<< HEAD
  456 0028 A9010000 		.4byte	.LASF0
  457 002c 03       		.uleb128 0x3
  458 002d B1000000 		.4byte	.LASF2
-=======
- 456 0028 D7010000 		.4byte	.LASF0
- 457 002c 03       		.uleb128 0x3
- 458 002d D3000000 		.4byte	.LASF2
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  459 0031 03       		.byte	0x3
  460 0032 1D       		.byte	0x1d
  461 0033 37000000 		.4byte	0x37
  462 0037 02       		.uleb128 0x2
  463 0038 01       		.byte	0x1
  464 0039 08       		.byte	0x8
-<<<<<<< HEAD
  465 003a 6E060000 		.4byte	.LASF1
  466 003e 03       		.uleb128 0x3
  467 003f 13030000 		.4byte	.LASF3
-=======
- 465 003a 77060000 		.4byte	.LASF1
- 466 003e 03       		.uleb128 0x3
- 467 003f 41030000 		.4byte	.LASF3
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  468 0043 03       		.byte	0x3
  469 0044 29       		.byte	0x29
  470 0045 49000000 		.4byte	0x49
  471 0049 02       		.uleb128 0x2
  472 004a 02       		.byte	0x2
  473 004b 05       		.byte	0x5
-<<<<<<< HEAD
  474 004c 90060000 		.4byte	.LASF4
  475 0050 03       		.uleb128 0x3
  476 0051 BE070000 		.4byte	.LASF5
-=======
- 474 004c 99060000 		.4byte	.LASF4
- 475 0050 03       		.uleb128 0x3
- 476 0051 C7070000 		.4byte	.LASF5
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  477 0055 03       		.byte	0x3
  478 0056 2B       		.byte	0x2b
  479 0057 5B000000 		.4byte	0x5b
  480 005b 02       		.uleb128 0x2
  481 005c 02       		.byte	0x2
  482 005d 07       		.byte	0x7
-<<<<<<< HEAD
  483 005e 0E080000 		.4byte	.LASF6
  484 0062 02       		.uleb128 0x2
  485 0063 04       		.byte	0x4
@@ -1228,22 +1122,12 @@ ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 1
  487 0065 05020000 		.4byte	.LASF7
  488 0069 03       		.uleb128 0x3
  489 006a DC070000 		.4byte	.LASF8
-=======
- 483 005e 17080000 		.4byte	.LASF6
- 484 0062 02       		.uleb128 0x2
- 485 0063 04       		.byte	0x4
- 486 0064 05       		.byte	0x5
- 487 0065 33020000 		.4byte	.LASF7
- 488 0069 03       		.uleb128 0x3
- 489 006a E5070000 		.4byte	.LASF8
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  490 006e 03       		.byte	0x3
  491 006f 41       		.byte	0x41
  492 0070 74000000 		.4byte	0x74
  493 0074 02       		.uleb128 0x2
  494 0075 04       		.byte	0x4
  495 0076 07       		.byte	0x7
-<<<<<<< HEAD
  496 0077 9F030000 		.4byte	.LASF9
  497 007b 02       		.uleb128 0x2
  498 007c 08       		.byte	0x8
@@ -1254,20 +1138,7 @@ ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 1
  503 0084 07       		.byte	0x7
  504 0085 00010000 		.4byte	.LASF11
  505 0089 04       		.uleb128 0x4
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLdd6Gy.s 			page 20
-=======
- 496 0077 A8030000 		.4byte	.LASF9
- 497 007b 02       		.uleb128 0x2
- 498 007c 08       		.byte	0x8
- 499 007d 05       		.byte	0x5
- 500 007e C9010000 		.4byte	.LASF10
- 501 0082 02       		.uleb128 0x2
- 502 0083 08       		.byte	0x8
- 503 0084 07       		.byte	0x7
- 504 0085 2E010000 		.4byte	.LASF11
- 505 0089 04       		.uleb128 0x4
-ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 20
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccjjKVEO.s 			page 20
 
 
  506 008a 04       		.byte	0x4
@@ -1276,53 +1147,31 @@ ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 1
  509 0090 02       		.uleb128 0x2
  510 0091 04       		.byte	0x4
  511 0092 07       		.byte	0x7
-<<<<<<< HEAD
  512 0093 52030000 		.4byte	.LASF12
  513 0097 03       		.uleb128 0x3
  514 0098 EC080000 		.4byte	.LASF13
-=======
- 512 0093 80030000 		.4byte	.LASF12
- 513 0097 03       		.uleb128 0x3
- 514 0098 F5080000 		.4byte	.LASF13
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  515 009c 04       		.byte	0x4
  516 009d 18       		.byte	0x18
  517 009e 2C000000 		.4byte	0x2c
  518 00a2 03       		.uleb128 0x3
-<<<<<<< HEAD
  519 00a3 93010000 		.4byte	.LASF14
-=======
- 519 00a3 C1010000 		.4byte	.LASF14
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  520 00a7 04       		.byte	0x4
  521 00a8 20       		.byte	0x20
  522 00a9 3E000000 		.4byte	0x3e
  523 00ad 03       		.uleb128 0x3
-<<<<<<< HEAD
  524 00ae 5F030000 		.4byte	.LASF15
-=======
- 524 00ae 8D030000 		.4byte	.LASF15
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  525 00b2 04       		.byte	0x4
  526 00b3 24       		.byte	0x24
  527 00b4 50000000 		.4byte	0x50
  528 00b8 03       		.uleb128 0x3
-<<<<<<< HEAD
  529 00b9 EB060000 		.4byte	.LASF16
-=======
- 529 00b9 F4060000 		.4byte	.LASF16
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  530 00bd 04       		.byte	0x4
  531 00be 30       		.byte	0x30
  532 00bf 69000000 		.4byte	0x69
  533 00c3 02       		.uleb128 0x2
  534 00c4 08       		.byte	0x8
  535 00c5 04       		.byte	0x4
-<<<<<<< HEAD
  536 00c6 86070000 		.4byte	.LASF17
-=======
- 536 00c6 8F070000 		.4byte	.LASF17
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  537 00ca 05       		.uleb128 0x5
  538 00cb B8000000 		.4byte	0xb8
  539 00cf 06       		.uleb128 0x6
@@ -1330,128 +1179,77 @@ ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 1
  541 00d4 02       		.uleb128 0x2
  542 00d5 04       		.byte	0x4
  543 00d6 07       		.byte	0x7
-<<<<<<< HEAD
  544 00d7 21050000 		.4byte	.LASF18
-=======
- 544 00d7 2A050000 		.4byte	.LASF18
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  545 00db 07       		.uleb128 0x7
  546 00dc B8       		.byte	0xb8
  547 00dd 05       		.byte	0x5
  548 00de 34       		.byte	0x34
  549 00df EC040000 		.4byte	0x4ec
  550 00e3 08       		.uleb128 0x8
-<<<<<<< HEAD
  551 00e4 E7000000 		.4byte	.LASF19
-=======
- 551 00e4 09010000 		.4byte	.LASF19
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  552 00e8 05       		.byte	0x5
  553 00e9 37       		.byte	0x37
  554 00ea B8000000 		.4byte	0xb8
  555 00ee 00       		.byte	0
  556 00ef 08       		.uleb128 0x8
-<<<<<<< HEAD
  557 00f0 C4020000 		.4byte	.LASF20
-=======
- 557 00f0 F2020000 		.4byte	.LASF20
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  558 00f4 05       		.byte	0x5
  559 00f5 38       		.byte	0x38
  560 00f6 B8000000 		.4byte	0xb8
  561 00fa 04       		.byte	0x4
  562 00fb 08       		.uleb128 0x8
-<<<<<<< HEAD
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLdd6Gy.s 			page 21
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccjjKVEO.s 			page 21
 
 
  563 00fc 1C020000 		.4byte	.LASF21
-=======
-ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 21
-
-
- 563 00fc 4A020000 		.4byte	.LASF21
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  564 0100 05       		.byte	0x5
  565 0101 39       		.byte	0x39
  566 0102 B8000000 		.4byte	0xb8
  567 0106 08       		.byte	0x8
  568 0107 08       		.uleb128 0x8
-<<<<<<< HEAD
  569 0108 77010000 		.4byte	.LASF22
-=======
- 569 0108 A5010000 		.4byte	.LASF22
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  570 010c 05       		.byte	0x5
  571 010d 3A       		.byte	0x3a
  572 010e B8000000 		.4byte	0xb8
  573 0112 0C       		.byte	0xc
  574 0113 08       		.uleb128 0x8
-<<<<<<< HEAD
  575 0114 D2010000 		.4byte	.LASF23
-=======
- 575 0114 00020000 		.4byte	.LASF23
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  576 0118 05       		.byte	0x5
  577 0119 3B       		.byte	0x3b
  578 011a B8000000 		.4byte	0xb8
  579 011e 10       		.byte	0x10
  580 011f 08       		.uleb128 0x8
-<<<<<<< HEAD
  581 0120 FB010000 		.4byte	.LASF24
-=======
- 581 0120 29020000 		.4byte	.LASF24
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  582 0124 05       		.byte	0x5
  583 0125 3C       		.byte	0x3c
  584 0126 B8000000 		.4byte	0xb8
  585 012a 14       		.byte	0x14
  586 012b 08       		.uleb128 0x8
-<<<<<<< HEAD
  587 012c BC030000 		.4byte	.LASF25
-=======
- 587 012c C5030000 		.4byte	.LASF25
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  588 0130 05       		.byte	0x5
  589 0131 3D       		.byte	0x3d
  590 0132 B8000000 		.4byte	0xb8
  591 0136 18       		.byte	0x18
  592 0137 08       		.uleb128 0x8
-<<<<<<< HEAD
  593 0138 8D000000 		.4byte	.LASF26
-=======
- 593 0138 AF000000 		.4byte	.LASF26
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  594 013c 05       		.byte	0x5
  595 013d 3E       		.byte	0x3e
  596 013e B8000000 		.4byte	0xb8
  597 0142 1C       		.byte	0x1c
  598 0143 08       		.uleb128 0x8
-<<<<<<< HEAD
  599 0144 6A090000 		.4byte	.LASF27
-=======
- 599 0144 73090000 		.4byte	.LASF27
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  600 0148 05       		.byte	0x5
  601 0149 3F       		.byte	0x3f
  602 014a B8000000 		.4byte	0xb8
  603 014e 20       		.byte	0x20
  604 014f 08       		.uleb128 0x8
-<<<<<<< HEAD
  605 0150 06060000 		.4byte	.LASF28
-=======
- 605 0150 0F060000 		.4byte	.LASF28
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  606 0154 05       		.byte	0x5
  607 0155 40       		.byte	0x40
  608 0156 B8000000 		.4byte	0xb8
  609 015a 24       		.byte	0x24
  610 015b 08       		.uleb128 0x8
-<<<<<<< HEAD
  611 015c C3040000 		.4byte	.LASF29
-=======
- 611 015c CC040000 		.4byte	.LASF29
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  612 0160 05       		.byte	0x5
  613 0161 43       		.byte	0x43
  614 0162 97000000 		.4byte	0x97
@@ -1460,253 +1258,151 @@ ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 1
  617 0168 73000000 		.4byte	.LASF30
  618 016c 05       		.byte	0x5
  619 016d 44       		.byte	0x44
-<<<<<<< HEAD
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLdd6Gy.s 			page 22
-=======
-ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 22
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccjjKVEO.s 			page 22
 
 
  620 016e 97000000 		.4byte	0x97
  621 0172 29       		.byte	0x29
  622 0173 08       		.uleb128 0x8
-<<<<<<< HEAD
  623 0174 60090000 		.4byte	.LASF31
-=======
- 623 0174 69090000 		.4byte	.LASF31
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  624 0178 05       		.byte	0x5
  625 0179 45       		.byte	0x45
  626 017a 97000000 		.4byte	0x97
  627 017e 2A       		.byte	0x2a
  628 017f 08       		.uleb128 0x8
-<<<<<<< HEAD
  629 0180 F8050000 		.4byte	.LASF32
-=======
- 629 0180 01060000 		.4byte	.LASF32
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  630 0184 05       		.byte	0x5
  631 0185 46       		.byte	0x46
  632 0186 97000000 		.4byte	0x97
  633 018a 2B       		.byte	0x2b
  634 018b 08       		.uleb128 0x8
-<<<<<<< HEAD
  635 018c 44040000 		.4byte	.LASF33
-=======
- 635 018c 4D040000 		.4byte	.LASF33
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  636 0190 05       		.byte	0x5
  637 0191 47       		.byte	0x47
  638 0192 97000000 		.4byte	0x97
  639 0196 2C       		.byte	0x2c
  640 0197 08       		.uleb128 0x8
-<<<<<<< HEAD
  641 0198 61060000 		.4byte	.LASF34
-=======
- 641 0198 6A060000 		.4byte	.LASF34
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  642 019c 05       		.byte	0x5
  643 019d 48       		.byte	0x48
  644 019e 97000000 		.4byte	0x97
  645 01a2 2D       		.byte	0x2d
  646 01a3 08       		.uleb128 0x8
-<<<<<<< HEAD
  647 01a4 DB010000 		.4byte	.LASF35
-=======
- 647 01a4 09020000 		.4byte	.LASF35
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  648 01a8 05       		.byte	0x5
  649 01a9 49       		.byte	0x49
  650 01aa 97000000 		.4byte	0x97
  651 01ae 2E       		.byte	0x2e
  652 01af 08       		.uleb128 0x8
-<<<<<<< HEAD
  653 01b0 E5040000 		.4byte	.LASF36
-=======
- 653 01b0 EE040000 		.4byte	.LASF36
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  654 01b4 05       		.byte	0x5
  655 01b5 4A       		.byte	0x4a
  656 01b6 97000000 		.4byte	0x97
  657 01ba 2F       		.byte	0x2f
  658 01bb 08       		.uleb128 0x8
-<<<<<<< HEAD
  659 01bc 97070000 		.4byte	.LASF37
-=======
- 659 01bc A0070000 		.4byte	.LASF37
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  660 01c0 05       		.byte	0x5
  661 01c1 4B       		.byte	0x4b
  662 01c2 97000000 		.4byte	0x97
  663 01c6 30       		.byte	0x30
  664 01c7 08       		.uleb128 0x8
-<<<<<<< HEAD
  665 01c8 B1030000 		.4byte	.LASF38
-=======
- 665 01c8 BA030000 		.4byte	.LASF38
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  666 01cc 05       		.byte	0x5
  667 01cd 4E       		.byte	0x4e
  668 01ce 97000000 		.4byte	0x97
  669 01d2 31       		.byte	0x31
  670 01d3 08       		.uleb128 0x8
-<<<<<<< HEAD
  671 01d4 A3000000 		.4byte	.LASF39
-=======
- 671 01d4 C5000000 		.4byte	.LASF39
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  672 01d8 05       		.byte	0x5
  673 01d9 4F       		.byte	0x4f
  674 01da 97000000 		.4byte	0x97
  675 01de 32       		.byte	0x32
  676 01df 08       		.uleb128 0x8
-<<<<<<< HEAD
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLdd6Gy.s 			page 23
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccjjKVEO.s 			page 23
 
 
  677 01e0 46030000 		.4byte	.LASF40
-=======
-ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 23
-
-
- 677 01e0 74030000 		.4byte	.LASF40
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  678 01e4 05       		.byte	0x5
  679 01e5 50       		.byte	0x50
  680 01e6 97000000 		.4byte	0x97
  681 01ea 33       		.byte	0x33
  682 01eb 08       		.uleb128 0x8
-<<<<<<< HEAD
  683 01ec C0090000 		.4byte	.LASF41
-=======
- 683 01ec C9090000 		.4byte	.LASF41
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  684 01f0 05       		.byte	0x5
  685 01f1 51       		.byte	0x51
  686 01f2 97000000 		.4byte	0x97
  687 01f6 34       		.byte	0x34
  688 01f7 08       		.uleb128 0x8
-<<<<<<< HEAD
  689 01f8 44080000 		.4byte	.LASF42
-=======
- 689 01f8 4D080000 		.4byte	.LASF42
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  690 01fc 05       		.byte	0x5
  691 01fd 52       		.byte	0x52
  692 01fe A2000000 		.4byte	0xa2
  693 0202 36       		.byte	0x36
  694 0203 08       		.uleb128 0x8
-<<<<<<< HEAD
  695 0204 58020000 		.4byte	.LASF43
-=======
- 695 0204 86020000 		.4byte	.LASF43
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  696 0208 05       		.byte	0x5
  697 0209 53       		.byte	0x53
  698 020a A2000000 		.4byte	0xa2
  699 020e 38       		.byte	0x38
  700 020f 08       		.uleb128 0x8
-<<<<<<< HEAD
  701 0210 BE080000 		.4byte	.LASF44
-=======
- 701 0210 C7080000 		.4byte	.LASF44
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  702 0214 05       		.byte	0x5
  703 0215 54       		.byte	0x54
  704 0216 A2000000 		.4byte	0xa2
  705 021a 3A       		.byte	0x3a
  706 021b 08       		.uleb128 0x8
-<<<<<<< HEAD
  707 021c 51090000 		.4byte	.LASF45
-=======
- 707 021c 5A090000 		.4byte	.LASF45
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  708 0220 05       		.byte	0x5
  709 0221 55       		.byte	0x55
  710 0222 97000000 		.4byte	0x97
  711 0226 3C       		.byte	0x3c
  712 0227 08       		.uleb128 0x8
-<<<<<<< HEAD
  713 0228 8A020000 		.4byte	.LASF46
-=======
- 713 0228 B8020000 		.4byte	.LASF46
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  714 022c 05       		.byte	0x5
  715 022d 56       		.byte	0x56
  716 022e 97000000 		.4byte	0x97
  717 0232 3D       		.byte	0x3d
  718 0233 08       		.uleb128 0x8
-<<<<<<< HEAD
  719 0234 CD060000 		.4byte	.LASF47
-=======
- 719 0234 D6060000 		.4byte	.LASF47
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  720 0238 05       		.byte	0x5
  721 0239 57       		.byte	0x57
  722 023a 97000000 		.4byte	0x97
  723 023e 3E       		.byte	0x3e
  724 023f 08       		.uleb128 0x8
-<<<<<<< HEAD
  725 0240 81000000 		.4byte	.LASF48
-=======
- 725 0240 22010000 		.4byte	.LASF48
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  726 0244 05       		.byte	0x5
  727 0245 58       		.byte	0x58
  728 0246 97000000 		.4byte	0x97
  729 024a 3F       		.byte	0x3f
  730 024b 08       		.uleb128 0x8
-<<<<<<< HEAD
  731 024c 11060000 		.4byte	.LASF49
  732 0250 05       		.byte	0x5
  733 0251 59       		.byte	0x59
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLdd6Gy.s 			page 24
-=======
- 731 024c 1A060000 		.4byte	.LASF49
- 732 0250 05       		.byte	0x5
- 733 0251 59       		.byte	0x59
-ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 24
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccjjKVEO.s 			page 24
 
 
  734 0252 97000000 		.4byte	0x97
  735 0256 40       		.byte	0x40
  736 0257 08       		.uleb128 0x8
-<<<<<<< HEAD
  737 0258 E7020000 		.4byte	.LASF50
-=======
- 737 0258 15030000 		.4byte	.LASF50
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  738 025c 05       		.byte	0x5
  739 025d 5A       		.byte	0x5a
  740 025e 97000000 		.4byte	0x97
  741 0262 41       		.byte	0x41
  742 0263 08       		.uleb128 0x8
-<<<<<<< HEAD
  743 0264 75040000 		.4byte	.LASF51
-=======
- 743 0264 7E040000 		.4byte	.LASF51
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  744 0268 05       		.byte	0x5
  745 0269 5B       		.byte	0x5b
  746 026a 97000000 		.4byte	0x97
  747 026e 42       		.byte	0x42
  748 026f 08       		.uleb128 0x8
-<<<<<<< HEAD
  749 0270 ED050000 		.4byte	.LASF52
-=======
- 749 0270 F6050000 		.4byte	.LASF52
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  750 0274 05       		.byte	0x5
  751 0275 5C       		.byte	0x5c
  752 0276 97000000 		.4byte	0x97
  753 027a 43       		.byte	0x43
  754 027b 08       		.uleb128 0x8
-<<<<<<< HEAD
  755 027c 47020000 		.4byte	.LASF53
-=======
- 755 027c 75020000 		.4byte	.LASF53
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  756 0280 05       		.byte	0x5
  757 0281 5D       		.byte	0x5d
  758 0282 97000000 		.4byte	0x97
@@ -1718,97 +1414,58 @@ ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 1
  764 028e B8000000 		.4byte	0xb8
  765 0292 48       		.byte	0x48
  766 0293 08       		.uleb128 0x8
-<<<<<<< HEAD
  767 0294 0E020000 		.4byte	.LASF55
-=======
- 767 0294 3C020000 		.4byte	.LASF55
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  768 0298 05       		.byte	0x5
  769 0299 5F       		.byte	0x5f
  770 029a B8000000 		.4byte	0xb8
  771 029e 4C       		.byte	0x4c
  772 029f 08       		.uleb128 0x8
-<<<<<<< HEAD
  773 02a0 D1090000 		.4byte	.LASF56
-=======
- 773 02a0 DA090000 		.4byte	.LASF56
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  774 02a4 05       		.byte	0x5
  775 02a5 60       		.byte	0x60
  776 02a6 97000000 		.4byte	0x97
  777 02aa 50       		.byte	0x50
  778 02ab 08       		.uleb128 0x8
-<<<<<<< HEAD
  779 02ac 65010000 		.4byte	.LASF57
-=======
- 779 02ac 93010000 		.4byte	.LASF57
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  780 02b0 05       		.byte	0x5
  781 02b1 61       		.byte	0x61
  782 02b2 97000000 		.4byte	0x97
  783 02b6 51       		.byte	0x51
  784 02b7 08       		.uleb128 0x8
-<<<<<<< HEAD
  785 02b8 D3080000 		.4byte	.LASF58
-=======
- 785 02b8 DC080000 		.4byte	.LASF58
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  786 02bc 05       		.byte	0x5
  787 02bd 62       		.byte	0x62
  788 02be 97000000 		.4byte	0x97
  789 02c2 52       		.byte	0x52
  790 02c3 08       		.uleb128 0x8
-<<<<<<< HEAD
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLdd6Gy.s 			page 25
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccjjKVEO.s 			page 25
 
 
  791 02c4 A2090000 		.4byte	.LASF59
-=======
-ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 25
-
-
- 791 02c4 AB090000 		.4byte	.LASF59
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  792 02c8 05       		.byte	0x5
  793 02c9 63       		.byte	0x63
  794 02ca 97000000 		.4byte	0x97
  795 02ce 53       		.byte	0x53
  796 02cf 08       		.uleb128 0x8
-<<<<<<< HEAD
  797 02d0 DB060000 		.4byte	.LASF60
-=======
- 797 02d0 E4060000 		.4byte	.LASF60
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  798 02d4 05       		.byte	0x5
  799 02d5 64       		.byte	0x64
  800 02d6 97000000 		.4byte	0x97
  801 02da 54       		.byte	0x54
  802 02db 08       		.uleb128 0x8
-<<<<<<< HEAD
  803 02dc 7F010000 		.4byte	.LASF61
-=======
- 803 02dc AD010000 		.4byte	.LASF61
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  804 02e0 05       		.byte	0x5
  805 02e1 65       		.byte	0x65
  806 02e2 97000000 		.4byte	0x97
  807 02e6 55       		.byte	0x55
  808 02e7 08       		.uleb128 0x8
-<<<<<<< HEAD
  809 02e8 FA070000 		.4byte	.LASF62
-=======
- 809 02e8 03080000 		.4byte	.LASF62
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  810 02ec 05       		.byte	0x5
  811 02ed 66       		.byte	0x66
  812 02ee 97000000 		.4byte	0x97
  813 02f2 56       		.byte	0x56
  814 02f3 08       		.uleb128 0x8
-<<<<<<< HEAD
  815 02f4 C5030000 		.4byte	.LASF63
-=======
- 815 02f4 CE030000 		.4byte	.LASF63
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  816 02f8 05       		.byte	0x5
  817 02f9 67       		.byte	0x67
  818 02fa 97000000 		.4byte	0x97
@@ -1820,415 +1477,247 @@ ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 1
  824 0306 97000000 		.4byte	0x97
  825 030a 58       		.byte	0x58
  826 030b 08       		.uleb128 0x8
-<<<<<<< HEAD
  827 030c 7C060000 		.4byte	.LASF65
-=======
- 827 030c 85060000 		.4byte	.LASF65
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  828 0310 05       		.byte	0x5
  829 0311 69       		.byte	0x69
  830 0312 97000000 		.4byte	0x97
  831 0316 59       		.byte	0x59
  832 0317 08       		.uleb128 0x8
-<<<<<<< HEAD
  833 0318 63020000 		.4byte	.LASF66
-=======
- 833 0318 91020000 		.4byte	.LASF66
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  834 031c 05       		.byte	0x5
  835 031d 6E       		.byte	0x6e
  836 031e AD000000 		.4byte	0xad
  837 0322 5A       		.byte	0x5a
  838 0323 08       		.uleb128 0x8
-<<<<<<< HEAD
  839 0324 E3080000 		.4byte	.LASF67
-=======
- 839 0324 EC080000 		.4byte	.LASF67
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  840 0328 05       		.byte	0x5
  841 0329 6F       		.byte	0x6f
  842 032a AD000000 		.4byte	0xad
  843 032e 5C       		.byte	0x5c
  844 032f 08       		.uleb128 0x8
-<<<<<<< HEAD
  845 0330 F1000000 		.4byte	.LASF68
  846 0334 05       		.byte	0x5
  847 0335 70       		.byte	0x70
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLdd6Gy.s 			page 26
-=======
- 845 0330 13010000 		.4byte	.LASF68
- 846 0334 05       		.byte	0x5
- 847 0335 70       		.byte	0x70
-ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 26
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccjjKVEO.s 			page 26
 
 
  848 0336 97000000 		.4byte	0x97
  849 033a 5E       		.byte	0x5e
  850 033b 08       		.uleb128 0x8
-<<<<<<< HEAD
  851 033c 4B060000 		.4byte	.LASF69
-=======
- 851 033c 54060000 		.4byte	.LASF69
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  852 0340 05       		.byte	0x5
  853 0341 71       		.byte	0x71
  854 0342 97000000 		.4byte	0x97
  855 0346 5F       		.byte	0x5f
  856 0347 08       		.uleb128 0x8
-<<<<<<< HEAD
  857 0348 CE050000 		.4byte	.LASF70
-=======
- 857 0348 D7050000 		.4byte	.LASF70
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  858 034c 05       		.byte	0x5
  859 034d 72       		.byte	0x72
  860 034e 97000000 		.4byte	0x97
  861 0352 60       		.byte	0x60
  862 0353 08       		.uleb128 0x8
-<<<<<<< HEAD
  863 0354 24060000 		.4byte	.LASF71
-=======
- 863 0354 2D060000 		.4byte	.LASF71
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  864 0358 05       		.byte	0x5
  865 0359 73       		.byte	0x73
  866 035a B8000000 		.4byte	0xb8
  867 035e 64       		.byte	0x64
  868 035f 08       		.uleb128 0x8
-<<<<<<< HEAD
  869 0360 28010000 		.4byte	.LASF72
-=======
- 869 0360 56010000 		.4byte	.LASF72
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  870 0364 05       		.byte	0x5
  871 0365 76       		.byte	0x76
  872 0366 AD000000 		.4byte	0xad
  873 036a 68       		.byte	0x68
  874 036b 08       		.uleb128 0x8
-<<<<<<< HEAD
  875 036c 8D030000 		.4byte	.LASF73
-=======
- 875 036c 96030000 		.4byte	.LASF73
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  876 0370 05       		.byte	0x5
  877 0371 77       		.byte	0x77
  878 0372 AD000000 		.4byte	0xad
  879 0376 6A       		.byte	0x6a
  880 0377 08       		.uleb128 0x8
-<<<<<<< HEAD
  881 0378 D9030000 		.4byte	.LASF74
-=======
- 881 0378 E2030000 		.4byte	.LASF74
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  882 037c 05       		.byte	0x5
  883 037d 78       		.byte	0x78
  884 037e AD000000 		.4byte	0xad
  885 0382 6C       		.byte	0x6c
  886 0383 08       		.uleb128 0x8
-<<<<<<< HEAD
  887 0384 96000000 		.4byte	.LASF75
-=======
- 887 0384 B8000000 		.4byte	.LASF75
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  888 0388 05       		.byte	0x5
  889 0389 79       		.byte	0x79
  890 038a AD000000 		.4byte	0xad
  891 038e 6E       		.byte	0x6e
  892 038f 08       		.uleb128 0x8
-<<<<<<< HEAD
  893 0390 B9060000 		.4byte	.LASF76
-=======
- 893 0390 C2060000 		.4byte	.LASF76
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  894 0394 05       		.byte	0x5
  895 0395 7B       		.byte	0x7b
  896 0396 97000000 		.4byte	0x97
  897 039a 70       		.byte	0x70
  898 039b 08       		.uleb128 0x8
-<<<<<<< HEAD
  899 039c 21080000 		.4byte	.LASF77
-=======
- 899 039c 2A080000 		.4byte	.LASF77
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  900 03a0 05       		.byte	0x5
  901 03a1 7C       		.byte	0x7c
  902 03a2 97000000 		.4byte	0x97
  903 03a6 71       		.byte	0x71
  904 03a7 08       		.uleb128 0x8
-<<<<<<< HEAD
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLdd6Gy.s 			page 27
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccjjKVEO.s 			page 27
 
 
  905 03a8 8C090000 		.4byte	.LASF78
-=======
-ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 27
-
-
- 905 03a8 95090000 		.4byte	.LASF78
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  906 03ac 05       		.byte	0x5
  907 03ad 7D       		.byte	0x7d
  908 03ae 97000000 		.4byte	0x97
  909 03b2 72       		.byte	0x72
  910 03b3 08       		.uleb128 0x8
-<<<<<<< HEAD
  911 03b4 92050000 		.4byte	.LASF79
-=======
- 911 03b4 9B050000 		.4byte	.LASF79
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  912 03b8 05       		.byte	0x5
  913 03b9 7E       		.byte	0x7e
  914 03ba 97000000 		.4byte	0x97
  915 03be 73       		.byte	0x73
  916 03bf 08       		.uleb128 0x8
-<<<<<<< HEAD
  917 03c0 95020000 		.4byte	.LASF80
-=======
- 917 03c0 C3020000 		.4byte	.LASF80
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  918 03c4 05       		.byte	0x5
  919 03c5 80       		.byte	0x80
  920 03c6 AD000000 		.4byte	0xad
  921 03ca 74       		.byte	0x74
  922 03cb 08       		.uleb128 0x8
-<<<<<<< HEAD
  923 03cc C9070000 		.4byte	.LASF81
-=======
- 923 03cc D2070000 		.4byte	.LASF81
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  924 03d0 05       		.byte	0x5
  925 03d1 81       		.byte	0x81
  926 03d2 AD000000 		.4byte	0xad
  927 03d6 76       		.byte	0x76
  928 03d7 08       		.uleb128 0x8
-<<<<<<< HEAD
  929 03d8 75020000 		.4byte	.LASF82
-=======
- 929 03d8 A3020000 		.4byte	.LASF82
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  930 03dc 05       		.byte	0x5
  931 03dd 82       		.byte	0x82
  932 03de AD000000 		.4byte	0xad
  933 03e2 78       		.byte	0x78
  934 03e3 08       		.uleb128 0x8
-<<<<<<< HEAD
  935 03e4 BB000000 		.4byte	.LASF83
-=======
- 935 03e4 DD000000 		.4byte	.LASF83
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  936 03e8 05       		.byte	0x5
  937 03e9 83       		.byte	0x83
  938 03ea AD000000 		.4byte	0xad
  939 03ee 7A       		.byte	0x7a
  940 03ef 08       		.uleb128 0x8
-<<<<<<< HEAD
  941 03f0 09090000 		.4byte	.LASF84
-=======
- 941 03f0 12090000 		.4byte	.LASF84
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  942 03f4 05       		.byte	0x5
  943 03f5 86       		.byte	0x86
  944 03f6 97000000 		.4byte	0x97
  945 03fa 7C       		.byte	0x7c
  946 03fb 08       		.uleb128 0x8
-<<<<<<< HEAD
  947 03fc 72080000 		.4byte	.LASF85
-=======
- 947 03fc 7B080000 		.4byte	.LASF85
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  948 0400 05       		.byte	0x5
  949 0401 87       		.byte	0x87
  950 0402 97000000 		.4byte	0x97
  951 0406 7D       		.byte	0x7d
  952 0407 08       		.uleb128 0x8
-<<<<<<< HEAD
  953 0408 AB080000 		.4byte	.LASF86
-=======
- 953 0408 B4080000 		.4byte	.LASF86
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  954 040c 05       		.byte	0x5
  955 040d 88       		.byte	0x88
  956 040e 97000000 		.4byte	0x97
  957 0412 7E       		.byte	0x7e
  958 0413 08       		.uleb128 0x8
-<<<<<<< HEAD
  959 0414 B0020000 		.4byte	.LASF87
  960 0418 05       		.byte	0x5
  961 0419 89       		.byte	0x89
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLdd6Gy.s 			page 28
-=======
- 959 0414 DE020000 		.4byte	.LASF87
- 960 0418 05       		.byte	0x5
- 961 0419 89       		.byte	0x89
-ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 28
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccjjKVEO.s 			page 28
 
 
  962 041a 97000000 		.4byte	0x97
  963 041e 7F       		.byte	0x7f
  964 041f 08       		.uleb128 0x8
-<<<<<<< HEAD
  965 0420 32030000 		.4byte	.LASF88
-=======
- 965 0420 60030000 		.4byte	.LASF88
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  966 0424 05       		.byte	0x5
  967 0425 8A       		.byte	0x8a
  968 0426 97000000 		.4byte	0x97
  969 042a 80       		.byte	0x80
  970 042b 08       		.uleb128 0x8
-<<<<<<< HEAD
  971 042c AC040000 		.4byte	.LASF89
-=======
- 971 042c B5040000 		.4byte	.LASF89
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  972 0430 05       		.byte	0x5
  973 0431 8D       		.byte	0x8d
  974 0432 B8000000 		.4byte	0xb8
  975 0436 84       		.byte	0x84
  976 0437 08       		.uleb128 0x8
-<<<<<<< HEAD
  977 0438 D0000000 		.4byte	.LASF90
-=======
- 977 0438 F2000000 		.4byte	.LASF90
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  978 043c 05       		.byte	0x5
  979 043d 8E       		.byte	0x8e
  980 043e B8000000 		.4byte	0xb8
  981 0442 88       		.byte	0x88
  982 0443 08       		.uleb128 0x8
-<<<<<<< HEAD
  983 0444 F4080000 		.4byte	.LASF91
-=======
- 983 0444 FD080000 		.4byte	.LASF91
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  984 0448 05       		.byte	0x5
  985 0449 8F       		.byte	0x8f
  986 044a B8000000 		.4byte	0xb8
  987 044e 8C       		.byte	0x8c
  988 044f 08       		.uleb128 0x8
-<<<<<<< HEAD
  989 0450 0C050000 		.4byte	.LASF92
-=======
- 989 0450 15050000 		.4byte	.LASF92
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  990 0454 05       		.byte	0x5
  991 0455 90       		.byte	0x90
  992 0456 B8000000 		.4byte	0xb8
  993 045a 90       		.byte	0x90
  994 045b 08       		.uleb128 0x8
-<<<<<<< HEAD
  995 045c 60040000 		.4byte	.LASF93
-=======
- 995 045c 69040000 		.4byte	.LASF93
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  996 0460 05       		.byte	0x5
  997 0461 91       		.byte	0x91
  998 0462 B8000000 		.4byte	0xb8
  999 0466 94       		.byte	0x94
  1000 0467 08       		.uleb128 0x8
-<<<<<<< HEAD
  1001 0468 96040000 		.4byte	.LASF94
-=======
- 1001 0468 9F040000 		.4byte	.LASF94
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  1002 046c 05       		.byte	0x5
  1003 046d 92       		.byte	0x92
  1004 046e B8000000 		.4byte	0xb8
  1005 0472 98       		.byte	0x98
  1006 0473 08       		.uleb128 0x8
-<<<<<<< HEAD
  1007 0474 3B090000 		.4byte	.LASF95
-=======
- 1007 0474 44090000 		.4byte	.LASF95
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  1008 0478 05       		.byte	0x5
  1009 0479 93       		.byte	0x93
  1010 047a B8000000 		.4byte	0xb8
  1011 047e 9C       		.byte	0x9c
  1012 047f 08       		.uleb128 0x8
-<<<<<<< HEAD
  1013 0480 38010000 		.4byte	.LASF96
-=======
- 1013 0480 66010000 		.4byte	.LASF96
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  1014 0484 05       		.byte	0x5
  1015 0485 94       		.byte	0x94
  1016 0486 B8000000 		.4byte	0xb8
  1017 048a A0       		.byte	0xa0
  1018 048b 08       		.uleb128 0x8
-<<<<<<< HEAD
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLdd6Gy.s 			page 29
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccjjKVEO.s 			page 29
 
 
  1019 048c E6010000 		.4byte	.LASF97
-=======
-ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 29
-
-
- 1019 048c 14020000 		.4byte	.LASF97
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  1020 0490 05       		.byte	0x5
  1021 0491 95       		.byte	0x95
  1022 0492 AD000000 		.4byte	0xad
  1023 0496 A4       		.byte	0xa4
  1024 0497 08       		.uleb128 0x8
-<<<<<<< HEAD
  1025 0498 81040000 		.4byte	.LASF98
-=======
- 1025 0498 8A040000 		.4byte	.LASF98
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  1026 049c 05       		.byte	0x5
  1027 049d 96       		.byte	0x96
  1028 049e AD000000 		.4byte	0xad
  1029 04a2 A6       		.byte	0xa6
  1030 04a3 08       		.uleb128 0x8
-<<<<<<< HEAD
  1031 04a4 3F060000 		.4byte	.LASF99
-=======
- 1031 04a4 48060000 		.4byte	.LASF99
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  1032 04a8 05       		.byte	0x5
  1033 04a9 97       		.byte	0x97
  1034 04aa AD000000 		.4byte	0xad
  1035 04ae A8       		.byte	0xa8
  1036 04af 08       		.uleb128 0x8
-<<<<<<< HEAD
  1037 04b0 A3070000 		.4byte	.LASF100
-=======
- 1037 04b0 AC070000 		.4byte	.LASF100
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  1038 04b4 05       		.byte	0x5
  1039 04b5 98       		.byte	0x98
  1040 04b6 AD000000 		.4byte	0xad
  1041 04ba AA       		.byte	0xaa
  1042 04bb 08       		.uleb128 0x8
-<<<<<<< HEAD
  1043 04bc E8030000 		.4byte	.LASF101
-=======
- 1043 04bc F1030000 		.4byte	.LASF101
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  1044 04c0 05       		.byte	0x5
  1045 04c1 99       		.byte	0x99
  1046 04c2 AD000000 		.4byte	0xad
  1047 04c6 AC       		.byte	0xac
  1048 04c7 08       		.uleb128 0x8
-<<<<<<< HEAD
  1049 04c8 C0050000 		.4byte	.LASF102
-=======
- 1049 04c8 C9050000 		.4byte	.LASF102
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  1050 04cc 05       		.byte	0x5
  1051 04cd 9A       		.byte	0x9a
  1052 04ce AD000000 		.4byte	0xad
  1053 04d2 AE       		.byte	0xae
  1054 04d3 08       		.uleb128 0x8
-<<<<<<< HEAD
  1055 04d4 36080000 		.4byte	.LASF103
-=======
- 1055 04d4 3F080000 		.4byte	.LASF103
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  1056 04d8 05       		.byte	0x5
  1057 04d9 9D       		.byte	0x9d
  1058 04da AD000000 		.4byte	0xad
@@ -2241,11 +1730,7 @@ ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 1
  1065 04ea B4       		.byte	0xb4
  1066 04eb 00       		.byte	0
  1067 04ec 03       		.uleb128 0x3
-<<<<<<< HEAD
  1068 04ed 50040000 		.4byte	.LASF105
-=======
- 1068 04ed 59040000 		.4byte	.LASF105
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  1069 04f1 05       		.byte	0x5
  1070 04f2 9F       		.byte	0x9f
  1071 04f3 DB000000 		.4byte	0xdb
@@ -2253,30 +1738,18 @@ ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 1
  1073 04f8 10       		.byte	0x10
  1074 04f9 06       		.byte	0x6
  1075 04fa D801     		.2byte	0x1d8
-<<<<<<< HEAD
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLdd6Gy.s 			page 30
-=======
-ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 30
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccjjKVEO.s 			page 30
 
 
  1076 04fc 35050000 		.4byte	0x535
  1077 0500 0A       		.uleb128 0xa
-<<<<<<< HEAD
  1078 0501 51080000 		.4byte	.LASF106
-=======
- 1078 0501 5A080000 		.4byte	.LASF106
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  1079 0505 06       		.byte	0x6
  1080 0506 DA01     		.2byte	0x1da
  1081 0508 CA000000 		.4byte	0xca
  1082 050c 00       		.byte	0
  1083 050d 0A       		.uleb128 0xa
-<<<<<<< HEAD
  1084 050e 2A050000 		.4byte	.LASF107
-=======
- 1084 050e 33050000 		.4byte	.LASF107
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  1085 0512 06       		.byte	0x6
  1086 0513 DB01     		.2byte	0x1db
  1087 0515 CA000000 		.4byte	0xca
@@ -2288,31 +1761,19 @@ ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 1
  1093 0522 CA000000 		.4byte	0xca
  1094 0526 08       		.byte	0x8
  1095 0527 0A       		.uleb128 0xa
-<<<<<<< HEAD
  1096 0528 93080000 		.4byte	.LASF108
-=======
- 1096 0528 9C080000 		.4byte	.LASF108
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  1097 052c 06       		.byte	0x6
  1098 052d DD01     		.2byte	0x1dd
  1099 052f CF000000 		.4byte	0xcf
  1100 0533 0C       		.byte	0xc
  1101 0534 00       		.byte	0
  1102 0535 0C       		.uleb128 0xc
-<<<<<<< HEAD
  1103 0536 17040000 		.4byte	.LASF109
-=======
- 1103 0536 20040000 		.4byte	.LASF109
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  1104 053a 06       		.byte	0x6
  1105 053b DE01     		.2byte	0x1de
  1106 053d F7040000 		.4byte	0x4f7
  1107 0541 0C       		.uleb128 0xc
-<<<<<<< HEAD
  1108 0542 DF050000 		.4byte	.LASF110
-=======
- 1108 0542 E8050000 		.4byte	.LASF110
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  1109 0546 07       		.byte	0x7
  1110 0547 EE01     		.2byte	0x1ee
  1111 0549 4D050000 		.4byte	0x54d
@@ -2323,7 +1784,6 @@ ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 1
  1116 0554 02       		.uleb128 0x2
  1117 0555 01       		.byte	0x1
  1118 0556 08       		.byte	0x8
-<<<<<<< HEAD
  1119 0557 92070000 		.4byte	.LASF111
  1120 055b 02       		.uleb128 0x2
  1121 055c 04       		.byte	0x4
@@ -2338,24 +1798,7 @@ ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 1
  1130 056e 02       		.byte	0x2
  1131 056f 72       		.byte	0x72
  1132 0570 4D050000 		.4byte	0x54d
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLdd6Gy.s 			page 31
-=======
- 1119 0557 9B070000 		.4byte	.LASF111
- 1120 055b 02       		.uleb128 0x2
- 1121 055c 04       		.byte	0x4
- 1122 055d 04       		.byte	0x4
- 1123 055e 27060000 		.4byte	.LASF112
- 1124 0562 02       		.uleb128 0x2
- 1125 0563 08       		.byte	0x8
- 1126 0564 04       		.byte	0x4
- 1127 0565 9C020000 		.4byte	.LASF113
- 1128 0569 03       		.uleb128 0x3
- 1129 056a E3010000 		.4byte	.LASF114
- 1130 056e 02       		.byte	0x2
- 1131 056f 72       		.byte	0x72
- 1132 0570 4D050000 		.4byte	0x54d
-ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 31
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccjjKVEO.s 			page 31
 
 
  1133 0574 0F       		.uleb128 0xf
@@ -2365,17 +1808,12 @@ ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 1
  1137 057b 7B       		.byte	0x7b
  1138 057c 9F050000 		.4byte	0x59f
  1139 0580 10       		.uleb128 0x10
-<<<<<<< HEAD
  1140 0581 9A060000 		.4byte	.LASF115
-=======
- 1140 0581 A3060000 		.4byte	.LASF115
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  1141 0585 00       		.byte	0
  1142 0586 10       		.uleb128 0x10
  1143 0587 1F000000 		.4byte	.LASF116
  1144 058b 01       		.byte	0x1
  1145 058c 10       		.uleb128 0x10
-<<<<<<< HEAD
  1146 058d 24040000 		.4byte	.LASF117
  1147 0591 02       		.byte	0x2
  1148 0592 10       		.uleb128 0x10
@@ -2387,65 +1825,32 @@ ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 1
  1154 059e 00       		.byte	0
  1155 059f 03       		.uleb128 0x3
  1156 05a0 1E090000 		.4byte	.LASF120
-=======
- 1146 058d 2D040000 		.4byte	.LASF117
- 1147 0591 02       		.byte	0x2
- 1148 0592 10       		.uleb128 0x10
- 1149 0593 53020000 		.4byte	.LASF118
- 1150 0597 03       		.byte	0x3
- 1151 0598 10       		.uleb128 0x10
- 1152 0599 38050000 		.4byte	.LASF119
- 1153 059d 04       		.byte	0x4
- 1154 059e 00       		.byte	0
- 1155 059f 03       		.uleb128 0x3
- 1156 05a0 27090000 		.4byte	.LASF120
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  1157 05a4 02       		.byte	0x2
  1158 05a5 81       		.byte	0x81
  1159 05a6 74050000 		.4byte	0x574
  1160 05aa 11       		.uleb128 0x11
-<<<<<<< HEAD
  1161 05ab CF020000 		.4byte	.LASF143
-=======
- 1161 05ab FD020000 		.4byte	.LASF143
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  1162 05af 02       		.byte	0x2
  1163 05b0 1E01     		.2byte	0x11e
  1164 05b2 B8000000 		.4byte	0xb8
  1165 05b6 03       		.byte	0x3
  1166 05b7 12       		.uleb128 0x12
-<<<<<<< HEAD
  1167 05b8 F1040000 		.4byte	.LASF121
-=======
- 1167 05b8 FA040000 		.4byte	.LASF121
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  1168 05bc 02       		.byte	0x2
  1169 05bd C1       		.byte	0xc1
  1170 05be 03       		.byte	0x3
  1171 05bf 12       		.uleb128 0x12
-<<<<<<< HEAD
  1172 05c0 F7020000 		.4byte	.LASF122
-=======
- 1172 05c0 25030000 		.4byte	.LASF122
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  1173 05c4 02       		.byte	0x2
  1174 05c5 D0       		.byte	0xd0
  1175 05c6 03       		.byte	0x3
  1176 05c7 13       		.uleb128 0x13
-<<<<<<< HEAD
  1177 05c8 17010000 		.4byte	.LASF123
-=======
- 1177 05c8 45010000 		.4byte	.LASF123
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  1178 05cc 02       		.byte	0x2
  1179 05cd 0B01     		.2byte	0x10b
  1180 05cf 03       		.byte	0x3
  1181 05d0 14       		.uleb128 0x14
-<<<<<<< HEAD
  1182 05d1 D0040000 		.4byte	.LASF144
-=======
- 1182 05d1 D9040000 		.4byte	.LASF144
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  1183 05d5 02       		.byte	0x2
  1184 05d6 E1       		.byte	0xe1
  1185 05d7 03       		.byte	0x3
@@ -2453,22 +1858,14 @@ ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 1
  1187 05dc 15       		.uleb128 0x15
  1188 05dd 19000000 		.4byte	.LASF145
  1189 05e1 02       		.byte	0x2
-<<<<<<< HEAD
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLdd6Gy.s 			page 32
-=======
-ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 32
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccjjKVEO.s 			page 32
 
 
  1190 05e2 E1       		.byte	0xe1
  1191 05e3 B8000000 		.4byte	0xb8
  1192 05e7 00       		.byte	0
  1193 05e8 16       		.uleb128 0x16
-<<<<<<< HEAD
  1194 05e9 56080000 		.4byte	.LASF146
-=======
- 1194 05e9 5F080000 		.4byte	.LASF146
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  1195 05ed 01       		.byte	0x1
  1196 05ee E4       		.byte	0xe4
  1197 05ef 00000000 		.4byte	.LFB59
@@ -2490,11 +1887,7 @@ ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 1
  1213 0618 E9       		.byte	0xe9
  1214 0619 00       		.byte	0
  1215 061a 19       		.uleb128 0x19
-<<<<<<< HEAD
  1216 061b 99080000 		.4byte	.LASF124
-=======
- 1216 061b A2080000 		.4byte	.LASF124
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  1217 061f 01       		.byte	0x1
  1218 0620 46       		.byte	0x46
  1219 0621 00000000 		.4byte	.LFB53
@@ -2510,11 +1903,7 @@ ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 1
  1229 063d 48       		.byte	0x48
  1230 063e 00       		.byte	0
  1231 063f 19       		.uleb128 0x19
-<<<<<<< HEAD
  1232 0640 E7070000 		.4byte	.LASF125
-=======
- 1232 0640 F0070000 		.4byte	.LASF125
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  1233 0644 01       		.byte	0x1
  1234 0645 56       		.byte	0x56
  1235 0646 00000000 		.4byte	.LFB54
@@ -2529,19 +1918,11 @@ ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 1
  1244 0661 01       		.byte	0x1
  1245 0662 58       		.byte	0x58
  1246 0663 00       		.byte	0
-<<<<<<< HEAD
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLdd6Gy.s 			page 33
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccjjKVEO.s 			page 33
 
 
  1247 0664 19       		.uleb128 0x19
  1248 0665 72090000 		.4byte	.LASF126
-=======
-ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 33
-
-
- 1247 0664 19       		.uleb128 0x19
- 1248 0665 7B090000 		.4byte	.LASF126
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  1249 0669 01       		.byte	0x1
  1250 066a 70       		.byte	0x70
  1251 066b 00000000 		.4byte	.LFB55
@@ -2557,11 +1938,7 @@ ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 1
  1261 0684 1E000000 		.4byte	.LLST1
  1262 0688 00       		.byte	0
  1263 0689 19       		.uleb128 0x19
-<<<<<<< HEAD
  1264 068a 83080000 		.4byte	.LASF127
-=======
- 1264 068a 8C080000 		.4byte	.LASF127
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  1265 068e 01       		.byte	0x1
  1266 068f 2B       		.byte	0x2b
  1267 0690 00000000 		.4byte	.LFB52
@@ -2576,11 +1953,7 @@ ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 1
  1276 06a5 9F050000 		.4byte	0x59f
  1277 06a9 3F000000 		.4byte	.LLST2
  1278 06ad 1A       		.uleb128 0x1a
-<<<<<<< HEAD
  1279 06ae A7020000 		.4byte	.LASF129
-=======
- 1279 06ae D5020000 		.4byte	.LASF129
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  1280 06b2 01       		.byte	0x1
  1281 06b3 2B       		.byte	0x2b
  1282 06b4 B8000000 		.4byte	0xb8
@@ -2605,11 +1978,7 @@ ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 1
  1301 06e6 18       		.uleb128 0x18
  1302 06e7 C7050000 		.4byte	0x5c7
  1303 06eb 28000000 		.4byte	.LBB20
-<<<<<<< HEAD
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLdd6Gy.s 			page 34
-=======
-ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 34
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccjjKVEO.s 			page 34
 
 
  1304 06ef 04000000 		.4byte	.LBE20-.LBB20
@@ -2623,11 +1992,7 @@ ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 1
  1312 0703 1A060000 		.4byte	0x61a
  1313 0707 00       		.byte	0
  1314 0708 1E       		.uleb128 0x1e
-<<<<<<< HEAD
  1315 0709 F6030000 		.4byte	.LASF131
-=======
- 1315 0709 FF030000 		.4byte	.LASF131
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  1316 070d 01       		.byte	0x1
  1317 070e 87       		.byte	0x87
  1318 070f 9F050000 		.4byte	0x59f
@@ -2637,22 +2002,14 @@ ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 1
  1322 071c 9C       		.byte	0x9c
  1323 071d 31070000 		.4byte	0x731
  1324 0721 1F       		.uleb128 0x1f
-<<<<<<< HEAD
  1325 0722 B4090000 		.4byte	.LASF130
-=======
- 1325 0722 BD090000 		.4byte	.LASF130
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  1326 0726 01       		.byte	0x1
  1327 0727 89       		.byte	0x89
  1328 0728 9F050000 		.4byte	0x59f
  1329 072c CC000000 		.4byte	.LLST6
  1330 0730 00       		.byte	0
  1331 0731 1E       		.uleb128 0x1e
-<<<<<<< HEAD
  1332 0732 4E010000 		.4byte	.LASF132
-=======
- 1332 0732 7C010000 		.4byte	.LASF132
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  1333 0736 01       		.byte	0x1
  1334 0737 AC       		.byte	0xac
  1335 0738 69050000 		.4byte	0x569
@@ -2662,21 +2019,13 @@ ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 1
  1339 0745 9C       		.byte	0x9c
  1340 0746 76070000 		.4byte	0x776
  1341 074a 1A       		.uleb128 0x1a
-<<<<<<< HEAD
  1342 074b 10040000 		.4byte	.LASF133
-=======
- 1342 074b 19040000 		.4byte	.LASF133
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  1343 074f 01       		.byte	0x1
  1344 0750 AC       		.byte	0xac
  1345 0751 B8000000 		.4byte	0xb8
  1346 0755 EA000000 		.4byte	.LLST7
  1347 0759 20       		.uleb128 0x20
-<<<<<<< HEAD
  1348 075a C9010000 		.4byte	.LASF134
-=======
- 1348 075a F7010000 		.4byte	.LASF134
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  1349 075e 01       		.byte	0x1
  1350 075f AC       		.byte	0xac
  1351 0760 69050000 		.4byte	0x569
@@ -2689,19 +2038,11 @@ ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 1
  1358 076d 69050000 		.4byte	0x569
  1359 0771 24010000 		.4byte	.LLST8
  1360 0775 00       		.byte	0
-<<<<<<< HEAD
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLdd6Gy.s 			page 35
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccjjKVEO.s 			page 35
 
 
  1361 0776 1E       		.uleb128 0x1e
  1362 0777 A9050000 		.4byte	.LASF136
-=======
-ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 35
-
-
- 1361 0776 1E       		.uleb128 0x1e
- 1362 0777 B2050000 		.4byte	.LASF136
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  1363 077b 01       		.byte	0x1
  1364 077c CC       		.byte	0xcc
  1365 077d 69050000 		.4byte	0x569
@@ -2711,11 +2052,7 @@ ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 1
  1369 078a 9C       		.byte	0x9c
  1370 078b AE070000 		.4byte	0x7ae
  1371 078f 1A       		.uleb128 0x1a
-<<<<<<< HEAD
  1372 0790 10040000 		.4byte	.LASF133
-=======
- 1372 0790 19040000 		.4byte	.LASF133
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  1373 0794 01       		.byte	0x1
  1374 0795 CC       		.byte	0xcc
  1375 0796 B8000000 		.4byte	0xb8
@@ -2735,11 +2072,7 @@ ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 1
  1389 07bc 04       		.byte	0x4
  1390 07bd 00       		.byte	0
  1391 07be 23       		.uleb128 0x23
-<<<<<<< HEAD
  1392 07bf 1D030000 		.4byte	.LASF137
-=======
- 1392 07bf 4B030000 		.4byte	.LASF137
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  1393 07c3 01       		.byte	0x1
  1394 07c4 13       		.byte	0x13
  1395 07c5 AE070000 		.4byte	0x7ae
@@ -2747,11 +2080,7 @@ ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 1
  1397 07ca 03       		.byte	0x3
  1398 07cb 00000000 		.4byte	Cy_SysTick_Callbacks
  1399 07cf 24       		.uleb128 0x24
-<<<<<<< HEAD
  1400 07d0 35060000 		.4byte	.LASF138
-=======
- 1400 07d0 3E060000 		.4byte	.LASF138
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  1401 07d4 05       		.byte	0x5
  1402 07d5 A7       		.byte	0xa7
  1403 07d6 DA070000 		.4byte	0x7da
@@ -2766,17 +2095,10 @@ ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 1
  1412 07ee 25       		.uleb128 0x25
  1413 07ef 00       		.byte	0
  1414 07f0 24       		.uleb128 0x24
-<<<<<<< HEAD
  1415 07f1 B1070000 		.4byte	.LASF139
  1416 07f5 02       		.byte	0x2
  1417 07f6 71       		.byte	0x71
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLdd6Gy.s 			page 36
-=======
- 1415 07f1 BA070000 		.4byte	.LASF139
- 1416 07f5 02       		.byte	0x2
- 1417 07f6 71       		.byte	0x71
-ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 36
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccjjKVEO.s 			page 36
 
 
  1418 07f7 E5070000 		.4byte	0x7e5
@@ -2836,11 +2158,7 @@ ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 1
  1472 0032 03       		.uleb128 0x3
  1473 0033 08       		.uleb128 0x8
  1474 0034 00       		.byte	0
-<<<<<<< HEAD
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLdd6Gy.s 			page 37
-=======
-ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 37
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccjjKVEO.s 			page 37
 
 
  1475 0035 00       		.byte	0
@@ -2900,11 +2218,7 @@ ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 1
  1529 006b 00       		.byte	0
  1530 006c 00       		.byte	0
  1531 006d 0A       		.uleb128 0xa
-<<<<<<< HEAD
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLdd6Gy.s 			page 38
-=======
-ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 38
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccjjKVEO.s 			page 38
 
 
  1532 006e 0D       		.uleb128 0xd
@@ -2964,11 +2278,7 @@ ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 1
  1586 00a4 27       		.uleb128 0x27
  1587 00a5 19       		.uleb128 0x19
  1588 00a6 00       		.byte	0
-<<<<<<< HEAD
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLdd6Gy.s 			page 39
-=======
-ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 39
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccjjKVEO.s 			page 39
 
 
  1589 00a7 00       		.byte	0
@@ -3028,11 +2338,7 @@ ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 1
  1643 00dd 0B       		.uleb128 0xb
  1644 00de 00       		.byte	0
  1645 00df 00       		.byte	0
-<<<<<<< HEAD
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLdd6Gy.s 			page 40
-=======
-ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 40
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccjjKVEO.s 			page 40
 
 
  1646 00e0 13       		.uleb128 0x13
@@ -3092,11 +2398,7 @@ ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 1
  1700 0116 27       		.uleb128 0x27
  1701 0117 19       		.uleb128 0x19
  1702 0118 11       		.uleb128 0x11
-<<<<<<< HEAD
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLdd6Gy.s 			page 41
-=======
-ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 41
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccjjKVEO.s 			page 41
 
 
  1703 0119 01       		.uleb128 0x1
@@ -3156,11 +2458,7 @@ ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 1
  1757 0150 11       		.uleb128 0x11
  1758 0151 01       		.uleb128 0x1
  1759 0152 12       		.uleb128 0x12
-<<<<<<< HEAD
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLdd6Gy.s 			page 42
-=======
-ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 42
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccjjKVEO.s 			page 42
 
 
  1760 0153 06       		.uleb128 0x6
@@ -3220,11 +2518,7 @@ ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 1
  1814 018c 01       		.uleb128 0x1
  1815 018d 31       		.uleb128 0x31
  1816 018e 13       		.uleb128 0x13
-<<<<<<< HEAD
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLdd6Gy.s 			page 43
-=======
-ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 43
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccjjKVEO.s 			page 43
 
 
  1817 018f 00       		.byte	0
@@ -3284,11 +2578,7 @@ ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 1
  1871 01c6 13       		.uleb128 0x13
  1872 01c7 02       		.uleb128 0x2
  1873 01c8 18       		.uleb128 0x18
-<<<<<<< HEAD
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLdd6Gy.s 			page 44
-=======
-ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 44
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccjjKVEO.s 			page 44
 
 
  1874 01c9 00       		.byte	0
@@ -3348,11 +2638,7 @@ ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 1
  1928 01ff 00       		.byte	0
  1929 0200 00       		.byte	0
  1930 0201 00       		.byte	0
-<<<<<<< HEAD
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLdd6Gy.s 			page 45
-=======
-ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 45
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccjjKVEO.s 			page 45
 
 
  1931 0202 00       		.byte	0
@@ -3412,11 +2698,7 @@ ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 1
  1985 0080 F3       		.byte	0xf3
  1986 0081 01       		.uleb128 0x1
  1987 0082 51       		.byte	0x51
-<<<<<<< HEAD
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLdd6Gy.s 			page 46
-=======
-ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 46
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccjjKVEO.s 			page 46
 
 
  1988 0083 9F       		.byte	0x9f
@@ -3476,11 +2758,7 @@ ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 1
  2042 010b 0100     		.2byte	0x1
  2043 010d 50       		.byte	0x50
  2044 010e 10000000 		.4byte	.LVL23
-<<<<<<< HEAD
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLdd6Gy.s 			page 47
-=======
-ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 47
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccjjKVEO.s 			page 47
 
 
  2045 0112 18000000 		.4byte	.LFE57
@@ -3540,11 +2818,7 @@ ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 1
  2099 0196 00000000 		.4byte	0
  2100              		.section	.debug_aranges,"",%progbits
  2101 0000 54000000 		.4byte	0x54
-<<<<<<< HEAD
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLdd6Gy.s 			page 48
-=======
-ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 48
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccjjKVEO.s 			page 48
 
 
  2102 0004 0200     		.2byte	0x2
@@ -3593,13 +2867,8 @@ ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 1
  2145 0044 00000000 		.4byte	0
  2146              		.section	.debug_line,"",%progbits
  2147              	.Ldebug_line0:
-<<<<<<< HEAD
  2148 0000 17030000 		.section	.debug_str,"MS",%progbits,1
  2148      02002902 
-=======
- 2148 0000 07030000 		.section	.debug_str,"MS",%progbits,1
- 2148      02001902 
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  2148      00000201 
  2148      FB0E0D00 
  2148      01010101 
@@ -3609,11 +2878,7 @@ ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 1
  2150      61737465 
  2150      724D6173 
  2150      6B00
-<<<<<<< HEAD
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLdd6Gy.s 			page 49
-=======
-ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 49
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccjjKVEO.s 			page 49
 
 
  2151              	.LASF135:
@@ -3649,7 +2914,6 @@ ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 1
  2164      746F5665 
  2164      7273696F 
  2164      6E00
-<<<<<<< HEAD
  2165              	.LASF48:
  2166 0081 70657269 		.ascii	"periClockNr\000"
  2166      436C6F63 
@@ -3660,68 +2924,34 @@ ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 1
  2168      00
  2169              	.LASF75:
  2170 0096 70657269 		.ascii	"periTrGrSize\000"
-=======
- 2165              	.LASF142:
- 2166 0081 433A5C49 		.ascii	"C:\\Infineon\\Hackathon-Infineon\\Hackaton.cydsn\000"
- 2166      6E66696E 
- 2166      656F6E5C 
- 2166      4861636B 
- 2166      6174686F 
- 2167              	.LASF26:
- 2168 00af 70617373 		.ascii	"passBase\000"
- 2168      42617365 
- 2168      00
- 2169              	.LASF75:
- 2170 00b8 70657269 		.ascii	"periTrGrSize\000"
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  2170      54724772 
  2170      53697A65 
  2170      00
  2171              	.LASF39:
-<<<<<<< HEAD
  2172 00a3 63707573 		.ascii	"cpussIpcIrqNr\000"
-=======
- 2172 00c5 63707573 		.ascii	"cpussIpcIrqNr\000"
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  2172      73497063 
  2172      4972714E 
  2172      7200
  2173              	.LASF2:
-<<<<<<< HEAD
  2174 00b1 5F5F7569 		.ascii	"__uint8_t\000"
  2174      6E74385F 
  2174      7400
  2175              	.LASF83:
  2176 00bb 70657269 		.ascii	"periDiv24_5CtlOffset\000"
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLdd6Gy.s 			page 50
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccjjKVEO.s 			page 50
 
 
-=======
- 2174 00d3 5F5F7569 		.ascii	"__uint8_t\000"
- 2174      6E74385F 
- 2174      7400
-ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 50
-
-
- 2175              	.LASF83:
- 2176 00dd 70657269 		.ascii	"periDiv24_5CtlOffset\000"
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  2176      44697632 
  2176      345F3543 
  2176      746C4F66 
  2176      66736574 
  2177              	.LASF90:
-<<<<<<< HEAD
  2178 00d0 63707573 		.ascii	"cpussCm4ClockCtlOffset\000"
-=======
- 2178 00f2 63707573 		.ascii	"cpussCm4ClockCtlOffset\000"
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  2178      73436D34 
  2178      436C6F63 
  2178      6B43746C 
  2178      4F666673 
  2179              	.LASF19:
-<<<<<<< HEAD
  2180 00e7 63707573 		.ascii	"cpussBase\000"
  2180      73426173 
  2180      6500
@@ -3768,7 +2998,7 @@ ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 1
  2195              	.LASF22:
  2196 0177 75646242 		.ascii	"udbBase\000"
  2196      61736500 
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLdd6Gy.s 			page 51
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccjjKVEO.s 			page 51
 
 
  2197              	.LASF61:
@@ -3828,7 +3058,7 @@ ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 1
  2220      6500
  2221              	.LASF21:
  2222 021c 70657269 		.ascii	"periBase\000"
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLdd6Gy.s 			page 52
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccjjKVEO.s 			page 52
 
 
  2222      42617365 
@@ -3888,7 +3118,7 @@ ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 1
  2244      736500
  2245              	.LASF143:
  2246 02cf 43795F53 		.ascii	"Cy_SysTick_GetCountFlag\000"
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLdd6Gy.s 			page 53
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccjjKVEO.s 			page 53
 
 
  2246      79735469 
@@ -3943,249 +3173,20 @@ ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 1
  2264      696E656F 
  2265              	.LASF73:
  2266 038d 70657269 		.ascii	"periTrCmdGrSelMsk\000"
-=======
- 2180 0109 63707573 		.ascii	"cpussBase\000"
- 2180      73426173 
- 2180      6500
- 2181              	.LASF68:
- 2182 0113 64774368 		.ascii	"dwChCtlPrioPos\000"
- 2182      43746C50 
- 2182      72696F50 
- 2182      6F7300
- 2183              	.LASF48:
- 2184 0122 70657269 		.ascii	"periClockNr\000"
- 2184      436C6F63 
- 2184      6B4E7200 
- 2185              	.LASF11:
- 2186 012e 6C6F6E67 		.ascii	"long long unsigned int\000"
- 2186      206C6F6E 
- 2186      6720756E 
- 2186      7369676E 
- 2186      65642069 
- 2187              	.LASF123:
- 2188 0145 43795F53 		.ascii	"Cy_SysTick_Clear\000"
- 2188      79735469 
- 2188      636B5F43 
- 2188      6C656172 
- 2188      00
- 2189              	.LASF72:
- 2190 0156 70657269 		.ascii	"periTrCmdOffset\000"
- 2190      5472436D 
- 2190      644F6666 
- 2190      73657400 
- 2191              	.LASF96:
- 2192 0166 63707573 		.ascii	"cpussSysTickCtlOffset\000"
- 2192      73537973 
- 2192      5469636B 
- 2192      43746C4F 
- 2192      66667365 
- 2193              	.LASF132:
- 2194 017c 43795F53 		.ascii	"Cy_SysTick_SetCallback\000"
- 2194      79735469 
- 2194      636B5F53 
- 2194      65744361 
- 2194      6C6C6261 
- 2195              	.LASF57:
- 2196 0193 666C6173 		.ascii	"flashPipeRequired\000"
- 2196      68506970 
-ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 51
-
-
- 2196      65526571 
- 2196      75697265 
- 2196      6400
- 2197              	.LASF22:
- 2198 01a5 75646242 		.ascii	"udbBase\000"
- 2198      61736500 
- 2199              	.LASF61:
- 2200 01ad 666C6173 		.ascii	"flashCtlMainWs0Freq\000"
- 2200      6843746C 
- 2200      4D61696E 
- 2200      57733046 
- 2200      72657100 
- 2201              	.LASF14:
- 2202 01c1 696E7431 		.ascii	"int16_t\000"
- 2202      365F7400 
- 2203              	.LASF10:
- 2204 01c9 6C6F6E67 		.ascii	"long long int\000"
- 2204      206C6F6E 
- 2204      6720696E 
- 2204      7400
- 2205              	.LASF0:
- 2206 01d7 7369676E 		.ascii	"signed char\000"
- 2206      65642063 
- 2206      68617200 
- 2207              	.LASF114:
- 2208 01e3 43795F53 		.ascii	"Cy_SysTick_Callback\000"
- 2208      79735469 
- 2208      636B5F43 
- 2208      616C6C62 
- 2208      61636B00 
- 2209              	.LASF134:
- 2210 01f7 66756E63 		.ascii	"function\000"
- 2210      74696F6E 
- 2210      00
- 2211              	.LASF23:
- 2212 0200 70726F74 		.ascii	"protBase\000"
- 2212      42617365 
- 2212      00
- 2213              	.LASF35:
- 2214 0209 69706356 		.ascii	"ipcVersion\000"
- 2214      65727369 
- 2214      6F6E00
- 2215              	.LASF97:
- 2216 0214 63707573 		.ascii	"cpussCm0NmiCtlOffset\000"
- 2216      73436D30 
- 2216      4E6D6943 
- 2216      746C4F66 
- 2216      66736574 
- 2217              	.LASF24:
- 2218 0229 6873696F 		.ascii	"hsiomBase\000"
- 2218      6D426173 
- 2218      6500
- 2219              	.LASF7:
- 2220 0233 6C6F6E67 		.ascii	"long int\000"
- 2220      20696E74 
- 2220      00
- 2221              	.LASF55:
-ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 52
-
-
- 2222 023c 63727970 		.ascii	"cryptoMemSize\000"
- 2222      746F4D65 
- 2222      6D53697A 
- 2222      6500
- 2223              	.LASF21:
- 2224 024a 70657269 		.ascii	"periBase\000"
- 2224      42617365 
- 2224      00
- 2225              	.LASF118:
- 2226 0253 43595F53 		.ascii	"CY_SYSTICK_CLOCK_SOURCE_CLK_TIMER\000"
- 2226      59535449 
- 2226      434B5F43 
- 2226      4C4F434B 
- 2226      5F534F55 
- 2227              	.LASF53:
- 2228 0275 73797350 		.ascii	"sysPmSimoPresent\000"
- 2228      6D53696D 
- 2228      6F507265 
- 2228      73656E74 
- 2228      00
- 2229              	.LASF43:
- 2230 0286 63707573 		.ascii	"cpussFmIrq\000"
- 2230      73466D49 
- 2230      727100
- 2231              	.LASF66:
- 2232 0291 64774368 		.ascii	"dwChOffset\000"
- 2232      4F666673 
- 2232      657400
- 2233              	.LASF113:
- 2234 029c 646F7562 		.ascii	"double\000"
- 2234      6C6500
- 2235              	.LASF82:
- 2236 02a3 70657269 		.ascii	"periDiv16_5CtlOffset\000"
- 2236      44697631 
- 2236      365F3543 
- 2236      746C4F66 
- 2236      66736574 
- 2237              	.LASF46:
- 2238 02b8 73727373 		.ascii	"srssNumPll\000"
- 2238      4E756D50 
- 2238      6C6C00
- 2239              	.LASF80:
- 2240 02c3 70657269 		.ascii	"periDiv8CtlOffset\000"
- 2240      44697638 
- 2240      43746C4F 
- 2240      66667365 
- 2240      7400
- 2241              	.LASF129:
- 2242 02d5 696E7465 		.ascii	"interval\000"
- 2242      7276616C 
- 2242      00
- 2243              	.LASF87:
- 2244 02de 6770696F 		.ascii	"gpioPrtCfgOutOffset\000"
- 2244      50727443 
- 2244      66674F75 
- 2244      744F6666 
- 2244      73657400 
-ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 53
-
-
- 2245              	.LASF20:
- 2246 02f2 666C6173 		.ascii	"flashcBase\000"
- 2246      68634261 
- 2246      736500
- 2247              	.LASF143:
- 2248 02fd 43795F53 		.ascii	"Cy_SysTick_GetCountFlag\000"
- 2248      79735469 
- 2248      636B5F47 
- 2248      6574436F 
- 2248      756E7446 
- 2249              	.LASF50:
- 2250 0315 70617373 		.ascii	"passSarChannels\000"
- 2250      53617243 
- 2250      68616E6E 
- 2250      656C7300 
- 2251              	.LASF122:
- 2252 0325 43795F53 		.ascii	"Cy_SysTick_DisableInterrupt\000"
- 2252      79735469 
- 2252      636B5F44 
- 2252      69736162 
- 2252      6C65496E 
- 2253              	.LASF3:
- 2254 0341 5F5F696E 		.ascii	"__int16_t\000"
- 2254      7431365F 
- 2254      7400
- 2255              	.LASF137:
- 2256 034b 43795F53 		.ascii	"Cy_SysTick_Callbacks\000"
- 2256      79735469 
- 2256      636B5F43 
- 2256      616C6C62 
- 2256      61636B73 
- 2257              	.LASF88:
- 2258 0360 6770696F 		.ascii	"gpioPrtCfgSioOffset\000"
- 2258      50727443 
- 2258      66675369 
- 2258      6F4F6666 
- 2258      73657400 
- 2259              	.LASF40:
- 2260 0374 63707573 		.ascii	"cpussDwChNr\000"
- 2260      73447743 
- 2260      684E7200 
- 2261              	.LASF12:
- 2262 0380 756E7369 		.ascii	"unsigned int\000"
- 2262      676E6564 
- 2262      20696E74 
- 2262      00
- 2263              	.LASF15:
- 2264 038d 75696E74 		.ascii	"uint16_t\000"
- 2264      31365F74 
- 2264      00
- 2265              	.LASF73:
- 2266 0396 70657269 		.ascii	"periTrCmdGrSelMsk\000"
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  2266      5472436D 
  2266      64477253 
  2266      656C4D73 
  2266      6B00
  2267              	.LASF9:
-<<<<<<< HEAD
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLdd6Gy.s 			page 54
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccjjKVEO.s 			page 54
 
 
  2268 039f 6C6F6E67 		.ascii	"long unsigned int\000"
-=======
-ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 54
-
-
- 2268 03a8 6C6F6E67 		.ascii	"long unsigned int\000"
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  2268      20756E73 
  2268      69676E65 
  2268      6420696E 
  2268      7400
  2269              	.LASF38:
-<<<<<<< HEAD
  2270 03b1 63707573 		.ascii	"cpussIpcNr\000"
  2270      73497063 
  2270      4E7200
@@ -4195,76 +3196,41 @@ ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 1
  2272      00
  2273              	.LASF63:
  2274 03c5 666C6173 		.ascii	"flashCtlMainWs2Freq\000"
-=======
- 2270 03ba 63707573 		.ascii	"cpussIpcNr\000"
- 2270      73497063 
- 2270      4E7200
- 2271              	.LASF25:
- 2272 03c5 6770696F 		.ascii	"gpioBase\000"
- 2272      42617365 
- 2272      00
- 2273              	.LASF63:
- 2274 03ce 666C6173 		.ascii	"flashCtlMainWs2Freq\000"
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  2274      6843746C 
  2274      4D61696E 
  2274      57733246 
  2274      72657100 
  2275              	.LASF74:
-<<<<<<< HEAD
  2276 03d9 70657269 		.ascii	"periTrGrOffset\000"
-=======
- 2276 03e2 70657269 		.ascii	"periTrGrOffset\000"
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  2276      54724772 
  2276      4F666673 
  2276      657400
  2277              	.LASF101:
-<<<<<<< HEAD
  2278 03e8 63707573 		.ascii	"cpussRam1Ctl0\000"
-=======
- 2278 03f1 63707573 		.ascii	"cpussRam1Ctl0\000"
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  2278      7352616D 
  2278      3143746C 
  2278      3000
  2279              	.LASF131:
-<<<<<<< HEAD
  2280 03f6 43795F53 		.ascii	"Cy_SysTick_GetClockSource\000"
-=======
- 2280 03ff 43795F53 		.ascii	"Cy_SysTick_GetClockSource\000"
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  2280      79735469 
  2280      636B5F47 
  2280      6574436C 
  2280      6F636B53 
  2281              	.LASF133:
-<<<<<<< HEAD
  2282 0410 6E756D62 		.ascii	"number\000"
  2282      657200
  2283              	.LASF109:
  2284 0417 53797354 		.ascii	"SysTick_Type\000"
-=======
- 2282 0419 6E756D62 		.ascii	"number\000"
- 2282      657200
- 2283              	.LASF109:
- 2284 0420 53797354 		.ascii	"SysTick_Type\000"
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  2284      69636B5F 
  2284      54797065 
  2284      00
  2285              	.LASF117:
-<<<<<<< HEAD
  2286 0424 43595F53 		.ascii	"CY_SYSTICK_CLOCK_SOURCE_CLK_ECO\000"
-=======
- 2286 042d 43595F53 		.ascii	"CY_SYSTICK_CLOCK_SOURCE_CLK_ECO\000"
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  2286      59535449 
  2286      434B5F43 
  2286      4C4F434B 
  2286      5F534F55 
  2287              	.LASF33:
-<<<<<<< HEAD
  2288 0444 6770696F 		.ascii	"gpioVersion\000"
  2288      56657273 
  2288      696F6E00 
@@ -4272,118 +3238,67 @@ ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 1
  2290 0450 63795F73 		.ascii	"cy_stc_device_t\000"
  2290      74635F64 
  2290      65766963 
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLdd6Gy.s 			page 55
-=======
- 2288 044d 6770696F 		.ascii	"gpioVersion\000"
- 2288      56657273 
- 2288      696F6E00 
- 2289              	.LASF105:
- 2290 0459 63795F73 		.ascii	"cy_stc_device_t\000"
- 2290      74635F64 
- 2290      65766963 
-ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 55
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccjjKVEO.s 			page 55
 
 
  2290      655F7400 
  2291              	.LASF93:
-<<<<<<< HEAD
  2292 0460 63707573 		.ascii	"cpussCm4PwrCtlOffset\000"
-=======
- 2292 0469 63707573 		.ascii	"cpussCm4PwrCtlOffset\000"
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  2292      73436D34 
  2292      50777243 
  2292      746C4F66 
  2292      66736574 
  2293              	.LASF51:
-<<<<<<< HEAD
  2294 0475 65704D6F 		.ascii	"epMonitorNr\000"
  2294      6E69746F 
  2294      724E7200 
  2295              	.LASF98:
  2296 0481 63707573 		.ascii	"cpussCm4NmiCtlOffset\000"
-=======
- 2294 047e 65704D6F 		.ascii	"epMonitorNr\000"
- 2294      6E69746F 
- 2294      724E7200 
- 2295              	.LASF98:
- 2296 048a 63707573 		.ascii	"cpussCm4NmiCtlOffset\000"
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  2296      73436D34 
  2296      4E6D6943 
  2296      746C4F66 
  2296      66736574 
  2297              	.LASF94:
-<<<<<<< HEAD
  2298 0496 63707573 		.ascii	"cpussTrimRamCtlOffset\000"
-=======
- 2298 049f 63707573 		.ascii	"cpussTrimRamCtlOffset\000"
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  2298      73547269 
  2298      6D52616D 
  2298      43746C4F 
  2298      66667365 
  2299              	.LASF89:
-<<<<<<< HEAD
  2300 04ac 63707573 		.ascii	"cpussCm0ClockCtlOffset\000"
-=======
- 2300 04b5 63707573 		.ascii	"cpussCm0ClockCtlOffset\000"
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  2300      73436D30 
  2300      436C6F63 
  2300      6B43746C 
  2300      4F666673 
  2301              	.LASF29:
-<<<<<<< HEAD
  2302 04c3 63707573 		.ascii	"cpussVersion\000"
-=======
- 2302 04cc 63707573 		.ascii	"cpussVersion\000"
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  2302      73566572 
  2302      73696F6E 
  2302      00
  2303              	.LASF144:
-<<<<<<< HEAD
  2304 04d0 43795F53 		.ascii	"Cy_SysTick_SetReload\000"
-=======
- 2304 04d9 43795F53 		.ascii	"Cy_SysTick_SetReload\000"
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  2304      79735469 
  2304      636B5F53 
  2304      65745265 
  2304      6C6F6164 
  2305              	.LASF36:
-<<<<<<< HEAD
  2306 04e5 70657269 		.ascii	"periVersion\000"
  2306      56657273 
  2306      696F6E00 
  2307              	.LASF121:
  2308 04f1 43795F53 		.ascii	"Cy_SysTick_EnableInterrupt\000"
-=======
- 2306 04ee 70657269 		.ascii	"periVersion\000"
- 2306      56657273 
- 2306      696F6E00 
- 2307              	.LASF121:
- 2308 04fa 43795F53 		.ascii	"Cy_SysTick_EnableInterrupt\000"
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  2308      79735469 
  2308      636B5F45 
  2308      6E61626C 
  2308      65496E74 
  2309              	.LASF92:
-<<<<<<< HEAD
  2310 050c 63707573 		.ascii	"cpussCm0StatusOffset\000"
-=======
- 2310 0515 63707573 		.ascii	"cpussCm0StatusOffset\000"
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  2310      73436D30 
  2310      53746174 
  2310      75734F66 
  2310      66736574 
  2311              	.LASF18:
-<<<<<<< HEAD
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLdd6Gy.s 			page 56
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccjjKVEO.s 			page 56
 
 
  2312 0521 73697A65 		.ascii	"sizetype\000"
@@ -4394,146 +3309,80 @@ ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 1
  2314      00
  2315              	.LASF119:
  2316 052f 43595F53 		.ascii	"CY_SYSTICK_CLOCK_SOURCE_CLK_CPU\000"
-=======
-ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 56
-
-
- 2312 052a 73697A65 		.ascii	"sizetype\000"
- 2312      74797065 
- 2312      00
- 2313              	.LASF107:
- 2314 0533 4C4F4144 		.ascii	"LOAD\000"
- 2314      00
- 2315              	.LASF119:
- 2316 0538 43595F53 		.ascii	"CY_SYSTICK_CLOCK_SOURCE_CLK_CPU\000"
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  2316      59535449 
  2316      434B5F43 
  2316      4C4F434B 
  2316      5F534F55 
  2317              	.LASF141:
-<<<<<<< HEAD
  2318 054f 47656E65 		.ascii	"Generated_Source\\PSoC6\\pdl\\drivers\\peripheral\\"
-=======
- 2318 0558 47656E65 		.ascii	"Generated_Source\\PSoC6\\pdl\\drivers\\peripheral\\"
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  2318      72617465 
  2318      645F536F 
  2318      75726365 
  2318      5C50536F 
-<<<<<<< HEAD
  2319 057d 73797374 		.ascii	"systick\\cy_systick.c\000"
-=======
- 2319 0586 73797374 		.ascii	"systick\\cy_systick.c\000"
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  2319      69636B5C 
  2319      63795F73 
  2319      79737469 
  2319      636B2E63 
  2320              	.LASF79:
-<<<<<<< HEAD
  2321 0592 70657269 		.ascii	"periDivCmdPaTypeSelPos\000"
-=======
- 2321 059b 70657269 		.ascii	"periDivCmdPaTypeSelPos\000"
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  2321      44697643 
  2321      6D645061 
  2321      54797065 
  2321      53656C50 
  2322              	.LASF136:
-<<<<<<< HEAD
  2323 05a9 43795F53 		.ascii	"Cy_SysTick_GetCallback\000"
-=======
- 2323 05b2 43795F53 		.ascii	"Cy_SysTick_GetCallback\000"
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  2323      79735469 
  2323      636B5F47 
  2323      65744361 
  2323      6C6C6261 
  2324              	.LASF102:
-<<<<<<< HEAD
  2325 05c0 63707573 		.ascii	"cpussRam2Ctl0\000"
-=======
- 2325 05c9 63707573 		.ascii	"cpussRam2Ctl0\000"
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  2325      7352616D 
  2325      3243746C 
  2325      3000
  2326              	.LASF70:
-<<<<<<< HEAD
  2327 05ce 64775374 		.ascii	"dwStatusChIdxPos\000"
-=======
- 2327 05d7 64775374 		.ascii	"dwStatusChIdxPos\000"
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  2327      61747573 
  2327      43684964 
  2327      78506F73 
  2327      00
  2328              	.LASF110:
-<<<<<<< HEAD
  2329 05df 63795F69 		.ascii	"cy_israddress\000"
-=======
- 2329 05e8 63795F69 		.ascii	"cy_israddress\000"
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  2329      73726164 
  2329      64726573 
  2329      7300
  2330              	.LASF52:
-<<<<<<< HEAD
  2331 05ed 75646250 		.ascii	"udbPresent\000"
  2331      72657365 
  2331      6E7400
  2332              	.LASF32:
  2333 05f8 666C6173 		.ascii	"flashcVersion\000"
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLdd6Gy.s 			page 57
-=======
- 2331 05f6 75646250 		.ascii	"udbPresent\000"
- 2331      72657365 
- 2331      6E7400
- 2332              	.LASF32:
- 2333 0601 666C6173 		.ascii	"flashcVersion\000"
-ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 57
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccjjKVEO.s 			page 57
 
 
  2333      68635665 
  2333      7273696F 
  2333      6E00
  2334              	.LASF28:
-<<<<<<< HEAD
  2335 0606 63727970 		.ascii	"cryptoBase\000"
  2335      746F4261 
  2335      736500
  2336              	.LASF49:
  2337 0611 736D6966 		.ascii	"smifDeviceNr\000"
-=======
- 2335 060f 63727970 		.ascii	"cryptoBase\000"
- 2335      746F4261 
- 2335      736500
- 2336              	.LASF49:
- 2337 061a 736D6966 		.ascii	"smifDeviceNr\000"
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  2337      44657669 
  2337      63654E72 
  2337      00
  2338              	.LASF112:
-<<<<<<< HEAD
  2339 061e 666C6F61 		.ascii	"float\000"
  2339      7400
  2340              	.LASF71:
  2341 0624 64775374 		.ascii	"dwStatusChIdxMsk\000"
-=======
- 2339 0627 666C6F61 		.ascii	"float\000"
- 2339      7400
- 2340              	.LASF71:
- 2341 062d 64775374 		.ascii	"dwStatusChIdxMsk\000"
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  2341      61747573 
  2341      43684964 
  2341      784D736B 
  2341      00
  2342              	.LASF138:
-<<<<<<< HEAD
  2343 0635 63795F64 		.ascii	"cy_device\000"
  2343      65766963 
  2343      6500
@@ -4543,65 +3392,33 @@ ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 1
  2345      43746C00 
  2346              	.LASF69:
  2347 064b 64774368 		.ascii	"dwChCtlPreemptablePos\000"
-=======
- 2343 063e 63795F64 		.ascii	"cy_device\000"
- 2343      65766963 
- 2343      6500
- 2344              	.LASF99:
- 2345 0648 63707573 		.ascii	"cpussRomCtl\000"
- 2345      73526F6D 
- 2345      43746C00 
- 2346              	.LASF69:
- 2347 0654 64774368 		.ascii	"dwChCtlPreemptablePos\000"
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  2347      43746C50 
  2347      7265656D 
  2347      70746162 
  2347      6C65506F 
  2348              	.LASF34:
-<<<<<<< HEAD
  2349 0661 6873696F 		.ascii	"hsiomVersion\000"
-=======
- 2349 066a 6873696F 		.ascii	"hsiomVersion\000"
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  2349      6D566572 
  2349      73696F6E 
  2349      00
  2350              	.LASF1:
-<<<<<<< HEAD
  2351 066e 756E7369 		.ascii	"unsigned char\000"
-=======
- 2351 0677 756E7369 		.ascii	"unsigned char\000"
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  2351      676E6564 
  2351      20636861 
  2351      7200
  2352              	.LASF65:
-<<<<<<< HEAD
  2353 067c 666C6173 		.ascii	"flashCtlMainWs4Freq\000"
-=======
- 2353 0685 666C6173 		.ascii	"flashCtlMainWs4Freq\000"
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  2353      6843746C 
  2353      4D61696E 
  2353      57733446 
  2353      72657100 
  2354              	.LASF4:
-<<<<<<< HEAD
  2355 0690 73686F72 		.ascii	"short int\000"
  2355      7420696E 
  2355      7400
  2356              	.LASF115:
  2357 069a 43595F53 		.ascii	"CY_SYSTICK_CLOCK_SOURCE_CLK_LF\000"
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLdd6Gy.s 			page 58
-=======
- 2355 0699 73686F72 		.ascii	"short int\000"
- 2355      7420696E 
- 2355      7400
- 2356              	.LASF115:
- 2357 06a3 43595F53 		.ascii	"CY_SYSTICK_CLOCK_SOURCE_CLK_LF\000"
-ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 58
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccjjKVEO.s 			page 58
 
 
  2357      59535449 
@@ -4609,71 +3426,42 @@ ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 1
  2357      4C4F434B 
  2357      5F534F55 
  2358              	.LASF76:
-<<<<<<< HEAD
  2359 06b9 70657269 		.ascii	"periDivCmdDivSelMsk\000"
-=======
- 2359 06c2 70657269 		.ascii	"periDivCmdDivSelMsk\000"
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  2359      44697643 
  2359      6D644469 
  2359      7653656C 
  2359      4D736B00 
  2360              	.LASF47:
-<<<<<<< HEAD
  2361 06cd 73727373 		.ascii	"srssNumHfroot\000"
-=======
- 2361 06d6 73727373 		.ascii	"srssNumHfroot\000"
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  2361      4E756D48 
  2361      66726F6F 
  2361      7400
  2362              	.LASF60:
-<<<<<<< HEAD
  2363 06db 666C6173 		.ascii	"flashEraseDelay\000"
-=======
- 2363 06e4 666C6173 		.ascii	"flashEraseDelay\000"
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  2363      68457261 
  2363      73654465 
  2363      6C617900 
  2364              	.LASF16:
-<<<<<<< HEAD
  2365 06eb 75696E74 		.ascii	"uint32_t\000"
  2365      33325F74 
  2365      00
  2366              	.LASF140:
  2367 06f4 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
-=======
- 2365 06f4 75696E74 		.ascii	"uint32_t\000"
- 2365      33325F74 
- 2365      00
- 2366              	.LASF140:
- 2367 06fd 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  2367      43313120 
  2367      352E342E 
  2367      31203230 
  2367      31363036 
-<<<<<<< HEAD
  2368 0727 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m0plus -mthumb -"
-=======
- 2368 0730 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m0plus -mthumb -"
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  2368      20726576 
  2368      6973696F 
  2368      6E203233 
  2368      37373135 
-<<<<<<< HEAD
  2369 075a 67202D4F 		.ascii	"g -Og -ffunction-sections -ffat-lto-objects\000"
-=======
- 2369 0763 67202D4F 		.ascii	"g -Og -ffunction-sections -ffat-lto-objects\000"
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  2369      67202D66 
  2369      66756E63 
  2369      74696F6E 
  2369      2D736563 
  2370              	.LASF17:
-<<<<<<< HEAD
  2371 0786 6C6F6E67 		.ascii	"long double\000"
  2371      20646F75 
  2371      626C6500 
@@ -4686,136 +3474,71 @@ ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 1
  2375      696F6E00 
  2376              	.LASF100:
  2377 07a3 63707573 		.ascii	"cpussRam0Ctl0\000"
-=======
- 2371 078f 6C6F6E67 		.ascii	"long double\000"
- 2371      20646F75 
- 2371      626C6500 
- 2372              	.LASF111:
- 2373 079b 63686172 		.ascii	"char\000"
- 2373      00
- 2374              	.LASF37:
- 2375 07a0 70726F74 		.ascii	"protVersion\000"
- 2375      56657273 
- 2375      696F6E00 
- 2376              	.LASF100:
- 2377 07ac 63707573 		.ascii	"cpussRam0Ctl0\000"
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  2377      7352616D 
  2377      3043746C 
  2377      3000
  2378              	.LASF139:
-<<<<<<< HEAD
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLdd6Gy.s 			page 59
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccjjKVEO.s 			page 59
 
 
  2379 07b1 5F5F7261 		.ascii	"__ramVectors\000"
-=======
-ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 59
-
-
- 2379 07ba 5F5F7261 		.ascii	"__ramVectors\000"
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  2379      6D566563 
  2379      746F7273 
  2379      00
  2380              	.LASF5:
-<<<<<<< HEAD
  2381 07be 5F5F7569 		.ascii	"__uint16_t\000"
  2381      6E743136 
  2381      5F7400
  2382              	.LASF81:
  2383 07c9 70657269 		.ascii	"periDiv16CtlOffset\000"
-=======
- 2381 07c7 5F5F7569 		.ascii	"__uint16_t\000"
- 2381      6E743136 
- 2381      5F7400
- 2382              	.LASF81:
- 2383 07d2 70657269 		.ascii	"periDiv16CtlOffset\000"
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  2383      44697631 
  2383      3643746C 
  2383      4F666673 
  2383      657400
  2384              	.LASF8:
-<<<<<<< HEAD
  2385 07dc 5F5F7569 		.ascii	"__uint32_t\000"
  2385      6E743332 
  2385      5F7400
  2386              	.LASF125:
  2387 07e7 43795F53 		.ascii	"Cy_SysTick_Disable\000"
-=======
- 2385 07e5 5F5F7569 		.ascii	"__uint32_t\000"
- 2385      6E743332 
- 2385      5F7400
- 2386              	.LASF125:
- 2387 07f0 43795F53 		.ascii	"Cy_SysTick_Disable\000"
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  2387      79735469 
  2387      636B5F44 
  2387      69736162 
  2387      6C6500
  2388              	.LASF62:
-<<<<<<< HEAD
  2389 07fa 666C6173 		.ascii	"flashCtlMainWs1Freq\000"
-=======
- 2389 0803 666C6173 		.ascii	"flashCtlMainWs1Freq\000"
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  2389      6843746C 
  2389      4D61696E 
  2389      57733146 
  2389      72657100 
  2390              	.LASF6:
-<<<<<<< HEAD
  2391 080e 73686F72 		.ascii	"short unsigned int\000"
-=======
- 2391 0817 73686F72 		.ascii	"short unsigned int\000"
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  2391      7420756E 
  2391      7369676E 
  2391      65642069 
  2391      6E7400
  2392              	.LASF77:
-<<<<<<< HEAD
  2393 0821 70657269 		.ascii	"periDivCmdTypeSelPos\000"
-=======
- 2393 082a 70657269 		.ascii	"periDivCmdTypeSelPos\000"
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  2393      44697643 
  2393      6D645479 
  2393      70655365 
  2393      6C506F73 
  2394              	.LASF103:
-<<<<<<< HEAD
  2395 0836 69706353 		.ascii	"ipcStructSize\000"
-=======
- 2395 083f 69706353 		.ascii	"ipcStructSize\000"
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  2395      74727563 
  2395      7453697A 
  2395      6500
  2396              	.LASF42:
-<<<<<<< HEAD
  2397 0844 63707573 		.ascii	"cpussIpc0Irq\000"
-=======
- 2397 084d 63707573 		.ascii	"cpussIpc0Irq\000"
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  2397      73497063 
  2397      30497271 
  2397      00
  2398              	.LASF106:
-<<<<<<< HEAD
  2399 0851 4354524C 		.ascii	"CTRL\000"
  2399      00
  2400              	.LASF146:
  2401 0856 43795F53 		.ascii	"Cy_SysTick_ServiceCallbacks\000"
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLdd6Gy.s 			page 60
-=======
- 2399 085a 4354524C 		.ascii	"CTRL\000"
- 2399      00
- 2400              	.LASF146:
- 2401 085f 43795F53 		.ascii	"Cy_SysTick_ServiceCallbacks\000"
-ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 60
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccjjKVEO.s 			page 60
 
 
  2401      79735469 
@@ -4823,71 +3546,43 @@ ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 1
  2401      65727669 
  2401      63654361 
  2402              	.LASF85:
-<<<<<<< HEAD
  2403 0872 6770696F 		.ascii	"gpioPrtCfgOffset\000"
-=======
- 2403 087b 6770696F 		.ascii	"gpioPrtCfgOffset\000"
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  2403      50727443 
  2403      66674F66 
  2403      66736574 
  2403      00
  2404              	.LASF127:
-<<<<<<< HEAD
  2405 0883 43795F53 		.ascii	"Cy_SysTick_Init\000"
-=======
- 2405 088c 43795F53 		.ascii	"Cy_SysTick_Init\000"
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  2405      79735469 
  2405      636B5F49 
  2405      6E697400 
  2406              	.LASF108:
-<<<<<<< HEAD
  2407 0893 43414C49 		.ascii	"CALIB\000"
  2407      4200
  2408              	.LASF124:
  2409 0899 43795F53 		.ascii	"Cy_SysTick_Enable\000"
-=======
- 2407 089c 43414C49 		.ascii	"CALIB\000"
- 2407      4200
- 2408              	.LASF124:
- 2409 08a2 43795F53 		.ascii	"Cy_SysTick_Enable\000"
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  2409      79735469 
  2409      636B5F45 
  2409      6E61626C 
  2409      6500
  2410              	.LASF86:
-<<<<<<< HEAD
  2411 08ab 6770696F 		.ascii	"gpioPrtCfgInOffset\000"
-=======
- 2411 08b4 6770696F 		.ascii	"gpioPrtCfgInOffset\000"
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  2411      50727443 
  2411      6667496E 
  2411      4F666673 
  2411      657400
  2412              	.LASF44:
-<<<<<<< HEAD
  2413 08be 63707573 		.ascii	"cpussNotConnectedIrq\000"
-=======
- 2413 08c7 63707573 		.ascii	"cpussNotConnectedIrq\000"
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  2413      734E6F74 
  2413      436F6E6E 
  2413      65637465 
  2413      64497271 
  2414              	.LASF58:
-<<<<<<< HEAD
  2415 08d3 666C6173 		.ascii	"flashWriteDelay\000"
-=======
- 2415 08dc 666C6173 		.ascii	"flashWriteDelay\000"
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  2415      68577269 
  2415      74654465 
  2415      6C617900 
  2416              	.LASF67:
-<<<<<<< HEAD
  2417 08e3 64774368 		.ascii	"dwChSize\000"
  2417      53697A65 
  2417      00
@@ -4896,66 +3591,37 @@ ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 1
  2419      385F7400 
  2420              	.LASF91:
  2421 08f4 63707573 		.ascii	"cpussCm4StatusOffset\000"
-=======
- 2417 08ec 64774368 		.ascii	"dwChSize\000"
- 2417      53697A65 
- 2417      00
- 2418              	.LASF13:
- 2419 08f5 75696E74 		.ascii	"uint8_t\000"
- 2419      385F7400 
- 2420              	.LASF91:
- 2421 08fd 63707573 		.ascii	"cpussCm4StatusOffset\000"
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  2421      73436D34 
  2421      53746174 
  2421      75734F66 
  2421      66736574 
  2422              	.LASF84:
-<<<<<<< HEAD
  2423 0909 6770696F 		.ascii	"gpioPrtIntrCfgOffset\000"
  2423      50727449 
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLdd6Gy.s 			page 61
-=======
- 2423 0912 6770696F 		.ascii	"gpioPrtIntrCfgOffset\000"
- 2423      50727449 
-ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 61
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccjjKVEO.s 			page 61
 
 
  2423      6E747243 
  2423      66674F66 
  2423      66736574 
  2424              	.LASF120:
-<<<<<<< HEAD
  2425 091e 63795F65 		.ascii	"cy_en_systick_clock_source_t\000"
-=======
- 2425 0927 63795F65 		.ascii	"cy_en_systick_clock_source_t\000"
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  2425      6E5F7379 
  2425      73746963 
  2425      6B5F636C 
  2425      6F636B5F 
  2426              	.LASF95:
-<<<<<<< HEAD
  2427 093b 63707573 		.ascii	"cpussTrimRomCtlOffset\000"
-=======
- 2427 0944 63707573 		.ascii	"cpussTrimRomCtlOffset\000"
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  2427      73547269 
  2427      6D526F6D 
  2427      43746C4F 
  2427      66667365 
  2428              	.LASF45:
-<<<<<<< HEAD
  2429 0951 73727373 		.ascii	"srssNumClkpath\000"
-=======
- 2429 095a 73727373 		.ascii	"srssNumClkpath\000"
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  2429      4E756D43 
  2429      6C6B7061 
  2429      746800
  2430              	.LASF31:
-<<<<<<< HEAD
  2431 0960 64775665 		.ascii	"dwVersion\000"
  2431      7273696F 
  2431      6E00
@@ -4964,66 +3630,35 @@ ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 1
  2433      61736500 
  2434              	.LASF126:
  2435 0972 43795F53 		.ascii	"Cy_SysTick_SetClockSource\000"
-=======
- 2431 0969 64775665 		.ascii	"dwVersion\000"
- 2431      7273696F 
- 2431      6E00
- 2432              	.LASF27:
- 2433 0973 69706342 		.ascii	"ipcBase\000"
- 2433      61736500 
- 2434              	.LASF126:
- 2435 097b 43795F53 		.ascii	"Cy_SysTick_SetClockSource\000"
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  2435      79735469 
  2435      636B5F53 
  2435      6574436C 
  2435      6F636B53 
  2436              	.LASF78:
-<<<<<<< HEAD
  2437 098c 70657269 		.ascii	"periDivCmdPaDivSelPos\000"
-=======
- 2437 0995 70657269 		.ascii	"periDivCmdPaDivSelPos\000"
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  2437      44697643 
  2437      6D645061 
  2437      44697653 
  2437      656C506F 
  2438              	.LASF59:
-<<<<<<< HEAD
  2439 09a2 666C6173 		.ascii	"flashProgramDelay\000"
-=======
- 2439 09ab 666C6173 		.ascii	"flashProgramDelay\000"
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  2439      6850726F 
  2439      6772616D 
  2439      44656C61 
  2439      7900
  2440              	.LASF130:
-<<<<<<< HEAD
  2441 09b4 72657475 		.ascii	"returnValue\000"
  2441      726E5661 
  2441      6C756500 
  2442              	.LASF41:
  2443 09c0 63707573 		.ascii	"cpussFlashPaSize\000"
-=======
- 2441 09bd 72657475 		.ascii	"returnValue\000"
- 2441      726E5661 
- 2441      6C756500 
- 2442              	.LASF41:
- 2443 09c9 63707573 		.ascii	"cpussFlashPaSize\000"
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
  2443      73466C61 
  2443      73685061 
  2443      53697A65 
  2443      00
  2444              	.LASF56:
-<<<<<<< HEAD
  2445 09d1 666C6173 		.ascii	"flashRwwRequired\000"
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLdd6Gy.s 			page 62
-=======
- 2445 09da 666C6173 		.ascii	"flashRwwRequired\000"
-ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccG6f2IG.s 			page 62
->>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccjjKVEO.s 			page 62
 
 
  2445      68527777 
