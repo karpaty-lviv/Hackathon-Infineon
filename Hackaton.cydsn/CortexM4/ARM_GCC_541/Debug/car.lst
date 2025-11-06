@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 1
 
 
    1              		.syntax unified
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
   28:car.c         **** 
   29:car.c         **** //Motor & servo subsystem initialization
   30:car.c         **** void Motor_Init(void) 
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 2
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 2
 
 
   31:car.c         **** {
@@ -107,69 +107,68 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
   74:car.c         ****   }
   75:car.c         **** }
   76:car.c         **** 
-  77:car.c         **** 
-  78:car.c         **** ///////////////////// SOUND API ///////////////////////////////////////////////
-  79:car.c         **** 
-  80:car.c         **** //Sound subsystem initialization
-  81:car.c         **** void Sound_Init(void)
-  82:car.c         **** {
-  83:car.c         ****     (void) Cy_TCPWM_PWM_Init(PWM_Buz_HW, PWM_Buz_CNT_NUM, &PWM_Buz_config);
-  84:car.c         ****     Cy_TCPWM_Enable_Multiple(PWM_Buz_HW, PWM_Buz_CNT_MASK);
-  85:car.c         ****     PWM_Buz_SetCompare0(0);
-  86:car.c         ****     Cy_TCPWM_TriggerStart(PWM_Buz_HW, PWM_Buz_CNT_MASK);
-  87:car.c         **** }
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 3
+  77:car.c         **** ///////////////////// SOUND API ///////////////////////////////////////////////
+  78:car.c         **** 
+  79:car.c         **** //Sound subsystem initialization
+  80:car.c         **** void Sound_Init(void)
+  81:car.c         **** {
+  82:car.c         ****     (void) Cy_TCPWM_PWM_Init(PWM_Buz_HW, PWM_Buz_CNT_NUM, &PWM_Buz_config);
+  83:car.c         ****     Cy_TCPWM_Enable_Multiple(PWM_Buz_HW, PWM_Buz_CNT_MASK);
+  84:car.c         ****     PWM_Buz_SetCompare0(0);
+  85:car.c         ****     Cy_TCPWM_TriggerStart(PWM_Buz_HW, PWM_Buz_CNT_MASK);
+  86:car.c         **** }
+  87:car.c         **** 
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 3
 
 
-  88:car.c         **** 
-  89:car.c         **** //Set permanent output (non-blocking) of tone with desired frequency
-  90:car.c         **** void Sound_WriteTone(uint32_t freq)
-  91:car.c         **** {
-  92:car.c         ****     uint32_t period;
-  93:car.c         ****     if (freq != 0u)
-  94:car.c         ****     {
-  95:car.c         ****         period = SOUND_PWM_CLOCK / freq;
-  96:car.c         ****         PWM_Buz_SetPeriod0(period);
-  97:car.c         ****         PWM_Buz_SetCompare0(period/2);
-  98:car.c         ****         PWM_Buz_SetCounter(0);
-  99:car.c         ****     }
- 100:car.c         ****     else
- 101:car.c         ****     {
- 102:car.c         ****         PWM_Buz_SetCompare0(0);
- 103:car.c         ****     }
- 104:car.c         **** }
- 105:car.c         **** 
- 106:car.c         **** //Play a tone with defined frequency and duraction
- 107:car.c         **** void Sound_Play(uint32_t freq, uint32_t duration)
- 108:car.c         **** {
- 109:car.c         ****     Sound_WriteTone(freq);
- 110:car.c         ****     CyDelay(duration);
- 111:car.c         ****     Sound_WriteTone(0);
- 112:car.c         **** }
+  88:car.c         **** //Set permanent output (non-blocking) of tone with desired frequency
+  89:car.c         **** void Sound_WriteTone(uint32_t freq)
+  90:car.c         **** {
+  91:car.c         ****     uint32_t period;
+  92:car.c         ****     if (freq != 0u)
+  93:car.c         ****     {
+  94:car.c         ****         period = SOUND_PWM_CLOCK / freq;
+  95:car.c         ****         PWM_Buz_SetPeriod0(period);
+  96:car.c         ****         PWM_Buz_SetCompare0(period/2);
+  97:car.c         ****         PWM_Buz_SetCounter(0);
+  98:car.c         ****     }
+  99:car.c         ****     else
+ 100:car.c         ****     {
+ 101:car.c         ****         PWM_Buz_SetCompare0(0);
+ 102:car.c         ****     }
+ 103:car.c         **** }
+ 104:car.c         **** 
+ 105:car.c         **** //Play a tone with defined frequency and duraction
+ 106:car.c         **** void Sound_Play(uint32_t freq, uint32_t duration)
+ 107:car.c         **** {
+ 108:car.c         ****     Sound_WriteTone(freq);
+ 109:car.c         ****     CyDelay(duration);
+ 110:car.c         ****     Sound_WriteTone(0);
+ 111:car.c         **** }
+ 112:car.c         **** 
  113:car.c         **** 
- 114:car.c         **** 
- 115:car.c         **** ///////////////////// TRACK SENSOR API ////////////////////////////////////////
- 116:car.c         **** void Track_Init(void)
- 117:car.c         **** {
- 118:car.c         ****     PCF8574_begin();
- 119:car.c         **** }
- 120:car.c         **** 
- 121:car.c         **** //Tracking module reading
- 122:car.c         **** uint8_t Track_Read(void)
- 123:car.c         **** {
- 124:car.c         ****   return (PCF8574_read8() & 0x7F); 
- 125:car.c         **** }
- 126:car.c         **** 
- 127:car.c         **** ///////////////////// TIMING API //////////////////////////////////////////////
- 128:car.c         **** static void systick_handler(void)
- 129:car.c         **** {
-  28              		.loc 1 129 0
+ 114:car.c         **** ///////////////////// TRACK SENSOR API ////////////////////////////////////////
+ 115:car.c         **** void Track_Init(void)
+ 116:car.c         **** {
+ 117:car.c         ****     PCF8574_begin();
+ 118:car.c         **** }
+ 119:car.c         **** 
+ 120:car.c         **** //Tracking module reading
+ 121:car.c         **** uint8_t Track_Read(void)
+ 122:car.c         **** {
+ 123:car.c         ****   return (PCF8574_read8() & 0x7F); 
+ 124:car.c         **** }
+ 125:car.c         **** 
+ 126:car.c         **** ///////////////////// TIMING API //////////////////////////////////////////////
+ 127:car.c         **** static void systick_handler(void)
+ 128:car.c         **** {
+  28              		.loc 1 128 0
   29              		.cfi_startproc
   30              		@ args = 0, pretend = 0, frame = 0
   31              		@ frame_needed = 0, uses_anonymous_args = 0
   32              		@ link register save eliminated.
- 130:car.c         ****     milliseconds++;
-  33              		.loc 1 130 0
+ 129:car.c         ****     milliseconds++;
+  33              		.loc 1 129 0
   34 0000 024A     		ldr	r2, .L2
   35 0002 1368     		ldr	r3, [r2]
   36 0004 0133     		adds	r3, r3, #1
@@ -178,10 +177,10 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
   39              	.L3:
   40 000a 00BF     		.align	2
   41              	.L2:
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 4
-
-
   42 000c 00000000 		.word	.LANCHOR0
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 4
+
+
   43              		.cfi_endproc
   44              	.LFE762:
   45              		.size	systick_handler, .-systick_handler
@@ -238,10 +237,10 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
   92              		.cfi_offset 8, -8
   93              		.cfi_offset 14, -4
   94 0004 0E46     		mov	r6, r1
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 5
-
-
   95 0006 1546     		mov	r5, r2
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 5
+
+
   96 0008 9846     		mov	r8, r3
   38:car.c         ****   m2_speed = MOTOR_2_DIRECTION * constrain_int(m2_speed, MOTOR_SPEED_MIN, MOTOR_SPEED_MAX);
   97              		.loc 1 38 0
@@ -298,10 +297,10 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
   45:car.c         ****   } else {
  143              		.loc 1 45 0
  144 004e 0021     		movs	r1, #0
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 6
-
-
  145 0050 0E20     		movs	r0, #14
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 6
+
+
  146 0052 FFF7FEFF 		bl	PCA9685_setChannelPulseWidth
  147              	.LVL18:
  148 0056 08E0     		b	.L8
@@ -358,10 +357,10 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  190 008a B1B2     		uxth	r1, r6
  191 008c 0820     		movs	r0, #8
  192 008e FFF7FEFF 		bl	PCA9685_setChannelPulseWidth
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 7
-
-
  193              	.LVL28:
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 7
+
+
  194              	.L10:
   59:car.c         ****     PCA9685_setChannelPulseWidth(PIN_MOTOR_M3_IN1, m3_speed);
  195              		.loc 1 59 0
@@ -418,10 +417,10 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  238              	.LVL36:
  239              	.L13:
   71:car.c         ****     PCA9685_setChannelPulseWidth(PIN_MOTOR_M4_IN1, 0);
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 8
-
-
  240              		.loc 1 71 0
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 8
+
+
  241 00d2 6442     		negs	r4, r4
  242              	.LVL37:
   72:car.c         ****     PCA9685_setChannelPulseWidth(PIN_MOTOR_M4_IN2, m4_speed);
@@ -453,8 +452,8 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  267              		.type	Sound_Init, %function
  268              	Sound_Init:
  269              	.LFB757:
-  82:car.c         ****     (void) Cy_TCPWM_PWM_Init(PWM_Buz_HW, PWM_Buz_CNT_NUM, &PWM_Buz_config);
- 270              		.loc 1 82 0
+  81:car.c         ****     (void) Cy_TCPWM_PWM_Init(PWM_Buz_HW, PWM_Buz_CNT_NUM, &PWM_Buz_config);
+ 270              		.loc 1 81 0
  271              		.cfi_startproc
  272              		@ args = 0, pretend = 0, frame = 0
  273              		@ frame_needed = 0, uses_anonymous_args = 0
@@ -462,8 +461,8 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  275              		.cfi_def_cfa_offset 8
  276              		.cfi_offset 4, -8
  277              		.cfi_offset 14, -4
-  83:car.c         ****     Cy_TCPWM_Enable_Multiple(PWM_Buz_HW, PWM_Buz_CNT_MASK);
- 278              		.loc 1 83 0
+  82:car.c         ****     Cy_TCPWM_Enable_Multiple(PWM_Buz_HW, PWM_Buz_CNT_MASK);
+ 278              		.loc 1 82 0
  279 0002 064C     		ldr	r4, .L20
  280 0004 064A     		ldr	r2, .L20+4
  281 0006 0021     		movs	r1, #0
@@ -478,10 +477,10 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
    3:Generated_Source\PSoC6\pdl\drivers/peripheral/tcpwm/cy_tcpwm.h **** * \version 1.10
    4:Generated_Source\PSoC6\pdl\drivers/peripheral/tcpwm/cy_tcpwm.h **** *
    5:Generated_Source\PSoC6\pdl\drivers/peripheral/tcpwm/cy_tcpwm.h **** * The header file of the TCPWM driver.
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 9
-
-
    6:Generated_Source\PSoC6\pdl\drivers/peripheral/tcpwm/cy_tcpwm.h **** *
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 9
+
+
    7:Generated_Source\PSoC6\pdl\drivers/peripheral/tcpwm/cy_tcpwm.h **** ********************************************************************************
    8:Generated_Source\PSoC6\pdl\drivers/peripheral/tcpwm/cy_tcpwm.h **** * \copyright
    9:Generated_Source\PSoC6\pdl\drivers/peripheral/tcpwm/cy_tcpwm.h **** * Copyright 2016-2018, Cypress Semiconductor Corporation. All rights reserved.
@@ -538,10 +537,10 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
   60:Generated_Source\PSoC6\pdl\drivers/peripheral/tcpwm/cy_tcpwm.h **** *
   61:Generated_Source\PSoC6\pdl\drivers/peripheral/tcpwm/cy_tcpwm.h **** * The Timer/Counter has the following features:
   62:Generated_Source\PSoC6\pdl\drivers/peripheral/tcpwm/cy_tcpwm.h **** * * 16- or 32-bit Timer/Counter
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 10
-
-
   63:Generated_Source\PSoC6\pdl\drivers/peripheral/tcpwm/cy_tcpwm.h **** * * Programmable Period Register
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 10
+
+
   64:Generated_Source\PSoC6\pdl\drivers/peripheral/tcpwm/cy_tcpwm.h **** * * Programmable Compare Register. Compare value can be swapped with a 
   65:Generated_Source\PSoC6\pdl\drivers/peripheral/tcpwm/cy_tcpwm.h **** * buffered compare value on comparison event
   66:Generated_Source\PSoC6\pdl\drivers/peripheral/tcpwm/cy_tcpwm.h **** * * Capture with buffer register
@@ -598,10 +597,10 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  117:Generated_Source\PSoC6\pdl\drivers/peripheral/tcpwm/cy_tcpwm.h **** *
  118:Generated_Source\PSoC6\pdl\drivers/peripheral/tcpwm/cy_tcpwm.h **** * Provide the configuration parameters in the appropriate structure (see
  119:Generated_Source\PSoC6\pdl\drivers/peripheral/tcpwm/cy_tcpwm.h **** * Counter \ref group_tcpwm_data_structures_counter, PWM 
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 11
-
-
  120:Generated_Source\PSoC6\pdl\drivers/peripheral/tcpwm/cy_tcpwm.h **** * \ref group_tcpwm_data_structures_pwm, or QuadDec 
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 11
+
+
  121:Generated_Source\PSoC6\pdl\drivers/peripheral/tcpwm/cy_tcpwm.h **** * \ref group_tcpwm_data_structures_quaddec). 
  122:Generated_Source\PSoC6\pdl\drivers/peripheral/tcpwm/cy_tcpwm.h **** * Then call the appropriate Init function: 
  123:Generated_Source\PSoC6\pdl\drivers/peripheral/tcpwm/cy_tcpwm.h **** * \ref Cy_TCPWM_Counter_Init, \ref Cy_TCPWM_PWM_Init, or 
@@ -658,10 +657,10 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  174:Generated_Source\PSoC6\pdl\drivers/peripheral/tcpwm/cy_tcpwm.h **** *     <th>Rule Description</th>
  175:Generated_Source\PSoC6\pdl\drivers/peripheral/tcpwm/cy_tcpwm.h **** *     <th>Description of Deviation(s)</th>
  176:Generated_Source\PSoC6\pdl\drivers/peripheral/tcpwm/cy_tcpwm.h **** *   </tr>
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 12
-
-
  177:Generated_Source\PSoC6\pdl\drivers/peripheral/tcpwm/cy_tcpwm.h **** *   <tr>
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 12
+
+
  178:Generated_Source\PSoC6\pdl\drivers/peripheral/tcpwm/cy_tcpwm.h **** *     <td>14.2</td>
  179:Generated_Source\PSoC6\pdl\drivers/peripheral/tcpwm/cy_tcpwm.h **** *     <td>R</td>
  180:Generated_Source\PSoC6\pdl\drivers/peripheral/tcpwm/cy_tcpwm.h **** *     <td>All non-null statements shall either: a) have at least one side-effect
@@ -718,10 +717,10 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  231:Generated_Source\PSoC6\pdl\drivers/peripheral/tcpwm/cy_tcpwm.h **** * to get access to all functions and declarations in the PDL.
  232:Generated_Source\PSoC6\pdl\drivers/peripheral/tcpwm/cy_tcpwm.h **** *
  233:Generated_Source\PSoC6\pdl\drivers/peripheral/tcpwm/cy_tcpwm.h **** * \{
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 13
-
-
  234:Generated_Source\PSoC6\pdl\drivers/peripheral/tcpwm/cy_tcpwm.h **** * \defgroup group_tcpwm_macros_common           Macros
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 13
+
+
  235:Generated_Source\PSoC6\pdl\drivers/peripheral/tcpwm/cy_tcpwm.h **** * \defgroup group_tcpwm_functions_common        Functions
  236:Generated_Source\PSoC6\pdl\drivers/peripheral/tcpwm/cy_tcpwm.h **** * \defgroup group_tcpwm_data_structures_common  Data Structures
  237:Generated_Source\PSoC6\pdl\drivers/peripheral/tcpwm/cy_tcpwm.h **** * \defgroup group_tcpwm_enums Enumerated Types
@@ -778,10 +777,10 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  288:Generated_Source\PSoC6\pdl\drivers/peripheral/tcpwm/cy_tcpwm.h **** #define CY_TCPWM_INPUT_TRIG_6           (8U)  /**< Input is connected to the trigger input 6 */
  289:Generated_Source\PSoC6\pdl\drivers/peripheral/tcpwm/cy_tcpwm.h **** #define CY_TCPWM_INPUT_TRIG_7           (9U)  /**< Input is connected to the trigger input 7 */
  290:Generated_Source\PSoC6\pdl\drivers/peripheral/tcpwm/cy_tcpwm.h **** #define CY_TCPWM_INPUT_TRIG_8           (10U) /**< Input is connected to the trigger input 8 */
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 14
-
-
  291:Generated_Source\PSoC6\pdl\drivers/peripheral/tcpwm/cy_tcpwm.h **** #define CY_TCPWM_INPUT_TRIG_9           (11U) /**< Input is connected to the trigger input 9 */
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 14
+
+
  292:Generated_Source\PSoC6\pdl\drivers/peripheral/tcpwm/cy_tcpwm.h **** #define CY_TCPWM_INPUT_TRIG_10          (12U) /**< Input is connected to the trigger input 10 */
  293:Generated_Source\PSoC6\pdl\drivers/peripheral/tcpwm/cy_tcpwm.h **** #define CY_TCPWM_INPUT_TRIG_11          (13U) /**< Input is connected to the trigger input 11 */
  294:Generated_Source\PSoC6\pdl\drivers/peripheral/tcpwm/cy_tcpwm.h **** #define CY_TCPWM_INPUT_TRIG_12          (14U) /**< Input is connected to the trigger input 12 */
@@ -838,10 +837,10 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  345:Generated_Source\PSoC6\pdl\drivers/peripheral/tcpwm/cy_tcpwm.h **** #define CY_TCPWM_CNT_TR_CTRL2_DEFAULT       (0x3FU)  /**< Default value for TR_CTRL2 register */
  346:Generated_Source\PSoC6\pdl\drivers/peripheral/tcpwm/cy_tcpwm.h **** #define CY_TCPWM_CNT_INTR_DEFAULT           (0x3U)   /**< Default value for INTR register */
  347:Generated_Source\PSoC6\pdl\drivers/peripheral/tcpwm/cy_tcpwm.h **** #define CY_TCPWM_CNT_INTR_SET_DEFAULT       (0x0U)   /**< Default value for INTR_SET register */
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 15
-
-
  348:Generated_Source\PSoC6\pdl\drivers/peripheral/tcpwm/cy_tcpwm.h **** #define CY_TCPWM_CNT_INTR_MASK_DEFAULT      (0x0U)   /**< Default value for INTR_MASK register */
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 15
+
+
  349:Generated_Source\PSoC6\pdl\drivers/peripheral/tcpwm/cy_tcpwm.h **** /** \} group_tcpwm_reg_const */
  350:Generated_Source\PSoC6\pdl\drivers/peripheral/tcpwm/cy_tcpwm.h **** 
  351:Generated_Source\PSoC6\pdl\drivers/peripheral/tcpwm/cy_tcpwm.h **** /** Position of Up counting counter status */
@@ -898,10 +897,10 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  402:Generated_Source\PSoC6\pdl\drivers/peripheral/tcpwm/cy_tcpwm.h **** ****************************************************************************//**
  403:Generated_Source\PSoC6\pdl\drivers/peripheral/tcpwm/cy_tcpwm.h **** *
  404:Generated_Source\PSoC6\pdl\drivers/peripheral/tcpwm/cy_tcpwm.h **** * Enables the counter(s) in the TCPWM block. Multiple blocks can be started 
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 16
-
-
  405:Generated_Source\PSoC6\pdl\drivers/peripheral/tcpwm/cy_tcpwm.h **** * simultaneously.
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 16
+
+
  406:Generated_Source\PSoC6\pdl\drivers/peripheral/tcpwm/cy_tcpwm.h **** *
  407:Generated_Source\PSoC6\pdl\drivers/peripheral/tcpwm/cy_tcpwm.h **** * \param base
  408:Generated_Source\PSoC6\pdl\drivers/peripheral/tcpwm/cy_tcpwm.h **** * The pointer to a TCPWM instance.
@@ -958,10 +957,10 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
   30:Generated_Source\PSoC6\pdl\drivers/peripheral/tcpwm/cy_tcpwm_pwm.h **** * You can also include cy_pdl.h (ModusToolbox only) to get access to all  
   31:Generated_Source\PSoC6\pdl\drivers/peripheral/tcpwm/cy_tcpwm_pwm.h **** * functions and declarations in the PDL.
   32:Generated_Source\PSoC6\pdl\drivers/peripheral/tcpwm/cy_tcpwm_pwm.h **** * \{
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 17
-
-
   33:Generated_Source\PSoC6\pdl\drivers/peripheral/tcpwm/cy_tcpwm_pwm.h **** */
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 17
+
+
   34:Generated_Source\PSoC6\pdl\drivers/peripheral/tcpwm/cy_tcpwm_pwm.h **** 
   35:Generated_Source\PSoC6\pdl\drivers/peripheral/tcpwm/cy_tcpwm_pwm.h **** /**
   36:Generated_Source\PSoC6\pdl\drivers/peripheral/tcpwm/cy_tcpwm_pwm.h **** * \defgroup group_tcpwm_macros_pwm          Macros
@@ -1018,10 +1017,10 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
   87:Generated_Source\PSoC6\pdl\drivers/peripheral/tcpwm/cy_tcpwm_pwm.h **** * \defgroup group_tcpwm_pwm_run_modes PWM run modes
   88:Generated_Source\PSoC6\pdl\drivers/peripheral/tcpwm/cy_tcpwm_pwm.h **** * \{
   89:Generated_Source\PSoC6\pdl\drivers/peripheral/tcpwm/cy_tcpwm_pwm.h **** * Run modes for the pwm timer.
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 18
-
-
   90:Generated_Source\PSoC6\pdl\drivers/peripheral/tcpwm/cy_tcpwm_pwm.h **** */
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 18
+
+
   91:Generated_Source\PSoC6\pdl\drivers/peripheral/tcpwm/cy_tcpwm_pwm.h **** #define CY_TCPWM_PWM_ONESHOT            (1U)    /**< Counter runs once and then stops */
   92:Generated_Source\PSoC6\pdl\drivers/peripheral/tcpwm/cy_tcpwm_pwm.h **** #define CY_TCPWM_PWM_CONTINUOUS         (0U)    /**< Counter runs forever */
   93:Generated_Source\PSoC6\pdl\drivers/peripheral/tcpwm/cy_tcpwm_pwm.h **** /** \} group_tcpwm_pwm_run_modes */
@@ -1078,10 +1077,10 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  144:Generated_Source\PSoC6\pdl\drivers/peripheral/tcpwm/cy_tcpwm_pwm.h **** #define CY_TCPWM_PWM_INVERT_DISABLE         (0U)  /**< Do not invert the output mode */
  145:Generated_Source\PSoC6\pdl\drivers/peripheral/tcpwm/cy_tcpwm_pwm.h **** /** \} group_tcpwm_pwm_output_invert */
  146:Generated_Source\PSoC6\pdl\drivers/peripheral/tcpwm/cy_tcpwm_pwm.h **** 
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 19
-
-
  147:Generated_Source\PSoC6\pdl\drivers/peripheral/tcpwm/cy_tcpwm_pwm.h **** /** \defgroup group_tcpwm_pwm_status PWM Status
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 19
+
+
  148:Generated_Source\PSoC6\pdl\drivers/peripheral/tcpwm/cy_tcpwm_pwm.h **** * \{
  149:Generated_Source\PSoC6\pdl\drivers/peripheral/tcpwm/cy_tcpwm_pwm.h **** * The counter status.
  150:Generated_Source\PSoC6\pdl\drivers/peripheral/tcpwm/cy_tcpwm_pwm.h **** */
@@ -1138,10 +1137,10 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  201:Generated_Source\PSoC6\pdl\drivers/peripheral/tcpwm/cy_tcpwm_pwm.h **** 
  202:Generated_Source\PSoC6\pdl\drivers/peripheral/tcpwm/cy_tcpwm_pwm.h **** cy_en_tcpwm_status_t Cy_TCPWM_PWM_Init(TCPWM_Type *base, uint32_t cntNum, cy_stc_tcpwm_pwm_config_t
  203:Generated_Source\PSoC6\pdl\drivers/peripheral/tcpwm/cy_tcpwm_pwm.h **** void Cy_TCPWM_PWM_DeInit(TCPWM_Type *base, uint32_t cntNum, cy_stc_tcpwm_pwm_config_t const *config
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 20
-
-
  204:Generated_Source\PSoC6\pdl\drivers/peripheral/tcpwm/cy_tcpwm_pwm.h **** __STATIC_INLINE void Cy_TCPWM_PWM_Enable(TCPWM_Type *base, uint32_t cntNum);
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 20
+
+
  205:Generated_Source\PSoC6\pdl\drivers/peripheral/tcpwm/cy_tcpwm_pwm.h **** __STATIC_INLINE void Cy_TCPWM_PWM_Disable(TCPWM_Type *base, uint32_t cntNum);
  206:Generated_Source\PSoC6\pdl\drivers/peripheral/tcpwm/cy_tcpwm_pwm.h **** __STATIC_INLINE uint32_t Cy_TCPWM_PWM_GetStatus(TCPWM_Type const *base, uint32_t cntNum);
  207:Generated_Source\PSoC6\pdl\drivers/peripheral/tcpwm/cy_tcpwm_pwm.h **** __STATIC_INLINE void Cy_TCPWM_PWM_SetCompare0(TCPWM_Type *base, uint32_t cntNum, uint32_t compare0)
@@ -1198,10 +1197,10 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  258:Generated_Source\PSoC6\pdl\drivers/peripheral/tcpwm/cy_tcpwm_pwm.h **** __STATIC_INLINE void Cy_TCPWM_PWM_Disable(TCPWM_Type *base, uint32_t cntNum)
  259:Generated_Source\PSoC6\pdl\drivers/peripheral/tcpwm/cy_tcpwm_pwm.h **** {
  260:Generated_Source\PSoC6\pdl\drivers/peripheral/tcpwm/cy_tcpwm_pwm.h ****     TCPWM_CTRL_CLR(base) = (1UL << cntNum);
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 21
-
-
  261:Generated_Source\PSoC6\pdl\drivers/peripheral/tcpwm/cy_tcpwm_pwm.h **** }
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 21
+
+
  262:Generated_Source\PSoC6\pdl\drivers/peripheral/tcpwm/cy_tcpwm_pwm.h **** 
  263:Generated_Source\PSoC6\pdl\drivers/peripheral/tcpwm/cy_tcpwm_pwm.h **** 
  264:Generated_Source\PSoC6\pdl\drivers/peripheral/tcpwm/cy_tcpwm_pwm.h **** /*******************************************************************************
@@ -1258,10 +1257,10 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  315:Generated_Source\PSoC6\pdl\drivers/peripheral/tcpwm/cy_tcpwm_pwm.h **** __STATIC_INLINE void Cy_TCPWM_PWM_SetCompare0(TCPWM_Type *base, uint32_t cntNum,  uint32_t compare0
  316:Generated_Source\PSoC6\pdl\drivers/peripheral/tcpwm/cy_tcpwm_pwm.h **** {
  317:Generated_Source\PSoC6\pdl\drivers/peripheral/tcpwm/cy_tcpwm_pwm.h ****     TCPWM_CNT_CC(base, cntNum) = compare0;
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 22
-
-
  298              		.loc 3 317 0
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 22
+
+
  299 0012 0022     		movs	r2, #0
  300 0014 C4F80C21 		str	r2, [r4, #268]
  301              	.LVL43:
@@ -1318,10 +1317,10 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  307              		.loc 2 464 0
  308 0018 A361     		str	r3, [r4, #24]
  309              	.LVL44:
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 23
-
-
  310 001a 10BD     		pop	{r4, pc}
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 23
+
+
  311              	.L21:
  312              		.align	2
  313              	.L20:
@@ -1340,19 +1339,19 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  326              		.type	Sound_WriteTone, %function
  327              	Sound_WriteTone:
  328              	.LFB758:
-  91:car.c         ****     uint32_t period;
- 329              		.loc 1 91 0
+  90:car.c         ****     uint32_t period;
+ 329              		.loc 1 90 0
  330              		.cfi_startproc
  331              		@ args = 0, pretend = 0, frame = 0
  332              		@ frame_needed = 0, uses_anonymous_args = 0
  333              		@ link register save eliminated.
  334              	.LVL45:
-  93:car.c         ****     {
- 335              		.loc 1 93 0
+  92:car.c         ****     {
+ 335              		.loc 1 92 0
  336 0000 0346     		mov	r3, r0
  337 0002 60B1     		cbz	r0, .L23
-  95:car.c         ****         PWM_Buz_SetPeriod0(period);
- 338              		.loc 1 95 0
+  94:car.c         ****         PWM_Buz_SetPeriod0(period);
+ 338              		.loc 1 94 0
  339 0004 0848     		ldr	r0, .L25
  340              	.LVL46:
  341 0006 B0FBF3F0 		udiv	r0, r0, r3
@@ -1378,10 +1377,10 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  333:Generated_Source\PSoC6\pdl\drivers/peripheral/tcpwm/cy_tcpwm_pwm.h **** * \return
  334:Generated_Source\PSoC6\pdl\drivers/peripheral/tcpwm/cy_tcpwm_pwm.h **** * Compare value 0.
  335:Generated_Source\PSoC6\pdl\drivers/peripheral/tcpwm/cy_tcpwm_pwm.h **** *
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 24
-
-
  336:Generated_Source\PSoC6\pdl\drivers/peripheral/tcpwm/cy_tcpwm_pwm.h **** * \funcusage
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 24
+
+
  337:Generated_Source\PSoC6\pdl\drivers/peripheral/tcpwm/cy_tcpwm_pwm.h **** * \snippet tcpwm\1.10\pwm\snippet\main.c snippet_Cy_TCPWM_PWM_SetCompare0
  338:Generated_Source\PSoC6\pdl\drivers/peripheral/tcpwm/cy_tcpwm_pwm.h **** *
  339:Generated_Source\PSoC6\pdl\drivers/peripheral/tcpwm/cy_tcpwm_pwm.h **** *******************************************************************************/
@@ -1438,10 +1437,10 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  390:Generated_Source\PSoC6\pdl\drivers/peripheral/tcpwm/cy_tcpwm_pwm.h **** __STATIC_INLINE uint32_t Cy_TCPWM_PWM_GetCompare1(TCPWM_Type const *base, uint32_t cntNum)
  391:Generated_Source\PSoC6\pdl\drivers/peripheral/tcpwm/cy_tcpwm_pwm.h **** {
  392:Generated_Source\PSoC6\pdl\drivers/peripheral/tcpwm/cy_tcpwm_pwm.h ****     return(TCPWM_CNT_CC_BUFF(base, cntNum));
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 25
-
-
  393:Generated_Source\PSoC6\pdl\drivers/peripheral/tcpwm/cy_tcpwm_pwm.h **** }
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 25
+
+
  394:Generated_Source\PSoC6\pdl\drivers/peripheral/tcpwm/cy_tcpwm_pwm.h **** 
  395:Generated_Source\PSoC6\pdl\drivers/peripheral/tcpwm/cy_tcpwm_pwm.h **** 
  396:Generated_Source\PSoC6\pdl\drivers/peripheral/tcpwm/cy_tcpwm_pwm.h **** /*******************************************************************************
@@ -1498,10 +1497,10 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  447:Generated_Source\PSoC6\pdl\drivers/peripheral/tcpwm/cy_tcpwm_pwm.h **** __STATIC_INLINE void Cy_TCPWM_PWM_SetCounter(TCPWM_Type *base, uint32_t cntNum,  uint32_t count)
  448:Generated_Source\PSoC6\pdl\drivers/peripheral/tcpwm/cy_tcpwm_pwm.h **** {
  449:Generated_Source\PSoC6\pdl\drivers/peripheral/tcpwm/cy_tcpwm_pwm.h ****     TCPWM_CNT_COUNTER(base, cntNum) = count;
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 26
-
-
  450:Generated_Source\PSoC6\pdl\drivers/peripheral/tcpwm/cy_tcpwm_pwm.h **** }
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 26
+
+
  451:Generated_Source\PSoC6\pdl\drivers/peripheral/tcpwm/cy_tcpwm_pwm.h **** 
  452:Generated_Source\PSoC6\pdl\drivers/peripheral/tcpwm/cy_tcpwm_pwm.h **** 
  453:Generated_Source\PSoC6\pdl\drivers/peripheral/tcpwm/cy_tcpwm_pwm.h **** /*******************************************************************************
@@ -1558,12 +1557,12 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  350              	.LVL49:
  351              	.LBE41:
  352              	.LBE40:
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 27
-
-
  353              	.LBE39:
-  97:car.c         ****         PWM_Buz_SetCounter(0);
- 354              		.loc 1 97 0
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 27
+
+
+  96:car.c         ****         PWM_Buz_SetCounter(0);
+ 354              		.loc 1 96 0
  355 0010 4008     		lsrs	r0, r0, #1
  356              	.LVL50:
  357              	.LBB42:
@@ -1618,12 +1617,12 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  403              		.thumb_func
  404              		.type	Sound_Play, %function
  405              	Sound_Play:
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 28
-
-
  406              	.LFB759:
- 108:car.c         ****     Sound_WriteTone(freq);
- 407              		.loc 1 108 0
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 28
+
+
+ 107:car.c         ****     Sound_WriteTone(freq);
+ 407              		.loc 1 107 0
  408              		.cfi_startproc
  409              		@ args = 0, pretend = 0, frame = 0
  410              		@ frame_needed = 0, uses_anonymous_args = 0
@@ -1633,17 +1632,17 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  414              		.cfi_offset 4, -8
  415              		.cfi_offset 14, -4
  416 0002 0C46     		mov	r4, r1
- 109:car.c         ****     CyDelay(duration);
- 417              		.loc 1 109 0
+ 108:car.c         ****     CyDelay(duration);
+ 417              		.loc 1 108 0
  418 0004 FFF7FEFF 		bl	Sound_WriteTone
  419              	.LVL56:
- 110:car.c         ****     Sound_WriteTone(0);
- 420              		.loc 1 110 0
+ 109:car.c         ****     Sound_WriteTone(0);
+ 420              		.loc 1 109 0
  421 0008 2046     		mov	r0, r4
  422 000a FFF7FEFF 		bl	Cy_SysLib_Delay
  423              	.LVL57:
- 111:car.c         **** }
- 424              		.loc 1 111 0
+ 110:car.c         **** }
+ 424              		.loc 1 110 0
  425 000e 0020     		movs	r0, #0
  426 0010 FFF7FEFF 		bl	Sound_WriteTone
  427              	.LVL58:
@@ -1659,8 +1658,8 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  437              		.type	Track_Init, %function
  438              	Track_Init:
  439              	.LFB760:
- 117:car.c         ****     PCF8574_begin();
- 440              		.loc 1 117 0
+ 116:car.c         ****     PCF8574_begin();
+ 440              		.loc 1 116 0
  441              		.cfi_startproc
  442              		@ args = 0, pretend = 0, frame = 0
  443              		@ frame_needed = 0, uses_anonymous_args = 0
@@ -1668,8 +1667,8 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  445              		.cfi_def_cfa_offset 8
  446              		.cfi_offset 3, -8
  447              		.cfi_offset 14, -4
- 118:car.c         **** }
- 448              		.loc 1 118 0
+ 117:car.c         **** }
+ 448              		.loc 1 117 0
  449 0002 FFF7FEFF 		bl	PCF8574_begin
  450              	.LVL59:
  451 0006 08BD     		pop	{r3, pc}
@@ -1678,17 +1677,17 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  454              		.size	Track_Init, .-Track_Init
  455              		.section	.text.Track_Read,"ax",%progbits
  456              		.align	2
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 29
-
-
  457              		.global	Track_Read
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 29
+
+
  458              		.thumb
  459              		.thumb_func
  460              		.type	Track_Read, %function
  461              	Track_Read:
  462              	.LFB761:
- 123:car.c         ****   return (PCF8574_read8() & 0x7F); 
- 463              		.loc 1 123 0
+ 122:car.c         ****   return (PCF8574_read8() & 0x7F); 
+ 463              		.loc 1 122 0
  464              		.cfi_startproc
  465              		@ args = 0, pretend = 0, frame = 0
  466              		@ frame_needed = 0, uses_anonymous_args = 0
@@ -1696,12 +1695,12 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  468              		.cfi_def_cfa_offset 8
  469              		.cfi_offset 3, -8
  470              		.cfi_offset 14, -4
- 124:car.c         **** }
- 471              		.loc 1 124 0
+ 123:car.c         **** }
+ 471              		.loc 1 123 0
  472 0002 FFF7FEFF 		bl	PCF8574_read8
  473              	.LVL60:
- 125:car.c         **** 
- 474              		.loc 1 125 0
+ 124:car.c         **** 
+ 474              		.loc 1 124 0
  475 0006 00F07F00 		and	r0, r0, #127
  476 000a 08BD     		pop	{r3, pc}
  477              		.cfi_endproc
@@ -1715,11 +1714,11 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  485              		.type	Timing_Init, %function
  486              	Timing_Init:
  487              	.LFB763:
- 131:car.c         **** }
- 132:car.c         **** 
- 133:car.c         **** void Timing_Init(void)
- 134:car.c         **** {
- 488              		.loc 1 134 0
+ 130:car.c         **** }
+ 131:car.c         **** 
+ 132:car.c         **** void Timing_Init(void)
+ 133:car.c         **** {
+ 488              		.loc 1 133 0
  489              		.cfi_startproc
  490              		@ args = 0, pretend = 0, frame = 0
  491              		@ frame_needed = 0, uses_anonymous_args = 0
@@ -1727,26 +1726,26 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  493              		.cfi_def_cfa_offset 8
  494              		.cfi_offset 3, -8
  495              		.cfi_offset 14, -4
- 135:car.c         ****     /* Enable Systick and the Systick interrupt */
- 136:car.c         ****     Cy_SysTick_Enable();
- 496              		.loc 1 136 0
+ 134:car.c         ****     /* Enable Systick and the Systick interrupt */
+ 135:car.c         ****     Cy_SysTick_Enable();
+ 496              		.loc 1 135 0
  497 0002 FFF7FEFF 		bl	Cy_SysTick_Enable
  498              	.LVL61:
- 137:car.c         ****     
- 138:car.c         ****     /* Initialize the systick, set the 8MHz IMO as clock source */
- 139:car.c         ****     Cy_SysTick_Init(CY_SYSTICK_CLOCK_SOURCE_CLK_IMO, SYSTICK_RELOAD_VAL);
- 499              		.loc 1 139 0
+ 136:car.c         ****     
+ 137:car.c         ****     /* Initialize the systick, set the 8MHz IMO as clock source */
+ 138:car.c         ****     Cy_SysTick_Init(CY_SYSTICK_CLOCK_SOURCE_CLK_IMO, SYSTICK_RELOAD_VAL);
+ 499              		.loc 1 138 0
  500 0006 4FF4FA51 		mov	r1, #8000
  501 000a 0120     		movs	r0, #1
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 30
-
-
  502 000c FFF7FEFF 		bl	Cy_SysTick_Init
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 30
+
+
  503              	.LVL62:
- 140:car.c         **** 
- 141:car.c         ****     /* Set Systick interrupt callback */
- 142:car.c         ****     Cy_SysTick_SetCallback(0, systick_handler);
- 504              		.loc 1 142 0
+ 139:car.c         **** 
+ 140:car.c         ****     /* Set Systick interrupt callback */
+ 141:car.c         ****     Cy_SysTick_SetCallback(0, systick_handler);
+ 504              		.loc 1 141 0
  505 0010 0249     		ldr	r1, .L35
  506 0012 0020     		movs	r0, #0
  507 0014 FFF7FEFF 		bl	Cy_SysTick_SetCallback
@@ -1767,21 +1766,21 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  522              		.type	Timing_GetMillisecongs, %function
  523              	Timing_GetMillisecongs:
  524              	.LFB764:
- 143:car.c         **** }
- 144:car.c         **** 
- 145:car.c         **** uint32_t Timing_GetMillisecongs(void)
- 146:car.c         **** {
- 525              		.loc 1 146 0
+ 142:car.c         **** }
+ 143:car.c         **** 
+ 144:car.c         **** uint32_t Timing_GetMillisecongs(void)
+ 145:car.c         **** {
+ 525              		.loc 1 145 0
  526              		.cfi_startproc
  527              		@ args = 0, pretend = 0, frame = 0
  528              		@ frame_needed = 0, uses_anonymous_args = 0
  529              		@ link register save eliminated.
- 147:car.c         ****    return milliseconds;   
- 530              		.loc 1 147 0
+ 146:car.c         ****    return milliseconds;   
+ 530              		.loc 1 146 0
  531 0000 014B     		ldr	r3, .L38
  532 0002 1868     		ldr	r0, [r3]
- 148:car.c         **** }...
- 533              		.loc 1 148 0
+ 147:car.c         **** }...
+ 533              		.loc 1 147 0
  534 0004 7047     		bx	lr
  535              	.L39:
  536 0006 00BF     		.align	2
@@ -1798,10 +1797,10 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  547              	milliseconds:
  548 0000 00000000 		.space	4
  549              		.text
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 31
-
-
  550              	.Letext0:
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 31
+
+
  551              		.file 4 "c:\\program files (x86)\\cypress\\psoc creator\\4.4\\psoc creator\\import\\gnu\\arm\\5.4.
  552              		.file 5 "c:\\program files (x86)\\cypress\\psoc creator\\4.4\\psoc creator\\import\\gnu\\arm\\5.4.
  553              		.file 6 "Generated_Source\\PSoC6\\pdl\\devices/psoc6/include/ip/cyip_tcpwm.h"
@@ -1858,10 +1857,10 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  604 0040 08       		.byte	0x8
  605 0041 960F0000 		.4byte	.LASF2
  606 0045 03       		.uleb128 0x3
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 32
-
-
  607 0046 A00A0000 		.4byte	.LASF4
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 32
+
+
  608 004a 04       		.byte	0x4
  609 004b 29       		.byte	0x29
  610 004c 50000000 		.4byte	0x50
@@ -1918,10 +1917,10 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  661 00b2 05       		.byte	0x5
  662 00b3 20       		.byte	0x20
  663 00b4 45000000 		.4byte	0x45
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 33
-
-
  664 00b8 03       		.uleb128 0x3
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 33
+
+
  665 00b9 400C0000 		.4byte	.LASF16
  666 00bd 05       		.byte	0x5
  667 00be 24       		.byte	0x24
@@ -1978,10 +1977,10 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  718 0124 09       		.uleb128 0x9
  719 0125 434300   		.ascii	"CC\000"
  720 0128 06       		.byte	0x6
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 34
-
-
  721 0129 26       		.byte	0x26
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 34
+
+
  722 012a EE000000 		.4byte	0xee
  723 012e 0C       		.byte	0xc
  724 012f 08       		.uleb128 0x8
@@ -2038,10 +2037,10 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  775 0195 2F       		.byte	0x2f
  776 0196 EE000000 		.4byte	0xee
  777 019a 30       		.byte	0x30
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 35
-
-
  778 019b 08       		.uleb128 0x8
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 35
+
+
  779 019c EE020000 		.4byte	.LASF34
  780 01a0 06       		.byte	0x6
  781 01a1 30       		.byte	0x30
@@ -2098,10 +2097,10 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  832 0205 4D010000 		.4byte	.LASF41
  833 0209 06       		.byte	0x6
  834 020a 3D       		.byte	0x3d
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 36
-
-
  835 020b EE000000 		.4byte	0xee
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 36
+
+
  836 020f 10       		.byte	0x10
  837 0210 08       		.uleb128 0x8
  838 0211 39120000 		.4byte	.LASF42
@@ -2158,10 +2157,10 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  889 027e 43       		.byte	0x43
  890 027f CB010000 		.4byte	0x1cb
  891 0283 0E       		.uleb128 0xe
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 37
-
-
  892 0284 250A0000 		.4byte	.LASF46
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 37
+
+
  893 0288 07       		.byte	0x7
  894 0289 4206     		.2byte	0x642
  895 028b 78020000 		.4byte	0x278
@@ -2218,10 +2217,10 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  946 02f1 3E       		.byte	0x3e
  947 02f2 CE000000 		.4byte	0xce
  948 02f6 1C       		.byte	0x1c
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 38
-
-
  949 02f7 08       		.uleb128 0x8
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 38
+
+
  950 02f8 3E0A0000 		.4byte	.LASF55
  951 02fc 08       		.byte	0x8
  952 02fd 3F       		.byte	0x3f
@@ -2278,10 +2277,10 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  1003 0363 08       		.uleb128 0x8
  1004 0364 50110000 		.4byte	.LASF64
  1005 0368 08       		.byte	0x8
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 39
-
-
  1006 0369 4A       		.byte	0x4a
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 39
+
+
  1007 036a A2000000 		.4byte	0xa2
  1008 036e 2F       		.byte	0x2f
  1009 036f 08       		.uleb128 0x8
@@ -2338,10 +2337,10 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  1060 03d5 55       		.byte	0x55
  1061 03d6 A2000000 		.4byte	0xa2
  1062 03da 3C       		.byte	0x3c
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 40
-
-
  1063 03db 08       		.uleb128 0x8
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 40
+
+
  1064 03dc 7A070000 		.4byte	.LASF74
  1065 03e0 08       		.byte	0x8
  1066 03e1 56       		.byte	0x56
@@ -2398,10 +2397,10 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  1117 0447 08       		.uleb128 0x8
  1118 0448 F7020000 		.4byte	.LASF83
  1119 044c 08       		.byte	0x8
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 41
-
-
  1120 044d 5F       		.byte	0x5f
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 41
+
+
  1121 044e CE000000 		.4byte	0xce
  1122 0452 4C       		.byte	0x4c
  1123 0453 08       		.uleb128 0x8
@@ -2458,10 +2457,10 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  1174 04b9 68       		.byte	0x68
  1175 04ba A2000000 		.4byte	0xa2
  1176 04be 58       		.byte	0x58
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 42
-
-
  1177 04bf 08       		.uleb128 0x8
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 42
+
+
  1178 04c0 D6110000 		.4byte	.LASF93
  1179 04c4 08       		.byte	0x8
  1180 04c5 69       		.byte	0x69
@@ -2518,10 +2517,10 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  1231 052b 08       		.uleb128 0x8
  1232 052c CB0A0000 		.4byte	.LASF102
  1233 0530 08       		.byte	0x8
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 43
-
-
  1234 0531 78       		.byte	0x78
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 43
+
+
  1235 0532 B8000000 		.4byte	0xb8
  1236 0536 6C       		.byte	0x6c
  1237 0537 08       		.uleb128 0x8
@@ -2578,10 +2577,10 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  1288 059d 83       		.byte	0x83
  1289 059e B8000000 		.4byte	0xb8
  1290 05a2 7A       		.byte	0x7a
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 44
-
-
  1291 05a3 08       		.uleb128 0x8
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 44
+
+
  1292 05a4 A50E0000 		.4byte	.LASF112
  1293 05a8 08       		.byte	0x8
  1294 05a9 86       		.byte	0x86
@@ -2638,10 +2637,10 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  1345 060f 08       		.uleb128 0x8
  1346 0610 560E0000 		.4byte	.LASF121
  1347 0614 08       		.byte	0x8
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 45
-
-
  1348 0615 91       		.byte	0x91
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 45
+
+
  1349 0616 CE000000 		.4byte	0xce
  1350 061a 94       		.byte	0x94
  1351 061b 08       		.uleb128 0x8
@@ -2698,10 +2697,10 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  1402 0681 9A       		.byte	0x9a
  1403 0682 B8000000 		.4byte	0xb8
  1404 0686 AE       		.byte	0xae
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 46
-
-
  1405 0687 08       		.uleb128 0x8
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 46
+
+
  1406 0688 1F030000 		.4byte	.LASF131
  1407 068c 08       		.byte	0x8
  1408 068d 9D       		.byte	0x9d
@@ -2758,10 +2757,10 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  1459 06ee 1804     		.2byte	0x418
  1460 06f0 C2060000 		.4byte	0x6c2
  1461 06f4 12       		.uleb128 0x12
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 47
-
-
  1462 06f5 78       		.byte	0x78
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 47
+
+
  1463 06f6 09       		.byte	0x9
  1464 06f7 0205     		.2byte	0x502
  1465 06f9 C1070000 		.4byte	0x7c1
@@ -2818,10 +2817,10 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  1516 076a 09       		.byte	0x9
  1517 076b 0C05     		.2byte	0x50c
  1518 076d CE000000 		.4byte	0xce
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 48
-
-
  1519 0771 5C       		.byte	0x5c
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 48
+
+
  1520 0772 13       		.uleb128 0x13
  1521 0773 05030000 		.4byte	.LASF151
  1522 0777 09       		.byte	0x9
@@ -2878,10 +2877,10 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  1573 07e4 2402     		.2byte	0x224
  1574 07e6 F7070000 		.4byte	0x7f7
  1575 07ea 11       		.uleb128 0x11
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 49
-
-
  1576 07eb E10D0000 		.4byte	.LASF158
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 49
+
+
  1577 07ef 00       		.byte	0
  1578 07f0 11       		.uleb128 0x11
  1579 07f1 2D030000 		.4byte	.LASF159
@@ -2938,10 +2937,10 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  1630 0863 BB060000 		.4byte	0x6bb
  1631 0867 01       		.byte	0x1
  1632 0868 13       		.uleb128 0x13
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 50
-
-
  1633 0869 2D100000 		.4byte	.LASF165
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 50
+
+
  1634 086d 0A       		.byte	0xa
  1635 086e C902     		.2byte	0x2c9
  1636 0870 EE000000 		.4byte	0xee
@@ -2998,10 +2997,10 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  1687 08de AB060000 		.4byte	.LASF174
  1688 08e2 0A       		.byte	0xa
  1689 08e3 D502     		.2byte	0x2d5
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 51
-
-
  1690 08e5 66090000 		.4byte	0x966
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 51
+
+
  1691 08e9 24       		.byte	0x24
  1692 08ea 13       		.uleb128 0x13
  1693 08eb AA040000 		.4byte	.LASF175
@@ -3058,10 +3057,10 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  1744 095a 20080000 		.4byte	0x820
  1745 095e 48       		.byte	0x48
  1746 095f 00       		.byte	0
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 52
-
-
  1747 0960 14       		.uleb128 0x14
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 52
+
+
  1748 0961 04       		.byte	0x4
  1749 0962 A2000000 		.4byte	0xa2
  1750 0966 05       		.uleb128 0x5
@@ -3118,10 +3117,10 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  1801 09d7 7E02     		.2byte	0x27e
  1802 09d9 CE000000 		.4byte	0xce
  1803 09dd 14       		.byte	0x14
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 53
-
-
  1804 09de 13       		.uleb128 0x13
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 53
+
+
  1805 09df 8D0A0000 		.4byte	.LASF194
  1806 09e3 0B       		.byte	0xb
  1807 09e4 7F02     		.2byte	0x27f
@@ -3178,10 +3177,10 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  1858 0a53 B5020000 		.4byte	.LASF202
  1859 0a57 0C       		.byte	0xc
  1860 0a58 7C02     		.2byte	0x27c
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 54
-
-
  1861 0a5a CE000000 		.4byte	0xce
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 54
+
+
  1862 0a5e 0C       		.byte	0xc
  1863 0a5f 13       		.uleb128 0x13
  1864 0a60 080B0000 		.4byte	.LASF203
@@ -3238,10 +3237,10 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  1915 0acf 120A0000 		.4byte	0xa12
  1916 0ad3 30       		.byte	0x30
  1917 0ad4 13       		.uleb128 0x13
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 55
-
-
  1918 0ad5 5B090000 		.4byte	.LASF195
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 55
+
+
  1919 0ad9 0C       		.byte	0xc
  1920 0ada 8E02     		.2byte	0x28e
  1921 0adc CE000000 		.4byte	0xce
@@ -3298,10 +3297,10 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  1972 0b43 34       		.byte	0x34
  1973 0b44 CE000000 		.4byte	0xce
  1974 0b48 08       		.byte	0x8
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 56
-
-
  1975 0b49 08       		.uleb128 0x8
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 56
+
+
  1976 0b4a 190E0000 		.4byte	.LASF216
  1977 0b4e 0E       		.byte	0xe
  1978 0b4f 35       		.byte	0x35
@@ -3358,10 +3357,10 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  2029 0bb5 08       		.uleb128 0x8
  2030 0bb6 BB050000 		.4byte	.LASF225
  2031 0bba 0E       		.byte	0xe
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 57
-
-
  2032 0bbb 42       		.byte	0x42
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 57
+
+
  2033 0bbc CE000000 		.4byte	0xce
  2034 0bc0 30       		.byte	0x30
  2035 0bc1 08       		.uleb128 0x8
@@ -3418,10 +3417,10 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  2086 0c27 31       		.byte	0x31
  2087 0c28 CE000000 		.4byte	0xce
  2088 0c2c 00       		.byte	0
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 58
-
-
  2089 0c2d 08       		.uleb128 0x8
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 58
+
+
  2090 0c2e 43090000 		.4byte	.LASF214
  2091 0c32 03       		.byte	0x3
  2092 0c33 33       		.byte	0x33
@@ -3478,10 +3477,10 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  2143 0c99 08       		.uleb128 0x8
  2144 0c9a 950D0000 		.4byte	.LASF220
  2145 0c9e 03       		.byte	0x3
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 59
-
-
  2146 0c9f 3C       		.byte	0x3c
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 59
+
+
  2147 0ca0 BB060000 		.4byte	0x6bb
  2148 0ca4 28       		.byte	0x28
  2149 0ca5 08       		.uleb128 0x8
@@ -3538,10 +3537,10 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  2200 0d0b 48       		.byte	0x48
  2201 0d0c CE000000 		.4byte	0xce
  2202 0d10 4C       		.byte	0x4c
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 60
-
-
  2203 0d11 08       		.uleb128 0x8
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 60
+
+
  2204 0d12 DE010000 		.4byte	.LASF227
  2205 0d16 03       		.byte	0x3
  2206 0d17 4A       		.byte	0x4a
@@ -3598,10 +3597,10 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  2257 0d7a 81020000 		.4byte	.LASF250
  2258 0d7e 0F       		.byte	0xf
  2259 0d7f 3F       		.byte	0x3f
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 61
-
-
  2260 0d80 9E0D0000 		.4byte	0xd9e
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 61
+
+
  2261 0d84 08       		.byte	0x8
  2262 0d85 08       		.uleb128 0x8
  2263 0d86 750E0000 		.4byte	.LASF251
@@ -3658,10 +3657,10 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  2314 0df4 03       		.byte	0x3
  2315 0df5 1E0E0000 		.4byte	0xe1e
  2316 0df9 1C       		.uleb128 0x1c
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 62
-
-
  2317 0dfa 86050000 		.4byte	.LASF254
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 62
+
+
  2318 0dfe 03       		.byte	0x3
  2319 0dff BF01     		.2byte	0x1bf
  2320 0e01 E60D0000 		.4byte	0xde6
@@ -3718,10 +3717,10 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  2371 0e76 1D       		.uleb128 0x1d
  2372 0e77 83110000 		.4byte	.LASF262
  2373 0e7b 10       		.byte	0x10
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 63
-
-
  2374 0e7c A9       		.byte	0xa9
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 63
+
+
  2375 0e7d 03       		.byte	0x3
  2376 0e7e 8E0E0000 		.4byte	0xe8e
  2377 0e82 1E       		.uleb128 0x1e
@@ -3774,14 +3773,14 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  2424 0ee6 1F       		.uleb128 0x1f
  2425 0ee7 390E0000 		.4byte	.LASF305
  2426 0eeb 01       		.byte	0x1
- 2427 0eec 80       		.byte	0x80
+ 2427 0eec 7F       		.byte	0x7f
  2428 0eed 00000000 		.4byte	.LFB762
  2429 0ef1 10000000 		.4byte	.LFE762-.LFB762
  2430 0ef5 01       		.uleb128 0x1
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 64
-
-
  2431 0ef6 9C       		.byte	0x9c
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 64
+
+
  2432 0ef7 20       		.uleb128 0x20
  2433 0ef8 DF000000 		.4byte	.LASF266
  2434 0efc 01       		.byte	0x1
@@ -3838,10 +3837,10 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  2485 0f6e 25       		.byte	0x25
  2486 0f6f 9B000000 		.4byte	0x9b
  2487 0f73 9F000000 		.4byte	.LLST3
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 65
-
-
  2488 0f77 25       		.uleb128 0x25
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 65
+
+
  2489 0f78 16000000 		.4byte	.LVL5
  2490 0f7c 79150000 		.4byte	0x1579
  2491 0f80 990F0000 		.4byte	0xf99
@@ -3898,10 +3897,10 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  2542 0fca 02       		.uleb128 0x2
  2543 0fcb 75       		.byte	0x75
  2544 0fcc 00       		.sleb128 0
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 66
-
-
  2545 0fcd 23       		.uleb128 0x23
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 66
+
+
  2546 0fce 01       		.uleb128 0x1
  2547 0fcf 51       		.byte	0x51
  2548 0fd0 02       		.uleb128 0x2
@@ -3958,10 +3957,10 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  2599 101a 84150000 		.4byte	0x1584
  2600 101e 2D100000 		.4byte	0x102d
  2601 1022 23       		.uleb128 0x23
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 67
-
-
  2602 1023 01       		.uleb128 0x1
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 67
+
+
  2603 1024 50       		.byte	0x50
  2604 1025 01       		.uleb128 0x1
  2605 1026 3E       		.byte	0x3e
@@ -4018,10 +4017,10 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  2656 1074 76       		.byte	0x76
  2657 1075 00       		.sleb128 0
  2658 1076 00       		.byte	0
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 68
-
-
  2659 1077 25       		.uleb128 0x25
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 68
+
+
  2660 1078 7E000000 		.4byte	.LVL25
  2661 107c 84150000 		.4byte	0x1584
  2662 1080 8F100000 		.4byte	0x108f
@@ -4078,10 +4077,10 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  2713 10d1 3C       		.byte	0x3c
  2714 10d2 23       		.uleb128 0x23
  2715 10d3 01       		.uleb128 0x1
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 69
-
-
  2716 10d4 51       		.byte	0x51
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 69
+
+
  2717 10d5 02       		.uleb128 0x2
  2718 10d6 75       		.byte	0x75
  2719 10d7 00       		.sleb128 0
@@ -4138,10 +4137,10 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  2770 112b 3B110000 		.4byte	0x113b
  2771 112f 23       		.uleb128 0x23
  2772 1130 01       		.uleb128 0x1
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 70
-
-
  2773 1131 50       		.byte	0x50
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 70
+
+
  2774 1132 01       		.uleb128 0x1
  2775 1133 3A       		.byte	0x3a
  2776 1134 23       		.uleb128 0x23
@@ -4198,12 +4197,12 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  2827 117f 00       		.byte	0
  2828 1180 00       		.byte	0
  2829 1181 20       		.uleb128 0x20
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 71
-
-
  2830 1182 23120000 		.4byte	.LASF272
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 71
+
+
  2831 1186 01       		.byte	0x1
- 2832 1187 51       		.byte	0x51
+ 2832 1187 50       		.byte	0x50
  2833 1188 00000000 		.4byte	.LFB757
  2834 118c 24000000 		.4byte	.LFE757-.LFB757
  2835 1190 01       		.uleb128 0x1
@@ -4214,7 +4213,7 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  2840 119b 0E000000 		.4byte	.LBB32
  2841 119f 04000000 		.4byte	.LBE32-.LBB32
  2842 11a3 01       		.byte	0x1
- 2843 11a4 54       		.byte	0x54
+ 2843 11a4 53       		.byte	0x53
  2844 11a5 BC110000 		.4byte	0x11bc
  2845 11a9 27       		.uleb128 0x27
  2846 11aa A70E0000 		.4byte	0xea7
@@ -4228,7 +4227,7 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  2854 11c1 12000000 		.4byte	.LBB34
  2855 11c5 06000000 		.4byte	.LBE34-.LBB34
  2856 11c9 01       		.byte	0x1
- 2857 11ca 55       		.byte	0x55
+ 2857 11ca 54       		.byte	0x54
  2858 11cb 04120000 		.4byte	0x1204
  2859 11cf 27       		.uleb128 0x27
  2860 11d0 820E0000 		.4byte	0xe82
@@ -4255,13 +4254,13 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  2881 1209 18000000 		.4byte	.LBB37
  2882 120d 0C000000 		.4byte	.LBE37-.LBB37
  2883 1211 01       		.byte	0x1
- 2884 1212 56       		.byte	0x56
+ 2884 1212 55       		.byte	0x55
  2885 1213 2A120000 		.4byte	0x122a
  2886 1217 27       		.uleb128 0x27
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 72
-
-
  2887 1218 690E0000 		.4byte	0xe69
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 72
+
+
  2888 121c 41010000 		.4byte	.LLST10
  2889 1220 27       		.uleb128 0x27
  2890 1221 5D0E0000 		.4byte	0xe5d
@@ -4286,7 +4285,7 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  2909 1240 20       		.uleb128 0x20
  2910 1241 1A080000 		.4byte	.LASF273
  2911 1245 01       		.byte	0x1
- 2912 1246 5A       		.byte	0x5a
+ 2912 1246 59       		.byte	0x59
  2913 1247 00000000 		.4byte	.LFB758
  2914 124b 30000000 		.4byte	.LFE758-.LFB758
  2915 124f 01       		.uleb128 0x1
@@ -4295,13 +4294,13 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  2918 1255 24       		.uleb128 0x24
  2919 1256 15080000 		.4byte	.LASF274
  2920 125a 01       		.byte	0x1
- 2921 125b 5A       		.byte	0x5a
+ 2921 125b 59       		.byte	0x59
  2922 125c CE000000 		.4byte	0xce
  2923 1260 6D010000 		.4byte	.LLST12
  2924 1264 29       		.uleb128 0x29
  2925 1265 84100000 		.4byte	.LASF213
  2926 1269 01       		.byte	0x1
- 2927 126a 5C       		.byte	0x5c
+ 2927 126a 5B       		.byte	0x5b
  2928 126b CE000000 		.4byte	0xce
  2929 126f A4010000 		.4byte	.LLST13
  2930 1273 26       		.uleb128 0x26
@@ -4309,7 +4308,7 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  2932 1278 0A000000 		.4byte	.LBB39
  2933 127c 06000000 		.4byte	.LBE39-.LBB39
  2934 1280 01       		.byte	0x1
- 2935 1281 60       		.byte	0x60
+ 2935 1281 5F       		.byte	0x5f
  2936 1282 BC120000 		.4byte	0x12bc
  2937 1286 27       		.uleb128 0x27
  2938 1287 D90E0000 		.4byte	0xed9
@@ -4318,10 +4317,10 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  2941 1290 1E0E0000 		.4byte	0xe1e
  2942 1294 0A000000 		.4byte	.LBB40
  2943 1298 06000000 		.4byte	.LBE40-.LBB40
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 73
-
-
  2944 129c 10       		.byte	0x10
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 73
+
+
  2945 129d 0601     		.2byte	0x106
  2946 129f 27       		.uleb128 0x27
  2947 12a0 430E0000 		.4byte	0xe43
@@ -4339,7 +4338,7 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  2959 12c1 12000000 		.4byte	.LBB42
  2960 12c5 04000000 		.4byte	.LBE42-.LBB42
  2961 12c9 01       		.byte	0x1
- 2962 12ca 61       		.byte	0x61
+ 2962 12ca 60       		.byte	0x60
  2963 12cb 04130000 		.4byte	0x1304
  2964 12cf 27       		.uleb128 0x27
  2965 12d0 820E0000 		.4byte	0xe82
@@ -4366,7 +4365,7 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  2986 1309 16000000 		.4byte	.LBB45
  2987 130d 08000000 		.4byte	.LBE45-.LBB45
  2988 1311 01       		.byte	0x1
- 2989 1312 62       		.byte	0x62
+ 2989 1312 61       		.byte	0x61
  2990 1313 4C130000 		.4byte	0x134c
  2991 1317 27       		.uleb128 0x27
  2992 1318 C00E0000 		.4byte	0xec0
@@ -4378,10 +4377,10 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  2998 132d 10       		.byte	0x10
  2999 132e EC       		.byte	0xec
  3000 132f 27       		.uleb128 0x27
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 74
-
-
  3001 1330 110E0000 		.4byte	0xe11
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 74
+
+
  3002 1334 70020000 		.4byte	.LLST23
  3003 1338 27       		.uleb128 0x27
  3004 1339 050E0000 		.4byte	0xe05
@@ -4396,7 +4395,7 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  3013 1351 1E000000 		.4byte	.LBB48
  3014 1355 12000000 		.4byte	.LBE48-.LBB48
  3015 1359 01       		.byte	0x1
- 3016 135a 66       		.byte	0x66
+ 3016 135a 65       		.byte	0x65
  3017 135b 2B       		.uleb128 0x2b
  3018 135c 820E0000 		.4byte	0xe82
  3019 1360 00       		.byte	0
@@ -4421,7 +4420,7 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  3038 138e 20       		.uleb128 0x20
  3039 138f C00A0000 		.4byte	.LASF275
  3040 1393 01       		.byte	0x1
- 3041 1394 6B       		.byte	0x6b
+ 3041 1394 6A       		.byte	0x6a
  3042 1395 00000000 		.4byte	.LFB759
  3043 1399 16000000 		.4byte	.LFE759-.LFB759
  3044 139d 01       		.uleb128 0x1
@@ -4430,18 +4429,18 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  3047 13a3 24       		.uleb128 0x24
  3048 13a4 15080000 		.4byte	.LASF274
  3049 13a8 01       		.byte	0x1
- 3050 13a9 6B       		.byte	0x6b
+ 3050 13a9 6A       		.byte	0x6a
  3051 13aa CE000000 		.4byte	0xce
  3052 13ae C8020000 		.4byte	.LLST29
  3053 13b2 24       		.uleb128 0x24
  3054 13b3 B2050000 		.4byte	.LASF276
  3055 13b7 01       		.byte	0x1
- 3056 13b8 6B       		.byte	0x6b
+ 3056 13b8 6A       		.byte	0x6a
  3057 13b9 CE000000 		.4byte	0xce
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 75
-
-
  3058 13bd E9020000 		.4byte	.LLST30
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 75
+
+
  3059 13c1 25       		.uleb128 0x25
  3060 13c2 08000000 		.4byte	.LVL56
  3061 13c6 40120000 		.4byte	0x1240
@@ -4478,7 +4477,7 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  3092 13fa 20       		.uleb128 0x20
  3093 13fb E50E0000 		.4byte	.LASF277
  3094 13ff 01       		.byte	0x1
- 3095 1400 74       		.byte	0x74
+ 3095 1400 73       		.byte	0x73
  3096 1401 00000000 		.4byte	.LFB760
  3097 1405 08000000 		.4byte	.LFE760-.LFB760
  3098 1409 01       		.uleb128 0x1
@@ -4491,24 +4490,24 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  3105 1419 2C       		.uleb128 0x2c
  3106 141a CE0F0000 		.4byte	.LASF306
  3107 141e 01       		.byte	0x1
- 3108 141f 7A       		.byte	0x7a
+ 3108 141f 79       		.byte	0x79
  3109 1420 A2000000 		.4byte	0xa2
  3110 1424 00000000 		.4byte	.LFB761
  3111 1428 0C000000 		.4byte	.LFE761-.LFB761
  3112 142c 01       		.uleb128 0x1
  3113 142d 9C       		.byte	0x9c
  3114 142e 3C140000 		.4byte	0x143c
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 76
-
-
  3115 1432 21       		.uleb128 0x21
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 76
+
+
  3116 1433 06000000 		.4byte	.LVL60
  3117 1437 B1150000 		.4byte	0x15b1
  3118 143b 00       		.byte	0
  3119 143c 20       		.uleb128 0x20
  3120 143d 6C100000 		.4byte	.LASF278
  3121 1441 01       		.byte	0x1
- 3122 1442 85       		.byte	0x85
+ 3122 1442 84       		.byte	0x84
  3123 1443 00000000 		.4byte	.LFB763
  3124 1447 20000000 		.4byte	.LFE763-.LFB763
  3125 144b 01       		.uleb128 0x1
@@ -4552,16 +4551,16 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  3163 148d 2D       		.uleb128 0x2d
  3164 148e 94020000 		.4byte	.LASF307
  3165 1492 01       		.byte	0x1
- 3166 1493 91       		.byte	0x91
+ 3166 1493 90       		.byte	0x90
  3167 1494 CE000000 		.4byte	0xce
  3168 1498 00000000 		.4byte	.LFB764
  3169 149c 0C000000 		.4byte	.LFE764-.LFB764
  3170 14a0 01       		.uleb128 0x1
  3171 14a1 9C       		.byte	0x9c
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 77
-
-
  3172 14a2 2E       		.uleb128 0x2e
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 77
+
+
  3173 14a3 5E000000 		.4byte	.LASF279
  3174 14a7 01       		.byte	0x1
  3175 14a8 19       		.byte	0x19
@@ -4618,10 +4617,10 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  3226 151d 87       		.byte	0x87
  3227 151e E20A0000 		.4byte	0xae2
  3228 1522 30       		.uleb128 0x30
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 78
-
-
  3229 1523 82000000 		.4byte	.LASF286
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 78
+
+
  3230 1527 14       		.byte	0x14
  3231 1528 1F       		.byte	0x1f
  3232 1529 2D150000 		.4byte	0x152d
@@ -4678,10 +4677,10 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  3283 159b 73110000 		.4byte	.LASF296
  3284 159f 73110000 		.4byte	.LASF296
  3285 15a3 1A       		.byte	0x1a
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 79
-
-
  3286 15a4 8903     		.2byte	0x389
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 79
+
+
  3287 15a6 31       		.uleb128 0x31
  3288 15a7 5C080000 		.4byte	.LASF297
  3289 15ab 5C080000 		.4byte	.LASF297
@@ -4738,10 +4737,10 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  3340 0019 0B       		.uleb128 0xb
  3341 001a 03       		.uleb128 0x3
  3342 001b 0E       		.uleb128 0xe
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 80
-
-
  3343 001c 00       		.byte	0
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 80
+
+
  3344 001d 00       		.byte	0
  3345 001e 03       		.uleb128 0x3
  3346 001f 16       		.uleb128 0x16
@@ -4798,10 +4797,10 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  3397 0052 0D       		.uleb128 0xd
  3398 0053 00       		.byte	0
  3399 0054 03       		.uleb128 0x3
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 81
-
-
  3400 0055 0E       		.uleb128 0xe
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 81
+
+
  3401 0056 3A       		.uleb128 0x3a
  3402 0057 0B       		.uleb128 0xb
  3403 0058 3B       		.uleb128 0x3b
@@ -4858,10 +4857,10 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  3454 008b 0C       		.uleb128 0xc
  3455 008c 01       		.uleb128 0x1
  3456 008d 01       		.byte	0x1
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 82
-
-
  3457 008e 49       		.uleb128 0x49
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 82
+
+
  3458 008f 13       		.uleb128 0x13
  3459 0090 01       		.uleb128 0x1
  3460 0091 13       		.uleb128 0x13
@@ -4918,10 +4917,10 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  3511 00c4 0E       		.uleb128 0xe
  3512 00c5 1C       		.uleb128 0x1c
  3513 00c6 0B       		.uleb128 0xb
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 83
-
-
  3514 00c7 00       		.byte	0
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 83
+
+
  3515 00c8 00       		.byte	0
  3516 00c9 12       		.uleb128 0x12
  3517 00ca 13       		.uleb128 0x13
@@ -4978,10 +4977,10 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  3568 00fd 00       		.byte	0
  3569 00fe 17       		.uleb128 0x17
  3570 00ff 15       		.uleb128 0x15
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 84
-
-
  3571 0100 01       		.byte	0x1
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 84
+
+
  3572 0101 27       		.uleb128 0x27
  3573 0102 19       		.uleb128 0x19
  3574 0103 49       		.uleb128 0x49
@@ -5038,10 +5037,10 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  3625 0136 1B       		.uleb128 0x1b
  3626 0137 2E       		.uleb128 0x2e
  3627 0138 01       		.byte	0x1
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 85
-
-
  3628 0139 03       		.uleb128 0x3
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 85
+
+
  3629 013a 0E       		.uleb128 0xe
  3630 013b 3A       		.uleb128 0x3a
  3631 013c 0B       		.uleb128 0xb
@@ -5098,10 +5097,10 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  3682 016f 13       		.uleb128 0x13
  3683 0170 00       		.byte	0
  3684 0171 00       		.byte	0
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 86
-
-
  3685 0172 1F       		.uleb128 0x1f
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 86
+
+
  3686 0173 2E       		.uleb128 0x2e
  3687 0174 00       		.byte	0
  3688 0175 03       		.uleb128 0x3
@@ -5158,10 +5157,10 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  3739 01ac 00       		.byte	0
  3740 01ad 22       		.uleb128 0x22
  3741 01ae 898201   		.uleb128 0x4109
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 87
-
-
  3742 01b1 01       		.byte	0x1
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 87
+
+
  3743 01b2 11       		.uleb128 0x11
  3744 01b3 01       		.uleb128 0x1
  3745 01b4 31       		.uleb128 0x31
@@ -5218,10 +5217,10 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  3796 01ec 0B       		.uleb128 0xb
  3797 01ed 01       		.uleb128 0x1
  3798 01ee 13       		.uleb128 0x13
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 88
-
-
  3799 01ef 00       		.byte	0
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 88
+
+
  3800 01f0 00       		.byte	0
  3801 01f1 27       		.uleb128 0x27
  3802 01f2 05       		.uleb128 0x5
@@ -5278,10 +5277,10 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  3853 0225 00       		.byte	0
  3854 0226 00       		.byte	0
  3855 0227 2B       		.uleb128 0x2b
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 89
-
-
  3856 0228 05       		.uleb128 0x5
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 89
+
+
  3857 0229 00       		.byte	0
  3858 022a 31       		.uleb128 0x31
  3859 022b 13       		.uleb128 0x13
@@ -5338,10 +5337,10 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  3910 025f 40       		.uleb128 0x40
  3911 0260 18       		.uleb128 0x18
  3912 0261 9742     		.uleb128 0x2117
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 90
-
-
  3913 0263 19       		.uleb128 0x19
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 90
+
+
  3914 0264 00       		.byte	0
  3915 0265 00       		.byte	0
  3916 0266 2E       		.uleb128 0x2e
@@ -5398,10 +5397,10 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  3967 0299 00       		.byte	0
  3968 029a 3F       		.uleb128 0x3f
  3969 029b 19       		.uleb128 0x19
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 91
-
-
  3970 029c 3C       		.uleb128 0x3c
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 91
+
+
  3971 029d 19       		.uleb128 0x19
  3972 029e 6E       		.uleb128 0x6e
  3973 029f 0E       		.uleb128 0xe
@@ -5458,10 +5457,10 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  4024              	.LLST1:
  4025 0037 00000000 		.4byte	.LVL2
  4026 003b 12000000 		.4byte	.LVL4
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 92
-
-
  4027 003f 0100     		.2byte	0x1
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 92
+
+
  4028 0041 51       		.byte	0x51
  4029 0042 12000000 		.4byte	.LVL4
  4030 0046 26000000 		.4byte	.LVL9
@@ -5518,10 +5517,10 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  4081 00d3 0100     		.2byte	0x1
  4082 00d5 50       		.byte	0x50
  4083 00d6 5E000000 		.4byte	.LVL21
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 93
-
-
  4084 00da E8000000 		.4byte	.LVL40
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 93
+
+
  4085 00de 0100     		.2byte	0x1
  4086 00e0 54       		.byte	0x54
  4087 00e1 00000000 		.4byte	0
@@ -5578,10 +5577,10 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  4138 0165 00000000 		.4byte	0
  4139 0169 00000000 		.4byte	0
  4140              	.LLST12:
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 94
-
-
  4141 016d 00000000 		.4byte	.LVL45
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 94
+
+
  4142 0171 06000000 		.4byte	.LVL46
  4143 0175 0100     		.2byte	0x1
  4144 0177 50       		.byte	0x50
@@ -5638,10 +5637,10 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  4195 01e9 00000000 		.4byte	0
  4196 01ed 00000000 		.4byte	0
  4197              	.LLST16:
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 95
-
-
  4198 01f1 0A000000 		.4byte	.LVL47
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 95
+
+
  4199 01f5 10000000 		.4byte	.LVL49
  4200 01f9 0200     		.2byte	0x2
  4201 01fb 30       		.byte	0x30
@@ -5698,10 +5697,10 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  4252 027c 00000000 		.4byte	0
  4253 0280 00000000 		.4byte	0
  4254              	.LLST25:
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 96
-
-
  4255 0284 16000000 		.4byte	.LVL51
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 96
+
+
  4256 0288 1C000000 		.4byte	.LVL52
  4257 028c 0600     		.2byte	0x6
  4258 028e 0C       		.byte	0xc
@@ -5758,10 +5757,10 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  4309 000a 04       		.byte	0x4
  4310 000b 00       		.byte	0
  4311 000c 0000     		.2byte	0
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 97
-
-
  4312 000e 0000     		.2byte	0
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 97
+
+
  4313 0010 00000000 		.4byte	.LFB762
  4314 0014 10000000 		.4byte	.LFE762-.LFB762
  4315 0018 00000000 		.4byte	.LFB755
@@ -5818,10 +5817,10 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  4362              	.LASF90:
  4363 0000 666C6173 		.ascii	"flashCtlMainWs1Freq\000"
  4363      6843746C 
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 98
-
-
  4363      4D61696E 
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 98
+
+
  4363      57733146 
  4363      72657100 
  4364              	.LASF28:
@@ -5878,10 +5877,10 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  4385      496E7075 
  4385      7400
  4386              	.LASF199:
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 99
-
-
  4387 00b7 74785374 		.ascii	"txStatus\000"
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 99
+
+
  4387      61747573 
  4387      00
  4388              	.LASF49:
@@ -5938,10 +5937,10 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  4409      414400
  4410              	.LASF161:
  4411 0158 63795F63 		.ascii	"cy_cb_scb_i2c_handle_events_t\000"
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 100
-
-
  4411      625F7363 
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 100
+
+
  4411      625F6932 
  4411      635F6861 
  4411      6E646C65 
@@ -5998,10 +5997,10 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  4432              	.LASF47:
  4433 021f 63707573 		.ascii	"cpussBase\000"
  4433      73426173 
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 101
-
-
  4433      6500
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 101
+
+
  4434              	.LASF248:
  4435 0229 6368616E 		.ascii	"channelBase\000"
  4435      6E656C42 
@@ -6058,10 +6057,10 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  4457      53697A65 
  4457      00
  4458              	.LASF106:
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 102
-
-
  4459 02d8 70657269 		.ascii	"periDivCmdPaDivSelPos\000"
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 102
+
+
  4459      44697643 
  4459      6D645061 
  4459      44697653 
@@ -6118,10 +6117,10 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  4480      20726576 
  4480      6973696F 
  4480      6E203233 
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 103
-
-
  4480      37373135 
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 103
+
+
  4481 03d0 6F667466 		.ascii	"oftfp -mfpu=fpv4-sp-d16 -mthumb -g -Og -ffunction-s"
  4481      70202D6D 
  4481      6670753D 
@@ -6178,10 +6177,10 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  4498      7200
  4499              	.LASF287:
  4500 04b8 436F756E 		.ascii	"Counter_Echo_config\000"
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 104
-
-
  4500      7465725F 
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 104
+
+
  4500      4563686F 
  4500      5F636F6E 
  4500      66696700 
@@ -6238,10 +6237,10 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  4521              	.LASF79:
  4522 057a 65704D6F 		.ascii	"epMonitorNr\000"
  4522      6E69746F 
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 105
-
-
  4522      724E7200 
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 105
+
+
  4523              	.LASF254:
  4524 0586 62617365 		.ascii	"base\000"
  4524      00
@@ -6298,10 +6297,10 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  4546      6F4F6666 
  4546      73657400 
  4547              	.LASF270:
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 106
-
-
  4548 062e 6D335F73 		.ascii	"m3_speed\000"
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 106
+
+
  4548      70656564 
  4548      00
  4549              	.LASF293:
@@ -6358,10 +6357,10 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  4570      4E00
  4571              	.LASF76:
  4572 06dd 70657269 		.ascii	"periClockNr\000"
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 107
-
-
  4572      436C6F63 
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 107
+
+
  4572      6B4E7200 
  4573              	.LASF226:
  4574 06e9 73746172 		.ascii	"startInputMode\000"
@@ -6418,10 +6417,10 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  4594      68506970 
  4594      65526571 
  4594      75697265 
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 108
-
-
  4594      6400
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 108
+
+
  4595              	.LASF182:
  4596 0797 63624576 		.ascii	"cbEvents\000"
  4596      656E7473 
@@ -6478,10 +6477,10 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  4620      69746554 
  4620      6F6E6500 
  4621              	.LASF299:
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 109
-
-
  4622 082a 43795F53 		.ascii	"Cy_SysTick_Enable\000"
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 109
+
+
  4622      79735469 
  4622      636B5F45 
  4622      6E61626C 
@@ -6538,10 +6537,10 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  4644 08c7 63617074 		.ascii	"captureInput\000"
  4644      75726549 
  4644      6E707574 
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 110
-
-
  4644      00
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 110
+
+
  4645              	.LASF26:
  4646 08d4 50455249 		.ascii	"PERIOD\000"
  4646      4F4400
@@ -6598,10 +6597,10 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  4670 0963 64775374 		.ascii	"dwStatusChIdxMsk\000"
  4670      61747573 
  4670      43684964 
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 111
-
-
  4670      784D736B 
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 111
+
+
  4670      00
  4671              	.LASF14:
  4672 0974 75696E74 		.ascii	"uint8_t\000"
@@ -6658,10 +6657,10 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  4692      7352616D 
  4692      3043746C 
  4692      3000
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 112
-
-
  4693              	.LASF46:
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 112
+
+
  4694 0a25 54435057 		.ascii	"TCPWM_Type\000"
  4694      4D5F5479 
  4694      706500
@@ -6718,10 +6717,10 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  4718 0ab4 6D617374 		.ascii	"masterRdDir\000"
  4718      65725264 
  4718      44697200 
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 113
-
-
  4719              	.LASF275:
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 113
+
+
  4720 0ac0 536F756E 		.ascii	"Sound_Play\000"
  4720      645F506C 
  4720      617900
@@ -6778,10 +6777,10 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  4740      66736574 
  4741              	.LASF259:
  4742 0b6f 43795F54 		.ascii	"Cy_TCPWM_PWM_SetPeriod0\000"
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 114
-
-
  4742      4350574D 
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 114
+
+
  4742      5F50574D 
  4742      5F536574 
  4742      50657269 
@@ -6838,10 +6837,10 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  4763              	.LASF7:
  4764 0c17 73686F72 		.ascii	"short unsigned int\000"
  4764      7420756E 
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 115
-
-
  4764      7369676E 
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 115
+
+
  4764      65642069 
  4764      6E7400
  4765              	.LASF201:
@@ -6898,10 +6897,10 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  4786      6800
  4787              	.LASF91:
  4788 0ccd 666C6173 		.ascii	"flashCtlMainWs2Freq\000"
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 116
-
-
  4788      6843746C 
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 116
+
+
  4788      4D61696E 
  4788      57733246 
  4788      72657100 
@@ -6958,10 +6957,10 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  4809              	.LASF221:
  4810 0d84 696E7465 		.ascii	"interruptSources\000"
  4810      72727570 
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 117
-
-
  4810      74536F75 
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 117
+
+
  4810      72636573 
  4810      00
  4811              	.LASF220:
@@ -7018,10 +7017,10 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  4832      65637469 
  4832      6F6E00
  4833              	.LASF205:
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 118
-
-
  4834 0e28 74784C65 		.ascii	"txLeftToTransmit\000"
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 118
+
+
  4834      6674546F 
  4834      5472616E 
  4834      736D6974 
@@ -7078,10 +7077,10 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  4855              	.LASF36:
  4856 0ed1 494E5452 		.ascii	"INTR_MASKED\000"
  4856      5F4D4153 
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 119
-
-
  4856      4B454400 
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 119
+
+
  4857              	.LASF25:
  4858 0edd 43435F42 		.ascii	"CC_BUFF\000"
  4858      55464600 
@@ -7138,10 +7137,10 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  4880      73436D30 
  4880      53746174 
  4880      75734F66 
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 120
-
-
  4880      66736574 
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 120
+
+
  4881              	.LASF143:
  4882 0f8b 73616D70 		.ascii	"sampleCtrl\000"
  4882      6C654374 
@@ -7198,10 +7197,10 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  4904 102d 73746174 		.ascii	"state\000"
  4904      6500
  4905              	.LASF142:
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 121
-
-
  4906 1033 6374726C 		.ascii	"ctrl\000"
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 121
+
+
  4906      00
  4907              	.LASF282:
  4908 1038 4144435F 		.ascii	"ADC_currentConfig\000"
@@ -7258,10 +7257,10 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  4928      74635F64 
  4928      65766963 
  4928      655F7400 
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 122
-
-
  4929              	.LASF29:
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 122
+
+
  4930 10e6 54525F43 		.ascii	"TR_CTRL0\000"
  4930      54524C30 
  4930      00
@@ -7318,10 +7317,10 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  4951              	.LASF32:
  4952 1197 52455345 		.ascii	"RESERVED1\000"
  4952      52564544 
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 123
-
-
  4952      3100
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 123
+
+
  4953              	.LASF110:
  4954 11a1 70657269 		.ascii	"periDiv16_5CtlOffset\000"
  4954      44697631 
@@ -7378,10 +7377,10 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 1
  4976      4F445F42 
  4976      55464600 
  4977              	.LASF190:
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\cc3T9BxE.s 			page 124
-
-
  4978 1257 72784275 		.ascii	"rxBufSize\000"
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccf8UWXa.s 			page 124
+
+
  4978      6653697A 
  4978      6500
  4979              	.LASF22:

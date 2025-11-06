@@ -1,4 +1,5 @@
 #include <project.h>
+
 #include "car.h"
 #include "music.h"
 #include "cm4_common.h"
@@ -24,6 +25,8 @@ ipc_msg_t ipcMsgForCM0 = {               /* IPC structure to be sent to CM0 */
 static void processIncomingIPCMessage(ipc_msg_t* msg);
 static void processCM4Command(enum cm4CommandList cmd);
 
+// Start flag
+bool startCar = false;
 
 int main(void)
 {    
@@ -92,12 +95,17 @@ int main(void)
     // Then execute remaining code
     Leds_FillSolidColor(0, 0, 0);
     
+    for (;!startCar;) {
+        if (CM4_isDataAvailableFromCM0()) {
+            processIncomingIPCMessage(CM4_GetCM0Message());
+        }
+    }
+    
     // MAIN LOOP   
     for(;;)
-    {
+    {        
         // Check for new messages from CM0 core and process them. This is the most important task.
-        if (CM4_isDataAvailableFromCM0())
-        {
+        if (CM4_isDataAvailableFromCM0()) {
             processIncomingIPCMessage(CM4_GetCM0Message());
         }
        
@@ -120,12 +128,15 @@ int main(void)
         //}
         
         // Duplicate track sensor on Smart LEDs
+        Motor_Move(1000, 1000, 1000, 1000);
+        
         uint8_t track = Track_Read();
         for (uint8_t i=0; i<7u; i++)
         {
             Leds_PutPixel(i,track & 0x01u ? 0x55u : 0x00u, 0x00u, 0x00u);
             track = track >> 1;
-        }    
+        }
+        
 
         Leds_Update();
        
@@ -168,27 +179,15 @@ static void processCM4Command(enum cm4CommandList cmd)
 {
     switch (cmd)
     {
-        case CM4_COMMAND_LED_ENA:
-        {
-            Cy_GPIO_Write(LEDG_0_PORT, LEDG_0_NUM, 0);
-            Cy_GPIO_Write(LEDR_0_PORT, LEDR_0_NUM, 0);
+        case CM4_COMMAND_START_CAR:
+        {   
+            startCar = true;
             break;
         }
-        case CM4_COMMAND_LED_DIS:
-        {
-            Cy_GPIO_Write(LEDG_0_PORT, LEDG_0_NUM, 1);
-            Cy_GPIO_Write(LEDR_0_PORT, LEDR_0_NUM, 1);
-            break;
-        }
-        case CM4_COMMAND_CAR_SAY:
-        {
-            if (CM4_IsCM0Ready())
-            {
-                ipcMsgForCM0.userCode = IPC_USR_CODE_CMD;
-                ipcMsgForCM0.len = 0x01;
-                ipcMsgForCM0.buffer[0] = (uint8_t)CM0_SHARED_CAR_SAY;
-                CM4_SendCM0Message(&ipcMsgForCM0);
-            }
+        case CM4_COMMAND_STOP_CAR:
+        {   
+            Motor_Move(0, 0, 0, 0);
+            CyDelay(5000);
             break;
         }
         case CM4_COMMAND_ECHO:

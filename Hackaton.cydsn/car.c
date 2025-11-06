@@ -74,7 +74,6 @@ void Motor_Move(int m1_speed, int m2_speed, int m3_speed, int m4_speed) {
   }
 }
 
-
 ///////////////////// SOUND API ///////////////////////////////////////////////
 
 //Sound subsystem initialization

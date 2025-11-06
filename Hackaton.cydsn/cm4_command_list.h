@@ -17,10 +17,9 @@ enum cm4CommandList
 {
     CM4_COMMANDS_START = 0x00,
     // Those are dummy commands to give you the starting point.
-    CM4_COMMAND_LED_ENA = 0x01,
-    CM4_COMMAND_LED_DIS = 0x02,
-    CM4_COMMAND_CAR_SAY = 0x03,
-    CM4_COMMAND_ECHO    = 0x04,
+    CM4_COMMAND_START_CAR = 0x01,
+    CM4_COMMAND_STOP_CAR = 0x02,
+    CM4_COMMAND_ECHO = 0x03,
     CM4_COMMAND_END = CM4_COMMAND_ECHO,
 };
 

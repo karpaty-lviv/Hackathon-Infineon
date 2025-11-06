@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 1
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccnkBFsd.s 			page 1
 
 
    1              		.syntax unified
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 1
   39              		.file 2 "Generated_Source\\PSoC6\\pdl\\cmsis/include/cmsis_gcc.h"
    1:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** /**************************************************************************//**
    2:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****  * @file     cmsis_gcc.h
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 2
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccnkBFsd.s 			page 2
 
 
    3:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****  * @brief    CMSIS compiler GCC header file
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 1
   57:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #endif
   58:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #ifndef   __WEAK
   59:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****   #define __WEAK                                 __attribute__((weak))
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 3
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccnkBFsd.s 			page 3
 
 
   60:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #endif
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 1
  114:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****   #define __RESTRICT                             __restrict
  115:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #endif
  116:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** 
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 4
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccnkBFsd.s 			page 4
 
 
  117:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** 
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 1
   69              		.file 5 "Generated_Source\\PSoC6\\pdl\\drivers/peripheral/device/cy_device.h"
   70              		.file 6 "Generated_Source\\PSoC6\\pdl\\drivers/peripheral/sar/cy_sar.h"
   71              		.file 7 "Generated_Source\\PSoC6\\pdl\\drivers/peripheral/scb/cy_scb_i2c.h"
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 5
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccnkBFsd.s 			page 5
 
 
   72              		.file 8 "Generated_Source\\PSoC6\\pdl\\drivers/peripheral/scb/cy_scb_spi.h"
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 1
  126 0055 03       		.byte	0x3
  127 0056 2B       		.byte	0x2b
  128 0057 5B000000 		.4byte	0x5b
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 6
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccnkBFsd.s 			page 6
 
 
  129 005b 02       		.uleb128 0x2
@@ -358,7 +358,7 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 1
  183 00c4 04       		.byte	0x4
  184 00c5 07       		.byte	0x7
  185 00c6 2A0C0000 		.4byte	.LASF17
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 7
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccnkBFsd.s 			page 7
 
 
  186 00ca 05       		.uleb128 0x5
@@ -418,7 +418,7 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 1
  240 0133 AB0F0000 		.4byte	.LASF26
  241 0137 05       		.byte	0x5
  242 0138 3E       		.byte	0x3e
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 8
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccnkBFsd.s 			page 8
 
 
  243 0139 B8000000 		.4byte	0xb8
@@ -478,7 +478,7 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 1
  297 01a5 97000000 		.4byte	0x97
  298 01a9 2E       		.byte	0x2e
  299 01aa 07       		.uleb128 0x7
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 9
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccnkBFsd.s 			page 9
 
 
  300 01ab 910F0000 		.4byte	.LASF36
@@ -538,7 +538,7 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 1
  354 0217 9A010000 		.4byte	.LASF45
  355 021b 05       		.byte	0x5
  356 021c 55       		.byte	0x55
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 10
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccnkBFsd.s 			page 10
 
 
  357 021d 97000000 		.4byte	0x97
@@ -598,7 +598,7 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 1
  411 0289 B8000000 		.4byte	0xb8
  412 028d 48       		.byte	0x48
  413 028e 07       		.uleb128 0x7
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 11
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccnkBFsd.s 			page 11
 
 
  414 028f 62080000 		.4byte	.LASF55
@@ -658,7 +658,7 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 1
  468 02fb 7C060000 		.4byte	.LASF64
  469 02ff 05       		.byte	0x5
  470 0300 68       		.byte	0x68
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 12
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccnkBFsd.s 			page 12
 
 
  471 0301 97000000 		.4byte	0x97
@@ -718,7 +718,7 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 1
  525 036d AD000000 		.4byte	0xad
  526 0371 6A       		.byte	0x6a
  527 0372 07       		.uleb128 0x7
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 13
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccnkBFsd.s 			page 13
 
 
  528 0373 DF090000 		.4byte	.LASF74
@@ -778,7 +778,7 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 1
  582 03df 3B050000 		.4byte	.LASF83
  583 03e3 05       		.byte	0x5
  584 03e4 83       		.byte	0x83
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 14
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccnkBFsd.s 			page 14
 
 
  585 03e5 AD000000 		.4byte	0xad
@@ -838,7 +838,7 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 1
  639 0451 B8000000 		.4byte	0xb8
  640 0455 90       		.byte	0x90
  641 0456 07       		.uleb128 0x7
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 15
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccnkBFsd.s 			page 15
 
 
  642 0457 5C0D0000 		.4byte	.LASF93
@@ -898,7 +898,7 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 1
  696 04c3 9C0A0000 		.4byte	.LASF102
  697 04c7 05       		.byte	0x5
  698 04c8 9A       		.byte	0x9a
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 16
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccnkBFsd.s 			page 16
 
 
  699 04c9 AD000000 		.4byte	0xad
@@ -958,7 +958,7 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 1
  753 0530 55010000 		.4byte	.LASF113
  754 0534 03       		.byte	0x3
  755 0535 00       		.byte	0
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 17
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccnkBFsd.s 			page 17
 
 
  756 0536 0B       		.uleb128 0xb
@@ -1018,7 +1018,7 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 1
  810 05ab 06       		.byte	0x6
  811 05ac 0B05     		.2byte	0x50b
  812 05ae 0F060000 		.4byte	0x60f
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 18
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccnkBFsd.s 			page 18
 
 
  813 05b2 1C       		.byte	0x1c
@@ -1078,7 +1078,7 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 1
  867 0625 1305     		.2byte	0x513
  868 0627 42050000 		.4byte	0x542
  869 062b 09       		.uleb128 0x9
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 19
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccnkBFsd.s 			page 19
 
 
  870 062c 01       		.byte	0x1
@@ -1138,7 +1138,7 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 1
  924 06a4 09050000 		.4byte	0x509
  925 06a8 00       		.byte	0
  926 06a9 0D       		.uleb128 0xd
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 20
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccnkBFsd.s 			page 20
 
 
  927 06aa A9090000 		.4byte	.LASF137
@@ -1198,7 +1198,7 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 1
  981 071f FF000000 		.4byte	.LASF146
  982 0723 07       		.byte	0x7
  983 0724 D402     		.2byte	0x2d4
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 21
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccnkBFsd.s 			page 21
 
 
  984 0726 CA000000 		.4byte	0xca
@@ -1258,7 +1258,7 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 1
  1038 079b 51060000 		.4byte	0x651
  1039 079f 44       		.byte	0x44
  1040 07a0 0D       		.uleb128 0xd
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 22
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccnkBFsd.s 			page 22
 
 
  1041 07a1 2A020000 		.4byte	.LASF156
@@ -1318,7 +1318,7 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 1
  1095 0818 7D02     		.2byte	0x27d
  1096 081a 07050000 		.4byte	0x507
  1097 081e 10       		.byte	0x10
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 23
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccnkBFsd.s 			page 23
 
 
  1098 081f 0D       		.uleb128 0xd
@@ -1378,7 +1378,7 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 1
  1152 0894 3E0B0000 		.4byte	.LASF174
  1153 0898 09       		.byte	0x9
  1154 0899 7B02     		.2byte	0x27b
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 24
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccnkBFsd.s 			page 24
 
 
  1155 089b 07050000 		.4byte	0x507
@@ -1438,7 +1438,7 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 1
  1209 0910 CA000000 		.4byte	0xca
  1210 0914 2C       		.byte	0x2c
  1211 0915 0D       		.uleb128 0xd
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 25
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccnkBFsd.s 			page 25
 
 
  1212 0916 BD060000 		.4byte	.LASF155
@@ -1498,7 +1498,7 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 1
  1266 0985 FB020000 		.4byte	.LASF186
  1267 0989 0A       		.byte	0xa
  1268 098a 38       		.byte	0x38
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 26
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccnkBFsd.s 			page 26
 
 
  1269 098b B8000000 		.4byte	0xb8
@@ -1558,7 +1558,7 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 1
  1323 09f7 B8000000 		.4byte	0xb8
  1324 09fb 38       		.byte	0x38
  1325 09fc 07       		.uleb128 0x7
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 27
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccnkBFsd.s 			page 27
 
 
  1326 09fd 43000000 		.4byte	.LASF196
@@ -1618,7 +1618,7 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 1
  1380 0a69 74090000 		.4byte	.LASF204
  1381 0a6d 0B       		.byte	0xb
  1382 0a6e 35       		.byte	0x35
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 28
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccnkBFsd.s 			page 28
 
 
  1383 0a6f B8000000 		.4byte	0xb8
@@ -1678,7 +1678,7 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 1
  1437 0adb B8000000 		.4byte	0xb8
  1438 0adf 30       		.byte	0x30
  1439 0ae0 07       		.uleb128 0x7
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 29
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccnkBFsd.s 			page 29
 
 
  1440 0ae1 10060000 		.4byte	.LASF209
@@ -1738,7 +1738,7 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 1
  1494 0b4d C90D0000 		.4byte	.LASF214
  1495 0b51 0B       		.byte	0xb
  1496 0b52 4D       		.byte	0x4d
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 30
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccnkBFsd.s 			page 30
 
 
  1497 0b53 B8000000 		.4byte	0xb8
@@ -1798,7 +1798,7 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 1
  1551 0bc3 01       		.byte	0x1
  1552 0bc4 0A       		.uleb128 0xa
  1553 0bc5 04070000 		.4byte	.LASF221
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 31
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccnkBFsd.s 			page 31
 
 
  1554 0bc9 02       		.byte	0x2
@@ -1858,7 +1858,7 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 1
  1608 0c32 3D       		.byte	0x3d
  1609 0c33 B8000000 		.4byte	0xb8
  1610 0c37 00       		.byte	0
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 32
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccnkBFsd.s 			page 32
 
 
  1611 0c38 07       		.uleb128 0x7
@@ -1918,7 +1918,7 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 1
  1665 0cad 01       		.byte	0x1
  1666 0cae 11       		.byte	0x11
  1667 0caf 1B       		.uleb128 0x1b
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 33
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccnkBFsd.s 			page 33
 
 
  1668 0cb0 0A000000 		.4byte	.LVL0
@@ -1978,7 +1978,7 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 1
  1722 0d2b C00E0000 		.4byte	.LASF243
  1723 0d2f 0E       		.byte	0xe
  1724 0d30 6001     		.2byte	0x160
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 34
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccnkBFsd.s 			page 34
 
 
  1725 0d32 B8000000 		.4byte	0xb8
@@ -2038,7 +2038,7 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 1
  1779 0dae 5E       		.byte	0x5e
  1780 0daf 54080000 		.4byte	0x854
  1781 0db3 20       		.uleb128 0x20
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 35
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccnkBFsd.s 			page 35
 
 
  1782 0db4 AB0B0000 		.4byte	.LASF252
@@ -2098,7 +2098,7 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 1
  1836 002a 00       		.byte	0
  1837 002b 04       		.uleb128 0x4
  1838 002c 24       		.uleb128 0x24
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 36
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccnkBFsd.s 			page 36
 
 
  1839 002d 00       		.byte	0
@@ -2158,7 +2158,7 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 1
  1893 0063 0B       		.uleb128 0xb
  1894 0064 0B       		.uleb128 0xb
  1895 0065 49       		.uleb128 0x49
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 37
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccnkBFsd.s 			page 37
 
 
  1896 0066 13       		.uleb128 0x13
@@ -2218,7 +2218,7 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 1
  1950 009c 13       		.uleb128 0x13
  1951 009d 38       		.uleb128 0x38
  1952 009e 0B       		.uleb128 0xb
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 38
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccnkBFsd.s 			page 38
 
 
  1953 009f 00       		.byte	0
@@ -2278,7 +2278,7 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 1
  2007 00d5 00       		.byte	0
  2008 00d6 00       		.byte	0
  2009 00d7 14       		.uleb128 0x14
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 39
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccnkBFsd.s 			page 39
 
 
  2010 00d8 13       		.uleb128 0x13
@@ -2338,7 +2338,7 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 1
  2064 010e 03       		.uleb128 0x3
  2065 010f 0E       		.uleb128 0xe
  2066 0110 3A       		.uleb128 0x3a
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 40
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccnkBFsd.s 			page 40
 
 
  2067 0111 0B       		.uleb128 0xb
@@ -2398,7 +2398,7 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 1
  2121 0149 898201   		.uleb128 0x4109
  2122 014c 01       		.byte	0x1
  2123 014d 11       		.uleb128 0x11
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 41
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccnkBFsd.s 			page 41
 
 
  2124 014e 01       		.uleb128 0x1
@@ -2458,7 +2458,7 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 1
  2178 0189 19       		.uleb128 0x19
  2179 018a 3C       		.uleb128 0x3c
  2180 018b 19       		.uleb128 0x19
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 42
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccnkBFsd.s 			page 42
 
 
  2181 018c 00       		.byte	0
@@ -2518,7 +2518,7 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 1
  2235 000c 00000000 		.4byte	0
  2236              		.section	.debug_line,"",%progbits
  2237              	.Ldebug_line0:
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 43
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccnkBFsd.s 			page 43
 
 
  2238 0000 BC030000 		.section	.debug_str,"MS",%progbits,1
@@ -2578,7 +2578,7 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 1
  2257              	.LASF172:
  2258 00b3 74785374 		.ascii	"txStatus\000"
  2258      61747573 
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 44
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccnkBFsd.s 			page 44
 
 
  2258      00
@@ -2638,7 +2638,7 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 1
  2280      414E4745 
  2280      5F434F4E 
  2280      445F4F55 
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 45
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccnkBFsd.s 			page 45
 
 
  2281              	.LASF79:
@@ -2698,7 +2698,7 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 1
  2303              	.LASF235:
  2304 021e 6877436F 		.ascii	"hwConfigStc\000"
  2304      6E666967 
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 46
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccnkBFsd.s 			page 46
 
 
  2304      53746300 
@@ -2758,7 +2758,7 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 1
  2328      7453697A 
  2328      6500
  2329              	.LASF132:
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 47
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccnkBFsd.s 			page 47
 
 
  2330 02d0 43595F53 		.ascii	"CY_SCB_I2C_NAK\000"
@@ -2818,7 +2818,7 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 1
  2350      73547269 
  2350      6D52616D 
  2350      43746C4F 
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 48
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccnkBFsd.s 			page 48
 
 
  2350      66667365 
@@ -2878,7 +2878,7 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 1
  2370      74635F73 
  2370      63625F75 
  2370      6172745F 
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 49
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccnkBFsd.s 			page 49
 
 
  2370      636F6E74 
@@ -2938,7 +2938,7 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 1
  2392      73497063 
  2392      30497271 
  2392      00
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 50
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccnkBFsd.s 			page 50
 
 
  2393              	.LASF206:
@@ -2998,7 +2998,7 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 1
  2416      4C455F43 
  2416      4F4E4E5F 
  2416      53544154 
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 51
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccnkBFsd.s 			page 51
 
 
  2416      455F434C 
@@ -3058,7 +3058,7 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 1
  2440      7400
  2441              	.LASF136:
  2442 06f1 75736552 		.ascii	"useRxFifo\000"
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 52
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccnkBFsd.s 			page 52
 
 
  2442      78466966 
@@ -3118,7 +3118,7 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 1
  2466 0797 6D617374 		.ascii	"masterNumBytes\000"
  2466      65724E75 
  2466      6D427974 
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 53
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccnkBFsd.s 			page 53
 
 
  2466      657300
@@ -3178,7 +3178,7 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 1
  2488 0862 63727970 		.ascii	"cryptoMemSize\000"
  2488      746F4D65 
  2488      6D53697A 
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 54
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccnkBFsd.s 			page 54
 
 
  2488      6500
@@ -3238,7 +3238,7 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 1
  2512 0907 63795F63 		.ascii	"cy_cb_scb_uart_handle_events_t\000"
  2512      625F7363 
  2512      625F7561 
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 55
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccnkBFsd.s 			page 55
 
 
  2512      72745F68 
@@ -3298,7 +3298,7 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 1
  2536      7431365F 
  2536      7400
  2537              	.LASF48:
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 56
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccnkBFsd.s 			page 56
 
 
  2538 09bd 70657269 		.ascii	"periClockNr\000"
@@ -3358,7 +3358,7 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 1
  2561              	.LASF91:
  2562 0a66 63707573 		.ascii	"cpussCm4StatusOffset\000"
  2562      73436D34 
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 57
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccnkBFsd.s 			page 57
 
 
  2562      53746174 
@@ -3418,7 +3418,7 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 1
  2582      6500
  2583              	.LASF6:
  2584 0b2b 73686F72 		.ascii	"short unsigned int\000"
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 58
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccnkBFsd.s 			page 58
 
 
  2584      7420756E 
@@ -3478,7 +3478,7 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 1
  2606      6370776D 
  2606      5F636F75 
  2606      6E746572 
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 59
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccnkBFsd.s 			page 59
 
 
  2607              	.LASF126:
@@ -3538,7 +3538,7 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 1
  2628      616C6C43 
  2628      6F6E6669 
  2628      677300
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 60
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccnkBFsd.s 			page 60
 
 
  2629              	.LASF210:
@@ -3598,7 +3598,7 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 1
  2651              	.LASF184:
  2652 0d3c 636F756E 		.ascii	"countDirection\000"
  2652      74446972 
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 61
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccnkBFsd.s 			page 61
 
 
  2652      65637469 
@@ -3658,7 +3658,7 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 1
  2672      00
  2673              	.LASF213:
  2674 0df6 6B696C6C 		.ascii	"killInputMode\000"
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 62
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccnkBFsd.s 			page 62
 
 
  2674      496E7075 
@@ -3718,7 +3718,7 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 1
  2696 0e9f 666C6173 		.ascii	"flashEraseDelay\000"
  2696      68457261 
  2696      73654465 
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 63
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccnkBFsd.s 			page 63
 
 
  2696      6C617900 
@@ -3778,7 +3778,7 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 1
  2720      43746C50 
  2720      7265656D 
  2720      70746162 
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 64
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccnkBFsd.s 			page 64
 
 
  2720      6C65506F 
@@ -3838,7 +3838,7 @@ ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 1
  2742      724D6173 
  2742      6B00
  2743              	.LASF114:
-ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccAUIab1.s 			page 65
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccnkBFsd.s 			page 65
 
 
  2744 1004 63795F65 		.ascii	"cy_en_sar_range_detect_condition_t\000"
