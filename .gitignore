@@ -1,0 +1,228 @@
+# ===============================================================================
+# PSoC Creator / ModusToolbox Project .gitignore for Windows
+# ===============================================================================
+
+# ===============================================================================
+# PSoC Creator Specific Files
+# ===============================================================================
+
+# Workspace files (user-specific settings)
+*.cywrk.*
+*.cyprj.*
+*.cydsn/codegentemp/
+*.cydsn/Generated_Source/
+
+# Build outputs
+**/Debug/
+**/Release/
+**/Export/
+*.cyacd
+*.hex
+*.elf
+*.map
+*.lst
+
+# Archive files
+**/Archive/
+**/Backup/
+*.zip
+
+# Generated documentation
+**/html/
+**/latex/
+
+# Timing reports
+*.rpt
+*.html
+
+# ===============================================================================
+# ModusToolbox Specific Files
+# ===============================================================================
+
+# Build directories
+build/
+Build/
+BUILD/
+**/build/
+libs/
+
+# IDE specific
+.vscode/
+.settings/
+.cproject
+.project
+
+# mtb-example specific
+mtb_shared/
+.modustoolbox/
+
+# ===============================================================================
+# Compiler and Build Artifacts
+# ===============================================================================
+
+# Object files
+*.o
+*.obj
+*.ko
+*.elf
+*.ilk
+*.map
+*.exp
+*.gch
+*.pch
+*.lib
+*.a
+*.la
+*.lo
+*.dll
+*.so
+*.so.*
+*.dylib
+
+# Executables
+*.exe
+*.out
+*.app
+
+# Linker output
+*.pdb
+*.idb
+
+# ===============================================================================
+# Windows Specific
+# ===============================================================================
+
+# Windows thumbnail cache
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+
+# Windows Installer files
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+
+# Windows shortcuts
+*.lnk
+
+# Recycle Bin
+$RECYCLE.BIN/
+
+# Windows folder config
+[Dd]esktop.ini
+
+# ===============================================================================
+# IDE and Editor Files
+# ===============================================================================
+
+# Visual Studio Code
+.vscode/
+*.code-workspace
+
+# Visual Studio
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.sln
+
+# JetBrains IDEs (PyCharm, CLion, etc.)
+.idea/
+*.iml
+*.iws
+
+# Sublime Text
+*.sublime-workspace
+*.sublime-project
+
+# Eclipse
+.metadata/
+.recommenders/
+
+# ===============================================================================
+# Version Control
+# ===============================================================================
+
+# Git
+*.orig
+*.BACKUP.*
+*.BASE.*
+*.LOCAL.*
+*.REMOTE.*
+*_BACKUP_*.txt
+*_BASE_*.txt
+*_LOCAL_*.txt
+*_REMOTE_*.txt
+
+# SVN
+.svn/
+
+# ===============================================================================
+# Logs and Temporary Files
+# ===============================================================================
+
+# Log files
+*.log
+*.tlog
+
+# Temporary files
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+*.bak
+*.old
+
+# Crash dumps
+*.stackdump
+*.dmp
+
+# ===============================================================================
+# Documentation Build
+# ===============================================================================
+
+# Doxygen
+**/doxygen/
+doc/html/
+doc/latex/
+
+# ===============================================================================
+# Miscellaneous
+# ===============================================================================
+
+# Compiled Python files (if using Python scripts)
+*.pyc
+__pycache__/
+
+# Mac files (in case of cross-platform development)
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Node modules (if using any JS tools)
+node_modules/
+
+# Compressed files (unless specifically needed)
+# *.zip
+# *.tar.gz
+# *.rar
+
+# ===============================================================================
+# Project Specific Exceptions
+# ===============================================================================
+
+# Keep specific workspace files if needed (uncomment if required)
+# !Hackaton.Bundle01.cywrk
+
+# Keep important documentation
+!doc/API_UserManual.md
+!doc/*.md
+
+# Keep reference code
+!references/
+

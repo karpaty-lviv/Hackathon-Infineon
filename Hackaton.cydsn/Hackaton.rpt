@@ -1,4 +1,7 @@
 <<<<<<< HEAD
+Loading plugins phase: Elapsed time ==> 0s.218ms
+=======
+<<<<<<< HEAD
 Loading plugins phase: Elapsed time ==> 0s.100ms
 <CYPRESSTAG name="CyDsfit arguments...">
 cydsfit arguments: -.fdsnotice -.fdswarpdepfile=warp_dependencies.txt -.fdselabdepfile=elab_dependencies.txt -.fdsbldfile=generated_files.txt -.fdsreffile=referenced_files.txt -p D:\Hackathon-Infineon\Hackaton.cydsn\Hackaton.cyprj -d CYBLE-416045-02 -s D:\Hackathon-Infineon\Hackaton.cydsn\Generated_Source\PSoC6 -- -yv2 -q10 -ygs -o2 -v3 -.fftcfgtype=LE
@@ -11,16 +14,21 @@ Elaboration phase: Elapsed time ==> 1s.985ms
 HDL generation phase: Elapsed time ==> 0s.154ms
 =======
 Loading plugins phase: Elapsed time ==> 0s.158ms
+>>>>>>> bd576f9808c8effb843f424a11422d1d642a784a
 <CYPRESSTAG name="CyDsfit arguments...">
 cydsfit arguments: -.fdsnotice -.fdswarpdepfile=warp_dependencies.txt -.fdselabdepfile=elab_dependencies.txt -.fdsbldfile=generated_files.txt -.fdsreffile=referenced_files.txt -p C:\Infineon\Hackathon-Infineon\Hackaton.cydsn\Hackaton.cyprj -d CYBLE-416045-02 -s C:\Infineon\Hackathon-Infineon\Hackaton.cydsn\Generated_Source\PSoC6 -- -yv2 -q10 -ygs -o2 -v3 -.fftcfgtype=LE
 </CYPRESSTAG>
 <CYPRESSTAG name="Design elaboration results...">
 </CYPRESSTAG>
-Elaboration phase: Elapsed time ==> 11s.753ms
+Elaboration phase: Elapsed time ==> 3s.376ms
 <CYPRESSTAG name="HDL generation results...">
 </CYPRESSTAG>
+<<<<<<< HEAD
+HDL generation phase: Elapsed time ==> 0s.123ms
+=======
 HDL generation phase: Elapsed time ==> 0s.125ms
 >>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
+>>>>>>> bd576f9808c8effb843f424a11422d1d642a784a
 <CYPRESSTAG name="Synthesis results...">
 
      | | | | | | |
@@ -39,9 +47,13 @@ HDL generation phase: Elapsed time ==> 0s.125ms
 Compiling:  Hackaton.v
 <<<<<<< HEAD
 Program  :   C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\warp\bin\warp.exe
+=======
+<<<<<<< HEAD
+Program  :   C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\warp\bin\warp.exe
 Options  :    -yv2 -q10 -ygs -o2 -v3 -.fftcfgtype=LE -ya -.fftprj=D:\Hackathon-Infineon\Hackaton.cydsn\Hackaton.cyprj -dcpsoc3 Hackaton.v -verilog
 =======
 Program  :   C:\MyApps\PSoC_Creator\PSoC Creator\4.4\PSoC Creator\warp\bin\warp.exe
+>>>>>>> bd576f9808c8effb843f424a11422d1d642a784a
 Options  :    -yv2 -q10 -ygs -o2 -v3 -.fftcfgtype=LE -ya -.fftprj=C:\Infineon\Hackathon-Infineon\Hackaton.cydsn\Hackaton.cyprj -dcpsoc3 Hackaton.v -verilog
 >>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
 ======================================================================
@@ -50,9 +62,13 @@ Options  :    -yv2 -q10 -ygs -o2 -v3 -.fftcfgtype=LE -ya -.fftprj=C:\Infineon\Ha
 Compiling:  Hackaton.v
 <<<<<<< HEAD
 Program  :   C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\warp\bin\warp.exe
+=======
+<<<<<<< HEAD
+Program  :   C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\warp\bin\warp.exe
 Options  :    -yv2 -q10 -ygs -o2 -v3 -.fftcfgtype=LE -ya -.fftprj=D:\Hackathon-Infineon\Hackaton.cydsn\Hackaton.cyprj -dcpsoc3 Hackaton.v -verilog
 =======
 Program  :   C:\MyApps\PSoC_Creator\PSoC Creator\4.4\PSoC Creator\warp\bin\warp.exe
+>>>>>>> bd576f9808c8effb843f424a11422d1d642a784a
 Options  :    -yv2 -q10 -ygs -o2 -v3 -.fftcfgtype=LE -ya -.fftprj=C:\Infineon\Hackathon-Infineon\Hackaton.cydsn\Hackaton.cyprj -dcpsoc3 Hackaton.v -verilog
 >>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
 ======================================================================
@@ -71,8 +87,12 @@ Options  :    -yv2 -q10 -ygs -o2 -v3 -.fftcfgtype=LE -ya -.fftprj=C:\Infineon\Ha
 ======================================================================
 
 vlogfe V6.3 IR 41:  Verilog parser
+<<<<<<< HEAD
+Thu Nov 06 12:52:52 2025
+=======
 Thu Nov 06 12:07:03 2025
 >>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
+>>>>>>> bd576f9808c8effb843f424a11422d1d642a784a
 
 
 ======================================================================
@@ -83,35 +103,39 @@ Options  :    -yv2 -q10 Hackaton.v
 
 vpp V6.3 IR 41:  Verilog Pre-Processor
 <<<<<<< HEAD
+Thu Nov 06 12:52:52 2025
+=======
+<<<<<<< HEAD
 Thu Nov 06 14:10:44 2025
 =======
 Thu Nov 06 12:07:03 2025
 >>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
+>>>>>>> bd576f9808c8effb843f424a11422d1d642a784a
 
-Flattening file 'C:\MyApps\PSoC_Creator\PSoC Creator\4.4\PSoC Creator\psoc\content\CyPrimitives\cyprimitives.cylib\cy_analog_virtualmux_v1_0\cy_analog_virtualmux_v1_0.v'
-Flattening file 'C:\MyApps\PSoC_Creator\PSoC Creator\4.4\PSoC Creator\psoc\content\CyComponentLibrary\CyComponentLibrary.cylib\Bus_Connect_v2_50\Bus_Connect_v2_50.v'
-Flattening file 'C:\MyApps\PSoC_Creator\PSoC Creator\4.4\PSoC Creator\warp\lib\common\cypress.v'
-Flattening file 'C:\MyApps\PSoC_Creator\PSoC Creator\4.4\PSoC Creator\warp\lib\common\cy_psoc3_inc.v'
-Flattening file 'C:\MyApps\PSoC_Creator\PSoC Creator\4.4\PSoC Creator\psoc\content\CyPrimitives\cyprimitives.cylib\ZeroTerminal\ZeroTerminal.v'
-Flattening file 'C:\MyApps\PSoC_Creator\PSoC Creator\4.4\PSoC Creator\psoc\content\CyPrimitives\cyprimitives.cylib\cy_virtualmux_v1_0\cy_virtualmux_v1_0.v'
-Flattening file 'C:\MyApps\PSoC_Creator\PSoC Creator\4.4\PSoC Creator\psoc\content\CyPrimitives\cyprimitives.cylib\or_v1_0\or_v1_0.v'
-Flattening file 'C:\MyApps\PSoC_Creator\PSoC Creator\4.4\PSoC Creator\psoc\content\CyPrimitives\cyprimitives.cylib\cy_constant_v1_0\cy_constant_v1_0.v'
-Flattening file 'C:\MyApps\PSoC_Creator\PSoC Creator\4.4\PSoC Creator\psoc\content\CyPrimitives\cyprimitives.cylib\cy_vref_v1_70\cy_vref_v1_70.v'
+Flattening file 'C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\psoc\content\CyPrimitives\cyprimitives.cylib\cy_analog_virtualmux_v1_0\cy_analog_virtualmux_v1_0.v'
+Flattening file 'C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\psoc\content\CyComponentLibrary\CyComponentLibrary.cylib\Bus_Connect_v2_50\Bus_Connect_v2_50.v'
+Flattening file 'C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\warp\lib\common\cypress.v'
+Flattening file 'C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\warp\lib\common\cy_psoc3_inc.v'
+Flattening file 'C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\psoc\content\CyPrimitives\cyprimitives.cylib\ZeroTerminal\ZeroTerminal.v'
+Flattening file 'C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\psoc\content\CyPrimitives\cyprimitives.cylib\cy_virtualmux_v1_0\cy_virtualmux_v1_0.v'
+Flattening file 'C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\psoc\content\CyPrimitives\cyprimitives.cylib\or_v1_0\or_v1_0.v'
+Flattening file 'C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\psoc\content\CyPrimitives\cyprimitives.cylib\cy_constant_v1_0\cy_constant_v1_0.v'
+Flattening file 'C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\psoc\content\CyPrimitives\cyprimitives.cylib\cy_vref_v1_70\cy_vref_v1_70.v'
 
 vpp:  No errors.
 
 Library 'work' => directory 'lcpsoc3'
 General_symbol_table
 General_symbol_table
-Linking 'C:\MyApps\PSoC_Creator\PSoC Creator\4.4\PSoC Creator\warp\lib\common\std.vhd'.
-Linking 'C:\MyApps\PSoC_Creator\PSoC Creator\4.4\PSoC Creator\warp\lib\common\cypress.vhd'.
-Linking 'C:\MyApps\PSoC_Creator\PSoC Creator\4.4\PSoC Creator\warp\lib\common\work\cypress.vif'.
-Linking 'C:\MyApps\PSoC_Creator\PSoC Creator\4.4\PSoC Creator\warp\lib\ieee\work\stdlogic.vif'.
-Linking 'C:\MyApps\PSoC_Creator\PSoC Creator\4.4\PSoC Creator\warp\lib\common\stdlogic\lpmpkg.vif'.
-Linking 'C:\MyApps\PSoC_Creator\PSoC Creator\4.4\PSoC Creator\warp\lib\common\stdlogic\rtlpkg.vif'.
-Linking 'C:\MyApps\PSoC_Creator\PSoC Creator\4.4\PSoC Creator\warp\lib\common\stdlogic\mod_cnst.vif'.
-Linking 'C:\MyApps\PSoC_Creator\PSoC Creator\4.4\PSoC Creator\warp\lib\common\stdlogic\mod_mthv.vif'.
-Linking 'C:\MyApps\PSoC_Creator\PSoC Creator\4.4\PSoC Creator\warp\lib\common\stdlogic\mod_genv.vif'.
+Linking 'C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\warp\lib\common\std.vhd'.
+Linking 'C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\warp\lib\common\cypress.vhd'.
+Linking 'C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\warp\lib\common\work\cypress.vif'.
+Linking 'C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\warp\lib\ieee\work\stdlogic.vif'.
+Linking 'C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\warp\lib\common\stdlogic\lpmpkg.vif'.
+Linking 'C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\warp\lib\common\stdlogic\rtlpkg.vif'.
+Linking 'C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\warp\lib\common\stdlogic\mod_cnst.vif'.
+Linking 'C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\warp\lib\common\stdlogic\mod_mthv.vif'.
+Linking 'C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\warp\lib\common\stdlogic\mod_genv.vif'.
 Using control file 'Hackaton.ctl'.
 
 vlogfe:  No errors.
@@ -152,20 +176,30 @@ Options  :    -yv2 -q10 -ygs -o2 -v3 -.fftcfgtype=LE -ya -.fftprj=C:\Infineon\Ha
 ======================================================================
 
 tovif V6.3 IR 41:  High-level synthesis
-Thu Nov 06 12:07:04 2025
+Thu Nov 06 12:52:52 2025
 
-Linking 'C:\MyApps\PSoC_Creator\PSoC Creator\4.4\PSoC Creator\warp\lib\common\std.vhd'.
-Linking 'C:\MyApps\PSoC_Creator\PSoC Creator\4.4\PSoC Creator\warp\lib\common\cypress.vhd'.
-Linking 'C:\MyApps\PSoC_Creator\PSoC Creator\4.4\PSoC Creator\warp\lib\common\work\cypress.vif'.
-Linking 'C:\MyApps\PSoC_Creator\PSoC Creator\4.4\PSoC Creator\warp\lib\ieee\work\stdlogic.vif'.
-Linking 'C:\MyApps\PSoC_Creator\PSoC Creator\4.4\PSoC Creator\warp\lib\common\stdlogic\lpmpkg.vif'.
-Linking 'C:\MyApps\PSoC_Creator\PSoC Creator\4.4\PSoC Creator\warp\lib\common\stdlogic\rtlpkg.vif'.
-Linking 'C:\MyApps\PSoC_Creator\PSoC Creator\4.4\PSoC Creator\warp\lib\common\stdlogic\mod_cnst.vif'.
-Linking 'C:\MyApps\PSoC_Creator\PSoC Creator\4.4\PSoC Creator\warp\lib\common\stdlogic\mod_mthv.vif'.
-Linking 'C:\MyApps\PSoC_Creator\PSoC Creator\4.4\PSoC Creator\warp\lib\common\stdlogic\mod_genv.vif'.
+Linking 'C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\warp\lib\common\std.vhd'.
+Linking 'C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\warp\lib\common\cypress.vhd'.
+Linking 'C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\warp\lib\common\work\cypress.vif'.
+Linking 'C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\warp\lib\ieee\work\stdlogic.vif'.
+Linking 'C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\warp\lib\common\stdlogic\lpmpkg.vif'.
+Linking 'C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\warp\lib\common\stdlogic\rtlpkg.vif'.
+Linking 'C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\warp\lib\common\stdlogic\mod_cnst.vif'.
+Linking 'C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\warp\lib\common\stdlogic\mod_mthv.vif'.
+Linking 'C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\warp\lib\common\stdlogic\mod_genv.vif'.
 Linking 'C:\Infineon\Hackathon-Infineon\Hackaton.cydsn\codegentemp\Hackaton.ctl'.
-Linking 'C:\MyApps\PSoC_Creator\PSoC Creator\4.4\PSoC Creator\psoc\content\CyPrimitives\cyprimitives.cylib\cy_analog_virtualmux_v1_0\cy_analog_virtualmux_v1_0.v'.
+Linking 'C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\psoc\content\CyPrimitives\cyprimitives.cylib\cy_analog_virtualmux_v1_0\cy_analog_virtualmux_v1_0.v'.
 Linking 'C:\Infineon\Hackathon-Infineon\Hackaton.cydsn\codegentemp\Hackaton.v'.
+<<<<<<< HEAD
+Linking 'C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\psoc\content\CyComponentLibrary\CyComponentLibrary.cylib\Bus_Connect_v2_50\Bus_Connect_v2_50.v'.
+Linking 'C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\warp\lib\common\cypress.v'.
+Linking 'C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\warp\lib\common\cy_psoc3_inc.v'.
+Linking 'C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\psoc\content\CyPrimitives\cyprimitives.cylib\ZeroTerminal\ZeroTerminal.v'.
+Linking 'C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\psoc\content\CyPrimitives\cyprimitives.cylib\cy_virtualmux_v1_0\cy_virtualmux_v1_0.v'.
+Linking 'C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\psoc\content\CyPrimitives\cyprimitives.cylib\or_v1_0\or_v1_0.v'.
+Linking 'C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\psoc\content\CyPrimitives\cyprimitives.cylib\cy_constant_v1_0\cy_constant_v1_0.v'.
+Linking 'C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\psoc\content\CyPrimitives\cyprimitives.cylib\cy_vref_v1_70\cy_vref_v1_70.v'.
+=======
 Linking 'C:\MyApps\PSoC_Creator\PSoC Creator\4.4\PSoC Creator\psoc\content\CyComponentLibrary\CyComponentLibrary.cylib\Bus_Connect_v2_50\Bus_Connect_v2_50.v'.
 Linking 'C:\MyApps\PSoC_Creator\PSoC Creator\4.4\PSoC Creator\warp\lib\common\cypress.v'.
 Linking 'C:\MyApps\PSoC_Creator\PSoC Creator\4.4\PSoC Creator\warp\lib\common\cy_psoc3_inc.v'.
@@ -175,6 +209,7 @@ Linking 'C:\MyApps\PSoC_Creator\PSoC Creator\4.4\PSoC Creator\psoc\content\CyPri
 Linking 'C:\MyApps\PSoC_Creator\PSoC Creator\4.4\PSoC Creator\psoc\content\CyPrimitives\cyprimitives.cylib\cy_constant_v1_0\cy_constant_v1_0.v'.
 Linking 'C:\MyApps\PSoC_Creator\PSoC Creator\4.4\PSoC Creator\psoc\content\CyPrimitives\cyprimitives.cylib\cy_vref_v1_70\cy_vref_v1_70.v'.
 >>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
+>>>>>>> bd576f9808c8effb843f424a11422d1d642a784a
 
 tovif:  No errors.
 
@@ -215,20 +250,31 @@ Options  :    -yv2 -q10 -ygs -o2 -v3 -.fftcfgtype=LE -ya -.fftprj=C:\Infineon\Ha
 ======================================================================
 
 topld V6.3 IR 41:  Synthesis and optimization
-Thu Nov 06 12:07:05 2025
+Thu Nov 06 12:52:53 2025
 
-Linking 'C:\MyApps\PSoC_Creator\PSoC Creator\4.4\PSoC Creator\warp\lib\common\std.vhd'.
-Linking 'C:\MyApps\PSoC_Creator\PSoC Creator\4.4\PSoC Creator\warp\lib\common\cypress.vhd'.
-Linking 'C:\MyApps\PSoC_Creator\PSoC Creator\4.4\PSoC Creator\warp\lib\common\work\cypress.vif'.
-Linking 'C:\MyApps\PSoC_Creator\PSoC Creator\4.4\PSoC Creator\warp\lib\ieee\work\stdlogic.vif'.
-Linking 'C:\MyApps\PSoC_Creator\PSoC Creator\4.4\PSoC Creator\warp\lib\common\stdlogic\lpmpkg.vif'.
-Linking 'C:\MyApps\PSoC_Creator\PSoC Creator\4.4\PSoC Creator\warp\lib\common\stdlogic\rtlpkg.vif'.
-Linking 'C:\MyApps\PSoC_Creator\PSoC Creator\4.4\PSoC Creator\warp\lib\common\stdlogic\mod_cnst.vif'.
-Linking 'C:\MyApps\PSoC_Creator\PSoC Creator\4.4\PSoC Creator\warp\lib\common\stdlogic\mod_mthv.vif'.
-Linking 'C:\MyApps\PSoC_Creator\PSoC Creator\4.4\PSoC Creator\warp\lib\common\stdlogic\mod_genv.vif'.
+Linking 'C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\warp\lib\common\std.vhd'.
+Linking 'C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\warp\lib\common\cypress.vhd'.
+Linking 'C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\warp\lib\common\work\cypress.vif'.
+Linking 'C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\warp\lib\ieee\work\stdlogic.vif'.
+Linking 'C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\warp\lib\common\stdlogic\lpmpkg.vif'.
+Linking 'C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\warp\lib\common\stdlogic\rtlpkg.vif'.
+Linking 'C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\warp\lib\common\stdlogic\mod_cnst.vif'.
+Linking 'C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\warp\lib\common\stdlogic\mod_mthv.vif'.
+Linking 'C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\warp\lib\common\stdlogic\mod_genv.vif'.
 Linking 'C:\Infineon\Hackathon-Infineon\Hackaton.cydsn\codegentemp\Hackaton.ctl'.
-Linking 'C:\MyApps\PSoC_Creator\PSoC Creator\4.4\PSoC Creator\psoc\content\CyPrimitives\cyprimitives.cylib\cy_analog_virtualmux_v1_0\cy_analog_virtualmux_v1_0.v'.
+Linking 'C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\psoc\content\CyPrimitives\cyprimitives.cylib\cy_analog_virtualmux_v1_0\cy_analog_virtualmux_v1_0.v'.
 Linking 'C:\Infineon\Hackathon-Infineon\Hackaton.cydsn\codegentemp\Hackaton.v'.
+<<<<<<< HEAD
+Linking 'C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\psoc\content\CyComponentLibrary\CyComponentLibrary.cylib\Bus_Connect_v2_50\Bus_Connect_v2_50.v'.
+Linking 'C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\warp\lib\common\cypress.v'.
+Linking 'C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\warp\lib\common\cy_psoc3_inc.v'.
+Linking 'C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\psoc\content\CyPrimitives\cyprimitives.cylib\ZeroTerminal\ZeroTerminal.v'.
+Linking 'C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\psoc\content\CyPrimitives\cyprimitives.cylib\cy_virtualmux_v1_0\cy_virtualmux_v1_0.v'.
+Linking 'C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\psoc\content\CyPrimitives\cyprimitives.cylib\or_v1_0\or_v1_0.v'.
+Linking 'C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\psoc\content\CyPrimitives\cyprimitives.cylib\cy_constant_v1_0\cy_constant_v1_0.v'.
+Linking 'C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\psoc\content\CyPrimitives\cyprimitives.cylib\cy_vref_v1_70\cy_vref_v1_70.v'.
+Linking 'C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\warp\lib\lcpsoc3\stdlogic\cpsoc3.vif'.
+=======
 Linking 'C:\MyApps\PSoC_Creator\PSoC Creator\4.4\PSoC Creator\psoc\content\CyComponentLibrary\CyComponentLibrary.cylib\Bus_Connect_v2_50\Bus_Connect_v2_50.v'.
 Linking 'C:\MyApps\PSoC_Creator\PSoC Creator\4.4\PSoC Creator\warp\lib\common\cypress.v'.
 Linking 'C:\MyApps\PSoC_Creator\PSoC Creator\4.4\PSoC Creator\warp\lib\common\cy_psoc3_inc.v'.
@@ -239,6 +285,7 @@ Linking 'C:\MyApps\PSoC_Creator\PSoC Creator\4.4\PSoC Creator\psoc\content\CyPri
 Linking 'C:\MyApps\PSoC_Creator\PSoC Creator\4.4\PSoC Creator\psoc\content\CyPrimitives\cyprimitives.cylib\cy_vref_v1_70\cy_vref_v1_70.v'.
 Linking 'C:\MyApps\PSoC_Creator\PSoC Creator\4.4\PSoC Creator\warp\lib\lcpsoc3\stdlogic\cpsoc3.vif'.
 >>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
+>>>>>>> bd576f9808c8effb843f424a11422d1d642a784a
 
 ----------------------------------------------------------
 Detecting unused logic.
@@ -380,6 +427,10 @@ topld:  No errors.
 <<<<<<< HEAD
 CYPRESS_DIR    : C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\warp
 Warp Program   : C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\warp\bin\warp.exe
+=======
+<<<<<<< HEAD
+CYPRESS_DIR    : C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\warp
+Warp Program   : C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\warp\bin\warp.exe
 Warp Arguments : -yv2 -q10 -ygs -o2 -v3 -.fftcfgtype=LE -ya -.fftprj=D:\Hackathon-Infineon\Hackaton.cydsn\Hackaton.cyprj -dcpsoc3 Hackaton.v -verilog
 </CYPRESSTAG>
 Warp synthesis phase: Elapsed time ==> 1s.519ms
@@ -393,17 +444,22 @@ Design parsing phase: Elapsed time ==> 0s.373ms
 =======
 CYPRESS_DIR    : C:\MyApps\PSoC_Creator\PSoC Creator\4.4\PSoC Creator\warp
 Warp Program   : C:\MyApps\PSoC_Creator\PSoC Creator\4.4\PSoC Creator\warp\bin\warp.exe
+>>>>>>> bd576f9808c8effb843f424a11422d1d642a784a
 Warp Arguments : -yv2 -q10 -ygs -o2 -v3 -.fftcfgtype=LE -ya -.fftprj=C:\Infineon\Hackathon-Infineon\Hackaton.cydsn\Hackaton.cyprj -dcpsoc3 Hackaton.v -verilog
 </CYPRESSTAG>
-Warp synthesis phase: Elapsed time ==> 3s.440ms
+Warp synthesis phase: Elapsed time ==> 2s.254ms
 <CYPRESSTAG name="Fitter results...">
 <CYPRESSTAG name="Fitter startup details...">
-cyp3fit: V4.4.0.80, Family: PSoC3, Started at: Thursday, 06 November 2025 12:07:06
+cyp3fit: V4.4.0.80, Family: PSoC3, Started at: Thursday, 06 November 2025 12:52:54
 Options: -yv2 -q10 -ygs -o2 -v3 -.fftcfgtype=LE -ya -.fftprj=C:\Infineon\Hackathon-Infineon\Hackaton.cydsn\Hackaton.cyprj -d CYBLE-416045-02 Hackaton.v -verilog
 </CYPRESSTAG>
 <CYPRESSTAG name="Design parsing">
+<<<<<<< HEAD
+Design parsing phase: Elapsed time ==> 0s.680ms
+=======
 Design parsing phase: Elapsed time ==> 0s.626ms
 >>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
+>>>>>>> bd576f9808c8effb843f424a11422d1d642a784a
 </CYPRESSTAG>
 <CYPRESSTAG name="Tech Mapping">
 <CYPRESSTAG name="Initial Mapping" icon="FILE_RPT_TECHM">
@@ -1127,12 +1183,17 @@ SAR ADC                       :    1 :    0 :    1 : 100.00 %
 DieTemp Sensor                :    0 :    1 :    1 :  0.00 %
 </CYPRESSTAG>
 <<<<<<< HEAD
+Technology Mapping: Elapsed time ==> 0s.284ms
+Tech Mapping phase: Elapsed time ==> 0s.427ms
+=======
+<<<<<<< HEAD
 Technology Mapping: Elapsed time ==> 0s.090ms
 Tech Mapping phase: Elapsed time ==> 0s.139ms
 =======
 Technology Mapping: Elapsed time ==> 0s.122ms
 Tech Mapping phase: Elapsed time ==> 0s.186ms
 >>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
+>>>>>>> bd576f9808c8effb843f424a11422d1d642a784a
 </CYPRESSTAG>
 <CYPRESSTAG name="Analog Placement">
 <CYPRESSTAG name="FFB & IO Pre Placement">
@@ -1172,6 +1233,9 @@ CPUSS                               : CPUSS_[FFB(CPUSS,0)]
 </CYPRESSTAG>
 <CYPRESSTAG name="Real Analog Placement">
 <<<<<<< HEAD
+Elapsed time ==> 0.1767161s
+=======
+<<<<<<< HEAD
 Elapsed time ==> 0.0778277s
 </CYPRESSTAG>
 Analog Placement phase: Elapsed time ==> 0s.517ms
@@ -1183,15 +1247,20 @@ Route success=True, Iterations=1 Elapsed=0.0016364 secs
 Analog Routing phase: Elapsed time ==> 0s.001ms
 =======
 Elapsed time ==> 0.1198019s
+>>>>>>> bd576f9808c8effb843f424a11422d1d642a784a
 </CYPRESSTAG>
-Analog Placement phase: Elapsed time ==> 0s.887ms
+Analog Placement phase: Elapsed time ==> 1s.000ms
 </CYPRESSTAG>
 <CYPRESSTAG name="Analog Routing">
 <CYPRESSTAG name="Analog Routing">
-Route success=True, Iterations=1 Elapsed=0.0030853 secs
+Route success=True, Iterations=1 Elapsed=0.0267955 secs
 </CYPRESSTAG>
+<<<<<<< HEAD
+Analog Routing phase: Elapsed time ==> 0s.031ms
+=======
 Analog Routing phase: Elapsed time ==> 0s.017ms
 >>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
+>>>>>>> bd576f9808c8effb843f424a11422d1d642a784a
 </CYPRESSTAG>
 <CYPRESSTAG name="Analog Code Generation">
 ============ Analog Final Answer Routes ============
@@ -1217,10 +1286,14 @@ Map of item to net {
 Mux Info {
 }
 <<<<<<< HEAD
+Analog Code Generation phase: Elapsed time ==> 0s.048ms
+=======
+<<<<<<< HEAD
 Analog Code Generation phase: Elapsed time ==> 0s.031ms
 =======
 Analog Code Generation phase: Elapsed time ==> 0s.013ms
 >>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
+>>>>>>> bd576f9808c8effb843f424a11422d1d642a784a
 </CYPRESSTAG>
 <CYPRESSTAG name="Digital Placement">
 <CYPRESSTAG name="Detailed placement messages">
@@ -1244,10 +1317,14 @@ Initial Partitioning Summary not displayed at this verbose level.</CYPRESSTAG>
 <CYPRESSTAG name="Final Partitioning Summary">
 Final Partitioning Summary not displayed at this verbose level.</CYPRESSTAG>
 <<<<<<< HEAD
+Partitioning: Elapsed time ==> 0s.063ms
+=======
+<<<<<<< HEAD
 Partitioning: Elapsed time ==> 0s.013ms
 =======
 Partitioning: Elapsed time ==> 0s.031ms
 >>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
+>>>>>>> bd576f9808c8effb843f424a11422d1d642a784a
 </CYPRESSTAG>
 <CYPRESSTAG name="Final Placement Summary">
 
@@ -2228,16 +2305,27 @@ Port | Pin | Fixed |      Type |       Drive Mode |                       Name |
 </CYPRESSTAG>
 </CYPRESSTAG>
 <<<<<<< HEAD
+Digital component placer commit/Report: Elapsed time ==> 0s.031ms
+Digital Placement phase: Elapsed time ==> 4s.893ms
+=======
+<<<<<<< HEAD
 Digital component placer commit/Report: Elapsed time ==> 0s.010ms
 Digital Placement phase: Elapsed time ==> 2s.892ms
 =======
 Digital component placer commit/Report: Elapsed time ==> 0s.032ms
 Digital Placement phase: Elapsed time ==> 5s.226ms
 >>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
+>>>>>>> bd576f9808c8effb843f424a11422d1d642a784a
 </CYPRESSTAG>
 <CYPRESSTAG name="Digital Routing">
-"C:\MyApps\PSoC_Creator\PSoC Creator\4.4\PSoC Creator\bin/sjrouter.exe" --xml-path "C:\MyApps\PSoC_Creator\PSoC Creator\4.4\PSoC Creator\dev\psoc6/0/route_arch-rrg.cydata" --vh2-path "Hackaton_r.vh2" --pcf-path "Hackaton.pco" --des-name "Hackaton" --dsf-path "Hackaton.dsf" --sdc-path "Hackaton.sdc" --lib-path "Hackaton_r.lib"
+"C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\bin/sjrouter.exe" --xml-path "C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\dev\psoc6/0/route_arch-rrg.cydata" --vh2-path "Hackaton_r.vh2" --pcf-path "Hackaton.pco" --des-name "Hackaton" --dsf-path "Hackaton.dsf" --sdc-path "Hackaton.sdc" --lib-path "Hackaton_r.lib"
 Routing successful.
+<<<<<<< HEAD
+Digital Routing phase: Elapsed time ==> 0s.845ms
+</CYPRESSTAG>
+<CYPRESSTAG name="Bitstream Generation">
+Bitstream Generation phase: Elapsed time ==> 0s.554ms
+=======
 <<<<<<< HEAD
 Digital Routing phase: Elapsed time ==> 0s.606ms
 </CYPRESSTAG>
@@ -2249,22 +2337,30 @@ Digital Routing phase: Elapsed time ==> 0s.863ms
 <CYPRESSTAG name="Bitstream Generation">
 Bitstream Generation phase: Elapsed time ==> 0s.456ms
 >>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
+>>>>>>> bd576f9808c8effb843f424a11422d1d642a784a
 </CYPRESSTAG>
 <CYPRESSTAG name="Bitstream Verification">
-Bitstream Verification phase: Elapsed time ==> 0s.000ms
+Bitstream Verification phase: Elapsed time ==> 0s.009ms
 </CYPRESSTAG>
 <CYPRESSTAG name="Static timing analysis">
 Timing report is in Hackaton_timing.html.
+<<<<<<< HEAD
+Static timing analysis phase: Elapsed time ==> 6s.405ms
+=======
 <<<<<<< HEAD
 Static timing analysis phase: Elapsed time ==> 4s.046ms
 =======
 Static timing analysis phase: Elapsed time ==> 6s.715ms
 >>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
+>>>>>>> bd576f9808c8effb843f424a11422d1d642a784a
 </CYPRESSTAG>
 <CYPRESSTAG name="Data reporting">
 Data reporting phase: Elapsed time ==> 0s.000ms
 </CYPRESSTAG>
 <CYPRESSTAG name="Database update...">
+<<<<<<< HEAD
+Design database save phase: Elapsed time ==> 0s.177ms
+=======
 <<<<<<< HEAD
 Design database save phase: Elapsed time ==> 0s.179ms
 </CYPRESSTAG>
@@ -2275,11 +2371,19 @@ API generation phase: Elapsed time ==> 1s.240ms
 Dependency generation phase: Elapsed time ==> 0s.059ms
 =======
 Design database save phase: Elapsed time ==> 0s.194ms
+>>>>>>> bd576f9808c8effb843f424a11422d1d642a784a
 </CYPRESSTAG>
-cydsfit: Elapsed time ==> 15s.254ms
+cydsfit: Elapsed time ==> 15s.186ms
 </CYPRESSTAG>
+<<<<<<< HEAD
+Fitter phase: Elapsed time ==> 15s.186ms
+API generation phase: Elapsed time ==> 1s.521ms
+Dependency generation phase: Elapsed time ==> 0s.016ms
+Cleanup phase: Elapsed time ==> 0s.003ms
+=======
 Fitter phase: Elapsed time ==> 15s.254ms
 API generation phase: Elapsed time ==> 1s.638ms
 Dependency generation phase: Elapsed time ==> 0s.000ms
 >>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
 Cleanup phase: Elapsed time ==> 0s.000ms
+>>>>>>> bd576f9808c8effb843f424a11422d1d642a784a
