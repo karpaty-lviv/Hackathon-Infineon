@@ -1,4 +1,5 @@
 #include <project.h>
+
 #include "car.h"
 #include "music.h"
 #include "cm4_common.h"
@@ -173,6 +174,8 @@ ipc_msg_t ipcMsgForCM0 = {               /* IPC structure to be sent to CM0 */
 static void processIncomingIPCMessage(ipc_msg_t* msg);
 static void processCM4Command(enum cm4CommandList cmd);
 
+// Start flag
+bool startCar = false;
 
 int main(void)
 {    
@@ -213,10 +216,29 @@ int main(void)
     Cy_GPIO_Clr(LEDG_0_PORT, LEDG_0_NUM); //green LED
     Cy_GPIO_Clr(LEDR_0_PORT, LEDR_0_NUM); //red LED
     
-    Music_FurElise();
+    // Music_FurElise();
 
-    Sound_Play(440u,1000u);
+    // Sound_Play(440u,1000u);
    
+<<<<<<< HEAD
+    // Motor_Move(2000, 2000, 2000, 2000);     //go forward
+    // CyDelay(1000);
+    // Motor_Move(0, 0, 0, 0);                 //stop
+    // CyDelay(1000);
+    // Motor_Move(-1000, -1000, -1000, -1000); //go back
+    // CyDelay(2000);
+    // Motor_Move(0, 0, 0, 0);                 //stop
+    // CyDelay(1000);
+    // 
+    // Motor_Move(-2000, -2000, 2000, 2000);   //turn left
+    // CyDelay(1000);
+    // Motor_Move(0, 0, 0, 0);                 //stop
+    // CyDelay(1000);
+    // Motor_Move(3000, 3000, -3000, -3000);   //turn right
+    // CyDelay(750);
+    // Motor_Move(0, 0, 0, 0);                 //stop
+    // CyDelay(1000);   
+=======
     // Demo movement sequence (removed for line following mode)
     /*
     Motor_Move(2000, 2000, 2000, 2000);     //go forward
@@ -237,6 +259,7 @@ int main(void)
     Motor_Move(0, 0, 0, 0);                 //stop
     CyDelay(1000);   
     */
+>>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
 
     uint32_t timeout = Timing_GetMillisecongs();
     uint32_t cycle = 0;
@@ -247,45 +270,57 @@ int main(void)
     // Then execute remaining code
     Leds_FillSolidColor(0, 0, 0);
     
+    for (;!startCar;) {
+        if (CM4_isDataAvailableFromCM0()) {
+            processIncomingIPCMessage(CM4_GetCM0Message());
+        }
+    }
+    
     // MAIN LOOP   
     for(;;)
+<<<<<<< HEAD
+    {        
+=======
     {
         // ========================================================================
         // LINE FOLLOWING - Execute PID control
         // ========================================================================
         followLine();
         
+>>>>>>> bd22d50f3383c241732a6171578cebde1d55ad66
         // Check for new messages from CM0 core and process them. This is the most important task.
-        if (CM4_isDataAvailableFromCM0())
-        {
+        if (CM4_isDataAvailableFromCM0()) {
             processIncomingIPCMessage(CM4_GetCM0Message());
         }
        
         // Blink Reg and blue LEDs based on timer
-        if((Timing_GetMillisecongs() - timeout) > 1000u)
-        {
-            if (cycle == 0u)
-            {
-                Leds_PutPixel(7u, 0x00u, 0x55u, 0x00u);
-                Leds_PutPixel(10u, 0x00u, 0x00u, 0x55u);
-                cycle++;
-            }
-            else             
-            {
-                Leds_PutPixel(7u, 0x00u, 0x00u, 0x55u);
-                Leds_PutPixel(10u, 0x00u, 0x55u, 0x00u);
-                cycle = 0;
-            }
-            timeout = Timing_GetMillisecongs();
-        }
+        //if((Timing_GetMillisecongs() - timeout) > 1000u)
+        //{
+        //    if (cycle == 0u)
+        //    {
+        //        Leds_PutPixel(7u, 0x00u, 0x55u, 0x00u);
+        //        Leds_PutPixel(10u, 0x00u, 0x00u, 0x55u);
+        //        cycle++;
+        //    }
+        //    else             
+        //    {
+        //        Leds_PutPixel(7u, 0x00u, 0x00u, 0x55u);
+        //        Leds_PutPixel(10u, 0x00u, 0x55u, 0x00u);
+        //        cycle = 0;
+        //    }
+        //    timeout = Timing_GetMillisecongs();
+        //}
         
         // Duplicate track sensor on Smart LEDs
+        Motor_Move(1000, 1000, 1000, 1000);
+        
         uint8_t track = Track_Read();
         for (uint8_t i=0; i<7u; i++)
         {
             Leds_PutPixel(i,track & 0x01u ? 0x55u : 0x00u, 0x00u, 0x00u);
             track = track >> 1;
-        }    
+        }
+        
 
         Leds_Update();
        
@@ -328,27 +363,15 @@ static void processCM4Command(enum cm4CommandList cmd)
 {
     switch (cmd)
     {
-        case CM4_COMMAND_LED_ENA:
-        {
-            Cy_GPIO_Write(LEDG_0_PORT, LEDG_0_NUM, 0);
-            Cy_GPIO_Write(LEDR_0_PORT, LEDR_0_NUM, 0);
+        case CM4_COMMAND_START_CAR:
+        {   
+            startCar = true;
             break;
         }
-        case CM4_COMMAND_LED_DIS:
-        {
-            Cy_GPIO_Write(LEDG_0_PORT, LEDG_0_NUM, 1);
-            Cy_GPIO_Write(LEDR_0_PORT, LEDR_0_NUM, 1);
-            break;
-        }
-        case CM4_COMMAND_CAR_SAY:
-        {
-            if (CM4_IsCM0Ready())
-            {
-                ipcMsgForCM0.userCode = IPC_USR_CODE_CMD;
-                ipcMsgForCM0.len = 0x01;
-                ipcMsgForCM0.buffer[0] = (uint8_t)CM0_SHARED_CAR_SAY;
-                CM4_SendCM0Message(&ipcMsgForCM0);
-            }
+        case CM4_COMMAND_STOP_CAR:
+        {   
+            Motor_Move(0, 0, 0, 0);
+            CyDelay(5000);
             break;
         }
         case CM4_COMMAND_ECHO:
