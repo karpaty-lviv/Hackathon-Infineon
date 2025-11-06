@@ -27,6 +27,7 @@ void Sound_Play(uint32_t freq, uint32_t duration);
 ///////////////////// TRACK SENSOR API ////////////////////////////////////////
 void Track_Init(void);
 uint8_t Track_Read(void);
+uint8_t Read_Sensor(uint8_t sensor_number);
 
 ///////////////////// TIMING API //////////////////////////////////////////////
 void Timing_Init(void);

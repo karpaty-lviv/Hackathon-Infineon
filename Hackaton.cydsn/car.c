@@ -124,6 +124,16 @@ uint8_t Track_Read(void)
   return (PCF8574_read8() & 0x7F); 
 }
 
+// return the state of sensor_number (0-6)
+uint8_t Read_Sensor(uint8_t sensor_number)
+{
+  if (sensor_number > 6)
+  {
+    return 0;
+  }
+  return !!(Track_Read() & (1 << (sensor_number)));
+}
+
 ///////////////////// TIMING API //////////////////////////////////////////////
 static void systick_handler(void)
 {
