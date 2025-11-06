@@ -17,6 +17,12 @@
 #define BASE_SPEED      1500    // Base forward speed (range: -4000 to 4000)
 #define MAX_CORRECTION  1500    // Maximum steering correction value
 
+static int16_t baseSpeed = BASE_SPEED;
+static int16_t maxCorrection = MAX_CORRECTION;
+static double pidKp = PID_KP;
+static double pidKd = PID_KD;
+static double pidKi = PID_KI;
+
 // PID state variables
 static double lastError = 0.0;
 static double integral = 0.0;
@@ -76,33 +82,21 @@ static int16_t pidControl(int error, uint32_t currentTime)
         deltaTime = 0.001;
     }
 
-    // PID FORMULA IMPLEMENTATION:
-    // ---------------------------
+    double pTerm = pidKp * error;
 
-    // P-term: Proportional to current error
-    // Larger error = stronger correction
-    double pTerm = PID_KP * error;
-
-    // I-term: Integral of error over time
-    // Accumulates past errors to eliminate steady-state offset
     integral += error * deltaTime;
-
-    // Anti-windup: Limit integral to prevent excessive accumulation
     if (integral > 100.0)  integral = 100.0;
     if (integral < -100.0) integral = -100.0;
+    double iTerm = pidKi * integral;
 
-    double iTerm = PID_KI * integral;
-
-    // D-term: Derivative (rate of change) of error
-    // Predicts future error and dampens oscillation
-    double dTerm = PID_KD * (error - lastError) / deltaTime;
+    double dTerm = pidKd * (error - lastError) / deltaTime;
 
     // Calculate total correction
     double correction = pTerm + iTerm + dTerm;
 
-    // Limit correction to prevent excessive steering
-    if (correction > MAX_CORRECTION)  correction = MAX_CORRECTION;
-    if (correction < -MAX_CORRECTION) correction = -MAX_CORRECTION;
+    // Limit correction to prevent excessive steering (use runtime variable)
+    if (correction > maxCorrection)  correction = maxCorrection;
+    if (correction < -maxCorrection) correction = -maxCorrection;
 
     // Update state variables for next iteration
     lastError = error;
@@ -140,8 +134,8 @@ static void followLine(void)
     // - If line is to the LEFT (positive error, negative correction):
     //   Speed up right motors, slow down left motors (turn left)
 
-    int16_t leftSpeed = BASE_SPEED + correction;
-    int16_t rightSpeed = BASE_SPEED - correction;
+    int16_t leftSpeed = baseSpeed + correction;
+    int16_t rightSpeed = baseSpeed - correction;
 
     // Constrain speeds to valid range
     if (leftSpeed > 4000)   leftSpeed = 4000;
@@ -264,7 +258,7 @@ int main(void)
         if (CM4_isDataAvailableFromCM0()) {
             processIncomingIPCMessage(CM4_GetCM0Message());
         }
- 
+
         // ========================================================================
         // LINE FOLLOWING - Execute PID control (only if motors enabled)
         // ========================================================================
@@ -360,13 +354,32 @@ static void processCM4Command(enum cm4CommandList cmd)
         }
         case CM4_COMMAND_ECHO:
         {
-            if (CM4_IsCM0Ready())
+            ipc_msg_t* msg = CM4_GetCM0Message();
+
+            if (msg->len >= 4)
             {
-                ipcMsgForCM0.userCode = IPC_USR_CODE_CMD;
-                ipcMsgForCM0.len = CM4_GetCM0Message()->len;
-                ipcMsgForCM0.buffer[0] = (uint8_t)CM0_SHARED_BLE_NTF_RELAY;
-                memcpy(&ipcMsgForCM0.buffer[1], &CM4_GetCM0Message()->buffer[1], ipcMsgForCM0.len - 1);
-                CM4_SendCM0Message(&ipcMsgForCM0);
+                uint8_t command = msg->buffer[1];
+                uint16_t rawValue = (uint16_t)(msg->buffer[2]) | ((uint16_t)(msg->buffer[3]) << 8);
+                int16_t value = (int16_t)rawValue;
+
+                switch (command)
+                {
+                    case 0:
+                        baseSpeed = value;
+                        break;
+                    case 1:
+                        maxCorrection = value;
+                        break;
+                    case 2:
+                        pidKp = (double)value / 10.0;
+                        break;
+                    case 3:
+                        pidKd = (double)value / 10.0;
+                        break;
+                    case 4:
+                        pidKi = (double)value / 10.0;
+                        break;
+                }
             }
             break;
         }
