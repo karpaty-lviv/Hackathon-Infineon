@@ -64,27 +64,27 @@ int main(void)
     Cy_GPIO_Clr(LEDG_0_PORT, LEDG_0_NUM); //green LED
     Cy_GPIO_Clr(LEDR_0_PORT, LEDR_0_NUM); //red LED
     
-    Music_FurElise();
+    // Music_FurElise();
 
-    Sound_Play(440u,1000u);
+    // Sound_Play(440u,1000u);
    
-    Motor_Move(2000, 2000, 2000, 2000);     //go forward
-    CyDelay(1000);
-    Motor_Move(0, 0, 0, 0);                 //stop
-    CyDelay(1000);
-    Motor_Move(-1000, -1000, -1000, -1000); //go back
-    CyDelay(2000);
-    Motor_Move(0, 0, 0, 0);                 //stop
-    CyDelay(1000);
-
-    Motor_Move(-2000, -2000, 2000, 2000);   //turn left
-    CyDelay(1000);
-    Motor_Move(0, 0, 0, 0);                 //stop
-    CyDelay(1000);
-    Motor_Move(3000, 3000, -3000, -3000);   //turn right
-    CyDelay(750);
-    Motor_Move(0, 0, 0, 0);                 //stop
-    CyDelay(1000);   
+    // Motor_Move(2000, 2000, 2000, 2000);     //go forward
+    // CyDelay(1000);
+    // Motor_Move(0, 0, 0, 0);                 //stop
+    // CyDelay(1000);
+    // Motor_Move(-1000, -1000, -1000, -1000); //go back
+    // CyDelay(2000);
+    // Motor_Move(0, 0, 0, 0);                 //stop
+    // CyDelay(1000);
+    // 
+    // Motor_Move(-2000, -2000, 2000, 2000);   //turn left
+    // CyDelay(1000);
+    // Motor_Move(0, 0, 0, 0);                 //stop
+    // CyDelay(1000);
+    // Motor_Move(3000, 3000, -3000, -3000);   //turn right
+    // CyDelay(750);
+    // Motor_Move(0, 0, 0, 0);                 //stop
+    // CyDelay(1000);   
 
     uint32_t timeout = Timing_GetMillisecongs();
     uint32_t cycle = 0;
@@ -102,22 +102,22 @@ int main(void)
         }
        
         // Blink Reg and blue LEDs based on timer
-        if((Timing_GetMillisecongs() - timeout) > 1000u)
-        {
-            if (cycle == 0u)
-            {
-                Leds_PutPixel(7u, 0x00u, 0x55u, 0x00u);
-                Leds_PutPixel(10u, 0x00u, 0x00u, 0x55u);
-                cycle++;
-            }
-            else             
-            {
-                Leds_PutPixel(7u, 0x00u, 0x00u, 0x55u);
-                Leds_PutPixel(10u, 0x00u, 0x55u, 0x00u);
-                cycle = 0;
-            }
-            timeout = Timing_GetMillisecongs();
-        }
+        //if((Timing_GetMillisecongs() - timeout) > 1000u)
+        //{
+        //    if (cycle == 0u)
+        //    {
+        //        Leds_PutPixel(7u, 0x00u, 0x55u, 0x00u);
+        //        Leds_PutPixel(10u, 0x00u, 0x00u, 0x55u);
+        //        cycle++;
+        //    }
+        //    else             
+        //    {
+        //        Leds_PutPixel(7u, 0x00u, 0x00u, 0x55u);
+        //        Leds_PutPixel(10u, 0x00u, 0x55u, 0x00u);
+        //        cycle = 0;
+        //    }
+        //    timeout = Timing_GetMillisecongs();
+        //}
         
         // Duplicate track sensor on Smart LEDs
         uint8_t track = Track_Read();

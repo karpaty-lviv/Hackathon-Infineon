@@ -1,0 +1,5565 @@
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLZDz0J.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m0plus
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 0
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"cm0_ipc.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text.CM0_ReleaseCallback,"ax",%progbits
+  20              		.align	2
+  21              		.global	CM0_ReleaseCallback
+  22              		.code	16
+  23              		.thumb_func
+  24              		.type	CM0_ReleaseCallback, %function
+  25              	CM0_ReleaseCallback:
+  26              	.LFB679:
+  27              		.file 1 "cm0_ipc.c"
+   1:cm0_ipc.c     **** /* ========================================
+   2:cm0_ipc.c     ****  *
+   3:cm0_ipc.c     ****  * Copyright YOUR COMPANY, THE YEAR
+   4:cm0_ipc.c     ****  * All Rights Reserved
+   5:cm0_ipc.c     ****  * UNPUBLISHED, LICENSED SOFTWARE.
+   6:cm0_ipc.c     ****  *
+   7:cm0_ipc.c     ****  * CONFIDENTIAL AND PROPRIETARY INFORMATION
+   8:cm0_ipc.c     ****  * WHICH IS THE PROPERTY OF your company.
+   9:cm0_ipc.c     ****  *
+  10:cm0_ipc.c     ****  * ========================================
+  11:cm0_ipc.c     **** */
+  12:cm0_ipc.c     **** 
+  13:cm0_ipc.c     **** #include "cm0_ipc.h"
+  14:cm0_ipc.c     **** 
+  15:cm0_ipc.c     **** static bool isCM4Ready = true;
+  16:cm0_ipc.c     **** static bool isDataAvailableFromCM4 = false;
+  17:cm0_ipc.c     **** 
+  18:cm0_ipc.c     **** static ipc_msg_t ipcMsgFromCM4_Local;
+  19:cm0_ipc.c     **** 
+  20:cm0_ipc.c     **** // Do not use directly, only pass to IPC functions!
+  21:cm0_ipc.c     **** void CM0_MessageCallback(uint32_t *msg)
+  22:cm0_ipc.c     **** {
+  23:cm0_ipc.c     ****     ipc_msg_t *ipcMsgFromCM4;
+  24:cm0_ipc.c     ****     
+  25:cm0_ipc.c     ****     if (msg != NULL)
+  26:cm0_ipc.c     ****     {
+  27:cm0_ipc.c     ****         /* Cast the message received to the IPC structure */
+  28:cm0_ipc.c     ****         ipcMsgFromCM4 = (ipc_msg_t*)msg;
+  29:cm0_ipc.c     **** 
+  30:cm0_ipc.c     ****         // Store the message locally
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLZDz0J.s 			page 2
+
+
+  31:cm0_ipc.c     ****         memcpy((void*)&ipcMsgFromCM4_Local,
+  32:cm0_ipc.c     ****                (void*)ipcMsgFromCM4,
+  33:cm0_ipc.c     ****                 sizeof(ipc_msg_t));
+  34:cm0_ipc.c     ****         
+  35:cm0_ipc.c     ****         // Mark new data is available
+  36:cm0_ipc.c     ****         isDataAvailableFromCM4 = true;
+  37:cm0_ipc.c     ****     }
+  38:cm0_ipc.c     **** }
+  39:cm0_ipc.c     **** 
+  40:cm0_ipc.c     **** // Do not use directly, only pass to IPC functions!
+  41:cm0_ipc.c     **** void CM0_ReleaseCallback(void)
+  42:cm0_ipc.c     **** {
+  28              		.loc 1 42 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              		@ link register save eliminated.
+  43:cm0_ipc.c     ****     /* Message processed by CM4. Ready to receive a new message */
+  44:cm0_ipc.c     ****     isCM4Ready = true;
+  33              		.loc 1 44 0
+  34 0000 0122     		movs	r2, #1
+  35 0002 014B     		ldr	r3, .L2
+  36 0004 1A70     		strb	r2, [r3]
+  45:cm0_ipc.c     ****     DBG_PRINTF("CM4 Accepted msg!\r\n");
+  46:cm0_ipc.c     **** }
+  37              		.loc 1 46 0
+  38              		@ sp needed
+  39 0006 7047     		bx	lr
+  40              	.L3:
+  41              		.align	2
+  42              	.L2:
+  43 0008 00000000 		.word	.LANCHOR0
+  44              		.cfi_endproc
+  45              	.LFE679:
+  46              		.size	CM0_ReleaseCallback, .-CM0_ReleaseCallback
+  47              		.section	.text.CM0_MessageCallback,"ax",%progbits
+  48              		.align	2
+  49              		.global	CM0_MessageCallback
+  50              		.code	16
+  51              		.thumb_func
+  52              		.type	CM0_MessageCallback, %function
+  53              	CM0_MessageCallback:
+  54              	.LFB678:
+  22:cm0_ipc.c     ****     ipc_msg_t *ipcMsgFromCM4;
+  55              		.loc 1 22 0
+  56              		.cfi_startproc
+  57              		@ args = 0, pretend = 0, frame = 0
+  58              		@ frame_needed = 0, uses_anonymous_args = 0
+  59              	.LVL0:
+  60 0000 10B5     		push	{r4, lr}
+  61              		.cfi_def_cfa_offset 8
+  62              		.cfi_offset 4, -8
+  63              		.cfi_offset 14, -4
+  25:cm0_ipc.c     ****     {
+  64              		.loc 1 25 0
+  65 0002 0028     		cmp	r0, #0
+  66 0004 08D0     		beq	.L4
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLZDz0J.s 			page 3
+
+
+  67              	.LVL1:
+  31:cm0_ipc.c     ****                (void*)ipcMsgFromCM4,
+  68              		.loc 1 31 0
+  69 0006 8422     		movs	r2, #132
+  70 0008 5200     		lsls	r2, r2, #1
+  71 000a 0100     		movs	r1, r0
+  72 000c 0348     		ldr	r0, .L6
+  73              	.LVL2:
+  74 000e FFF7FEFF 		bl	memcpy
+  75              	.LVL3:
+  36:cm0_ipc.c     ****     }
+  76              		.loc 1 36 0
+  77 0012 0122     		movs	r2, #1
+  78 0014 024B     		ldr	r3, .L6+4
+  79 0016 1A72     		strb	r2, [r3, #8]
+  80              	.LVL4:
+  81              	.L4:
+  38:cm0_ipc.c     **** 
+  82              		.loc 1 38 0
+  83              		@ sp needed
+  84 0018 10BD     		pop	{r4, pc}
+  85              	.L7:
+  86 001a C046     		.align	2
+  87              	.L6:
+  88 001c 00000000 		.word	.LANCHOR1
+  89 0020 00010000 		.word	.LANCHOR2
+  90              		.cfi_endproc
+  91              	.LFE678:
+  92              		.size	CM0_MessageCallback, .-CM0_MessageCallback
+  93              		.section	.text.CM0_IsCM4Ready,"ax",%progbits
+  94              		.align	2
+  95              		.global	CM0_IsCM4Ready
+  96              		.code	16
+  97              		.thumb_func
+  98              		.type	CM0_IsCM4Ready, %function
+  99              	CM0_IsCM4Ready:
+ 100              	.LFB680:
+  47:cm0_ipc.c     **** 
+  48:cm0_ipc.c     **** bool CM0_IsCM4Ready(void)
+  49:cm0_ipc.c     **** {
+ 101              		.loc 1 49 0
+ 102              		.cfi_startproc
+ 103              		@ args = 0, pretend = 0, frame = 0
+ 104              		@ frame_needed = 0, uses_anonymous_args = 0
+ 105              		@ link register save eliminated.
+  50:cm0_ipc.c     ****     return isCM4Ready;
+ 106              		.loc 1 50 0
+ 107 0000 014B     		ldr	r3, .L9
+ 108 0002 1878     		ldrb	r0, [r3]
+  51:cm0_ipc.c     **** }
+ 109              		.loc 1 51 0
+ 110              		@ sp needed
+ 111 0004 7047     		bx	lr
+ 112              	.L10:
+ 113 0006 C046     		.align	2
+ 114              	.L9:
+ 115 0008 00000000 		.word	.LANCHOR0
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLZDz0J.s 			page 4
+
+
+ 116              		.cfi_endproc
+ 117              	.LFE680:
+ 118              		.size	CM0_IsCM4Ready, .-CM0_IsCM4Ready
+ 119              		.section	.text.CM0_isDataAvailableFromCM4,"ax",%progbits
+ 120              		.align	2
+ 121              		.global	CM0_isDataAvailableFromCM4
+ 122              		.code	16
+ 123              		.thumb_func
+ 124              		.type	CM0_isDataAvailableFromCM4, %function
+ 125              	CM0_isDataAvailableFromCM4:
+ 126              	.LFB681:
+  52:cm0_ipc.c     **** 
+  53:cm0_ipc.c     **** bool CM0_isDataAvailableFromCM4(void)
+  54:cm0_ipc.c     **** {
+ 127              		.loc 1 54 0
+ 128              		.cfi_startproc
+ 129              		@ args = 0, pretend = 0, frame = 0
+ 130              		@ frame_needed = 0, uses_anonymous_args = 0
+ 131              		@ link register save eliminated.
+  55:cm0_ipc.c     ****     return isDataAvailableFromCM4;
+ 132              		.loc 1 55 0
+ 133 0000 014B     		ldr	r3, .L12
+ 134 0002 187A     		ldrb	r0, [r3, #8]
+  56:cm0_ipc.c     **** }
+ 135              		.loc 1 56 0
+ 136              		@ sp needed
+ 137 0004 7047     		bx	lr
+ 138              	.L13:
+ 139 0006 C046     		.align	2
+ 140              	.L12:
+ 141 0008 00010000 		.word	.LANCHOR2
+ 142              		.cfi_endproc
+ 143              	.LFE681:
+ 144              		.size	CM0_isDataAvailableFromCM4, .-CM0_isDataAvailableFromCM4
+ 145              		.section	.text.CM0_GetCM4Message,"ax",%progbits
+ 146              		.align	2
+ 147              		.global	CM0_GetCM4Message
+ 148              		.code	16
+ 149              		.thumb_func
+ 150              		.type	CM0_GetCM4Message, %function
+ 151              	CM0_GetCM4Message:
+ 152              	.LFB682:
+  57:cm0_ipc.c     **** 
+  58:cm0_ipc.c     **** ipc_msg_t* CM0_GetCM4Message(void)
+  59:cm0_ipc.c     **** {
+ 153              		.loc 1 59 0
+ 154              		.cfi_startproc
+ 155              		@ args = 0, pretend = 0, frame = 0
+ 156              		@ frame_needed = 0, uses_anonymous_args = 0
+ 157              		@ link register save eliminated.
+  60:cm0_ipc.c     ****     // Mark that no new data is available from CM4 (we read it just now).
+  61:cm0_ipc.c     ****     isDataAvailableFromCM4 = false;
+ 158              		.loc 1 61 0
+ 159 0000 0022     		movs	r2, #0
+ 160 0002 024B     		ldr	r3, .L15
+ 161 0004 1A72     		strb	r2, [r3, #8]
+  62:cm0_ipc.c     ****     // This is a programmer responsibility to check for NULL pointer!
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLZDz0J.s 			page 5
+
+
+  63:cm0_ipc.c     ****     return &ipcMsgFromCM4_Local;
+  64:cm0_ipc.c     **** }
+ 162              		.loc 1 64 0
+ 163 0006 0248     		ldr	r0, .L15+4
+ 164              		@ sp needed
+ 165 0008 7047     		bx	lr
+ 166              	.L16:
+ 167 000a C046     		.align	2
+ 168              	.L15:
+ 169 000c 00010000 		.word	.LANCHOR2
+ 170 0010 00000000 		.word	.LANCHOR1
+ 171              		.cfi_endproc
+ 172              	.LFE682:
+ 173              		.size	CM0_GetCM4Message, .-CM0_GetCM4Message
+ 174              		.section	.text.CM0_SendCM4Message,"ax",%progbits
+ 175              		.align	2
+ 176              		.global	CM0_SendCM4Message
+ 177              		.code	16
+ 178              		.thumb_func
+ 179              		.type	CM0_SendCM4Message, %function
+ 180              	CM0_SendCM4Message:
+ 181              	.LFB683:
+  65:cm0_ipc.c     **** 
+  66:cm0_ipc.c     **** bool CM0_SendCM4Message(ipc_msg_t* msg)
+  67:cm0_ipc.c     **** {
+ 182              		.loc 1 67 0
+ 183              		.cfi_startproc
+ 184              		@ args = 0, pretend = 0, frame = 0
+ 185              		@ frame_needed = 0, uses_anonymous_args = 0
+ 186              	.LVL5:
+ 187 0000 10B5     		push	{r4, lr}
+ 188              		.cfi_def_cfa_offset 8
+ 189              		.cfi_offset 4, -8
+ 190              		.cfi_offset 14, -4
+ 191 0002 0200     		movs	r2, r0
+ 192              	.LVL6:
+  68:cm0_ipc.c     ****     bool ret = true;
+  69:cm0_ipc.c     ****     /* Send the string message to CM4 */
+  70:cm0_ipc.c     ****     // For the sake of simplicity, we won't record exact error.
+  71:cm0_ipc.c     ****     // Inversion is needed so retuned 0 error will be actually converted to true
+  72:cm0_ipc.c     ****     ret = (bool)!Cy_IPC_Pipe_SendMessage(CY_IPC_EP_CYPIPE_CM4_ADDR,
+ 193              		.loc 1 72 0
+ 194 0004 044B     		ldr	r3, .L18
+ 195 0006 0021     		movs	r1, #0
+ 196 0008 0120     		movs	r0, #1
+ 197              	.LVL7:
+ 198 000a FFF7FEFF 		bl	Cy_IPC_Pipe_SendMessage
+ 199              	.LVL8:
+ 200 000e 4342     		rsbs	r3, r0, #0
+ 201 0010 5841     		adcs	r0, r0, r3
+ 202 0012 C0B2     		uxtb	r0, r0
+ 203              	.LVL9:
+  73:cm0_ipc.c     ****                                          CY_IPC_EP_CYPIPE_CM0_ADDR,
+  74:cm0_ipc.c     ****                                          (void *)msg,
+  75:cm0_ipc.c     ****                                          CM0_ReleaseCallback);
+  76:cm0_ipc.c     ****     return ret;
+  77:cm0_ipc.c     **** }
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLZDz0J.s 			page 6
+
+
+ 204              		.loc 1 77 0
+ 205              		@ sp needed
+ 206 0014 10BD     		pop	{r4, pc}
+ 207              	.L19:
+ 208 0016 C046     		.align	2
+ 209              	.L18:
+ 210 0018 00000000 		.word	CM0_ReleaseCallback
+ 211              		.cfi_endproc
+ 212              	.LFE683:
+ 213              		.size	CM0_SendCM4Message, .-CM0_SendCM4Message
+ 214              		.data
+ 215              		.set	.LANCHOR0,. + 0
+ 216              		.type	isCM4Ready, %object
+ 217              		.size	isCM4Ready, 1
+ 218              	isCM4Ready:
+ 219 0000 01       		.byte	1
+ 220              		.bss
+ 221              		.align	2
+ 222              		.set	.LANCHOR1,. + 0
+ 223              		.set	.LANCHOR2,. + 256
+ 224              		.type	ipcMsgFromCM4_Local, %object
+ 225              		.size	ipcMsgFromCM4_Local, 264
+ 226              	ipcMsgFromCM4_Local:
+ 227 0000 00000000 		.space	264
+ 227      00000000 
+ 227      00000000 
+ 227      00000000 
+ 227      00000000 
+ 228              		.type	isDataAvailableFromCM4, %object
+ 229              		.size	isDataAvailableFromCM4, 1
+ 230              	isDataAvailableFromCM4:
+ 231 0108 00       		.space	1
+ 232              		.text
+ 233              	.Letext0:
+ 234              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\4.4\\psoc creator\\import\\gnu\\arm\\5.4.
+ 235              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\4.4\\psoc creator\\import\\gnu\\arm\\5.4.
+ 236              		.file 4 "Generated_Source\\PSoC6\\pdl\\drivers/peripheral/device/cy_device.h"
+ 237              		.file 5 "Generated_Source\\PSoC6\\pdl\\drivers/peripheral/sar/cy_sar.h"
+ 238              		.file 6 "Generated_Source\\PSoC6\\pdl\\drivers/peripheral/scb/cy_scb_i2c.h"
+ 239              		.file 7 "Generated_Source\\PSoC6\\pdl\\drivers/peripheral/scb/cy_scb_spi.h"
+ 240              		.file 8 "Generated_Source\\PSoC6\\pdl\\drivers/peripheral/scb/cy_scb_uart.h"
+ 241              		.file 9 "Generated_Source\\PSoC6\\pdl\\drivers/peripheral/tcpwm/cy_tcpwm_counter.h"
+ 242              		.file 10 "Generated_Source\\PSoC6\\pdl\\drivers/peripheral/tcpwm/cy_tcpwm_pwm.h"
+ 243              		.file 11 "Generated_Source\\PSoC6\\pdl\\middleware/ble/cy_ble_stack.h"
+ 244              		.file 12 "Generated_Source\\PSoC6\\pdl\\middleware/ble/cy_ble_stack_host_main.h"
+ 245              		.file 13 "Generated_Source\\PSoC6\\pdl\\middleware/ble/cy_ble_gap.h"
+ 246              		.file 14 "Generated_Source\\PSoC6/ADC.h"
+ 247              		.file 15 "ipc_def.h"
+ 248              		.file 16 "Generated_Source\\PSoC6/I2C_Main.h"
+ 249              		.file 17 "Generated_Source\\PSoC6/UART_Debug.h"
+ 250              		.file 18 "Generated_Source\\PSoC6/PWM_Trig.h"
+ 251              		.file 19 "Generated_Source\\PSoC6/Counter_Echo.h"
+ 252              		.file 20 "Generated_Source\\PSoC6/IR.h"
+ 253              		.file 21 "Generated_Source\\PSoC6/PWM_Buz.h"
+ 254              		.file 22 "Generated_Source\\PSoC6/SPI_LEDCTRL.h"
+ 255              		.file 23 "Generated_Source\\PSoC6\\pdl\\drivers/peripheral/ipc/cy_ipc_pipe.h"
+ 256              		.section	.debug_info,"",%progbits
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLZDz0J.s 			page 7
+
+
+ 257              	.Ldebug_info0:
+ 258 0000 56120000 		.4byte	0x1256
+ 259 0004 0400     		.2byte	0x4
+ 260 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 261 000a 04       		.byte	0x4
+ 262 000b 01       		.uleb128 0x1
+ 263 000c F8070000 		.4byte	.LASF380
+ 264 0010 0C       		.byte	0xc
+ 265 0011 D1190000 		.4byte	.LASF381
+ 266 0015 160F0000 		.4byte	.LASF382
+ 267 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 268 001d 00000000 		.4byte	0
+ 269 0021 00000000 		.4byte	.Ldebug_line0
+ 270 0025 02       		.uleb128 0x2
+ 271 0026 01       		.byte	0x1
+ 272 0027 08       		.byte	0x8
+ 273 0028 951C0000 		.4byte	.LASF0
+ 274 002c 02       		.uleb128 0x2
+ 275 002d 02       		.byte	0x2
+ 276 002e 05       		.byte	0x5
+ 277 002f 62180000 		.4byte	.LASF1
+ 278 0033 02       		.uleb128 0x2
+ 279 0034 01       		.byte	0x1
+ 280 0035 06       		.byte	0x6
+ 281 0036 831E0000 		.4byte	.LASF2
+ 282 003a 03       		.uleb128 0x3
+ 283 003b 9D1A0000 		.4byte	.LASF3
+ 284 003f 02       		.byte	0x2
+ 285 0040 1D       		.byte	0x1d
+ 286 0041 25000000 		.4byte	0x25
+ 287 0045 03       		.uleb128 0x3
+ 288 0046 74120000 		.4byte	.LASF4
+ 289 004a 02       		.byte	0x2
+ 290 004b 29       		.byte	0x29
+ 291 004c 2C000000 		.4byte	0x2c
+ 292 0050 03       		.uleb128 0x3
+ 293 0051 C70D0000 		.4byte	.LASF5
+ 294 0055 02       		.byte	0x2
+ 295 0056 2B       		.byte	0x2b
+ 296 0057 5B000000 		.4byte	0x5b
+ 297 005b 02       		.uleb128 0x2
+ 298 005c 02       		.byte	0x2
+ 299 005d 07       		.byte	0x7
+ 300 005e C50B0000 		.4byte	.LASF6
+ 301 0062 02       		.uleb128 0x2
+ 302 0063 04       		.byte	0x4
+ 303 0064 05       		.byte	0x5
+ 304 0065 C4180000 		.4byte	.LASF7
+ 305 0069 03       		.uleb128 0x3
+ 306 006a C81C0000 		.4byte	.LASF8
+ 307 006e 02       		.byte	0x2
+ 308 006f 41       		.byte	0x41
+ 309 0070 74000000 		.4byte	0x74
+ 310 0074 02       		.uleb128 0x2
+ 311 0075 04       		.byte	0x4
+ 312 0076 07       		.byte	0x7
+ 313 0077 3B0D0000 		.4byte	.LASF9
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLZDz0J.s 			page 8
+
+
+ 314 007b 02       		.uleb128 0x2
+ 315 007c 08       		.byte	0x8
+ 316 007d 05       		.byte	0x5
+ 317 007e 96110000 		.4byte	.LASF10
+ 318 0082 02       		.uleb128 0x2
+ 319 0083 08       		.byte	0x8
+ 320 0084 07       		.byte	0x7
+ 321 0085 42090000 		.4byte	.LASF11
+ 322 0089 04       		.uleb128 0x4
+ 323 008a 04       		.byte	0x4
+ 324 008b 05       		.byte	0x5
+ 325 008c 696E7400 		.ascii	"int\000"
+ 326 0090 02       		.uleb128 0x2
+ 327 0091 04       		.byte	0x4
+ 328 0092 07       		.byte	0x7
+ 329 0093 53020000 		.4byte	.LASF12
+ 330 0097 03       		.uleb128 0x3
+ 331 0098 33100000 		.4byte	.LASF13
+ 332 009c 03       		.byte	0x3
+ 333 009d 18       		.byte	0x18
+ 334 009e 3A000000 		.4byte	0x3a
+ 335 00a2 03       		.uleb128 0x3
+ 336 00a3 F6080000 		.4byte	.LASF14
+ 337 00a7 03       		.byte	0x3
+ 338 00a8 20       		.byte	0x20
+ 339 00a9 45000000 		.4byte	0x45
+ 340 00ad 03       		.uleb128 0x3
+ 341 00ae FF150000 		.4byte	.LASF15
+ 342 00b2 03       		.byte	0x3
+ 343 00b3 24       		.byte	0x24
+ 344 00b4 50000000 		.4byte	0x50
+ 345 00b8 03       		.uleb128 0x3
+ 346 00b9 3A070000 		.4byte	.LASF16
+ 347 00bd 03       		.byte	0x3
+ 348 00be 30       		.byte	0x30
+ 349 00bf 69000000 		.4byte	0x69
+ 350 00c3 02       		.uleb128 0x2
+ 351 00c4 04       		.byte	0x4
+ 352 00c5 07       		.byte	0x7
+ 353 00c6 AC170000 		.4byte	.LASF17
+ 354 00ca 05       		.uleb128 0x5
+ 355 00cb B8000000 		.4byte	0xb8
+ 356 00cf 02       		.uleb128 0x2
+ 357 00d0 08       		.byte	0x8
+ 358 00d1 04       		.byte	0x4
+ 359 00d2 F3150000 		.4byte	.LASF18
+ 360 00d6 06       		.uleb128 0x6
+ 361 00d7 B8       		.byte	0xb8
+ 362 00d8 04       		.byte	0x4
+ 363 00d9 34       		.byte	0x34
+ 364 00da E7040000 		.4byte	0x4e7
+ 365 00de 07       		.uleb128 0x7
+ 366 00df 7D030000 		.4byte	.LASF19
+ 367 00e3 04       		.byte	0x4
+ 368 00e4 37       		.byte	0x37
+ 369 00e5 B8000000 		.4byte	0xb8
+ 370 00e9 00       		.byte	0
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLZDz0J.s 			page 9
+
+
+ 371 00ea 07       		.uleb128 0x7
+ 372 00eb E5010000 		.4byte	.LASF20
+ 373 00ef 04       		.byte	0x4
+ 374 00f0 38       		.byte	0x38
+ 375 00f1 B8000000 		.4byte	0xb8
+ 376 00f5 04       		.byte	0x4
+ 377 00f6 07       		.uleb128 0x7
+ 378 00f7 A1010000 		.4byte	.LASF21
+ 379 00fb 04       		.byte	0x4
+ 380 00fc 39       		.byte	0x39
+ 381 00fd B8000000 		.4byte	0xb8
+ 382 0101 08       		.byte	0x8
+ 383 0102 07       		.uleb128 0x7
+ 384 0103 FD090000 		.4byte	.LASF22
+ 385 0107 04       		.byte	0x4
+ 386 0108 3A       		.byte	0x3a
+ 387 0109 B8000000 		.4byte	0xb8
+ 388 010d 0C       		.byte	0xc
+ 389 010e 07       		.uleb128 0x7
+ 390 010f 38190000 		.4byte	.LASF23
+ 391 0113 04       		.byte	0x4
+ 392 0114 3B       		.byte	0x3b
+ 393 0115 B8000000 		.4byte	0xb8
+ 394 0119 10       		.byte	0x10
+ 395 011a 07       		.uleb128 0x7
+ 396 011b BA120000 		.4byte	.LASF24
+ 397 011f 04       		.byte	0x4
+ 398 0120 3C       		.byte	0x3c
+ 399 0121 B8000000 		.4byte	0xb8
+ 400 0125 14       		.byte	0x14
+ 401 0126 07       		.uleb128 0x7
+ 402 0127 7B0C0000 		.4byte	.LASF25
+ 403 012b 04       		.byte	0x4
+ 404 012c 3D       		.byte	0x3d
+ 405 012d B8000000 		.4byte	0xb8
+ 406 0131 18       		.byte	0x18
+ 407 0132 07       		.uleb128 0x7
+ 408 0133 681F0000 		.4byte	.LASF26
+ 409 0137 04       		.byte	0x4
+ 410 0138 3E       		.byte	0x3e
+ 411 0139 B8000000 		.4byte	0xb8
+ 412 013d 1C       		.byte	0x1c
+ 413 013e 07       		.uleb128 0x7
+ 414 013f A4110000 		.4byte	.LASF27
+ 415 0143 04       		.byte	0x4
+ 416 0144 3F       		.byte	0x3f
+ 417 0145 B8000000 		.4byte	0xb8
+ 418 0149 20       		.byte	0x20
+ 419 014a 07       		.uleb128 0x7
+ 420 014b F80D0000 		.4byte	.LASF28
+ 421 014f 04       		.byte	0x4
+ 422 0150 40       		.byte	0x40
+ 423 0151 B8000000 		.4byte	0xb8
+ 424 0155 24       		.byte	0x24
+ 425 0156 07       		.uleb128 0x7
+ 426 0157 CD180000 		.4byte	.LASF29
+ 427 015b 04       		.byte	0x4
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLZDz0J.s 			page 10
+
+
+ 428 015c 43       		.byte	0x43
+ 429 015d 97000000 		.4byte	0x97
+ 430 0161 28       		.byte	0x28
+ 431 0162 07       		.uleb128 0x7
+ 432 0163 B6180000 		.4byte	.LASF30
+ 433 0167 04       		.byte	0x4
+ 434 0168 44       		.byte	0x44
+ 435 0169 97000000 		.4byte	0x97
+ 436 016d 29       		.byte	0x29
+ 437 016e 07       		.uleb128 0x7
+ 438 016f 310D0000 		.4byte	.LASF31
+ 439 0173 04       		.byte	0x4
+ 440 0174 45       		.byte	0x45
+ 441 0175 97000000 		.4byte	0x97
+ 442 0179 2A       		.byte	0x2a
+ 443 017a 07       		.uleb128 0x7
+ 444 017b 18190000 		.4byte	.LASF32
+ 445 017f 04       		.byte	0x4
+ 446 0180 46       		.byte	0x46
+ 447 0181 97000000 		.4byte	0x97
+ 448 0185 2B       		.byte	0x2b
+ 449 0186 07       		.uleb128 0x7
+ 450 0187 62030000 		.4byte	.LASF33
+ 451 018b 04       		.byte	0x4
+ 452 018c 47       		.byte	0x47
+ 453 018d 97000000 		.4byte	0x97
+ 454 0191 2C       		.byte	0x2c
+ 455 0192 07       		.uleb128 0x7
+ 456 0193 E91B0000 		.4byte	.LASF34
+ 457 0197 04       		.byte	0x4
+ 458 0198 48       		.byte	0x48
+ 459 0199 97000000 		.4byte	0x97
+ 460 019d 2D       		.byte	0x2d
+ 461 019e 07       		.uleb128 0x7
+ 462 019f 67200000 		.4byte	.LASF35
+ 463 01a3 04       		.byte	0x4
+ 464 01a4 49       		.byte	0x49
+ 465 01a5 97000000 		.4byte	0x97
+ 466 01a9 2E       		.byte	0x2e
+ 467 01aa 07       		.uleb128 0x7
+ 468 01ab 271F0000 		.4byte	.LASF36
+ 469 01af 04       		.byte	0x4
+ 470 01b0 4A       		.byte	0x4a
+ 471 01b1 97000000 		.4byte	0x97
+ 472 01b5 2F       		.byte	0x2f
+ 473 01b6 07       		.uleb128 0x7
+ 474 01b7 150D0000 		.4byte	.LASF37
+ 475 01bb 04       		.byte	0x4
+ 476 01bc 4B       		.byte	0x4b
+ 477 01bd 97000000 		.4byte	0x97
+ 478 01c1 30       		.byte	0x30
+ 479 01c2 07       		.uleb128 0x7
+ 480 01c3 1C140000 		.4byte	.LASF38
+ 481 01c7 04       		.byte	0x4
+ 482 01c8 4E       		.byte	0x4e
+ 483 01c9 97000000 		.4byte	0x97
+ 484 01cd 31       		.byte	0x31
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLZDz0J.s 			page 11
+
+
+ 485 01ce 07       		.uleb128 0x7
+ 486 01cf A11E0000 		.4byte	.LASF39
+ 487 01d3 04       		.byte	0x4
+ 488 01d4 4F       		.byte	0x4f
+ 489 01d5 97000000 		.4byte	0x97
+ 490 01d9 32       		.byte	0x32
+ 491 01da 07       		.uleb128 0x7
+ 492 01db 6C130000 		.4byte	.LASF40
+ 493 01df 04       		.byte	0x4
+ 494 01e0 50       		.byte	0x50
+ 495 01e1 97000000 		.4byte	0x97
+ 496 01e5 33       		.byte	0x33
+ 497 01e6 07       		.uleb128 0x7
+ 498 01e7 580E0000 		.4byte	.LASF41
+ 499 01eb 04       		.byte	0x4
+ 500 01ec 51       		.byte	0x51
+ 501 01ed 97000000 		.4byte	0x97
+ 502 01f1 34       		.byte	0x34
+ 503 01f2 07       		.uleb128 0x7
+ 504 01f3 B5090000 		.4byte	.LASF42
+ 505 01f7 04       		.byte	0x4
+ 506 01f8 52       		.byte	0x52
+ 507 01f9 A2000000 		.4byte	0xa2
+ 508 01fd 36       		.byte	0x36
+ 509 01fe 07       		.uleb128 0x7
+ 510 01ff D7030000 		.4byte	.LASF43
+ 511 0203 04       		.byte	0x4
+ 512 0204 53       		.byte	0x53
+ 513 0205 A2000000 		.4byte	0xa2
+ 514 0209 38       		.byte	0x38
+ 515 020a 07       		.uleb128 0x7
+ 516 020b 11130000 		.4byte	.LASF44
+ 517 020f 04       		.byte	0x4
+ 518 0210 54       		.byte	0x54
+ 519 0211 A2000000 		.4byte	0xa2
+ 520 0215 3A       		.byte	0x3a
+ 521 0216 07       		.uleb128 0x7
+ 522 0217 6E030000 		.4byte	.LASF45
+ 523 021b 04       		.byte	0x4
+ 524 021c 55       		.byte	0x55
+ 525 021d 97000000 		.4byte	0x97
+ 526 0221 3C       		.byte	0x3c
+ 527 0222 07       		.uleb128 0x7
+ 528 0223 760B0000 		.4byte	.LASF46
+ 529 0227 04       		.byte	0x4
+ 530 0228 56       		.byte	0x56
+ 531 0229 97000000 		.4byte	0x97
+ 532 022d 3D       		.byte	0x3d
+ 533 022e 07       		.uleb128 0x7
+ 534 022f 8F160000 		.4byte	.LASF47
+ 535 0233 04       		.byte	0x4
+ 536 0234 57       		.byte	0x57
+ 537 0235 97000000 		.4byte	0x97
+ 538 0239 3E       		.byte	0x3e
+ 539 023a 07       		.uleb128 0x7
+ 540 023b 7E120000 		.4byte	.LASF48
+ 541 023f 04       		.byte	0x4
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLZDz0J.s 			page 12
+
+
+ 542 0240 58       		.byte	0x58
+ 543 0241 97000000 		.4byte	0x97
+ 544 0245 3F       		.byte	0x3f
+ 545 0246 07       		.uleb128 0x7
+ 546 0247 DB020000 		.4byte	.LASF49
+ 547 024b 04       		.byte	0x4
+ 548 024c 59       		.byte	0x59
+ 549 024d 97000000 		.4byte	0x97
+ 550 0251 40       		.byte	0x40
+ 551 0252 07       		.uleb128 0x7
+ 552 0253 77140000 		.4byte	.LASF50
+ 553 0257 04       		.byte	0x4
+ 554 0258 5A       		.byte	0x5a
+ 555 0259 97000000 		.4byte	0x97
+ 556 025d 41       		.byte	0x41
+ 557 025e 07       		.uleb128 0x7
+ 558 025f A4080000 		.4byte	.LASF51
+ 559 0263 04       		.byte	0x4
+ 560 0264 5B       		.byte	0x5b
+ 561 0265 97000000 		.4byte	0x97
+ 562 0269 42       		.byte	0x42
+ 563 026a 07       		.uleb128 0x7
+ 564 026b 6A0D0000 		.4byte	.LASF52
+ 565 026f 04       		.byte	0x4
+ 566 0270 5C       		.byte	0x5c
+ 567 0271 97000000 		.4byte	0x97
+ 568 0275 43       		.byte	0x43
+ 569 0276 07       		.uleb128 0x7
+ 570 0277 3B0F0000 		.4byte	.LASF53
+ 571 027b 04       		.byte	0x4
+ 572 027c 5D       		.byte	0x5d
+ 573 027d 97000000 		.4byte	0x97
+ 574 0281 44       		.byte	0x44
+ 575 0282 07       		.uleb128 0x7
+ 576 0283 26190000 		.4byte	.LASF54
+ 577 0287 04       		.byte	0x4
+ 578 0288 5E       		.byte	0x5e
+ 579 0289 B8000000 		.4byte	0xb8
+ 580 028d 48       		.byte	0x48
+ 581 028e 07       		.uleb128 0x7
+ 582 028f 5D0F0000 		.4byte	.LASF55
+ 583 0293 04       		.byte	0x4
+ 584 0294 5F       		.byte	0x5f
+ 585 0295 B8000000 		.4byte	0xb8
+ 586 0299 4C       		.byte	0x4c
+ 587 029a 07       		.uleb128 0x7
+ 588 029b 331E0000 		.4byte	.LASF56
+ 589 029f 04       		.byte	0x4
+ 590 02a0 60       		.byte	0x60
+ 591 02a1 97000000 		.4byte	0x97
+ 592 02a5 50       		.byte	0x50
+ 593 02a6 07       		.uleb128 0x7
+ 594 02a7 D80B0000 		.4byte	.LASF57
+ 595 02ab 04       		.byte	0x4
+ 596 02ac 61       		.byte	0x61
+ 597 02ad 97000000 		.4byte	0x97
+ 598 02b1 51       		.byte	0x51
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLZDz0J.s 			page 13
+
+
+ 599 02b2 07       		.uleb128 0x7
+ 600 02b3 210D0000 		.4byte	.LASF58
+ 601 02b7 04       		.byte	0x4
+ 602 02b8 62       		.byte	0x62
+ 603 02b9 97000000 		.4byte	0x97
+ 604 02bd 52       		.byte	0x52
+ 605 02be 07       		.uleb128 0x7
+ 606 02bf A1150000 		.4byte	.LASF59
+ 607 02c3 04       		.byte	0x4
+ 608 02c4 63       		.byte	0x63
+ 609 02c5 97000000 		.4byte	0x97
+ 610 02c9 53       		.byte	0x53
+ 611 02ca 07       		.uleb128 0x7
+ 612 02cb 8B1D0000 		.4byte	.LASF60
+ 613 02cf 04       		.byte	0x4
+ 614 02d0 64       		.byte	0x64
+ 615 02d1 97000000 		.4byte	0x97
+ 616 02d5 54       		.byte	0x54
+ 617 02d6 07       		.uleb128 0x7
+ 618 02d7 0F0C0000 		.4byte	.LASF61
+ 619 02db 04       		.byte	0x4
+ 620 02dc 65       		.byte	0x65
+ 621 02dd 97000000 		.4byte	0x97
+ 622 02e1 55       		.byte	0x55
+ 623 02e2 07       		.uleb128 0x7
+ 624 02e3 00000000 		.4byte	.LASF62
+ 625 02e7 04       		.byte	0x4
+ 626 02e8 66       		.byte	0x66
+ 627 02e9 97000000 		.4byte	0x97
+ 628 02ed 56       		.byte	0x56
+ 629 02ee 07       		.uleb128 0x7
+ 630 02ef E4160000 		.4byte	.LASF63
+ 631 02f3 04       		.byte	0x4
+ 632 02f4 67       		.byte	0x67
+ 633 02f5 97000000 		.4byte	0x97
+ 634 02f9 57       		.byte	0x57
+ 635 02fa 07       		.uleb128 0x7
+ 636 02fb 420B0000 		.4byte	.LASF64
+ 637 02ff 04       		.byte	0x4
+ 638 0300 68       		.byte	0x68
+ 639 0301 97000000 		.4byte	0x97
+ 640 0305 58       		.byte	0x58
+ 641 0306 07       		.uleb128 0x7
+ 642 0307 9F1F0000 		.4byte	.LASF65
+ 643 030b 04       		.byte	0x4
+ 644 030c 69       		.byte	0x69
+ 645 030d 97000000 		.4byte	0x97
+ 646 0311 59       		.byte	0x59
+ 647 0312 07       		.uleb128 0x7
+ 648 0313 961E0000 		.4byte	.LASF66
+ 649 0317 04       		.byte	0x4
+ 650 0318 6E       		.byte	0x6e
+ 651 0319 AD000000 		.4byte	0xad
+ 652 031d 5A       		.byte	0x5a
+ 653 031e 07       		.uleb128 0x7
+ 654 031f F7010000 		.4byte	.LASF67
+ 655 0323 04       		.byte	0x4
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLZDz0J.s 			page 14
+
+
+ 656 0324 6F       		.byte	0x6f
+ 657 0325 AD000000 		.4byte	0xad
+ 658 0329 5C       		.byte	0x5c
+ 659 032a 07       		.uleb128 0x7
+ 660 032b AC110000 		.4byte	.LASF68
+ 661 032f 04       		.byte	0x4
+ 662 0330 70       		.byte	0x70
+ 663 0331 97000000 		.4byte	0x97
+ 664 0335 5E       		.byte	0x5e
+ 665 0336 07       		.uleb128 0x7
+ 666 0337 CB1E0000 		.4byte	.LASF69
+ 667 033b 04       		.byte	0x4
+ 668 033c 71       		.byte	0x71
+ 669 033d 97000000 		.4byte	0x97
+ 670 0341 5F       		.byte	0x5f
+ 671 0342 07       		.uleb128 0x7
+ 672 0343 B60D0000 		.4byte	.LASF70
+ 673 0347 04       		.byte	0x4
+ 674 0348 72       		.byte	0x72
+ 675 0349 97000000 		.4byte	0x97
+ 676 034d 60       		.byte	0x60
+ 677 034e 07       		.uleb128 0x7
+ 678 034f 22100000 		.4byte	.LASF71
+ 679 0353 04       		.byte	0x4
+ 680 0354 73       		.byte	0x73
+ 681 0355 B8000000 		.4byte	0xb8
+ 682 0359 64       		.byte	0x64
+ 683 035a 07       		.uleb128 0x7
+ 684 035b A5200000 		.4byte	.LASF72
+ 685 035f 04       		.byte	0x4
+ 686 0360 76       		.byte	0x76
+ 687 0361 AD000000 		.4byte	0xad
+ 688 0365 68       		.byte	0x68
+ 689 0366 07       		.uleb128 0x7
+ 690 0367 2A160000 		.4byte	.LASF73
+ 691 036b 04       		.byte	0x4
+ 692 036c 77       		.byte	0x77
+ 693 036d AD000000 		.4byte	0xad
+ 694 0371 6A       		.byte	0x6a
+ 695 0372 07       		.uleb128 0x7
+ 696 0373 02130000 		.4byte	.LASF74
+ 697 0377 04       		.byte	0x4
+ 698 0378 78       		.byte	0x78
+ 699 0379 AD000000 		.4byte	0xad
+ 700 037d 6C       		.byte	0x6c
+ 701 037e 07       		.uleb128 0x7
+ 702 037f 5C040000 		.4byte	.LASF75
+ 703 0383 04       		.byte	0x4
+ 704 0384 79       		.byte	0x79
+ 705 0385 AD000000 		.4byte	0xad
+ 706 0389 6E       		.byte	0x6e
+ 707 038a 07       		.uleb128 0x7
+ 708 038b 7E100000 		.4byte	.LASF76
+ 709 038f 04       		.byte	0x4
+ 710 0390 7B       		.byte	0x7b
+ 711 0391 97000000 		.4byte	0x97
+ 712 0395 70       		.byte	0x70
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLZDz0J.s 			page 15
+
+
+ 713 0396 07       		.uleb128 0x7
+ 714 0397 33060000 		.4byte	.LASF77
+ 715 039b 04       		.byte	0x4
+ 716 039c 7C       		.byte	0x7c
+ 717 039d 97000000 		.4byte	0x97
+ 718 03a1 71       		.byte	0x71
+ 719 03a2 07       		.uleb128 0x7
+ 720 03a3 4E0A0000 		.4byte	.LASF78
+ 721 03a7 04       		.byte	0x4
+ 722 03a8 7D       		.byte	0x7d
+ 723 03a9 97000000 		.4byte	0x97
+ 724 03ad 72       		.byte	0x72
+ 725 03ae 07       		.uleb128 0x7
+ 726 03af 02030000 		.4byte	.LASF79
+ 727 03b3 04       		.byte	0x4
+ 728 03b4 7E       		.byte	0x7e
+ 729 03b5 97000000 		.4byte	0x97
+ 730 03b9 73       		.byte	0x73
+ 731 03ba 07       		.uleb128 0x7
+ 732 03bb 17180000 		.4byte	.LASF80
+ 733 03bf 04       		.byte	0x4
+ 734 03c0 80       		.byte	0x80
+ 735 03c1 AD000000 		.4byte	0xad
+ 736 03c5 74       		.byte	0x74
+ 737 03c6 07       		.uleb128 0x7
+ 738 03c7 B3150000 		.4byte	.LASF81
+ 739 03cb 04       		.byte	0x4
+ 740 03cc 81       		.byte	0x81
+ 741 03cd AD000000 		.4byte	0xad
+ 742 03d1 76       		.byte	0x76
+ 743 03d2 07       		.uleb128 0x7
+ 744 03d3 711F0000 		.4byte	.LASF82
+ 745 03d7 04       		.byte	0x4
+ 746 03d8 82       		.byte	0x82
+ 747 03d9 AD000000 		.4byte	0xad
+ 748 03dd 78       		.byte	0x78
+ 749 03de 07       		.uleb128 0x7
+ 750 03df 59090000 		.4byte	.LASF83
+ 751 03e3 04       		.byte	0x4
+ 752 03e4 83       		.byte	0x83
+ 753 03e5 AD000000 		.4byte	0xad
+ 754 03e9 7A       		.byte	0x7a
+ 755 03ea 07       		.uleb128 0x7
+ 756 03eb B21A0000 		.4byte	.LASF84
+ 757 03ef 04       		.byte	0x4
+ 758 03f0 86       		.byte	0x86
+ 759 03f1 97000000 		.4byte	0x97
+ 760 03f5 7C       		.byte	0x7c
+ 761 03f6 07       		.uleb128 0x7
+ 762 03f7 691E0000 		.4byte	.LASF85
+ 763 03fb 04       		.byte	0x4
+ 764 03fc 87       		.byte	0x87
+ 765 03fd 97000000 		.4byte	0x97
+ 766 0401 7D       		.byte	0x7d
+ 767 0402 07       		.uleb128 0x7
+ 768 0403 FE080000 		.4byte	.LASF86
+ 769 0407 04       		.byte	0x4
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLZDz0J.s 			page 16
+
+
+ 770 0408 88       		.byte	0x88
+ 771 0409 97000000 		.4byte	0x97
+ 772 040d 7E       		.byte	0x7e
+ 773 040e 07       		.uleb128 0x7
+ 774 040f A4070000 		.4byte	.LASF87
+ 775 0413 04       		.byte	0x4
+ 776 0414 89       		.byte	0x89
+ 777 0415 97000000 		.4byte	0x97
+ 778 0419 7F       		.byte	0x7f
+ 779 041a 07       		.uleb128 0x7
+ 780 041b 6E090000 		.4byte	.LASF88
+ 781 041f 04       		.byte	0x4
+ 782 0420 8A       		.byte	0x8a
+ 783 0421 97000000 		.4byte	0x97
+ 784 0425 80       		.byte	0x80
+ 785 0426 07       		.uleb128 0x7
+ 786 0427 10010000 		.4byte	.LASF89
+ 787 042b 04       		.byte	0x4
+ 788 042c 8D       		.byte	0x8d
+ 789 042d B8000000 		.4byte	0xb8
+ 790 0431 84       		.byte	0x84
+ 791 0432 07       		.uleb128 0x7
+ 792 0433 4E1B0000 		.4byte	.LASF90
+ 793 0437 04       		.byte	0x4
+ 794 0438 8E       		.byte	0x8e
+ 795 0439 B8000000 		.4byte	0xb8
+ 796 043d 88       		.byte	0x88
+ 797 043e 07       		.uleb128 0x7
+ 798 043f 62140000 		.4byte	.LASF91
+ 799 0443 04       		.byte	0x4
+ 800 0444 8F       		.byte	0x8f
+ 801 0445 B8000000 		.4byte	0xb8
+ 802 0449 8C       		.byte	0x8c
+ 803 044a 07       		.uleb128 0x7
+ 804 044b 751C0000 		.4byte	.LASF92
+ 805 044f 04       		.byte	0x4
+ 806 0450 90       		.byte	0x90
+ 807 0451 B8000000 		.4byte	0xb8
+ 808 0455 90       		.byte	0x90
+ 809 0456 07       		.uleb128 0x7
+ 810 0457 881A0000 		.4byte	.LASF93
+ 811 045b 04       		.byte	0x4
+ 812 045c 91       		.byte	0x91
+ 813 045d B8000000 		.4byte	0xb8
+ 814 0461 94       		.byte	0x94
+ 815 0462 07       		.uleb128 0x7
+ 816 0463 48060000 		.4byte	.LASF94
+ 817 0467 04       		.byte	0x4
+ 818 0468 92       		.byte	0x92
+ 819 0469 B8000000 		.4byte	0xb8
+ 820 046d 98       		.byte	0x98
+ 821 046e 07       		.uleb128 0x7
+ 822 046f A51B0000 		.4byte	.LASF95
+ 823 0473 04       		.byte	0x4
+ 824 0474 93       		.byte	0x93
+ 825 0475 B8000000 		.4byte	0xb8
+ 826 0479 9C       		.byte	0x9c
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLZDz0J.s 			page 17
+
+
+ 827 047a 07       		.uleb128 0x7
+ 828 047b 60020000 		.4byte	.LASF96
+ 829 047f 04       		.byte	0x4
+ 830 0480 94       		.byte	0x94
+ 831 0481 B8000000 		.4byte	0xb8
+ 832 0485 A0       		.byte	0xa0
+ 833 0486 07       		.uleb128 0x7
+ 834 0487 F51A0000 		.4byte	.LASF97
+ 835 048b 04       		.byte	0x4
+ 836 048c 95       		.byte	0x95
+ 837 048d AD000000 		.4byte	0xad
+ 838 0491 A4       		.byte	0xa4
+ 839 0492 07       		.uleb128 0x7
+ 840 0493 F1170000 		.4byte	.LASF98
+ 841 0497 04       		.byte	0x4
+ 842 0498 96       		.byte	0x96
+ 843 0499 AD000000 		.4byte	0xad
+ 844 049d A6       		.byte	0xa6
+ 845 049e 07       		.uleb128 0x7
+ 846 049f 131C0000 		.4byte	.LASF99
+ 847 04a3 04       		.byte	0x4
+ 848 04a4 97       		.byte	0x97
+ 849 04a5 AD000000 		.4byte	0xad
+ 850 04a9 A8       		.byte	0xa8
+ 851 04aa 07       		.uleb128 0x7
+ 852 04ab 88110000 		.4byte	.LASF100
+ 853 04af 04       		.byte	0x4
+ 854 04b0 98       		.byte	0x98
+ 855 04b1 AD000000 		.4byte	0xad
+ 856 04b5 AA       		.byte	0xaa
+ 857 04b6 07       		.uleb128 0x7
+ 858 04b7 CD040000 		.4byte	.LASF101
+ 859 04bb 04       		.byte	0x4
+ 860 04bc 99       		.byte	0x99
+ 861 04bd AD000000 		.4byte	0xad
+ 862 04c1 AC       		.byte	0xac
+ 863 04c2 07       		.uleb128 0x7
+ 864 04c3 98140000 		.4byte	.LASF102
+ 865 04c7 04       		.byte	0x4
+ 866 04c8 9A       		.byte	0x9a
+ 867 04c9 AD000000 		.4byte	0xad
+ 868 04cd AE       		.byte	0xae
+ 869 04ce 07       		.uleb128 0x7
+ 870 04cf 03050000 		.4byte	.LASF103
+ 871 04d3 04       		.byte	0x4
+ 872 04d4 9D       		.byte	0x9d
+ 873 04d5 AD000000 		.4byte	0xad
+ 874 04d9 B0       		.byte	0xb0
+ 875 04da 07       		.uleb128 0x7
+ 876 04db D31C0000 		.4byte	.LASF104
+ 877 04df 04       		.byte	0x4
+ 878 04e0 9E       		.byte	0x9e
+ 879 04e1 B8000000 		.4byte	0xb8
+ 880 04e5 B4       		.byte	0xb4
+ 881 04e6 00       		.byte	0
+ 882 04e7 03       		.uleb128 0x3
+ 883 04e8 031F0000 		.4byte	.LASF105
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLZDz0J.s 			page 18
+
+
+ 884 04ec 04       		.byte	0x4
+ 885 04ed 9F       		.byte	0x9f
+ 886 04ee D6000000 		.4byte	0xd6
+ 887 04f2 02       		.uleb128 0x2
+ 888 04f3 01       		.byte	0x1
+ 889 04f4 08       		.byte	0x8
+ 890 04f5 B80E0000 		.4byte	.LASF106
+ 891 04f9 02       		.uleb128 0x2
+ 892 04fa 04       		.byte	0x4
+ 893 04fb 04       		.byte	0x4
+ 894 04fc 2B1C0000 		.4byte	.LASF107
+ 895 0500 02       		.uleb128 0x2
+ 896 0501 08       		.byte	0x8
+ 897 0502 04       		.byte	0x4
+ 898 0503 F30B0000 		.4byte	.LASF108
+ 899 0507 08       		.uleb128 0x8
+ 900 0508 04       		.byte	0x4
+ 901 0509 B8000000 		.4byte	0xb8
+ 902 050d 09       		.uleb128 0x9
+ 903 050e 04       		.byte	0x4
+ 904 050f 02       		.uleb128 0x2
+ 905 0510 01       		.byte	0x1
+ 906 0511 02       		.byte	0x2
+ 907 0512 FA0B0000 		.4byte	.LASF109
+ 908 0516 0A       		.uleb128 0xa
+ 909 0517 01       		.byte	0x1
+ 910 0518 25000000 		.4byte	0x25
+ 911 051c 05       		.byte	0x5
+ 912 051d 1304     		.2byte	0x413
+ 913 051f 3C050000 		.4byte	0x53c
+ 914 0523 0B       		.uleb128 0xb
+ 915 0524 D2050000 		.4byte	.LASF110
+ 916 0528 00       		.byte	0
+ 917 0529 0B       		.uleb128 0xb
+ 918 052a 170A0000 		.4byte	.LASF111
+ 919 052e 01       		.byte	0x1
+ 920 052f 0B       		.uleb128 0xb
+ 921 0530 A00E0000 		.4byte	.LASF112
+ 922 0534 02       		.byte	0x2
+ 923 0535 0B       		.uleb128 0xb
+ 924 0536 E8020000 		.4byte	.LASF113
+ 925 053a 03       		.byte	0x3
+ 926 053b 00       		.byte	0
+ 927 053c 0C       		.uleb128 0xc
+ 928 053d C11F0000 		.4byte	.LASF114
+ 929 0541 05       		.byte	0x5
+ 930 0542 1804     		.2byte	0x418
+ 931 0544 16050000 		.4byte	0x516
+ 932 0548 0D       		.uleb128 0xd
+ 933 0549 78       		.byte	0x78
+ 934 054a 05       		.byte	0x5
+ 935 054b 0205     		.2byte	0x502
+ 936 054d 15060000 		.4byte	0x615
+ 937 0551 0E       		.uleb128 0xe
+ 938 0552 A20A0000 		.4byte	.LASF115
+ 939 0556 05       		.byte	0x5
+ 940 0557 0405     		.2byte	0x504
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLZDz0J.s 			page 19
+
+
+ 941 0559 B8000000 		.4byte	0xb8
+ 942 055d 00       		.byte	0
+ 943 055e 0E       		.uleb128 0xe
+ 944 055f 8A1C0000 		.4byte	.LASF116
+ 945 0563 05       		.byte	0x5
+ 946 0564 0505     		.2byte	0x505
+ 947 0566 B8000000 		.4byte	0xb8
+ 948 056a 04       		.byte	0x4
+ 949 056b 0E       		.uleb128 0xe
+ 950 056c 68160000 		.4byte	.LASF117
+ 951 0570 05       		.byte	0x5
+ 952 0571 0605     		.2byte	0x506
+ 953 0573 B8000000 		.4byte	0xb8
+ 954 0577 08       		.byte	0x8
+ 955 0578 0E       		.uleb128 0xe
+ 956 0579 BB1B0000 		.4byte	.LASF118
+ 957 057d 05       		.byte	0x5
+ 958 057e 0705     		.2byte	0x507
+ 959 0580 B8000000 		.4byte	0xb8
+ 960 0584 0C       		.byte	0xc
+ 961 0585 0E       		.uleb128 0xe
+ 962 0586 D3090000 		.4byte	.LASF119
+ 963 058a 05       		.byte	0x5
+ 964 058b 0805     		.2byte	0x508
+ 965 058d B8000000 		.4byte	0xb8
+ 966 0591 10       		.byte	0x10
+ 967 0592 0E       		.uleb128 0xe
+ 968 0593 12110000 		.4byte	.LASF120
+ 969 0597 05       		.byte	0x5
+ 970 0598 0905     		.2byte	0x509
+ 971 059a 3C050000 		.4byte	0x53c
+ 972 059e 14       		.byte	0x14
+ 973 059f 0E       		.uleb128 0xe
+ 974 05a0 010F0000 		.4byte	.LASF121
+ 975 05a4 05       		.byte	0x5
+ 976 05a5 0A05     		.2byte	0x50a
+ 977 05a7 B8000000 		.4byte	0xb8
+ 978 05ab 18       		.byte	0x18
+ 979 05ac 0E       		.uleb128 0xe
+ 980 05ad A6130000 		.4byte	.LASF122
+ 981 05b1 05       		.byte	0x5
+ 982 05b2 0B05     		.2byte	0x50b
+ 983 05b4 15060000 		.4byte	0x615
+ 984 05b8 1C       		.byte	0x1c
+ 985 05b9 0E       		.uleb128 0xe
+ 986 05ba 9C200000 		.4byte	.LASF123
+ 987 05be 05       		.byte	0x5
+ 988 05bf 0C05     		.2byte	0x50c
+ 989 05c1 B8000000 		.4byte	0xb8
+ 990 05c5 5C       		.byte	0x5c
+ 991 05c6 0E       		.uleb128 0xe
+ 992 05c7 C1040000 		.4byte	.LASF124
+ 993 05cb 05       		.byte	0x5
+ 994 05cc 0D05     		.2byte	0x50d
+ 995 05ce B8000000 		.4byte	0xb8
+ 996 05d2 60       		.byte	0x60
+ 997 05d3 0E       		.uleb128 0xe
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLZDz0J.s 			page 20
+
+
+ 998 05d4 B31F0000 		.4byte	.LASF125
+ 999 05d8 05       		.byte	0x5
+ 1000 05d9 0E05     		.2byte	0x50e
+ 1001 05db B8000000 		.4byte	0xb8
+ 1002 05df 64       		.byte	0x64
+ 1003 05e0 0E       		.uleb128 0xe
+ 1004 05e1 DA160000 		.4byte	.LASF126
+ 1005 05e5 05       		.byte	0x5
+ 1006 05e6 0F05     		.2byte	0x50f
+ 1007 05e8 B8000000 		.4byte	0xb8
+ 1008 05ec 68       		.byte	0x68
+ 1009 05ed 0E       		.uleb128 0xe
+ 1010 05ee D3100000 		.4byte	.LASF127
+ 1011 05f2 05       		.byte	0x5
+ 1012 05f3 1005     		.2byte	0x510
+ 1013 05f5 B8000000 		.4byte	0xb8
+ 1014 05f9 6C       		.byte	0x6c
+ 1015 05fa 0E       		.uleb128 0xe
+ 1016 05fb 5A1F0000 		.4byte	.LASF128
+ 1017 05ff 05       		.byte	0x5
+ 1018 0600 1105     		.2byte	0x511
+ 1019 0602 0F050000 		.4byte	0x50f
+ 1020 0606 70       		.byte	0x70
+ 1021 0607 0E       		.uleb128 0xe
+ 1022 0608 EC0D0000 		.4byte	.LASF129
+ 1023 060c 05       		.byte	0x5
+ 1024 060d 1205     		.2byte	0x512
+ 1025 060f B8000000 		.4byte	0xb8
+ 1026 0613 74       		.byte	0x74
+ 1027 0614 00       		.byte	0
+ 1028 0615 0F       		.uleb128 0xf
+ 1029 0616 B8000000 		.4byte	0xb8
+ 1030 061a 25060000 		.4byte	0x625
+ 1031 061e 10       		.uleb128 0x10
+ 1032 061f C3000000 		.4byte	0xc3
+ 1033 0623 0F       		.byte	0xf
+ 1034 0624 00       		.byte	0
+ 1035 0625 0C       		.uleb128 0xc
+ 1036 0626 880A0000 		.4byte	.LASF130
+ 1037 062a 05       		.byte	0x5
+ 1038 062b 1305     		.2byte	0x513
+ 1039 062d 48050000 		.4byte	0x548
+ 1040 0631 0A       		.uleb128 0xa
+ 1041 0632 01       		.byte	0x1
+ 1042 0633 25000000 		.4byte	0x25
+ 1043 0637 06       		.byte	0x6
+ 1044 0638 2402     		.2byte	0x224
+ 1045 063a 4B060000 		.4byte	0x64b
+ 1046 063e 0B       		.uleb128 0xb
+ 1047 063f 2D040000 		.4byte	.LASF131
+ 1048 0643 00       		.byte	0
+ 1049 0644 0B       		.uleb128 0xb
+ 1050 0645 11050000 		.4byte	.LASF132
+ 1051 0649 01       		.byte	0x1
+ 1052 064a 00       		.byte	0
+ 1053 064b 0C       		.uleb128 0xc
+ 1054 064c 731D0000 		.4byte	.LASF133
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLZDz0J.s 			page 21
+
+
+ 1055 0650 06       		.byte	0x6
+ 1056 0651 2702     		.2byte	0x227
+ 1057 0653 31060000 		.4byte	0x631
+ 1058 0657 0C       		.uleb128 0xc
+ 1059 0658 76020000 		.4byte	.LASF134
+ 1060 065c 06       		.byte	0x6
+ 1061 065d 3902     		.2byte	0x239
+ 1062 065f 63060000 		.4byte	0x663
+ 1063 0663 08       		.uleb128 0x8
+ 1064 0664 04       		.byte	0x4
+ 1065 0665 69060000 		.4byte	0x669
+ 1066 0669 11       		.uleb128 0x11
+ 1067 066a 74060000 		.4byte	0x674
+ 1068 066e 12       		.uleb128 0x12
+ 1069 066f B8000000 		.4byte	0xb8
+ 1070 0673 00       		.byte	0
+ 1071 0674 0C       		.uleb128 0xc
+ 1072 0675 66050000 		.4byte	.LASF135
+ 1073 0679 06       		.byte	0x6
+ 1074 067a 4402     		.2byte	0x244
+ 1075 067c 80060000 		.4byte	0x680
+ 1076 0680 08       		.uleb128 0x8
+ 1077 0681 04       		.byte	0x4
+ 1078 0682 86060000 		.4byte	0x686
+ 1079 0686 13       		.uleb128 0x13
+ 1080 0687 4B060000 		.4byte	0x64b
+ 1081 068b 95060000 		.4byte	0x695
+ 1082 068f 12       		.uleb128 0x12
+ 1083 0690 B8000000 		.4byte	0xb8
+ 1084 0694 00       		.byte	0
+ 1085 0695 14       		.uleb128 0x14
+ 1086 0696 BB050000 		.4byte	.LASF159
+ 1087 069a 4C       		.byte	0x4c
+ 1088 069b 06       		.byte	0x6
+ 1089 069c C302     		.2byte	0x2c3
+ 1090 069e B4070000 		.4byte	0x7b4
+ 1091 06a2 0E       		.uleb128 0xe
+ 1092 06a3 450C0000 		.4byte	.LASF136
+ 1093 06a7 06       		.byte	0x6
+ 1094 06a8 C602     		.2byte	0x2c6
+ 1095 06aa 0F050000 		.4byte	0x50f
+ 1096 06ae 00       		.byte	0
+ 1097 06af 0E       		.uleb128 0xe
+ 1098 06b0 60120000 		.4byte	.LASF137
+ 1099 06b4 06       		.byte	0x6
+ 1100 06b5 C702     		.2byte	0x2c7
+ 1101 06b7 0F050000 		.4byte	0x50f
+ 1102 06bb 01       		.byte	0x1
+ 1103 06bc 0E       		.uleb128 0xe
+ 1104 06bd A61D0000 		.4byte	.LASF138
+ 1105 06c1 06       		.byte	0x6
+ 1106 06c2 C902     		.2byte	0x2c9
+ 1107 06c4 CA000000 		.4byte	0xca
+ 1108 06c8 04       		.byte	0x4
+ 1109 06c9 0E       		.uleb128 0xe
+ 1110 06ca 37010000 		.4byte	.LASF139
+ 1111 06ce 06       		.byte	0x6
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLZDz0J.s 			page 22
+
+
+ 1112 06cf CB02     		.2byte	0x2cb
+ 1113 06d1 CA000000 		.4byte	0xca
+ 1114 06d5 08       		.byte	0x8
+ 1115 06d6 0E       		.uleb128 0xe
+ 1116 06d7 A6140000 		.4byte	.LASF140
+ 1117 06db 06       		.byte	0x6
+ 1118 06dc CC02     		.2byte	0x2cc
+ 1119 06de 0F050000 		.4byte	0x50f
+ 1120 06e2 0C       		.byte	0xc
+ 1121 06e3 0E       		.uleb128 0xe
+ 1122 06e4 1F1C0000 		.4byte	.LASF141
+ 1123 06e8 06       		.byte	0x6
+ 1124 06e9 CD02     		.2byte	0x2cd
+ 1125 06eb 0F050000 		.4byte	0x50f
+ 1126 06ef 0D       		.byte	0xd
+ 1127 06f0 0E       		.uleb128 0xe
+ 1128 06f1 3C160000 		.4byte	.LASF142
+ 1129 06f5 06       		.byte	0x6
+ 1130 06f6 CF02     		.2byte	0x2cf
+ 1131 06f8 B4070000 		.4byte	0x7b4
+ 1132 06fc 10       		.byte	0x10
+ 1133 06fd 0E       		.uleb128 0xe
+ 1134 06fe 4C0F0000 		.4byte	.LASF143
+ 1135 0702 06       		.byte	0x6
+ 1136 0703 D002     		.2byte	0x2d0
+ 1137 0705 B8000000 		.4byte	0xb8
+ 1138 0709 14       		.byte	0x14
+ 1139 070a 0E       		.uleb128 0xe
+ 1140 070b 810B0000 		.4byte	.LASF144
+ 1141 070f 06       		.byte	0x6
+ 1142 0710 D102     		.2byte	0x2d1
+ 1143 0712 CA000000 		.4byte	0xca
+ 1144 0716 18       		.byte	0x18
+ 1145 0717 0E       		.uleb128 0xe
+ 1146 0718 290E0000 		.4byte	.LASF145
+ 1147 071c 06       		.byte	0x6
+ 1148 071d D202     		.2byte	0x2d2
+ 1149 071f CA000000 		.4byte	0xca
+ 1150 0723 1C       		.byte	0x1c
+ 1151 0724 0E       		.uleb128 0xe
+ 1152 0725 23020000 		.4byte	.LASF146
+ 1153 0729 06       		.byte	0x6
+ 1154 072a D402     		.2byte	0x2d4
+ 1155 072c CA000000 		.4byte	0xca
+ 1156 0730 20       		.byte	0x20
+ 1157 0731 0E       		.uleb128 0xe
+ 1158 0732 85040000 		.4byte	.LASF147
+ 1159 0736 06       		.byte	0x6
+ 1160 0737 D502     		.2byte	0x2d5
+ 1161 0739 BA070000 		.4byte	0x7ba
+ 1162 073d 24       		.byte	0x24
+ 1163 073e 0E       		.uleb128 0xe
+ 1164 073f E8060000 		.4byte	.LASF148
+ 1165 0743 06       		.byte	0x6
+ 1166 0744 D702     		.2byte	0x2d7
+ 1167 0746 B4070000 		.4byte	0x7b4
+ 1168 074a 28       		.byte	0x28
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLZDz0J.s 			page 23
+
+
+ 1169 074b 0E       		.uleb128 0xe
+ 1170 074c 050A0000 		.4byte	.LASF149
+ 1171 0750 06       		.byte	0x6
+ 1172 0751 D802     		.2byte	0x2d8
+ 1173 0753 B8000000 		.4byte	0xb8
+ 1174 0757 2C       		.byte	0x2c
+ 1175 0758 0E       		.uleb128 0xe
+ 1176 0759 0A070000 		.4byte	.LASF150
+ 1177 075d 06       		.byte	0x6
+ 1178 075e D902     		.2byte	0x2d9
+ 1179 0760 CA000000 		.4byte	0xca
+ 1180 0764 30       		.byte	0x30
+ 1181 0765 0E       		.uleb128 0xe
+ 1182 0766 6D100000 		.4byte	.LASF151
+ 1183 076a 06       		.byte	0x6
+ 1184 076b DA02     		.2byte	0x2da
+ 1185 076d CA000000 		.4byte	0xca
+ 1186 0771 34       		.byte	0x34
+ 1187 0772 0E       		.uleb128 0xe
+ 1188 0773 93030000 		.4byte	.LASF152
+ 1189 0777 06       		.byte	0x6
+ 1190 0778 DC02     		.2byte	0x2dc
+ 1191 077a B4070000 		.4byte	0x7b4
+ 1192 077e 38       		.byte	0x38
+ 1193 077f 0E       		.uleb128 0xe
+ 1194 0780 50030000 		.4byte	.LASF153
+ 1195 0784 06       		.byte	0x6
+ 1196 0785 DD02     		.2byte	0x2dd
+ 1197 0787 B8000000 		.4byte	0xb8
+ 1198 078b 3C       		.byte	0x3c
+ 1199 078c 0E       		.uleb128 0xe
+ 1200 078d 87140000 		.4byte	.LASF154
+ 1201 0791 06       		.byte	0x6
+ 1202 0792 DE02     		.2byte	0x2de
+ 1203 0794 CA000000 		.4byte	0xca
+ 1204 0798 40       		.byte	0x40
+ 1205 0799 0E       		.uleb128 0xe
+ 1206 079a EA0B0000 		.4byte	.LASF155
+ 1207 079e 06       		.byte	0x6
+ 1208 079f E402     		.2byte	0x2e4
+ 1209 07a1 57060000 		.4byte	0x657
+ 1210 07a5 44       		.byte	0x44
+ 1211 07a6 0E       		.uleb128 0xe
+ 1212 07a7 26040000 		.4byte	.LASF156
+ 1213 07ab 06       		.byte	0x6
+ 1214 07ac EB02     		.2byte	0x2eb
+ 1215 07ae 74060000 		.4byte	0x674
+ 1216 07b2 48       		.byte	0x48
+ 1217 07b3 00       		.byte	0
+ 1218 07b4 08       		.uleb128 0x8
+ 1219 07b5 04       		.byte	0x4
+ 1220 07b6 97000000 		.4byte	0x97
+ 1221 07ba 05       		.uleb128 0x5
+ 1222 07bb 0F050000 		.4byte	0x50f
+ 1223 07bf 0C       		.uleb128 0xc
+ 1224 07c0 861F0000 		.4byte	.LASF157
+ 1225 07c4 06       		.byte	0x6
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLZDz0J.s 			page 24
+
+
+ 1226 07c5 EE02     		.2byte	0x2ee
+ 1227 07c7 95060000 		.4byte	0x695
+ 1228 07cb 0C       		.uleb128 0xc
+ 1229 07cc 6E000000 		.4byte	.LASF158
+ 1230 07d0 07       		.byte	0x7
+ 1231 07d1 F201     		.2byte	0x1f2
+ 1232 07d3 63060000 		.4byte	0x663
+ 1233 07d7 14       		.uleb128 0x14
+ 1234 07d8 841B0000 		.4byte	.LASF160
+ 1235 07dc 24       		.byte	0x24
+ 1236 07dd 07       		.byte	0x7
+ 1237 07de 7402     		.2byte	0x274
+ 1238 07e0 5A080000 		.4byte	0x85a
+ 1239 07e4 0E       		.uleb128 0xe
+ 1240 07e5 3B100000 		.4byte	.LASF161
+ 1241 07e9 07       		.byte	0x7
+ 1242 07ea 7702     		.2byte	0x277
+ 1243 07ec CA000000 		.4byte	0xca
+ 1244 07f0 00       		.byte	0
+ 1245 07f1 0E       		.uleb128 0xe
+ 1246 07f2 3C0B0000 		.4byte	.LASF162
+ 1247 07f6 07       		.byte	0x7
+ 1248 07f7 7902     		.2byte	0x279
+ 1249 07f9 0D050000 		.4byte	0x50d
+ 1250 07fd 04       		.byte	0x4
+ 1251 07fe 0E       		.uleb128 0xe
+ 1252 07ff B5200000 		.4byte	.LASF163
+ 1253 0803 07       		.byte	0x7
+ 1254 0804 7A02     		.2byte	0x27a
+ 1255 0806 B8000000 		.4byte	0xb8
+ 1256 080a 08       		.byte	0x8
+ 1257 080b 0E       		.uleb128 0xe
+ 1258 080c E70F0000 		.4byte	.LASF164
+ 1259 0810 07       		.byte	0x7
+ 1260 0811 7B02     		.2byte	0x27b
+ 1261 0813 CA000000 		.4byte	0xca
+ 1262 0817 0C       		.byte	0xc
+ 1263 0818 0E       		.uleb128 0xe
+ 1264 0819 9B150000 		.4byte	.LASF165
+ 1265 081d 07       		.byte	0x7
+ 1266 081e 7D02     		.2byte	0x27d
+ 1267 0820 0D050000 		.4byte	0x50d
+ 1268 0824 10       		.byte	0x10
+ 1269 0825 0E       		.uleb128 0xe
+ 1270 0826 12140000 		.4byte	.LASF166
+ 1271 082a 07       		.byte	0x7
+ 1272 082b 7E02     		.2byte	0x27e
+ 1273 082d B8000000 		.4byte	0xb8
+ 1274 0831 14       		.byte	0x14
+ 1275 0832 0E       		.uleb128 0xe
+ 1276 0833 3C030000 		.4byte	.LASF167
+ 1277 0837 07       		.byte	0x7
+ 1278 0838 7F02     		.2byte	0x27f
+ 1279 083a CA000000 		.4byte	0xca
+ 1280 083e 18       		.byte	0x18
+ 1281 083f 0E       		.uleb128 0xe
+ 1282 0840 EA0B0000 		.4byte	.LASF155
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLZDz0J.s 			page 25
+
+
+ 1283 0844 07       		.byte	0x7
+ 1284 0845 8502     		.2byte	0x285
+ 1285 0847 CB070000 		.4byte	0x7cb
+ 1286 084b 1C       		.byte	0x1c
+ 1287 084c 0E       		.uleb128 0xe
+ 1288 084d 1A100000 		.4byte	.LASF168
+ 1289 0851 07       		.byte	0x7
+ 1290 0852 8802     		.2byte	0x288
+ 1291 0854 B8000000 		.4byte	0xb8
+ 1292 0858 20       		.byte	0x20
+ 1293 0859 00       		.byte	0
+ 1294 085a 0C       		.uleb128 0xc
+ 1295 085b 26130000 		.4byte	.LASF169
+ 1296 085f 07       		.byte	0x7
+ 1297 0860 8B02     		.2byte	0x28b
+ 1298 0862 D7070000 		.4byte	0x7d7
+ 1299 0866 0C       		.uleb128 0xc
+ 1300 0867 F3100000 		.4byte	.LASF170
+ 1301 086b 08       		.byte	0x8
+ 1302 086c D901     		.2byte	0x1d9
+ 1303 086e 63060000 		.4byte	0x663
+ 1304 0872 14       		.uleb128 0x14
+ 1305 0873 B0080000 		.4byte	.LASF171
+ 1306 0877 38       		.byte	0x38
+ 1307 0878 08       		.byte	0x8
+ 1308 0879 7502     		.2byte	0x275
+ 1309 087b 36090000 		.4byte	0x936
+ 1310 087f 0E       		.uleb128 0xe
+ 1311 0880 98010000 		.4byte	.LASF172
+ 1312 0884 08       		.byte	0x8
+ 1313 0885 7802     		.2byte	0x278
+ 1314 0887 CA000000 		.4byte	0xca
+ 1315 088b 00       		.byte	0
+ 1316 088c 0E       		.uleb128 0xe
+ 1317 088d 330B0000 		.4byte	.LASF173
+ 1318 0891 08       		.byte	0x8
+ 1319 0892 7902     		.2byte	0x279
+ 1320 0894 CA000000 		.4byte	0xca
+ 1321 0898 04       		.byte	0x4
+ 1322 0899 0E       		.uleb128 0xe
+ 1323 089a E9150000 		.4byte	.LASF174
+ 1324 089e 08       		.byte	0x8
+ 1325 089f 7B02     		.2byte	0x27b
+ 1326 08a1 0D050000 		.4byte	0x50d
+ 1327 08a5 08       		.byte	0x8
+ 1328 08a6 0E       		.uleb128 0xe
+ 1329 08a7 46040000 		.4byte	.LASF175
+ 1330 08ab 08       		.byte	0x8
+ 1331 08ac 7C02     		.2byte	0x27c
+ 1332 08ae B8000000 		.4byte	0xb8
+ 1333 08b2 0C       		.byte	0xc
+ 1334 08b3 0E       		.uleb128 0xe
+ 1335 08b4 5E130000 		.4byte	.LASF176
+ 1336 08b8 08       		.byte	0x8
+ 1337 08b9 7D02     		.2byte	0x27d
+ 1338 08bb CA000000 		.4byte	0xca
+ 1339 08bf 10       		.byte	0x10
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLZDz0J.s 			page 26
+
+
+ 1340 08c0 0E       		.uleb128 0xe
+ 1341 08c1 080F0000 		.4byte	.LASF177
+ 1342 08c5 08       		.byte	0x8
+ 1343 08c6 7E02     		.2byte	0x27e
+ 1344 08c8 CA000000 		.4byte	0xca
+ 1345 08cc 14       		.byte	0x14
+ 1346 08cd 0E       		.uleb128 0xe
+ 1347 08ce 3C0B0000 		.4byte	.LASF162
+ 1348 08d2 08       		.byte	0x8
+ 1349 08d3 8002     		.2byte	0x280
+ 1350 08d5 0D050000 		.4byte	0x50d
+ 1351 08d9 18       		.byte	0x18
+ 1352 08da 0E       		.uleb128 0xe
+ 1353 08db B5200000 		.4byte	.LASF163
+ 1354 08df 08       		.byte	0x8
+ 1355 08e0 8102     		.2byte	0x281
+ 1356 08e2 B8000000 		.4byte	0xb8
+ 1357 08e6 1C       		.byte	0x1c
+ 1358 08e7 0E       		.uleb128 0xe
+ 1359 08e8 E70F0000 		.4byte	.LASF164
+ 1360 08ec 08       		.byte	0x8
+ 1361 08ed 8202     		.2byte	0x282
+ 1362 08ef CA000000 		.4byte	0xca
+ 1363 08f3 20       		.byte	0x20
+ 1364 08f4 0E       		.uleb128 0xe
+ 1365 08f5 9B150000 		.4byte	.LASF165
+ 1366 08f9 08       		.byte	0x8
+ 1367 08fa 8402     		.2byte	0x284
+ 1368 08fc 0D050000 		.4byte	0x50d
+ 1369 0900 24       		.byte	0x24
+ 1370 0901 0E       		.uleb128 0xe
+ 1371 0902 12140000 		.4byte	.LASF166
+ 1372 0906 08       		.byte	0x8
+ 1373 0907 8502     		.2byte	0x285
+ 1374 0909 B8000000 		.4byte	0xb8
+ 1375 090d 28       		.byte	0x28
+ 1376 090e 0E       		.uleb128 0xe
+ 1377 090f FA190000 		.4byte	.LASF178
+ 1378 0913 08       		.byte	0x8
+ 1379 0914 8602     		.2byte	0x286
+ 1380 0916 CA000000 		.4byte	0xca
+ 1381 091a 2C       		.byte	0x2c
+ 1382 091b 0E       		.uleb128 0xe
+ 1383 091c EA0B0000 		.4byte	.LASF155
+ 1384 0920 08       		.byte	0x8
+ 1385 0921 8B02     		.2byte	0x28b
+ 1386 0923 66080000 		.4byte	0x866
+ 1387 0927 30       		.byte	0x30
+ 1388 0928 0E       		.uleb128 0xe
+ 1389 0929 1A100000 		.4byte	.LASF168
+ 1390 092d 08       		.byte	0x8
+ 1391 092e 8E02     		.2byte	0x28e
+ 1392 0930 B8000000 		.4byte	0xb8
+ 1393 0934 34       		.byte	0x34
+ 1394 0935 00       		.byte	0
+ 1395 0936 0C       		.uleb128 0xc
+ 1396 0937 8A080000 		.4byte	.LASF179
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLZDz0J.s 			page 27
+
+
+ 1397 093b 08       		.byte	0x8
+ 1398 093c 9102     		.2byte	0x291
+ 1399 093e 72080000 		.4byte	0x872
+ 1400 0942 15       		.uleb128 0x15
+ 1401 0943 AF1E0000 		.4byte	.LASF180
+ 1402 0947 4C       		.byte	0x4c
+ 1403 0948 09       		.byte	0x9
+ 1404 0949 2F       		.byte	0x2f
+ 1405 094a 330A0000 		.4byte	0xa33
+ 1406 094e 07       		.uleb128 0x7
+ 1407 094f 8F1E0000 		.4byte	.LASF181
+ 1408 0953 09       		.byte	0x9
+ 1409 0954 31       		.byte	0x31
+ 1410 0955 B8000000 		.4byte	0xb8
+ 1411 0959 00       		.byte	0
+ 1412 095a 07       		.uleb128 0x7
+ 1413 095b 8D0F0000 		.4byte	.LASF182
+ 1414 095f 09       		.byte	0x9
+ 1415 0960 33       		.byte	0x33
+ 1416 0961 B8000000 		.4byte	0xb8
+ 1417 0965 04       		.byte	0x4
+ 1418 0966 07       		.uleb128 0x7
+ 1419 0967 22160000 		.4byte	.LASF183
+ 1420 096b 09       		.byte	0x9
+ 1421 096c 34       		.byte	0x34
+ 1422 096d B8000000 		.4byte	0xb8
+ 1423 0971 08       		.byte	0x8
+ 1424 0972 07       		.uleb128 0x7
+ 1425 0973 61190000 		.4byte	.LASF184
+ 1426 0977 09       		.byte	0x9
+ 1427 0978 35       		.byte	0x35
+ 1428 0979 B8000000 		.4byte	0xb8
+ 1429 097d 0C       		.byte	0xc
+ 1430 097e 07       		.uleb128 0x7
+ 1431 097f 06180000 		.4byte	.LASF185
+ 1432 0983 09       		.byte	0x9
+ 1433 0984 37       		.byte	0x37
+ 1434 0985 B8000000 		.4byte	0xb8
+ 1435 0989 10       		.byte	0x10
+ 1436 098a 07       		.uleb128 0x7
+ 1437 098b 82050000 		.4byte	.LASF186
+ 1438 098f 09       		.byte	0x9
+ 1439 0990 38       		.byte	0x38
+ 1440 0991 B8000000 		.4byte	0xb8
+ 1441 0995 14       		.byte	0x14
+ 1442 0996 07       		.uleb128 0x7
+ 1443 0997 8B050000 		.4byte	.LASF187
+ 1444 099b 09       		.byte	0x9
+ 1445 099c 39       		.byte	0x39
+ 1446 099d B8000000 		.4byte	0xb8
+ 1447 09a1 18       		.byte	0x18
+ 1448 09a2 07       		.uleb128 0x7
+ 1449 09a3 A4180000 		.4byte	.LASF188
+ 1450 09a7 09       		.byte	0x9
+ 1451 09a8 3A       		.byte	0x3a
+ 1452 09a9 0F050000 		.4byte	0x50f
+ 1453 09ad 1C       		.byte	0x1c
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLZDz0J.s 			page 28
+
+
+ 1454 09ae 07       		.uleb128 0x7
+ 1455 09af 93180000 		.4byte	.LASF189
+ 1456 09b3 09       		.byte	0x9
+ 1457 09b4 3C       		.byte	0x3c
+ 1458 09b5 B8000000 		.4byte	0xb8
+ 1459 09b9 20       		.byte	0x20
+ 1460 09ba 07       		.uleb128 0x7
+ 1461 09bb E00A0000 		.4byte	.LASF190
+ 1462 09bf 09       		.byte	0x9
+ 1463 09c0 3D       		.byte	0x3d
+ 1464 09c1 B8000000 		.4byte	0xb8
+ 1465 09c5 24       		.byte	0x24
+ 1466 09c6 07       		.uleb128 0x7
+ 1467 09c7 930E0000 		.4byte	.LASF191
+ 1468 09cb 09       		.byte	0x9
+ 1469 09cc 3F       		.byte	0x3f
+ 1470 09cd B8000000 		.4byte	0xb8
+ 1471 09d1 28       		.byte	0x28
+ 1472 09d2 07       		.uleb128 0x7
+ 1473 09d3 78130000 		.4byte	.LASF192
+ 1474 09d7 09       		.byte	0x9
+ 1475 09d8 40       		.byte	0x40
+ 1476 09d9 B8000000 		.4byte	0xb8
+ 1477 09dd 2C       		.byte	0x2c
+ 1478 09de 07       		.uleb128 0x7
+ 1479 09df EA080000 		.4byte	.LASF193
+ 1480 09e3 09       		.byte	0x9
+ 1481 09e4 42       		.byte	0x42
+ 1482 09e5 B8000000 		.4byte	0xb8
+ 1483 09e9 30       		.byte	0x30
+ 1484 09ea 07       		.uleb128 0x7
+ 1485 09eb A70A0000 		.4byte	.LASF194
+ 1486 09ef 09       		.byte	0x9
+ 1487 09f0 43       		.byte	0x43
+ 1488 09f1 B8000000 		.4byte	0xb8
+ 1489 09f5 34       		.byte	0x34
+ 1490 09f6 07       		.uleb128 0x7
+ 1491 09f7 45030000 		.4byte	.LASF195
+ 1492 09fb 09       		.byte	0x9
+ 1493 09fc 45       		.byte	0x45
+ 1494 09fd B8000000 		.4byte	0xb8
+ 1495 0a01 38       		.byte	0x38
+ 1496 0a02 07       		.uleb128 0x7
+ 1497 0a03 8C000000 		.4byte	.LASF196
+ 1498 0a07 09       		.byte	0x9
+ 1499 0a08 46       		.byte	0x46
+ 1500 0a09 B8000000 		.4byte	0xb8
+ 1501 0a0d 3C       		.byte	0x3c
+ 1502 0a0e 07       		.uleb128 0x7
+ 1503 0a0f 3C040000 		.4byte	.LASF197
+ 1504 0a13 09       		.byte	0x9
+ 1505 0a14 48       		.byte	0x48
+ 1506 0a15 B8000000 		.4byte	0xb8
+ 1507 0a19 40       		.byte	0x40
+ 1508 0a1a 07       		.uleb128 0x7
+ 1509 0a1b DA180000 		.4byte	.LASF198
+ 1510 0a1f 09       		.byte	0x9
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLZDz0J.s 			page 29
+
+
+ 1511 0a20 49       		.byte	0x49
+ 1512 0a21 B8000000 		.4byte	0xb8
+ 1513 0a25 44       		.byte	0x44
+ 1514 0a26 07       		.uleb128 0x7
+ 1515 0a27 E71C0000 		.4byte	.LASF199
+ 1516 0a2b 09       		.byte	0x9
+ 1517 0a2c 4B       		.byte	0x4b
+ 1518 0a2d B8000000 		.4byte	0xb8
+ 1519 0a31 48       		.byte	0x48
+ 1520 0a32 00       		.byte	0
+ 1521 0a33 03       		.uleb128 0x3
+ 1522 0a34 BC160000 		.4byte	.LASF200
+ 1523 0a38 09       		.byte	0x9
+ 1524 0a39 4C       		.byte	0x4c
+ 1525 0a3a 42090000 		.4byte	0x942
+ 1526 0a3e 15       		.uleb128 0x15
+ 1527 0a3f 1B060000 		.4byte	.LASF201
+ 1528 0a43 64       		.byte	0x64
+ 1529 0a44 0A       		.byte	0xa
+ 1530 0a45 2F       		.byte	0x2f
+ 1531 0a46 770B0000 		.4byte	0xb77
+ 1532 0a4a 07       		.uleb128 0x7
+ 1533 0a4b 54040000 		.4byte	.LASF202
+ 1534 0a4f 0A       		.byte	0xa
+ 1535 0a50 31       		.byte	0x31
+ 1536 0a51 B8000000 		.4byte	0xb8
+ 1537 0a55 00       		.byte	0
+ 1538 0a56 07       		.uleb128 0x7
+ 1539 0a57 8D0F0000 		.4byte	.LASF182
+ 1540 0a5b 0A       		.byte	0xa
+ 1541 0a5c 33       		.byte	0x33
+ 1542 0a5d B8000000 		.4byte	0xb8
+ 1543 0a61 04       		.byte	0x4
+ 1544 0a62 07       		.uleb128 0x7
+ 1545 0a63 ED0C0000 		.4byte	.LASF203
+ 1546 0a67 0A       		.byte	0xa
+ 1547 0a68 34       		.byte	0x34
+ 1548 0a69 B8000000 		.4byte	0xb8
+ 1549 0a6d 08       		.byte	0x8
+ 1550 0a6e 07       		.uleb128 0x7
+ 1551 0a6f CC110000 		.4byte	.LASF204
+ 1552 0a73 0A       		.byte	0xa
+ 1553 0a74 35       		.byte	0x35
+ 1554 0a75 B8000000 		.4byte	0xb8
+ 1555 0a79 0C       		.byte	0xc
+ 1556 0a7a 07       		.uleb128 0x7
+ 1557 0a7b 22160000 		.4byte	.LASF183
+ 1558 0a7f 0A       		.byte	0xa
+ 1559 0a80 36       		.byte	0x36
+ 1560 0a81 B8000000 		.4byte	0xb8
+ 1561 0a85 10       		.byte	0x10
+ 1562 0a86 07       		.uleb128 0x7
+ 1563 0a87 58120000 		.4byte	.LASF205
+ 1564 0a8b 0A       		.byte	0xa
+ 1565 0a8c 37       		.byte	0x37
+ 1566 0a8d B8000000 		.4byte	0xb8
+ 1567 0a91 14       		.byte	0x14
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLZDz0J.s 			page 30
+
+
+ 1568 0a92 07       		.uleb128 0x7
+ 1569 0a93 CB090000 		.4byte	.LASF206
+ 1570 0a97 0A       		.byte	0xa
+ 1571 0a98 38       		.byte	0x38
+ 1572 0a99 B8000000 		.4byte	0xb8
+ 1573 0a9d 18       		.byte	0x18
+ 1574 0a9e 07       		.uleb128 0x7
+ 1575 0a9f BB110000 		.4byte	.LASF207
+ 1576 0aa3 0A       		.byte	0xa
+ 1577 0aa4 39       		.byte	0x39
+ 1578 0aa5 0F050000 		.4byte	0x50f
+ 1579 0aa9 1C       		.byte	0x1c
+ 1580 0aaa 07       		.uleb128 0x7
+ 1581 0aab 82050000 		.4byte	.LASF186
+ 1582 0aaf 0A       		.byte	0xa
+ 1583 0ab0 3A       		.byte	0x3a
+ 1584 0ab1 B8000000 		.4byte	0xb8
+ 1585 0ab5 20       		.byte	0x20
+ 1586 0ab6 07       		.uleb128 0x7
+ 1587 0ab7 8B050000 		.4byte	.LASF187
+ 1588 0abb 0A       		.byte	0xa
+ 1589 0abc 3B       		.byte	0x3b
+ 1590 0abd B8000000 		.4byte	0xb8
+ 1591 0ac1 24       		.byte	0x24
+ 1592 0ac2 07       		.uleb128 0x7
+ 1593 0ac3 A4180000 		.4byte	.LASF188
+ 1594 0ac7 0A       		.byte	0xa
+ 1595 0ac8 3C       		.byte	0x3c
+ 1596 0ac9 0F050000 		.4byte	0x50f
+ 1597 0acd 28       		.byte	0x28
+ 1598 0ace 07       		.uleb128 0x7
+ 1599 0acf 93180000 		.4byte	.LASF189
+ 1600 0ad3 0A       		.byte	0xa
+ 1601 0ad4 3E       		.byte	0x3e
+ 1602 0ad5 B8000000 		.4byte	0xb8
+ 1603 0ad9 2C       		.byte	0x2c
+ 1604 0ada 07       		.uleb128 0x7
+ 1605 0adb 8A120000 		.4byte	.LASF208
+ 1606 0adf 0A       		.byte	0xa
+ 1607 0ae0 3F       		.byte	0x3f
+ 1608 0ae1 B8000000 		.4byte	0xb8
+ 1609 0ae5 30       		.byte	0x30
+ 1610 0ae6 07       		.uleb128 0x7
+ 1611 0ae7 66010000 		.4byte	.LASF209
+ 1612 0aeb 0A       		.byte	0xa
+ 1613 0aec 40       		.byte	0x40
+ 1614 0aed B8000000 		.4byte	0xb8
+ 1615 0af1 34       		.byte	0x34
+ 1616 0af2 07       		.uleb128 0x7
+ 1617 0af3 C2090000 		.4byte	.LASF210
+ 1618 0af7 0A       		.byte	0xa
+ 1619 0af8 41       		.byte	0x41
+ 1620 0af9 B8000000 		.4byte	0xb8
+ 1621 0afd 38       		.byte	0x38
+ 1622 0afe 07       		.uleb128 0x7
+ 1623 0aff E9180000 		.4byte	.LASF211
+ 1624 0b03 0A       		.byte	0xa
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLZDz0J.s 			page 31
+
+
+ 1625 0b04 42       		.byte	0x42
+ 1626 0b05 B8000000 		.4byte	0xb8
+ 1627 0b09 3C       		.byte	0x3c
+ 1628 0b0a 07       		.uleb128 0x7
+ 1629 0b0b 6A120000 		.4byte	.LASF212
+ 1630 0b0f 0A       		.byte	0xa
+ 1631 0b10 44       		.byte	0x44
+ 1632 0b11 B8000000 		.4byte	0xb8
+ 1633 0b15 40       		.byte	0x40
+ 1634 0b16 07       		.uleb128 0x7
+ 1635 0b17 78130000 		.4byte	.LASF192
+ 1636 0b1b 0A       		.byte	0xa
+ 1637 0b1c 45       		.byte	0x45
+ 1638 0b1d B8000000 		.4byte	0xb8
+ 1639 0b21 44       		.byte	0x44
+ 1640 0b22 07       		.uleb128 0x7
+ 1641 0b23 EA080000 		.4byte	.LASF193
+ 1642 0b27 0A       		.byte	0xa
+ 1643 0b28 47       		.byte	0x47
+ 1644 0b29 B8000000 		.4byte	0xb8
+ 1645 0b2d 48       		.byte	0x48
+ 1646 0b2e 07       		.uleb128 0x7
+ 1647 0b2f A70A0000 		.4byte	.LASF194
+ 1648 0b33 0A       		.byte	0xa
+ 1649 0b34 48       		.byte	0x48
+ 1650 0b35 B8000000 		.4byte	0xb8
+ 1651 0b39 4C       		.byte	0x4c
+ 1652 0b3a 07       		.uleb128 0x7
+ 1653 0b3b 45030000 		.4byte	.LASF195
+ 1654 0b3f 0A       		.byte	0xa
+ 1655 0b40 4A       		.byte	0x4a
+ 1656 0b41 B8000000 		.4byte	0xb8
+ 1657 0b45 50       		.byte	0x50
+ 1658 0b46 07       		.uleb128 0x7
+ 1659 0b47 C81B0000 		.4byte	.LASF213
+ 1660 0b4b 0A       		.byte	0xa
+ 1661 0b4c 4B       		.byte	0x4b
+ 1662 0b4d B8000000 		.4byte	0xb8
+ 1663 0b51 54       		.byte	0x54
+ 1664 0b52 07       		.uleb128 0x7
+ 1665 0b53 9B1B0000 		.4byte	.LASF214
+ 1666 0b57 0A       		.byte	0xa
+ 1667 0b58 4D       		.byte	0x4d
+ 1668 0b59 B8000000 		.4byte	0xb8
+ 1669 0b5d 58       		.byte	0x58
+ 1670 0b5e 07       		.uleb128 0x7
+ 1671 0b5f DA180000 		.4byte	.LASF198
+ 1672 0b63 0A       		.byte	0xa
+ 1673 0b64 4E       		.byte	0x4e
+ 1674 0b65 B8000000 		.4byte	0xb8
+ 1675 0b69 5C       		.byte	0x5c
+ 1676 0b6a 07       		.uleb128 0x7
+ 1677 0b6b E71C0000 		.4byte	.LASF199
+ 1678 0b6f 0A       		.byte	0xa
+ 1679 0b70 50       		.byte	0x50
+ 1680 0b71 B8000000 		.4byte	0xb8
+ 1681 0b75 60       		.byte	0x60
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLZDz0J.s 			page 32
+
+
+ 1682 0b76 00       		.byte	0
+ 1683 0b77 03       		.uleb128 0x3
+ 1684 0b78 08160000 		.4byte	.LASF215
+ 1685 0b7c 0A       		.byte	0xa
+ 1686 0b7d 51       		.byte	0x51
+ 1687 0b7e 3E0A0000 		.4byte	0xa3e
+ 1688 0b82 0A       		.uleb128 0xa
+ 1689 0b83 02       		.byte	0x2
+ 1690 0b84 5B000000 		.4byte	0x5b
+ 1691 0b88 0B       		.byte	0xb
+ 1692 0b89 5401     		.2byte	0x154
+ 1693 0b8b C20E0000 		.4byte	0xec2
+ 1694 0b8f 0B       		.uleb128 0xb
+ 1695 0b90 95040000 		.4byte	.LASF216
+ 1696 0b94 00       		.byte	0
+ 1697 0b95 16       		.uleb128 0x16
+ 1698 0b96 66070000 		.4byte	.LASF217
+ 1699 0b9a 0010     		.2byte	0x1000
+ 1700 0b9c 16       		.uleb128 0x16
+ 1701 0b9d D61B0000 		.4byte	.LASF218
+ 1702 0ba1 0110     		.2byte	0x1001
+ 1703 0ba3 16       		.uleb128 0x16
+ 1704 0ba4 4D0D0000 		.4byte	.LASF219
+ 1705 0ba8 0210     		.2byte	0x1002
+ 1706 0baa 16       		.uleb128 0x16
+ 1707 0bab D20D0000 		.4byte	.LASF220
+ 1708 0baf 0310     		.2byte	0x1003
+ 1709 0bb1 16       		.uleb128 0x16
+ 1710 0bb2 F1000000 		.4byte	.LASF221
+ 1711 0bb6 0410     		.2byte	0x1004
+ 1712 0bb8 16       		.uleb128 0x16
+ 1713 0bb9 E41F0000 		.4byte	.LASF222
+ 1714 0bbd 0510     		.2byte	0x1005
+ 1715 0bbf 16       		.uleb128 0x16
+ 1716 0bc0 75160000 		.4byte	.LASF223
+ 1717 0bc4 0020     		.2byte	0x2000
+ 1718 0bc6 16       		.uleb128 0x16
+ 1719 0bc7 2B1A0000 		.4byte	.LASF224
+ 1720 0bcb 0120     		.2byte	0x2001
+ 1721 0bcd 16       		.uleb128 0x16
+ 1722 0bce 25000000 		.4byte	.LASF225
+ 1723 0bd2 0220     		.2byte	0x2002
+ 1724 0bd4 16       		.uleb128 0x16
+ 1725 0bd5 920D0000 		.4byte	.LASF226
+ 1726 0bd9 0320     		.2byte	0x2003
+ 1727 0bdb 16       		.uleb128 0x16
+ 1728 0bdc C10F0000 		.4byte	.LASF227
+ 1729 0be0 0420     		.2byte	0x2004
+ 1730 0be2 16       		.uleb128 0x16
+ 1731 0be3 38120000 		.4byte	.LASF228
+ 1732 0be7 0520     		.2byte	0x2005
+ 1733 0be9 16       		.uleb128 0x16
+ 1734 0bea C90C0000 		.4byte	.LASF229
+ 1735 0bee 0620     		.2byte	0x2006
+ 1736 0bf0 16       		.uleb128 0x16
+ 1737 0bf1 C71A0000 		.4byte	.LASF230
+ 1738 0bf5 0720     		.2byte	0x2007
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLZDz0J.s 			page 33
+
+
+ 1739 0bf7 16       		.uleb128 0x16
+ 1740 0bf8 2D1D0000 		.4byte	.LASF231
+ 1741 0bfc 0820     		.2byte	0x2008
+ 1742 0bfe 16       		.uleb128 0x16
+ 1743 0bff 88130000 		.4byte	.LASF232
+ 1744 0c03 0920     		.2byte	0x2009
+ 1745 0c05 16       		.uleb128 0x16
+ 1746 0c06 D7070000 		.4byte	.LASF233
+ 1747 0c0a 0A20     		.2byte	0x200a
+ 1748 0c0c 16       		.uleb128 0x16
+ 1749 0c0d C8080000 		.4byte	.LASF234
+ 1750 0c11 0B20     		.2byte	0x200b
+ 1751 0c13 16       		.uleb128 0x16
+ 1752 0c14 49160000 		.4byte	.LASF235
+ 1753 0c18 0C20     		.2byte	0x200c
+ 1754 0c1a 16       		.uleb128 0x16
+ 1755 0c1b 43070000 		.4byte	.LASF236
+ 1756 0c1f 0D20     		.2byte	0x200d
+ 1757 0c21 16       		.uleb128 0x16
+ 1758 0c22 9C0F0000 		.4byte	.LASF237
+ 1759 0c26 0E20     		.2byte	0x200e
+ 1760 0c28 16       		.uleb128 0x16
+ 1761 0c29 5D170000 		.4byte	.LASF238
+ 1762 0c2d 0F20     		.2byte	0x200f
+ 1763 0c2f 16       		.uleb128 0x16
+ 1764 0c30 08120000 		.4byte	.LASF239
+ 1765 0c34 1020     		.2byte	0x2010
+ 1766 0c36 16       		.uleb128 0x16
+ 1767 0c37 E5130000 		.4byte	.LASF240
+ 1768 0c3b 1120     		.2byte	0x2011
+ 1769 0c3d 16       		.uleb128 0x16
+ 1770 0c3e FB1C0000 		.4byte	.LASF241
+ 1771 0c42 1220     		.2byte	0x2012
+ 1772 0c44 16       		.uleb128 0x16
+ 1773 0c45 C9010000 		.4byte	.LASF242
+ 1774 0c49 1320     		.2byte	0x2013
+ 1775 0c4b 16       		.uleb128 0x16
+ 1776 0c4c AF100000 		.4byte	.LASF243
+ 1777 0c50 1420     		.2byte	0x2014
+ 1778 0c52 16       		.uleb128 0x16
+ 1779 0c53 20050000 		.4byte	.LASF244
+ 1780 0c57 1520     		.2byte	0x2015
+ 1781 0c59 16       		.uleb128 0x16
+ 1782 0c5a AE060000 		.4byte	.LASF245
+ 1783 0c5e 1620     		.2byte	0x2016
+ 1784 0c60 16       		.uleb128 0x16
+ 1785 0c61 F5030000 		.4byte	.LASF246
+ 1786 0c65 1720     		.2byte	0x2017
+ 1787 0c67 16       		.uleb128 0x16
+ 1788 0c68 7A070000 		.4byte	.LASF247
+ 1789 0c6c 0030     		.2byte	0x3000
+ 1790 0c6e 16       		.uleb128 0x16
+ 1791 0c6f 3F130000 		.4byte	.LASF248
+ 1792 0c73 0130     		.2byte	0x3001
+ 1793 0c75 16       		.uleb128 0x16
+ 1794 0c76 640A0000 		.4byte	.LASF249
+ 1795 0c7a 0230     		.2byte	0x3002
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLZDz0J.s 			page 34
+
+
+ 1796 0c7c 16       		.uleb128 0x16
+ 1797 0c7d 0A1B0000 		.4byte	.LASF250
+ 1798 0c81 0330     		.2byte	0x3003
+ 1799 0c83 16       		.uleb128 0x16
+ 1800 0c84 98090000 		.4byte	.LASF251
+ 1801 0c88 0430     		.2byte	0x3004
+ 1802 0c8a 16       		.uleb128 0x16
+ 1803 0c8b 651B0000 		.4byte	.LASF252
+ 1804 0c8f 0530     		.2byte	0x3005
+ 1805 0c91 16       		.uleb128 0x16
+ 1806 0c92 AA010000 		.4byte	.LASF253
+ 1807 0c96 0630     		.2byte	0x3006
+ 1808 0c98 16       		.uleb128 0x16
+ 1809 0c99 C6150000 		.4byte	.LASF254
+ 1810 0c9d 0730     		.2byte	0x3007
+ 1811 0c9f 16       		.uleb128 0x16
+ 1812 0ca0 97120000 		.4byte	.LASF255
+ 1813 0ca4 0830     		.2byte	0x3008
+ 1814 0ca6 16       		.uleb128 0x16
+ 1815 0ca7 580C0000 		.4byte	.LASF256
+ 1816 0cab 0930     		.2byte	0x3009
+ 1817 0cad 16       		.uleb128 0x16
+ 1818 0cae 2E1B0000 		.4byte	.LASF257
+ 1819 0cb2 0A30     		.2byte	0x300a
+ 1820 0cb4 16       		.uleb128 0x16
+ 1821 0cb5 BD0E0000 		.4byte	.LASF258
+ 1822 0cb9 0B30     		.2byte	0x300b
+ 1823 0cbb 16       		.uleb128 0x16
+ 1824 0cbc 88170000 		.4byte	.LASF259
+ 1825 0cc0 0C30     		.2byte	0x300c
+ 1826 0cc2 16       		.uleb128 0x16
+ 1827 0cc3 42100000 		.4byte	.LASF260
+ 1828 0cc7 1130     		.2byte	0x3011
+ 1829 0cc9 16       		.uleb128 0x16
+ 1830 0cca B5170000 		.4byte	.LASF261
+ 1831 0cce 1230     		.2byte	0x3012
+ 1832 0cd0 16       		.uleb128 0x16
+ 1833 0cd1 311C0000 		.4byte	.LASF262
+ 1834 0cd5 1330     		.2byte	0x3013
+ 1835 0cd7 16       		.uleb128 0x16
+ 1836 0cd8 551A0000 		.4byte	.LASF263
+ 1837 0cdc 1430     		.2byte	0x3014
+ 1838 0cde 16       		.uleb128 0x16
+ 1839 0cdf F7180000 		.4byte	.LASF264
+ 1840 0ce3 1530     		.2byte	0x3015
+ 1841 0ce5 16       		.uleb128 0x16
+ 1842 0ce6 65110000 		.4byte	.LASF265
+ 1843 0cea 1630     		.2byte	0x3016
+ 1844 0cec 16       		.uleb128 0x16
+ 1845 0ced 43110000 		.4byte	.LASF266
+ 1846 0cf1 1730     		.2byte	0x3017
+ 1847 0cf3 16       		.uleb128 0x16
+ 1848 0cf4 030E0000 		.4byte	.LASF267
+ 1849 0cf8 1830     		.2byte	0x3018
+ 1850 0cfa 16       		.uleb128 0x16
+ 1851 0cfb 7B180000 		.4byte	.LASF268
+ 1852 0cff 1930     		.2byte	0x3019
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLZDz0J.s 			page 35
+
+
+ 1853 0d01 16       		.uleb128 0x16
+ 1854 0d02 CA140000 		.4byte	.LASF269
+ 1855 0d06 0040     		.2byte	0x4000
+ 1856 0d08 16       		.uleb128 0x16
+ 1857 0d09 F10A0000 		.4byte	.LASF270
+ 1858 0d0d 0140     		.2byte	0x4001
+ 1859 0d0f 16       		.uleb128 0x16
+ 1860 0d10 441E0000 		.4byte	.LASF271
+ 1861 0d14 0240     		.2byte	0x4002
+ 1862 0d16 16       		.uleb128 0x16
+ 1863 0d17 4E1C0000 		.4byte	.LASF272
+ 1864 0d1b 0340     		.2byte	0x4003
+ 1865 0d1d 16       		.uleb128 0x16
+ 1866 0d1e 92100000 		.4byte	.LASF273
+ 1867 0d22 0440     		.2byte	0x4004
+ 1868 0d24 16       		.uleb128 0x16
+ 1869 0d25 2D200000 		.4byte	.LASF274
+ 1870 0d29 0540     		.2byte	0x4005
+ 1871 0d2b 16       		.uleb128 0x16
+ 1872 0d2c 9A000000 		.4byte	.LASF275
+ 1873 0d30 0640     		.2byte	0x4006
+ 1874 0d32 16       		.uleb128 0x16
+ 1875 0d33 560B0000 		.4byte	.LASF276
+ 1876 0d37 0740     		.2byte	0x4007
+ 1877 0d39 16       		.uleb128 0x16
+ 1878 0d3a 19030000 		.4byte	.LASF277
+ 1879 0d3e 0840     		.2byte	0x4008
+ 1880 0d40 16       		.uleb128 0x16
+ 1881 0d41 300A0000 		.4byte	.LASF278
+ 1882 0d45 0940     		.2byte	0x4009
+ 1883 0d47 16       		.uleb128 0x16
+ 1884 0d48 CD200000 		.4byte	.LASF279
+ 1885 0d4c 0A40     		.2byte	0x400a
+ 1886 0d4e 16       		.uleb128 0x16
+ 1887 0d4f E10E0000 		.4byte	.LASF280
+ 1888 0d53 0B40     		.2byte	0x400b
+ 1889 0d55 16       		.uleb128 0x16
+ 1890 0d56 C0130000 		.4byte	.LASF281
+ 1891 0d5a 0C40     		.2byte	0x400c
+ 1892 0d5c 16       		.uleb128 0x16
+ 1893 0d5d F00F0000 		.4byte	.LASF282
+ 1894 0d61 0D40     		.2byte	0x400d
+ 1895 0d63 16       		.uleb128 0x16
+ 1896 0d64 2F150000 		.4byte	.LASF283
+ 1897 0d68 0E40     		.2byte	0x400e
+ 1898 0d6a 16       		.uleb128 0x16
+ 1899 0d6b 090B0000 		.4byte	.LASF284
+ 1900 0d6f 0F40     		.2byte	0x400f
+ 1901 0d71 16       		.uleb128 0x16
+ 1902 0d72 1D090000 		.4byte	.LASF285
+ 1903 0d76 1040     		.2byte	0x4010
+ 1904 0d78 16       		.uleb128 0x16
+ 1905 0d79 511D0000 		.4byte	.LASF286
+ 1906 0d7d 1140     		.2byte	0x4011
+ 1907 0d7f 16       		.uleb128 0x16
+ 1908 0d80 A10C0000 		.4byte	.LASF287
+ 1909 0d84 1240     		.2byte	0x4012
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLZDz0J.s 			page 36
+
+
+ 1910 0d86 16       		.uleb128 0x16
+ 1911 0d87 70190000 		.4byte	.LASF288
+ 1912 0d8b 1340     		.2byte	0x4013
+ 1913 0d8d 16       		.uleb128 0x16
+ 1914 0d8e 0E150000 		.4byte	.LASF289
+ 1915 0d92 1440     		.2byte	0x4014
+ 1916 0d94 16       		.uleb128 0x16
+ 1917 0d95 94050000 		.4byte	.LASF290
+ 1918 0d99 1540     		.2byte	0x4015
+ 1919 0d9b 16       		.uleb128 0x16
+ 1920 0d9c FD1F0000 		.4byte	.LASF291
+ 1921 0da0 1640     		.2byte	0x4016
+ 1922 0da2 16       		.uleb128 0x16
+ 1923 0da3 A6020000 		.4byte	.LASF292
+ 1924 0da7 1740     		.2byte	0x4017
+ 1925 0da9 16       		.uleb128 0x16
+ 1926 0daa DB110000 		.4byte	.LASF293
+ 1927 0dae 1840     		.2byte	0x4018
+ 1928 0db0 16       		.uleb128 0x16
+ 1929 0db1 29180000 		.4byte	.LASF294
+ 1930 0db5 1940     		.2byte	0x4019
+ 1931 0db7 16       		.uleb128 0x16
+ 1932 0db8 27140000 		.4byte	.LASF295
+ 1933 0dbc 1A40     		.2byte	0x401a
+ 1934 0dbe 16       		.uleb128 0x16
+ 1935 0dbf 1A170000 		.4byte	.LASF296
+ 1936 0dc3 0050     		.2byte	0x5000
+ 1937 0dc5 16       		.uleb128 0x16
+ 1938 0dc6 69040000 		.4byte	.LASF297
+ 1939 0dca 0150     		.2byte	0x5001
+ 1940 0dcc 16       		.uleb128 0x16
+ 1941 0dcd DB190000 		.4byte	.LASF298
+ 1942 0dd1 0250     		.2byte	0x5002
+ 1943 0dd3 16       		.uleb128 0x16
+ 1944 0dd4 F11D0000 		.4byte	.LASF299
+ 1945 0dd8 0350     		.2byte	0x5003
+ 1946 0dda 16       		.uleb128 0x16
+ 1947 0ddb 5E060000 		.4byte	.LASF300
+ 1948 0ddf 0450     		.2byte	0x5004
+ 1949 0de1 16       		.uleb128 0x16
+ 1950 0de2 35170000 		.4byte	.LASF301
+ 1951 0de6 0550     		.2byte	0x5005
+ 1952 0de8 16       		.uleb128 0x16
+ 1953 0de9 6B0F0000 		.4byte	.LASF302
+ 1954 0ded 0650     		.2byte	0x5006
+ 1955 0def 16       		.uleb128 0x16
+ 1956 0df0 B8030000 		.4byte	.LASF303
+ 1957 0df4 0750     		.2byte	0x5007
+ 1958 0df6 16       		.uleb128 0x16
+ 1959 0df7 DB040000 		.4byte	.LASF304
+ 1960 0dfb 0850     		.2byte	0x5008
+ 1961 0dfd 16       		.uleb128 0x16
+ 1962 0dfe E8120000 		.4byte	.LASF305
+ 1963 0e02 0950     		.2byte	0x5009
+ 1964 0e04 16       		.uleb128 0x16
+ 1965 0e05 1B070000 		.4byte	.LASF306
+ 1966 0e09 0A50     		.2byte	0x500a
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLZDz0J.s 			page 37
+
+
+ 1967 0e0b 16       		.uleb128 0x16
+ 1968 0e0c 41190000 		.4byte	.LASF307
+ 1969 0e10 0B50     		.2byte	0x500b
+ 1970 0e12 16       		.uleb128 0x16
+ 1971 0e13 CD060000 		.4byte	.LASF308
+ 1972 0e17 0C50     		.2byte	0x500c
+ 1973 0e19 16       		.uleb128 0x16
+ 1974 0e1a FA0C0000 		.4byte	.LASF309
+ 1975 0e1e 0D50     		.2byte	0x500d
+ 1976 0e20 16       		.uleb128 0x16
+ 1977 0e21 9D160000 		.4byte	.LASF310
+ 1978 0e25 0E50     		.2byte	0x500e
+ 1979 0e27 16       		.uleb128 0x16
+ 1980 0e28 910B0000 		.4byte	.LASF311
+ 1981 0e2c 0F50     		.2byte	0x500f
+ 1982 0e2e 16       		.uleb128 0x16
+ 1983 0e2f 0B1A0000 		.4byte	.LASF312
+ 1984 0e33 1050     		.2byte	0x5010
+ 1985 0e35 16       		.uleb128 0x16
+ 1986 0e36 D11D0000 		.4byte	.LASF313
+ 1987 0e3a 1150     		.2byte	0x5011
+ 1988 0e3c 16       		.uleb128 0x16
+ 1989 0e3d 44010000 		.4byte	.LASF314
+ 1990 0e41 1250     		.2byte	0x5012
+ 1991 0e43 16       		.uleb128 0x16
+ 1992 0e44 F8160000 		.4byte	.LASF315
+ 1993 0e48 1350     		.2byte	0x5013
+ 1994 0e4a 16       		.uleb128 0x16
+ 1995 0e4b 8C060000 		.4byte	.LASF316
+ 1996 0e4f 1450     		.2byte	0x5014
+ 1997 0e51 16       		.uleb128 0x16
+ 1998 0e52 A31C0000 		.4byte	.LASF317
+ 1999 0e56 1550     		.2byte	0x5015
+ 2000 0e58 16       		.uleb128 0x16
+ 2001 0e59 101E0000 		.4byte	.LASF318
+ 2002 0e5d 1650     		.2byte	0x5016
+ 2003 0e5f 16       		.uleb128 0x16
+ 2004 0e60 3C050000 		.4byte	.LASF319
+ 2005 0e64 1750     		.2byte	0x5017
+ 2006 0e66 16       		.uleb128 0x16
+ 2007 0e67 C4120000 		.4byte	.LASF320
+ 2008 0e6b 1850     		.2byte	0x5018
+ 2009 0e6d 16       		.uleb128 0x16
+ 2010 0e6e 331F0000 		.4byte	.LASF321
+ 2011 0e72 0060     		.2byte	0x6000
+ 2012 0e74 16       		.uleb128 0x16
+ 2013 0e75 1C110000 		.4byte	.LASF322
+ 2014 0e79 0160     		.2byte	0x6001
+ 2015 0e7b 16       		.uleb128 0x16
+ 2016 0e7c 750D0000 		.4byte	.LASF323
+ 2017 0e80 0260     		.2byte	0x6002
+ 2018 0e82 16       		.uleb128 0x16
+ 2019 0e83 EF140000 		.4byte	.LASF324
+ 2020 0e87 0360     		.2byte	0x6003
+ 2021 0e89 16       		.uleb128 0x16
+ 2022 0e8a B8070000 		.4byte	.LASF325
+ 2023 0e8e 0460     		.2byte	0x6004
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLZDz0J.s 			page 38
+
+
+ 2024 0e90 16       		.uleb128 0x16
+ 2025 0e91 AF190000 		.4byte	.LASF326
+ 2026 0e95 0560     		.2byte	0x6005
+ 2027 0e97 16       		.uleb128 0x16
+ 2028 0e98 230C0000 		.4byte	.LASF327
+ 2029 0e9c 0660     		.2byte	0x6006
+ 2030 0e9e 16       		.uleb128 0x16
+ 2031 0e9f 4E000000 		.4byte	.LASF328
+ 2032 0ea3 0760     		.2byte	0x6007
+ 2033 0ea5 16       		.uleb128 0x16
+ 2034 0ea6 2F020000 		.4byte	.LASF329
+ 2035 0eaa 0860     		.2byte	0x6008
+ 2036 0eac 16       		.uleb128 0x16
+ 2037 0ead CD000000 		.4byte	.LASF330
+ 2038 0eb1 0960     		.2byte	0x6009
+ 2039 0eb3 16       		.uleb128 0x16
+ 2040 0eb4 3D140000 		.4byte	.LASF331
+ 2041 0eb8 0A60     		.2byte	0x600a
+ 2042 0eba 16       		.uleb128 0x16
+ 2043 0ebb 000C0000 		.4byte	.LASF332
+ 2044 0ebf FFFF     		.2byte	0xffff
+ 2045 0ec1 00       		.byte	0
+ 2046 0ec2 0D       		.uleb128 0xd
+ 2047 0ec3 02       		.byte	0x2
+ 2048 0ec4 0C       		.byte	0xc
+ 2049 0ec5 6401     		.2byte	0x164
+ 2050 0ec7 E60E0000 		.4byte	0xee6
+ 2051 0ecb 0E       		.uleb128 0xe
+ 2052 0ecc 7A1E0000 		.4byte	.LASF333
+ 2053 0ed0 0C       		.byte	0xc
+ 2054 0ed1 6E01     		.2byte	0x16e
+ 2055 0ed3 97000000 		.4byte	0x97
+ 2056 0ed7 00       		.byte	0
+ 2057 0ed8 0E       		.uleb128 0xe
+ 2058 0ed9 9C0A0000 		.4byte	.LASF334
+ 2059 0edd 0C       		.byte	0xc
+ 2060 0ede 7201     		.2byte	0x172
+ 2061 0ee0 97000000 		.4byte	0x97
+ 2062 0ee4 01       		.byte	0x1
+ 2063 0ee5 00       		.byte	0
+ 2064 0ee6 0C       		.uleb128 0xc
+ 2065 0ee7 D8170000 		.4byte	.LASF335
+ 2066 0eeb 0C       		.byte	0xc
+ 2067 0eec 7401     		.2byte	0x174
+ 2068 0eee C20E0000 		.4byte	0xec2
+ 2069 0ef2 17       		.uleb128 0x17
+ 2070 0ef3 01       		.byte	0x1
+ 2071 0ef4 25000000 		.4byte	0x25
+ 2072 0ef8 0D       		.byte	0xd
+ 2073 0ef9 7E       		.byte	0x7e
+ 2074 0efa 170F0000 		.4byte	0xf17
+ 2075 0efe 0B       		.uleb128 0xb
+ 2076 0eff A8040000 		.4byte	.LASF336
+ 2077 0f03 00       		.byte	0
+ 2078 0f04 0B       		.uleb128 0xb
+ 2079 0f05 DE090000 		.4byte	.LASF337
+ 2080 0f09 01       		.byte	0x1
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLZDz0J.s 			page 39
+
+
+ 2081 0f0a 0B       		.uleb128 0xb
+ 2082 0f0b 840C0000 		.4byte	.LASF338
+ 2083 0f0f 02       		.byte	0x2
+ 2084 0f10 0B       		.uleb128 0xb
+ 2085 0f11 380E0000 		.4byte	.LASF339
+ 2086 0f15 03       		.byte	0x3
+ 2087 0f16 00       		.byte	0
+ 2088 0f17 03       		.uleb128 0x3
+ 2089 0f18 82090000 		.4byte	.LASF340
+ 2090 0f1c 0D       		.byte	0xd
+ 2091 0f1d 83       		.byte	0x83
+ 2092 0f1e F20E0000 		.4byte	0xef2
+ 2093 0f22 17       		.uleb128 0x17
+ 2094 0f23 01       		.byte	0x1
+ 2095 0f24 25000000 		.4byte	0x25
+ 2096 0f28 0D       		.byte	0xd
+ 2097 0f29 87       		.byte	0x87
+ 2098 0f2a 5F0F0000 		.4byte	0xf5f
+ 2099 0f2e 0B       		.uleb128 0xb
+ 2100 0f2f 48200000 		.4byte	.LASF341
+ 2101 0f33 00       		.byte	0
+ 2102 0f34 0B       		.uleb128 0xb
+ 2103 0f35 EA050000 		.4byte	.LASF342
+ 2104 0f39 01       		.byte	0x1
+ 2105 0f3a 0B       		.uleb128 0xb
+ 2106 0f3b 7F150000 		.4byte	.LASF343
+ 2107 0f3f 02       		.byte	0x2
+ 2108 0f40 0B       		.uleb128 0xb
+ 2109 0f41 72200000 		.4byte	.LASF344
+ 2110 0f45 03       		.byte	0x3
+ 2111 0f46 0B       		.uleb128 0xb
+ 2112 0f47 B60A0000 		.4byte	.LASF345
+ 2113 0f4b 04       		.byte	0x4
+ 2114 0f4c 0B       		.uleb128 0xb
+ 2115 0f4d 690E0000 		.4byte	.LASF346
+ 2116 0f51 05       		.byte	0x5
+ 2117 0f52 0B       		.uleb128 0xb
+ 2118 0f53 54150000 		.4byte	.LASF347
+ 2119 0f57 06       		.byte	0x6
+ 2120 0f58 0B       		.uleb128 0xb
+ 2121 0f59 74010000 		.4byte	.LASF348
+ 2122 0f5d 07       		.byte	0x7
+ 2123 0f5e 00       		.byte	0
+ 2124 0f5f 03       		.uleb128 0x3
+ 2125 0f60 A1030000 		.4byte	.LASF349
+ 2126 0f64 0D       		.byte	0xd
+ 2127 0f65 90       		.byte	0x90
+ 2128 0f66 220F0000 		.4byte	0xf22
+ 2129 0f6a 06       		.uleb128 0x6
+ 2130 0f6b 14       		.byte	0x14
+ 2131 0f6c 0E       		.byte	0xe
+ 2132 0f6d 3B       		.byte	0x3b
+ 2133 0f6e AF0F0000 		.4byte	0xfaf
+ 2134 0f72 07       		.uleb128 0x7
+ 2135 0f73 87030000 		.4byte	.LASF350
+ 2136 0f77 0E       		.byte	0xe
+ 2137 0f78 3D       		.byte	0x3d
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLZDz0J.s 			page 40
+
+
+ 2138 0f79 B8000000 		.4byte	0xb8
+ 2139 0f7d 00       		.byte	0
+ 2140 0f7e 07       		.uleb128 0x7
+ 2141 0f7f 11090000 		.4byte	.LASF351
+ 2142 0f83 0E       		.byte	0xe
+ 2143 0f84 3E       		.byte	0x3e
+ 2144 0f85 B8000000 		.4byte	0xb8
+ 2145 0f89 04       		.byte	0x4
+ 2146 0f8a 07       		.uleb128 0x7
+ 2147 0f8b 1A040000 		.4byte	.LASF352
+ 2148 0f8f 0E       		.byte	0xe
+ 2149 0f90 3F       		.byte	0x3f
+ 2150 0f91 AF0F0000 		.4byte	0xfaf
+ 2151 0f95 08       		.byte	0x8
+ 2152 0f96 07       		.uleb128 0x7
+ 2153 0f97 A71A0000 		.4byte	.LASF353
+ 2154 0f9b 0E       		.byte	0xe
+ 2155 0f9c 40       		.byte	0x40
+ 2156 0f9d B8000000 		.4byte	0xb8
+ 2157 0fa1 0C       		.byte	0xc
+ 2158 0fa2 07       		.uleb128 0x7
+ 2159 0fa3 9B1D0000 		.4byte	.LASF354
+ 2160 0fa7 0E       		.byte	0xe
+ 2161 0fa8 45       		.byte	0x45
+ 2162 0fa9 B8000000 		.4byte	0xb8
+ 2163 0fad 10       		.byte	0x10
+ 2164 0fae 00       		.byte	0
+ 2165 0faf 08       		.uleb128 0x8
+ 2166 0fb0 04       		.byte	0x4
+ 2167 0fb1 B50F0000 		.4byte	0xfb5
+ 2168 0fb5 18       		.uleb128 0x18
+ 2169 0fb6 25060000 		.4byte	0x625
+ 2170 0fba 03       		.uleb128 0x3
+ 2171 0fbb F61B0000 		.4byte	.LASF355
+ 2172 0fbf 0E       		.byte	0xe
+ 2173 0fc0 48       		.byte	0x48
+ 2174 0fc1 6A0F0000 		.4byte	0xf6a
+ 2175 0fc5 19       		.uleb128 0x19
+ 2176 0fc6 0801     		.2byte	0x108
+ 2177 0fc8 0F       		.byte	0xf
+ 2178 0fc9 35       		.byte	0x35
+ 2179 0fca 0C100000 		.4byte	0x100c
+ 2180 0fce 07       		.uleb128 0x7
+ 2181 0fcf 4F0C0000 		.4byte	.LASF356
+ 2182 0fd3 0F       		.byte	0xf
+ 2183 0fd4 37       		.byte	0x37
+ 2184 0fd5 97000000 		.4byte	0x97
+ 2185 0fd9 00       		.byte	0
+ 2186 0fda 07       		.uleb128 0x7
+ 2187 0fdb F21C0000 		.4byte	.LASF357
+ 2188 0fdf 0F       		.byte	0xf
+ 2189 0fe0 38       		.byte	0x38
+ 2190 0fe1 97000000 		.4byte	0x97
+ 2191 0fe5 01       		.byte	0x1
+ 2192 0fe6 07       		.uleb128 0x7
+ 2193 0fe7 9C200000 		.4byte	.LASF123
+ 2194 0feb 0F       		.byte	0xf
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLZDz0J.s 			page 41
+
+
+ 2195 0fec 39       		.byte	0x39
+ 2196 0fed AD000000 		.4byte	0xad
+ 2197 0ff1 02       		.byte	0x2
+ 2198 0ff2 07       		.uleb128 0x7
+ 2199 0ff3 F0010000 		.4byte	.LASF358
+ 2200 0ff7 0F       		.byte	0xf
+ 2201 0ff8 3A       		.byte	0x3a
+ 2202 0ff9 0C100000 		.4byte	0x100c
+ 2203 0ffd 04       		.byte	0x4
+ 2204 0ffe 1A       		.uleb128 0x1a
+ 2205 0fff 6C656E00 		.ascii	"len\000"
+ 2206 1003 0F       		.byte	0xf
+ 2207 1004 3B       		.byte	0x3b
+ 2208 1005 97000000 		.4byte	0x97
+ 2209 1009 0401     		.2byte	0x104
+ 2210 100b 00       		.byte	0
+ 2211 100c 0F       		.uleb128 0xf
+ 2212 100d 97000000 		.4byte	0x97
+ 2213 1011 1C100000 		.4byte	0x101c
+ 2214 1015 10       		.uleb128 0x10
+ 2215 1016 C3000000 		.4byte	0xc3
+ 2216 101a FF       		.byte	0xff
+ 2217 101b 00       		.byte	0
+ 2218 101c 03       		.uleb128 0x3
+ 2219 101d D1020000 		.4byte	.LASF359
+ 2220 1021 0F       		.byte	0xf
+ 2221 1022 3C       		.byte	0x3c
+ 2222 1023 C50F0000 		.4byte	0xfc5
+ 2223 1027 1B       		.uleb128 0x1b
+ 2224 1028 B10B0000 		.4byte	.LASF383
+ 2225 102c 01       		.byte	0x1
+ 2226 102d 29       		.byte	0x29
+ 2227 102e 00000000 		.4byte	.LFB679
+ 2228 1032 0C000000 		.4byte	.LFE679-.LFB679
+ 2229 1036 01       		.uleb128 0x1
+ 2230 1037 9C       		.byte	0x9c
+ 2231 1038 1C       		.uleb128 0x1c
+ 2232 1039 F4110000 		.4byte	.LASF384
+ 2233 103d 01       		.byte	0x1
+ 2234 103e 15       		.byte	0x15
+ 2235 103f 00000000 		.4byte	.LFB678
+ 2236 1043 24000000 		.4byte	.LFE678-.LFB678
+ 2237 1047 01       		.uleb128 0x1
+ 2238 1048 9C       		.byte	0x9c
+ 2239 1049 8D100000 		.4byte	0x108d
+ 2240 104d 1D       		.uleb128 0x1d
+ 2241 104e 6D736700 		.ascii	"msg\000"
+ 2242 1052 01       		.byte	0x1
+ 2243 1053 15       		.byte	0x15
+ 2244 1054 07050000 		.4byte	0x507
+ 2245 1058 00000000 		.4byte	.LLST0
+ 2246 105c 1E       		.uleb128 0x1e
+ 2247 105d BF200000 		.4byte	.LASF363
+ 2248 1061 01       		.byte	0x1
+ 2249 1062 17       		.byte	0x17
+ 2250 1063 8D100000 		.4byte	0x108d
+ 2251 1067 2C000000 		.4byte	.LLST1
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLZDz0J.s 			page 42
+
+
+ 2252 106b 1F       		.uleb128 0x1f
+ 2253 106c 12000000 		.4byte	.LVL3
+ 2254 1070 44120000 		.4byte	0x1244
+ 2255 1074 20       		.uleb128 0x20
+ 2256 1075 01       		.uleb128 0x1
+ 2257 1076 50       		.byte	0x50
+ 2258 1077 05       		.uleb128 0x5
+ 2259 1078 03       		.byte	0x3
+ 2260 1079 00000000 		.4byte	.LANCHOR1
+ 2261 107d 20       		.uleb128 0x20
+ 2262 107e 01       		.uleb128 0x1
+ 2263 107f 51       		.byte	0x51
+ 2264 1080 03       		.uleb128 0x3
+ 2265 1081 F3       		.byte	0xf3
+ 2266 1082 01       		.uleb128 0x1
+ 2267 1083 50       		.byte	0x50
+ 2268 1084 20       		.uleb128 0x20
+ 2269 1085 01       		.uleb128 0x1
+ 2270 1086 52       		.byte	0x52
+ 2271 1087 03       		.uleb128 0x3
+ 2272 1088 0A       		.byte	0xa
+ 2273 1089 0801     		.2byte	0x108
+ 2274 108b 00       		.byte	0
+ 2275 108c 00       		.byte	0
+ 2276 108d 08       		.uleb128 0x8
+ 2277 108e 04       		.byte	0x4
+ 2278 108f 1C100000 		.4byte	0x101c
+ 2279 1093 21       		.uleb128 0x21
+ 2280 1094 B1130000 		.4byte	.LASF360
+ 2281 1098 01       		.byte	0x1
+ 2282 1099 30       		.byte	0x30
+ 2283 109a 0F050000 		.4byte	0x50f
+ 2284 109e 00000000 		.4byte	.LFB680
+ 2285 10a2 0C000000 		.4byte	.LFE680-.LFB680
+ 2286 10a6 01       		.uleb128 0x1
+ 2287 10a7 9C       		.byte	0x9c
+ 2288 10a8 21       		.uleb128 0x21
+ 2289 10a9 E11E0000 		.4byte	.LASF361
+ 2290 10ad 01       		.byte	0x1
+ 2291 10ae 35       		.byte	0x35
+ 2292 10af 0F050000 		.4byte	0x50f
+ 2293 10b3 00000000 		.4byte	.LFB681
+ 2294 10b7 0C000000 		.4byte	.LFE681-.LFB681
+ 2295 10bb 01       		.uleb128 0x1
+ 2296 10bc 9C       		.byte	0x9c
+ 2297 10bd 21       		.uleb128 0x21
+ 2298 10be 00020000 		.4byte	.LASF362
+ 2299 10c2 01       		.byte	0x1
+ 2300 10c3 3A       		.byte	0x3a
+ 2301 10c4 8D100000 		.4byte	0x108d
+ 2302 10c8 00000000 		.4byte	.LFB682
+ 2303 10cc 14000000 		.4byte	.LFE682-.LFB682
+ 2304 10d0 01       		.uleb128 0x1
+ 2305 10d1 9C       		.byte	0x9c
+ 2306 10d2 22       		.uleb128 0x22
+ 2307 10d3 AC1D0000 		.4byte	.LASF385
+ 2308 10d7 01       		.byte	0x1
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLZDz0J.s 			page 43
+
+
+ 2309 10d8 42       		.byte	0x42
+ 2310 10d9 0F050000 		.4byte	0x50f
+ 2311 10dd 00000000 		.4byte	.LFB683
+ 2312 10e1 1C000000 		.4byte	.LFE683-.LFB683
+ 2313 10e5 01       		.uleb128 0x1
+ 2314 10e6 9C       		.byte	0x9c
+ 2315 10e7 2E110000 		.4byte	0x112e
+ 2316 10eb 1D       		.uleb128 0x1d
+ 2317 10ec 6D736700 		.ascii	"msg\000"
+ 2318 10f0 01       		.byte	0x1
+ 2319 10f1 42       		.byte	0x42
+ 2320 10f2 8D100000 		.4byte	0x108d
+ 2321 10f6 58000000 		.4byte	.LLST2
+ 2322 10fa 23       		.uleb128 0x23
+ 2323 10fb 72657400 		.ascii	"ret\000"
+ 2324 10ff 01       		.byte	0x1
+ 2325 1100 44       		.byte	0x44
+ 2326 1101 0F050000 		.4byte	0x50f
+ 2327 1105 84000000 		.4byte	.LLST3
+ 2328 1109 1F       		.uleb128 0x1f
+ 2329 110a 0E000000 		.4byte	.LVL8
+ 2330 110e 4D120000 		.4byte	0x124d
+ 2331 1112 20       		.uleb128 0x20
+ 2332 1113 01       		.uleb128 0x1
+ 2333 1114 50       		.byte	0x50
+ 2334 1115 01       		.uleb128 0x1
+ 2335 1116 31       		.byte	0x31
+ 2336 1117 20       		.uleb128 0x20
+ 2337 1118 01       		.uleb128 0x1
+ 2338 1119 51       		.byte	0x51
+ 2339 111a 01       		.uleb128 0x1
+ 2340 111b 30       		.byte	0x30
+ 2341 111c 20       		.uleb128 0x20
+ 2342 111d 01       		.uleb128 0x1
+ 2343 111e 52       		.byte	0x52
+ 2344 111f 03       		.uleb128 0x3
+ 2345 1120 F3       		.byte	0xf3
+ 2346 1121 01       		.uleb128 0x1
+ 2347 1122 50       		.byte	0x50
+ 2348 1123 20       		.uleb128 0x20
+ 2349 1124 01       		.uleb128 0x1
+ 2350 1125 53       		.byte	0x53
+ 2351 1126 05       		.uleb128 0x5
+ 2352 1127 03       		.byte	0x3
+ 2353 1128 00000000 		.4byte	CM0_ReleaseCallback
+ 2354 112c 00       		.byte	0
+ 2355 112d 00       		.byte	0
+ 2356 112e 24       		.uleb128 0x24
+ 2357 112f 081C0000 		.4byte	.LASF364
+ 2358 1133 01       		.byte	0x1
+ 2359 1134 0F       		.byte	0xf
+ 2360 1135 0F050000 		.4byte	0x50f
+ 2361 1139 05       		.uleb128 0x5
+ 2362 113a 03       		.byte	0x3
+ 2363 113b 00000000 		.4byte	isCM4Ready
+ 2364 113f 24       		.uleb128 0x24
+ 2365 1140 98190000 		.4byte	.LASF365
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLZDz0J.s 			page 44
+
+
+ 2366 1144 01       		.byte	0x1
+ 2367 1145 10       		.byte	0x10
+ 2368 1146 0F050000 		.4byte	0x50f
+ 2369 114a 05       		.uleb128 0x5
+ 2370 114b 03       		.byte	0x3
+ 2371 114c 08010000 		.4byte	isDataAvailableFromCM4
+ 2372 1150 24       		.uleb128 0x24
+ 2373 1151 741A0000 		.4byte	.LASF366
+ 2374 1155 01       		.byte	0x1
+ 2375 1156 12       		.byte	0x12
+ 2376 1157 1C100000 		.4byte	0x101c
+ 2377 115b 05       		.uleb128 0x5
+ 2378 115c 03       		.byte	0x3
+ 2379 115d 00000000 		.4byte	ipcMsgFromCM4_Local
+ 2380 1161 25       		.uleb128 0x25
+ 2381 1162 C3000000 		.4byte	.LASF367
+ 2382 1166 04       		.byte	0x4
+ 2383 1167 A7       		.byte	0xa7
+ 2384 1168 6C110000 		.4byte	0x116c
+ 2385 116c 08       		.uleb128 0x8
+ 2386 116d 04       		.byte	0x4
+ 2387 116e 72110000 		.4byte	0x1172
+ 2388 1172 18       		.uleb128 0x18
+ 2389 1173 E7040000 		.4byte	0x4e7
+ 2390 1177 26       		.uleb128 0x26
+ 2391 1178 E3100000 		.4byte	.LASF368
+ 2392 117c 0D       		.byte	0xd
+ 2393 117d 2202     		.2byte	0x222
+ 2394 117f 170F0000 		.4byte	0xf17
+ 2395 1183 0F       		.uleb128 0xf
+ 2396 1184 E60E0000 		.4byte	0xee6
+ 2397 1188 93110000 		.4byte	0x1193
+ 2398 118c 10       		.uleb128 0x10
+ 2399 118d C3000000 		.4byte	0xc3
+ 2400 1191 00       		.byte	0
+ 2401 1192 00       		.byte	0
+ 2402 1193 26       		.uleb128 0x26
+ 2403 1194 94020000 		.4byte	.LASF369
+ 2404 1198 0D       		.byte	0xd
+ 2405 1199 2C02     		.2byte	0x22c
+ 2406 119b 83110000 		.4byte	0x1183
+ 2407 119f 0F       		.uleb128 0xf
+ 2408 11a0 5F0F0000 		.4byte	0xf5f
+ 2409 11a4 AF110000 		.4byte	0x11af
+ 2410 11a8 10       		.uleb128 0x10
+ 2411 11a9 C3000000 		.4byte	0xc3
+ 2412 11ad 00       		.byte	0
+ 2413 11ae 00       		.byte	0
+ 2414 11af 26       		.uleb128 0x26
+ 2415 11b0 14000000 		.4byte	.LASF370
+ 2416 11b4 0D       		.byte	0xd
+ 2417 11b5 2D02     		.2byte	0x22d
+ 2418 11b7 9F110000 		.4byte	0x119f
+ 2419 11bb 26       		.uleb128 0x26
+ 2420 11bc BF1D0000 		.4byte	.LASF371
+ 2421 11c0 0E       		.byte	0xe
+ 2422 11c1 6001     		.2byte	0x160
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLZDz0J.s 			page 45
+
+
+ 2423 11c3 B8000000 		.4byte	0xb8
+ 2424 11c7 0F       		.uleb128 0xf
+ 2425 11c8 D7110000 		.4byte	0x11d7
+ 2426 11cc D7110000 		.4byte	0x11d7
+ 2427 11d0 10       		.uleb128 0x10
+ 2428 11d1 C3000000 		.4byte	0xc3
+ 2429 11d5 00       		.byte	0
+ 2430 11d6 00       		.byte	0
+ 2431 11d7 18       		.uleb128 0x18
+ 2432 11d8 BA0F0000 		.4byte	0xfba
+ 2433 11dc 26       		.uleb128 0x26
+ 2434 11dd 6C180000 		.4byte	.LASF372
+ 2435 11e1 0E       		.byte	0xe
+ 2436 11e2 6401     		.2byte	0x164
+ 2437 11e4 E8110000 		.4byte	0x11e8
+ 2438 11e8 18       		.uleb128 0x18
+ 2439 11e9 C7110000 		.4byte	0x11c7
+ 2440 11ed 25       		.uleb128 0x25
+ 2441 11ee 12020000 		.4byte	.LASF373
+ 2442 11f2 10       		.byte	0x10
+ 2443 11f3 7F       		.byte	0x7f
+ 2444 11f4 BF070000 		.4byte	0x7bf
+ 2445 11f8 25       		.uleb128 0x25
+ 2446 11f9 E2030000 		.4byte	.LASF374
+ 2447 11fd 11       		.byte	0x11
+ 2448 11fe 87       		.byte	0x87
+ 2449 11ff 36090000 		.4byte	0x936
+ 2450 1203 25       		.uleb128 0x25
+ 2451 1204 27010000 		.4byte	.LASF375
+ 2452 1208 12       		.byte	0x12
+ 2453 1209 1F       		.byte	0x1f
+ 2454 120a 0E120000 		.4byte	0x120e
+ 2455 120e 18       		.uleb128 0x18
+ 2456 120f 770B0000 		.4byte	0xb77
+ 2457 1213 25       		.uleb128 0x25
+ 2458 1214 F6060000 		.4byte	.LASF376
+ 2459 1218 13       		.byte	0x13
+ 2460 1219 1F       		.byte	0x1f
+ 2461 121a 1E120000 		.4byte	0x121e
+ 2462 121e 18       		.uleb128 0x18
+ 2463 121f 330A0000 		.4byte	0xa33
+ 2464 1223 25       		.uleb128 0x25
+ 2465 1224 57180000 		.4byte	.LASF377
+ 2466 1228 14       		.byte	0x14
+ 2467 1229 87       		.byte	0x87
+ 2468 122a 36090000 		.4byte	0x936
+ 2469 122e 25       		.uleb128 0x25
+ 2470 122f 7D060000 		.4byte	.LASF378
+ 2471 1233 15       		.byte	0x15
+ 2472 1234 1F       		.byte	0x1f
+ 2473 1235 0E120000 		.4byte	0x120e
+ 2474 1239 25       		.uleb128 0x25
+ 2475 123a 131F0000 		.4byte	.LASF379
+ 2476 123e 16       		.byte	0x16
+ 2477 123f 5E       		.byte	0x5e
+ 2478 1240 5A080000 		.4byte	0x85a
+ 2479 1244 27       		.uleb128 0x27
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLZDz0J.s 			page 46
+
+
+ 2480 1245 FC1E0000 		.4byte	.LASF386
+ 2481 1249 FC1E0000 		.4byte	.LASF386
+ 2482 124d 28       		.uleb128 0x28
+ 2483 124e B2140000 		.4byte	.LASF387
+ 2484 1252 B2140000 		.4byte	.LASF387
+ 2485 1256 17       		.byte	0x17
+ 2486 1257 0201     		.2byte	0x102
+ 2487 1259 00       		.byte	0
+ 2488              		.section	.debug_abbrev,"",%progbits
+ 2489              	.Ldebug_abbrev0:
+ 2490 0000 01       		.uleb128 0x1
+ 2491 0001 11       		.uleb128 0x11
+ 2492 0002 01       		.byte	0x1
+ 2493 0003 25       		.uleb128 0x25
+ 2494 0004 0E       		.uleb128 0xe
+ 2495 0005 13       		.uleb128 0x13
+ 2496 0006 0B       		.uleb128 0xb
+ 2497 0007 03       		.uleb128 0x3
+ 2498 0008 0E       		.uleb128 0xe
+ 2499 0009 1B       		.uleb128 0x1b
+ 2500 000a 0E       		.uleb128 0xe
+ 2501 000b 55       		.uleb128 0x55
+ 2502 000c 17       		.uleb128 0x17
+ 2503 000d 11       		.uleb128 0x11
+ 2504 000e 01       		.uleb128 0x1
+ 2505 000f 10       		.uleb128 0x10
+ 2506 0010 17       		.uleb128 0x17
+ 2507 0011 00       		.byte	0
+ 2508 0012 00       		.byte	0
+ 2509 0013 02       		.uleb128 0x2
+ 2510 0014 24       		.uleb128 0x24
+ 2511 0015 00       		.byte	0
+ 2512 0016 0B       		.uleb128 0xb
+ 2513 0017 0B       		.uleb128 0xb
+ 2514 0018 3E       		.uleb128 0x3e
+ 2515 0019 0B       		.uleb128 0xb
+ 2516 001a 03       		.uleb128 0x3
+ 2517 001b 0E       		.uleb128 0xe
+ 2518 001c 00       		.byte	0
+ 2519 001d 00       		.byte	0
+ 2520 001e 03       		.uleb128 0x3
+ 2521 001f 16       		.uleb128 0x16
+ 2522 0020 00       		.byte	0
+ 2523 0021 03       		.uleb128 0x3
+ 2524 0022 0E       		.uleb128 0xe
+ 2525 0023 3A       		.uleb128 0x3a
+ 2526 0024 0B       		.uleb128 0xb
+ 2527 0025 3B       		.uleb128 0x3b
+ 2528 0026 0B       		.uleb128 0xb
+ 2529 0027 49       		.uleb128 0x49
+ 2530 0028 13       		.uleb128 0x13
+ 2531 0029 00       		.byte	0
+ 2532 002a 00       		.byte	0
+ 2533 002b 04       		.uleb128 0x4
+ 2534 002c 24       		.uleb128 0x24
+ 2535 002d 00       		.byte	0
+ 2536 002e 0B       		.uleb128 0xb
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLZDz0J.s 			page 47
+
+
+ 2537 002f 0B       		.uleb128 0xb
+ 2538 0030 3E       		.uleb128 0x3e
+ 2539 0031 0B       		.uleb128 0xb
+ 2540 0032 03       		.uleb128 0x3
+ 2541 0033 08       		.uleb128 0x8
+ 2542 0034 00       		.byte	0
+ 2543 0035 00       		.byte	0
+ 2544 0036 05       		.uleb128 0x5
+ 2545 0037 35       		.uleb128 0x35
+ 2546 0038 00       		.byte	0
+ 2547 0039 49       		.uleb128 0x49
+ 2548 003a 13       		.uleb128 0x13
+ 2549 003b 00       		.byte	0
+ 2550 003c 00       		.byte	0
+ 2551 003d 06       		.uleb128 0x6
+ 2552 003e 13       		.uleb128 0x13
+ 2553 003f 01       		.byte	0x1
+ 2554 0040 0B       		.uleb128 0xb
+ 2555 0041 0B       		.uleb128 0xb
+ 2556 0042 3A       		.uleb128 0x3a
+ 2557 0043 0B       		.uleb128 0xb
+ 2558 0044 3B       		.uleb128 0x3b
+ 2559 0045 0B       		.uleb128 0xb
+ 2560 0046 01       		.uleb128 0x1
+ 2561 0047 13       		.uleb128 0x13
+ 2562 0048 00       		.byte	0
+ 2563 0049 00       		.byte	0
+ 2564 004a 07       		.uleb128 0x7
+ 2565 004b 0D       		.uleb128 0xd
+ 2566 004c 00       		.byte	0
+ 2567 004d 03       		.uleb128 0x3
+ 2568 004e 0E       		.uleb128 0xe
+ 2569 004f 3A       		.uleb128 0x3a
+ 2570 0050 0B       		.uleb128 0xb
+ 2571 0051 3B       		.uleb128 0x3b
+ 2572 0052 0B       		.uleb128 0xb
+ 2573 0053 49       		.uleb128 0x49
+ 2574 0054 13       		.uleb128 0x13
+ 2575 0055 38       		.uleb128 0x38
+ 2576 0056 0B       		.uleb128 0xb
+ 2577 0057 00       		.byte	0
+ 2578 0058 00       		.byte	0
+ 2579 0059 08       		.uleb128 0x8
+ 2580 005a 0F       		.uleb128 0xf
+ 2581 005b 00       		.byte	0
+ 2582 005c 0B       		.uleb128 0xb
+ 2583 005d 0B       		.uleb128 0xb
+ 2584 005e 49       		.uleb128 0x49
+ 2585 005f 13       		.uleb128 0x13
+ 2586 0060 00       		.byte	0
+ 2587 0061 00       		.byte	0
+ 2588 0062 09       		.uleb128 0x9
+ 2589 0063 0F       		.uleb128 0xf
+ 2590 0064 00       		.byte	0
+ 2591 0065 0B       		.uleb128 0xb
+ 2592 0066 0B       		.uleb128 0xb
+ 2593 0067 00       		.byte	0
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLZDz0J.s 			page 48
+
+
+ 2594 0068 00       		.byte	0
+ 2595 0069 0A       		.uleb128 0xa
+ 2596 006a 04       		.uleb128 0x4
+ 2597 006b 01       		.byte	0x1
+ 2598 006c 0B       		.uleb128 0xb
+ 2599 006d 0B       		.uleb128 0xb
+ 2600 006e 49       		.uleb128 0x49
+ 2601 006f 13       		.uleb128 0x13
+ 2602 0070 3A       		.uleb128 0x3a
+ 2603 0071 0B       		.uleb128 0xb
+ 2604 0072 3B       		.uleb128 0x3b
+ 2605 0073 05       		.uleb128 0x5
+ 2606 0074 01       		.uleb128 0x1
+ 2607 0075 13       		.uleb128 0x13
+ 2608 0076 00       		.byte	0
+ 2609 0077 00       		.byte	0
+ 2610 0078 0B       		.uleb128 0xb
+ 2611 0079 28       		.uleb128 0x28
+ 2612 007a 00       		.byte	0
+ 2613 007b 03       		.uleb128 0x3
+ 2614 007c 0E       		.uleb128 0xe
+ 2615 007d 1C       		.uleb128 0x1c
+ 2616 007e 0B       		.uleb128 0xb
+ 2617 007f 00       		.byte	0
+ 2618 0080 00       		.byte	0
+ 2619 0081 0C       		.uleb128 0xc
+ 2620 0082 16       		.uleb128 0x16
+ 2621 0083 00       		.byte	0
+ 2622 0084 03       		.uleb128 0x3
+ 2623 0085 0E       		.uleb128 0xe
+ 2624 0086 3A       		.uleb128 0x3a
+ 2625 0087 0B       		.uleb128 0xb
+ 2626 0088 3B       		.uleb128 0x3b
+ 2627 0089 05       		.uleb128 0x5
+ 2628 008a 49       		.uleb128 0x49
+ 2629 008b 13       		.uleb128 0x13
+ 2630 008c 00       		.byte	0
+ 2631 008d 00       		.byte	0
+ 2632 008e 0D       		.uleb128 0xd
+ 2633 008f 13       		.uleb128 0x13
+ 2634 0090 01       		.byte	0x1
+ 2635 0091 0B       		.uleb128 0xb
+ 2636 0092 0B       		.uleb128 0xb
+ 2637 0093 3A       		.uleb128 0x3a
+ 2638 0094 0B       		.uleb128 0xb
+ 2639 0095 3B       		.uleb128 0x3b
+ 2640 0096 05       		.uleb128 0x5
+ 2641 0097 01       		.uleb128 0x1
+ 2642 0098 13       		.uleb128 0x13
+ 2643 0099 00       		.byte	0
+ 2644 009a 00       		.byte	0
+ 2645 009b 0E       		.uleb128 0xe
+ 2646 009c 0D       		.uleb128 0xd
+ 2647 009d 00       		.byte	0
+ 2648 009e 03       		.uleb128 0x3
+ 2649 009f 0E       		.uleb128 0xe
+ 2650 00a0 3A       		.uleb128 0x3a
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLZDz0J.s 			page 49
+
+
+ 2651 00a1 0B       		.uleb128 0xb
+ 2652 00a2 3B       		.uleb128 0x3b
+ 2653 00a3 05       		.uleb128 0x5
+ 2654 00a4 49       		.uleb128 0x49
+ 2655 00a5 13       		.uleb128 0x13
+ 2656 00a6 38       		.uleb128 0x38
+ 2657 00a7 0B       		.uleb128 0xb
+ 2658 00a8 00       		.byte	0
+ 2659 00a9 00       		.byte	0
+ 2660 00aa 0F       		.uleb128 0xf
+ 2661 00ab 01       		.uleb128 0x1
+ 2662 00ac 01       		.byte	0x1
+ 2663 00ad 49       		.uleb128 0x49
+ 2664 00ae 13       		.uleb128 0x13
+ 2665 00af 01       		.uleb128 0x1
+ 2666 00b0 13       		.uleb128 0x13
+ 2667 00b1 00       		.byte	0
+ 2668 00b2 00       		.byte	0
+ 2669 00b3 10       		.uleb128 0x10
+ 2670 00b4 21       		.uleb128 0x21
+ 2671 00b5 00       		.byte	0
+ 2672 00b6 49       		.uleb128 0x49
+ 2673 00b7 13       		.uleb128 0x13
+ 2674 00b8 2F       		.uleb128 0x2f
+ 2675 00b9 0B       		.uleb128 0xb
+ 2676 00ba 00       		.byte	0
+ 2677 00bb 00       		.byte	0
+ 2678 00bc 11       		.uleb128 0x11
+ 2679 00bd 15       		.uleb128 0x15
+ 2680 00be 01       		.byte	0x1
+ 2681 00bf 27       		.uleb128 0x27
+ 2682 00c0 19       		.uleb128 0x19
+ 2683 00c1 01       		.uleb128 0x1
+ 2684 00c2 13       		.uleb128 0x13
+ 2685 00c3 00       		.byte	0
+ 2686 00c4 00       		.byte	0
+ 2687 00c5 12       		.uleb128 0x12
+ 2688 00c6 05       		.uleb128 0x5
+ 2689 00c7 00       		.byte	0
+ 2690 00c8 49       		.uleb128 0x49
+ 2691 00c9 13       		.uleb128 0x13
+ 2692 00ca 00       		.byte	0
+ 2693 00cb 00       		.byte	0
+ 2694 00cc 13       		.uleb128 0x13
+ 2695 00cd 15       		.uleb128 0x15
+ 2696 00ce 01       		.byte	0x1
+ 2697 00cf 27       		.uleb128 0x27
+ 2698 00d0 19       		.uleb128 0x19
+ 2699 00d1 49       		.uleb128 0x49
+ 2700 00d2 13       		.uleb128 0x13
+ 2701 00d3 01       		.uleb128 0x1
+ 2702 00d4 13       		.uleb128 0x13
+ 2703 00d5 00       		.byte	0
+ 2704 00d6 00       		.byte	0
+ 2705 00d7 14       		.uleb128 0x14
+ 2706 00d8 13       		.uleb128 0x13
+ 2707 00d9 01       		.byte	0x1
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLZDz0J.s 			page 50
+
+
+ 2708 00da 03       		.uleb128 0x3
+ 2709 00db 0E       		.uleb128 0xe
+ 2710 00dc 0B       		.uleb128 0xb
+ 2711 00dd 0B       		.uleb128 0xb
+ 2712 00de 3A       		.uleb128 0x3a
+ 2713 00df 0B       		.uleb128 0xb
+ 2714 00e0 3B       		.uleb128 0x3b
+ 2715 00e1 05       		.uleb128 0x5
+ 2716 00e2 01       		.uleb128 0x1
+ 2717 00e3 13       		.uleb128 0x13
+ 2718 00e4 00       		.byte	0
+ 2719 00e5 00       		.byte	0
+ 2720 00e6 15       		.uleb128 0x15
+ 2721 00e7 13       		.uleb128 0x13
+ 2722 00e8 01       		.byte	0x1
+ 2723 00e9 03       		.uleb128 0x3
+ 2724 00ea 0E       		.uleb128 0xe
+ 2725 00eb 0B       		.uleb128 0xb
+ 2726 00ec 0B       		.uleb128 0xb
+ 2727 00ed 3A       		.uleb128 0x3a
+ 2728 00ee 0B       		.uleb128 0xb
+ 2729 00ef 3B       		.uleb128 0x3b
+ 2730 00f0 0B       		.uleb128 0xb
+ 2731 00f1 01       		.uleb128 0x1
+ 2732 00f2 13       		.uleb128 0x13
+ 2733 00f3 00       		.byte	0
+ 2734 00f4 00       		.byte	0
+ 2735 00f5 16       		.uleb128 0x16
+ 2736 00f6 28       		.uleb128 0x28
+ 2737 00f7 00       		.byte	0
+ 2738 00f8 03       		.uleb128 0x3
+ 2739 00f9 0E       		.uleb128 0xe
+ 2740 00fa 1C       		.uleb128 0x1c
+ 2741 00fb 05       		.uleb128 0x5
+ 2742 00fc 00       		.byte	0
+ 2743 00fd 00       		.byte	0
+ 2744 00fe 17       		.uleb128 0x17
+ 2745 00ff 04       		.uleb128 0x4
+ 2746 0100 01       		.byte	0x1
+ 2747 0101 0B       		.uleb128 0xb
+ 2748 0102 0B       		.uleb128 0xb
+ 2749 0103 49       		.uleb128 0x49
+ 2750 0104 13       		.uleb128 0x13
+ 2751 0105 3A       		.uleb128 0x3a
+ 2752 0106 0B       		.uleb128 0xb
+ 2753 0107 3B       		.uleb128 0x3b
+ 2754 0108 0B       		.uleb128 0xb
+ 2755 0109 01       		.uleb128 0x1
+ 2756 010a 13       		.uleb128 0x13
+ 2757 010b 00       		.byte	0
+ 2758 010c 00       		.byte	0
+ 2759 010d 18       		.uleb128 0x18
+ 2760 010e 26       		.uleb128 0x26
+ 2761 010f 00       		.byte	0
+ 2762 0110 49       		.uleb128 0x49
+ 2763 0111 13       		.uleb128 0x13
+ 2764 0112 00       		.byte	0
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLZDz0J.s 			page 51
+
+
+ 2765 0113 00       		.byte	0
+ 2766 0114 19       		.uleb128 0x19
+ 2767 0115 13       		.uleb128 0x13
+ 2768 0116 01       		.byte	0x1
+ 2769 0117 0B       		.uleb128 0xb
+ 2770 0118 05       		.uleb128 0x5
+ 2771 0119 3A       		.uleb128 0x3a
+ 2772 011a 0B       		.uleb128 0xb
+ 2773 011b 3B       		.uleb128 0x3b
+ 2774 011c 0B       		.uleb128 0xb
+ 2775 011d 01       		.uleb128 0x1
+ 2776 011e 13       		.uleb128 0x13
+ 2777 011f 00       		.byte	0
+ 2778 0120 00       		.byte	0
+ 2779 0121 1A       		.uleb128 0x1a
+ 2780 0122 0D       		.uleb128 0xd
+ 2781 0123 00       		.byte	0
+ 2782 0124 03       		.uleb128 0x3
+ 2783 0125 08       		.uleb128 0x8
+ 2784 0126 3A       		.uleb128 0x3a
+ 2785 0127 0B       		.uleb128 0xb
+ 2786 0128 3B       		.uleb128 0x3b
+ 2787 0129 0B       		.uleb128 0xb
+ 2788 012a 49       		.uleb128 0x49
+ 2789 012b 13       		.uleb128 0x13
+ 2790 012c 38       		.uleb128 0x38
+ 2791 012d 05       		.uleb128 0x5
+ 2792 012e 00       		.byte	0
+ 2793 012f 00       		.byte	0
+ 2794 0130 1B       		.uleb128 0x1b
+ 2795 0131 2E       		.uleb128 0x2e
+ 2796 0132 00       		.byte	0
+ 2797 0133 3F       		.uleb128 0x3f
+ 2798 0134 19       		.uleb128 0x19
+ 2799 0135 03       		.uleb128 0x3
+ 2800 0136 0E       		.uleb128 0xe
+ 2801 0137 3A       		.uleb128 0x3a
+ 2802 0138 0B       		.uleb128 0xb
+ 2803 0139 3B       		.uleb128 0x3b
+ 2804 013a 0B       		.uleb128 0xb
+ 2805 013b 27       		.uleb128 0x27
+ 2806 013c 19       		.uleb128 0x19
+ 2807 013d 11       		.uleb128 0x11
+ 2808 013e 01       		.uleb128 0x1
+ 2809 013f 12       		.uleb128 0x12
+ 2810 0140 06       		.uleb128 0x6
+ 2811 0141 40       		.uleb128 0x40
+ 2812 0142 18       		.uleb128 0x18
+ 2813 0143 9742     		.uleb128 0x2117
+ 2814 0145 19       		.uleb128 0x19
+ 2815 0146 00       		.byte	0
+ 2816 0147 00       		.byte	0
+ 2817 0148 1C       		.uleb128 0x1c
+ 2818 0149 2E       		.uleb128 0x2e
+ 2819 014a 01       		.byte	0x1
+ 2820 014b 3F       		.uleb128 0x3f
+ 2821 014c 19       		.uleb128 0x19
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLZDz0J.s 			page 52
+
+
+ 2822 014d 03       		.uleb128 0x3
+ 2823 014e 0E       		.uleb128 0xe
+ 2824 014f 3A       		.uleb128 0x3a
+ 2825 0150 0B       		.uleb128 0xb
+ 2826 0151 3B       		.uleb128 0x3b
+ 2827 0152 0B       		.uleb128 0xb
+ 2828 0153 27       		.uleb128 0x27
+ 2829 0154 19       		.uleb128 0x19
+ 2830 0155 11       		.uleb128 0x11
+ 2831 0156 01       		.uleb128 0x1
+ 2832 0157 12       		.uleb128 0x12
+ 2833 0158 06       		.uleb128 0x6
+ 2834 0159 40       		.uleb128 0x40
+ 2835 015a 18       		.uleb128 0x18
+ 2836 015b 9742     		.uleb128 0x2117
+ 2837 015d 19       		.uleb128 0x19
+ 2838 015e 01       		.uleb128 0x1
+ 2839 015f 13       		.uleb128 0x13
+ 2840 0160 00       		.byte	0
+ 2841 0161 00       		.byte	0
+ 2842 0162 1D       		.uleb128 0x1d
+ 2843 0163 05       		.uleb128 0x5
+ 2844 0164 00       		.byte	0
+ 2845 0165 03       		.uleb128 0x3
+ 2846 0166 08       		.uleb128 0x8
+ 2847 0167 3A       		.uleb128 0x3a
+ 2848 0168 0B       		.uleb128 0xb
+ 2849 0169 3B       		.uleb128 0x3b
+ 2850 016a 0B       		.uleb128 0xb
+ 2851 016b 49       		.uleb128 0x49
+ 2852 016c 13       		.uleb128 0x13
+ 2853 016d 02       		.uleb128 0x2
+ 2854 016e 17       		.uleb128 0x17
+ 2855 016f 00       		.byte	0
+ 2856 0170 00       		.byte	0
+ 2857 0171 1E       		.uleb128 0x1e
+ 2858 0172 34       		.uleb128 0x34
+ 2859 0173 00       		.byte	0
+ 2860 0174 03       		.uleb128 0x3
+ 2861 0175 0E       		.uleb128 0xe
+ 2862 0176 3A       		.uleb128 0x3a
+ 2863 0177 0B       		.uleb128 0xb
+ 2864 0178 3B       		.uleb128 0x3b
+ 2865 0179 0B       		.uleb128 0xb
+ 2866 017a 49       		.uleb128 0x49
+ 2867 017b 13       		.uleb128 0x13
+ 2868 017c 02       		.uleb128 0x2
+ 2869 017d 17       		.uleb128 0x17
+ 2870 017e 00       		.byte	0
+ 2871 017f 00       		.byte	0
+ 2872 0180 1F       		.uleb128 0x1f
+ 2873 0181 898201   		.uleb128 0x4109
+ 2874 0184 01       		.byte	0x1
+ 2875 0185 11       		.uleb128 0x11
+ 2876 0186 01       		.uleb128 0x1
+ 2877 0187 31       		.uleb128 0x31
+ 2878 0188 13       		.uleb128 0x13
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLZDz0J.s 			page 53
+
+
+ 2879 0189 00       		.byte	0
+ 2880 018a 00       		.byte	0
+ 2881 018b 20       		.uleb128 0x20
+ 2882 018c 8A8201   		.uleb128 0x410a
+ 2883 018f 00       		.byte	0
+ 2884 0190 02       		.uleb128 0x2
+ 2885 0191 18       		.uleb128 0x18
+ 2886 0192 9142     		.uleb128 0x2111
+ 2887 0194 18       		.uleb128 0x18
+ 2888 0195 00       		.byte	0
+ 2889 0196 00       		.byte	0
+ 2890 0197 21       		.uleb128 0x21
+ 2891 0198 2E       		.uleb128 0x2e
+ 2892 0199 00       		.byte	0
+ 2893 019a 3F       		.uleb128 0x3f
+ 2894 019b 19       		.uleb128 0x19
+ 2895 019c 03       		.uleb128 0x3
+ 2896 019d 0E       		.uleb128 0xe
+ 2897 019e 3A       		.uleb128 0x3a
+ 2898 019f 0B       		.uleb128 0xb
+ 2899 01a0 3B       		.uleb128 0x3b
+ 2900 01a1 0B       		.uleb128 0xb
+ 2901 01a2 27       		.uleb128 0x27
+ 2902 01a3 19       		.uleb128 0x19
+ 2903 01a4 49       		.uleb128 0x49
+ 2904 01a5 13       		.uleb128 0x13
+ 2905 01a6 11       		.uleb128 0x11
+ 2906 01a7 01       		.uleb128 0x1
+ 2907 01a8 12       		.uleb128 0x12
+ 2908 01a9 06       		.uleb128 0x6
+ 2909 01aa 40       		.uleb128 0x40
+ 2910 01ab 18       		.uleb128 0x18
+ 2911 01ac 9742     		.uleb128 0x2117
+ 2912 01ae 19       		.uleb128 0x19
+ 2913 01af 00       		.byte	0
+ 2914 01b0 00       		.byte	0
+ 2915 01b1 22       		.uleb128 0x22
+ 2916 01b2 2E       		.uleb128 0x2e
+ 2917 01b3 01       		.byte	0x1
+ 2918 01b4 3F       		.uleb128 0x3f
+ 2919 01b5 19       		.uleb128 0x19
+ 2920 01b6 03       		.uleb128 0x3
+ 2921 01b7 0E       		.uleb128 0xe
+ 2922 01b8 3A       		.uleb128 0x3a
+ 2923 01b9 0B       		.uleb128 0xb
+ 2924 01ba 3B       		.uleb128 0x3b
+ 2925 01bb 0B       		.uleb128 0xb
+ 2926 01bc 27       		.uleb128 0x27
+ 2927 01bd 19       		.uleb128 0x19
+ 2928 01be 49       		.uleb128 0x49
+ 2929 01bf 13       		.uleb128 0x13
+ 2930 01c0 11       		.uleb128 0x11
+ 2931 01c1 01       		.uleb128 0x1
+ 2932 01c2 12       		.uleb128 0x12
+ 2933 01c3 06       		.uleb128 0x6
+ 2934 01c4 40       		.uleb128 0x40
+ 2935 01c5 18       		.uleb128 0x18
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLZDz0J.s 			page 54
+
+
+ 2936 01c6 9742     		.uleb128 0x2117
+ 2937 01c8 19       		.uleb128 0x19
+ 2938 01c9 01       		.uleb128 0x1
+ 2939 01ca 13       		.uleb128 0x13
+ 2940 01cb 00       		.byte	0
+ 2941 01cc 00       		.byte	0
+ 2942 01cd 23       		.uleb128 0x23
+ 2943 01ce 34       		.uleb128 0x34
+ 2944 01cf 00       		.byte	0
+ 2945 01d0 03       		.uleb128 0x3
+ 2946 01d1 08       		.uleb128 0x8
+ 2947 01d2 3A       		.uleb128 0x3a
+ 2948 01d3 0B       		.uleb128 0xb
+ 2949 01d4 3B       		.uleb128 0x3b
+ 2950 01d5 0B       		.uleb128 0xb
+ 2951 01d6 49       		.uleb128 0x49
+ 2952 01d7 13       		.uleb128 0x13
+ 2953 01d8 02       		.uleb128 0x2
+ 2954 01d9 17       		.uleb128 0x17
+ 2955 01da 00       		.byte	0
+ 2956 01db 00       		.byte	0
+ 2957 01dc 24       		.uleb128 0x24
+ 2958 01dd 34       		.uleb128 0x34
+ 2959 01de 00       		.byte	0
+ 2960 01df 03       		.uleb128 0x3
+ 2961 01e0 0E       		.uleb128 0xe
+ 2962 01e1 3A       		.uleb128 0x3a
+ 2963 01e2 0B       		.uleb128 0xb
+ 2964 01e3 3B       		.uleb128 0x3b
+ 2965 01e4 0B       		.uleb128 0xb
+ 2966 01e5 49       		.uleb128 0x49
+ 2967 01e6 13       		.uleb128 0x13
+ 2968 01e7 02       		.uleb128 0x2
+ 2969 01e8 18       		.uleb128 0x18
+ 2970 01e9 00       		.byte	0
+ 2971 01ea 00       		.byte	0
+ 2972 01eb 25       		.uleb128 0x25
+ 2973 01ec 34       		.uleb128 0x34
+ 2974 01ed 00       		.byte	0
+ 2975 01ee 03       		.uleb128 0x3
+ 2976 01ef 0E       		.uleb128 0xe
+ 2977 01f0 3A       		.uleb128 0x3a
+ 2978 01f1 0B       		.uleb128 0xb
+ 2979 01f2 3B       		.uleb128 0x3b
+ 2980 01f3 0B       		.uleb128 0xb
+ 2981 01f4 49       		.uleb128 0x49
+ 2982 01f5 13       		.uleb128 0x13
+ 2983 01f6 3F       		.uleb128 0x3f
+ 2984 01f7 19       		.uleb128 0x19
+ 2985 01f8 3C       		.uleb128 0x3c
+ 2986 01f9 19       		.uleb128 0x19
+ 2987 01fa 00       		.byte	0
+ 2988 01fb 00       		.byte	0
+ 2989 01fc 26       		.uleb128 0x26
+ 2990 01fd 34       		.uleb128 0x34
+ 2991 01fe 00       		.byte	0
+ 2992 01ff 03       		.uleb128 0x3
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLZDz0J.s 			page 55
+
+
+ 2993 0200 0E       		.uleb128 0xe
+ 2994 0201 3A       		.uleb128 0x3a
+ 2995 0202 0B       		.uleb128 0xb
+ 2996 0203 3B       		.uleb128 0x3b
+ 2997 0204 05       		.uleb128 0x5
+ 2998 0205 49       		.uleb128 0x49
+ 2999 0206 13       		.uleb128 0x13
+ 3000 0207 3F       		.uleb128 0x3f
+ 3001 0208 19       		.uleb128 0x19
+ 3002 0209 3C       		.uleb128 0x3c
+ 3003 020a 19       		.uleb128 0x19
+ 3004 020b 00       		.byte	0
+ 3005 020c 00       		.byte	0
+ 3006 020d 27       		.uleb128 0x27
+ 3007 020e 2E       		.uleb128 0x2e
+ 3008 020f 00       		.byte	0
+ 3009 0210 3F       		.uleb128 0x3f
+ 3010 0211 19       		.uleb128 0x19
+ 3011 0212 3C       		.uleb128 0x3c
+ 3012 0213 19       		.uleb128 0x19
+ 3013 0214 6E       		.uleb128 0x6e
+ 3014 0215 0E       		.uleb128 0xe
+ 3015 0216 03       		.uleb128 0x3
+ 3016 0217 0E       		.uleb128 0xe
+ 3017 0218 00       		.byte	0
+ 3018 0219 00       		.byte	0
+ 3019 021a 28       		.uleb128 0x28
+ 3020 021b 2E       		.uleb128 0x2e
+ 3021 021c 00       		.byte	0
+ 3022 021d 3F       		.uleb128 0x3f
+ 3023 021e 19       		.uleb128 0x19
+ 3024 021f 3C       		.uleb128 0x3c
+ 3025 0220 19       		.uleb128 0x19
+ 3026 0221 6E       		.uleb128 0x6e
+ 3027 0222 0E       		.uleb128 0xe
+ 3028 0223 03       		.uleb128 0x3
+ 3029 0224 0E       		.uleb128 0xe
+ 3030 0225 3A       		.uleb128 0x3a
+ 3031 0226 0B       		.uleb128 0xb
+ 3032 0227 3B       		.uleb128 0x3b
+ 3033 0228 05       		.uleb128 0x5
+ 3034 0229 00       		.byte	0
+ 3035 022a 00       		.byte	0
+ 3036 022b 00       		.byte	0
+ 3037              		.section	.debug_loc,"",%progbits
+ 3038              	.Ldebug_loc0:
+ 3039              	.LLST0:
+ 3040 0000 00000000 		.4byte	.LVL0
+ 3041 0004 0E000000 		.4byte	.LVL2
+ 3042 0008 0100     		.2byte	0x1
+ 3043 000a 50       		.byte	0x50
+ 3044 000b 0E000000 		.4byte	.LVL2
+ 3045 000f 11000000 		.4byte	.LVL3-1
+ 3046 0013 0100     		.2byte	0x1
+ 3047 0015 51       		.byte	0x51
+ 3048 0016 11000000 		.4byte	.LVL3-1
+ 3049 001a 24000000 		.4byte	.LFE678
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLZDz0J.s 			page 56
+
+
+ 3050 001e 0400     		.2byte	0x4
+ 3051 0020 F3       		.byte	0xf3
+ 3052 0021 01       		.uleb128 0x1
+ 3053 0022 50       		.byte	0x50
+ 3054 0023 9F       		.byte	0x9f
+ 3055 0024 00000000 		.4byte	0
+ 3056 0028 00000000 		.4byte	0
+ 3057              	.LLST1:
+ 3058 002c 06000000 		.4byte	.LVL1
+ 3059 0030 0E000000 		.4byte	.LVL2
+ 3060 0034 0100     		.2byte	0x1
+ 3061 0036 50       		.byte	0x50
+ 3062 0037 0E000000 		.4byte	.LVL2
+ 3063 003b 11000000 		.4byte	.LVL3-1
+ 3064 003f 0100     		.2byte	0x1
+ 3065 0041 51       		.byte	0x51
+ 3066 0042 11000000 		.4byte	.LVL3-1
+ 3067 0046 18000000 		.4byte	.LVL4
+ 3068 004a 0400     		.2byte	0x4
+ 3069 004c F3       		.byte	0xf3
+ 3070 004d 01       		.uleb128 0x1
+ 3071 004e 50       		.byte	0x50
+ 3072 004f 9F       		.byte	0x9f
+ 3073 0050 00000000 		.4byte	0
+ 3074 0054 00000000 		.4byte	0
+ 3075              	.LLST2:
+ 3076 0058 00000000 		.4byte	.LVL5
+ 3077 005c 0A000000 		.4byte	.LVL7
+ 3078 0060 0100     		.2byte	0x1
+ 3079 0062 50       		.byte	0x50
+ 3080 0063 0A000000 		.4byte	.LVL7
+ 3081 0067 0D000000 		.4byte	.LVL8-1
+ 3082 006b 0100     		.2byte	0x1
+ 3083 006d 52       		.byte	0x52
+ 3084 006e 0D000000 		.4byte	.LVL8-1
+ 3085 0072 1C000000 		.4byte	.LFE683
+ 3086 0076 0400     		.2byte	0x4
+ 3087 0078 F3       		.byte	0xf3
+ 3088 0079 01       		.uleb128 0x1
+ 3089 007a 50       		.byte	0x50
+ 3090 007b 9F       		.byte	0x9f
+ 3091 007c 00000000 		.4byte	0
+ 3092 0080 00000000 		.4byte	0
+ 3093              	.LLST3:
+ 3094 0084 04000000 		.4byte	.LVL6
+ 3095 0088 14000000 		.4byte	.LVL9
+ 3096 008c 0200     		.2byte	0x2
+ 3097 008e 31       		.byte	0x31
+ 3098 008f 9F       		.byte	0x9f
+ 3099 0090 14000000 		.4byte	.LVL9
+ 3100 0094 1C000000 		.4byte	.LFE683
+ 3101 0098 0100     		.2byte	0x1
+ 3102 009a 50       		.byte	0x50
+ 3103 009b 00000000 		.4byte	0
+ 3104 009f 00000000 		.4byte	0
+ 3105              		.section	.debug_aranges,"",%progbits
+ 3106 0000 44000000 		.4byte	0x44
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLZDz0J.s 			page 57
+
+
+ 3107 0004 0200     		.2byte	0x2
+ 3108 0006 00000000 		.4byte	.Ldebug_info0
+ 3109 000a 04       		.byte	0x4
+ 3110 000b 00       		.byte	0
+ 3111 000c 0000     		.2byte	0
+ 3112 000e 0000     		.2byte	0
+ 3113 0010 00000000 		.4byte	.LFB679
+ 3114 0014 0C000000 		.4byte	.LFE679-.LFB679
+ 3115 0018 00000000 		.4byte	.LFB678
+ 3116 001c 24000000 		.4byte	.LFE678-.LFB678
+ 3117 0020 00000000 		.4byte	.LFB680
+ 3118 0024 0C000000 		.4byte	.LFE680-.LFB680
+ 3119 0028 00000000 		.4byte	.LFB681
+ 3120 002c 0C000000 		.4byte	.LFE681-.LFB681
+ 3121 0030 00000000 		.4byte	.LFB682
+ 3122 0034 14000000 		.4byte	.LFE682-.LFB682
+ 3123 0038 00000000 		.4byte	.LFB683
+ 3124 003c 1C000000 		.4byte	.LFE683-.LFB683
+ 3125 0040 00000000 		.4byte	0
+ 3126 0044 00000000 		.4byte	0
+ 3127              		.section	.debug_ranges,"",%progbits
+ 3128              	.Ldebug_ranges0:
+ 3129 0000 00000000 		.4byte	.LFB679
+ 3130 0004 0C000000 		.4byte	.LFE679
+ 3131 0008 00000000 		.4byte	.LFB678
+ 3132 000c 24000000 		.4byte	.LFE678
+ 3133 0010 00000000 		.4byte	.LFB680
+ 3134 0014 0C000000 		.4byte	.LFE680
+ 3135 0018 00000000 		.4byte	.LFB681
+ 3136 001c 0C000000 		.4byte	.LFE681
+ 3137 0020 00000000 		.4byte	.LFB682
+ 3138 0024 14000000 		.4byte	.LFE682
+ 3139 0028 00000000 		.4byte	.LFB683
+ 3140 002c 1C000000 		.4byte	.LFE683
+ 3141 0030 00000000 		.4byte	0
+ 3142 0034 00000000 		.4byte	0
+ 3143              		.section	.debug_line,"",%progbits
+ 3144              	.Ldebug_line0:
+ 3145 0000 09040000 		.section	.debug_str,"MS",%progbits,1
+ 3145      02009A03 
+ 3145      00000201 
+ 3145      FB0E0D00 
+ 3145      01010101 
+ 3146              	.LASF62:
+ 3147 0000 666C6173 		.ascii	"flashCtlMainWs1Freq\000"
+ 3147      6843746C 
+ 3147      4D61696E 
+ 3147      57733146 
+ 3147      72657100 
+ 3148              	.LASF370:
+ 3149 0014 63795F62 		.ascii	"cy_ble_connState\000"
+ 3149      6C655F63 
+ 3149      6F6E6E53 
+ 3149      74617465 
+ 3149      00
+ 3150              	.LASF225:
+ 3151 0025 43595F42 		.ascii	"CY_BLE_EVT_READ_AUTH_PAYLOAD_TO_COMPLETE\000"
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLZDz0J.s 			page 58
+
+
+ 3151      4C455F45 
+ 3151      56545F52 
+ 3151      4541445F 
+ 3151      41555448 
+ 3152              	.LASF328:
+ 3153 004e 43595F42 		.ascii	"CY_BLE_EVT_L2CAP_CBFC_DATA_READ\000"
+ 3153      4C455F45 
+ 3153      56545F4C 
+ 3153      32434150 
+ 3153      5F434246 
+ 3154              	.LASF158:
+ 3155 006e 63795F63 		.ascii	"cy_cb_scb_spi_handle_events_t\000"
+ 3155      625F7363 
+ 3155      625F7370 
+ 3155      695F6861 
+ 3155      6E646C65 
+ 3156              	.LASF196:
+ 3157 008c 73746F70 		.ascii	"stopInputMode\000"
+ 3157      496E7075 
+ 3157      744D6F64 
+ 3157      6500
+ 3158              	.LASF275:
+ 3159 009a 43595F42 		.ascii	"CY_BLE_EVT_GAPP_ADVERTISEMENT_START_STOP\000"
+ 3159      4C455F45 
+ 3159      56545F47 
+ 3159      4150505F 
+ 3159      41445645 
+ 3160              	.LASF367:
+ 3161 00c3 63795F64 		.ascii	"cy_device\000"
+ 3161      65766963 
+ 3161      6500
+ 3162              	.LASF330:
+ 3163 00cd 43595F42 		.ascii	"CY_BLE_EVT_L2CAP_CBFC_TX_CREDIT_IND\000"
+ 3163      4C455F45 
+ 3163      56545F4C 
+ 3163      32434150 
+ 3163      5F434246 
+ 3164              	.LASF221:
+ 3165 00f1 43595F42 		.ascii	"CY_BLE_EVT_PENDING_FLASH_WRITE\000"
+ 3165      4C455F45 
+ 3165      56545F50 
+ 3165      454E4449 
+ 3165      4E475F46 
+ 3166              	.LASF89:
+ 3167 0110 63707573 		.ascii	"cpussCm0ClockCtlOffset\000"
+ 3167      73436D30 
+ 3167      436C6F63 
+ 3167      6B43746C 
+ 3167      4F666673 
+ 3168              	.LASF375:
+ 3169 0127 50574D5F 		.ascii	"PWM_Trig_config\000"
+ 3169      54726967 
+ 3169      5F636F6E 
+ 3169      66696700 
+ 3170              	.LASF139:
+ 3171 0137 6D617374 		.ascii	"masterStatus\000"
+ 3171      65725374 
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLZDz0J.s 			page 59
+
+
+ 3171      61747573 
+ 3171      00
+ 3172              	.LASF314:
+ 3173 0144 43595F42 		.ascii	"CY_BLE_EVT_GATTC_HANDLE_VALUE_NTF\000"
+ 3173      4C455F45 
+ 3173      56545F47 
+ 3173      41545443 
+ 3173      5F48414E 
+ 3174              	.LASF209:
+ 3175 0166 696E7665 		.ascii	"invertPWMOutN\000"
+ 3175      72745057 
+ 3175      4D4F7574 
+ 3175      4E00
+ 3176              	.LASF348:
+ 3177 0174 43595F42 		.ascii	"CY_BLE_CONN_STATE_CLIENT_DISCOVERED\000"
+ 3177      4C455F43 
+ 3177      4F4E4E5F 
+ 3177      53544154 
+ 3177      455F434C 
+ 3178              	.LASF172:
+ 3179 0198 74785374 		.ascii	"txStatus\000"
+ 3179      61747573 
+ 3179      00
+ 3180              	.LASF21:
+ 3181 01a1 70657269 		.ascii	"periBase\000"
+ 3181      42617365 
+ 3181      00
+ 3182              	.LASF253:
+ 3183 01aa 43595F42 		.ascii	"CY_BLE_EVT_SET_TX_PWR_COMPLETE\000"
+ 3183      4C455F45 
+ 3183      56545F53 
+ 3183      45545F54 
+ 3183      585F5057 
+ 3184              	.LASF242:
+ 3185 01c9 43595F42 		.ascii	"CY_BLE_EVT_GET_PHY_COMPLETE\000"
+ 3185      4C455F45 
+ 3185      56545F47 
+ 3185      45545F50 
+ 3185      48595F43 
+ 3186              	.LASF20:
+ 3187 01e5 666C6173 		.ascii	"flashcBase\000"
+ 3187      68634261 
+ 3187      736500
+ 3188              	.LASF358:
+ 3189 01f0 62756666 		.ascii	"buffer\000"
+ 3189      657200
+ 3190              	.LASF67:
+ 3191 01f7 64774368 		.ascii	"dwChSize\000"
+ 3191      53697A65 
+ 3191      00
+ 3192              	.LASF362:
+ 3193 0200 434D305F 		.ascii	"CM0_GetCM4Message\000"
+ 3193      47657443 
+ 3193      4D344D65 
+ 3193      73736167 
+ 3193      6500
+ 3194              	.LASF373:
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLZDz0J.s 			page 60
+
+
+ 3195 0212 4932435F 		.ascii	"I2C_Main_context\000"
+ 3195      4D61696E 
+ 3195      5F636F6E 
+ 3195      74657874 
+ 3195      00
+ 3196              	.LASF146:
+ 3197 0223 736C6176 		.ascii	"slaveStatus\000"
+ 3197      65537461 
+ 3197      74757300 
+ 3198              	.LASF329:
+ 3199 022f 43595F42 		.ascii	"CY_BLE_EVT_L2CAP_CBFC_RX_CREDIT_IND\000"
+ 3199      4C455F45 
+ 3199      56545F4C 
+ 3199      32434150 
+ 3199      5F434246 
+ 3200              	.LASF12:
+ 3201 0253 756E7369 		.ascii	"unsigned int\000"
+ 3201      676E6564 
+ 3201      20696E74 
+ 3201      00
+ 3202              	.LASF96:
+ 3203 0260 63707573 		.ascii	"cpussSysTickCtlOffset\000"
+ 3203      73537973 
+ 3203      5469636B 
+ 3203      43746C4F 
+ 3203      66667365 
+ 3204              	.LASF134:
+ 3205 0276 63795F63 		.ascii	"cy_cb_scb_i2c_handle_events_t\000"
+ 3205      625F7363 
+ 3205      625F6932 
+ 3205      635F6861 
+ 3205      6E646C65 
+ 3206              	.LASF369:
+ 3207 0294 63795F62 		.ascii	"cy_ble_connHandle\000"
+ 3207      6C655F63 
+ 3207      6F6E6E48 
+ 3207      616E646C 
+ 3207      6500
+ 3208              	.LASF292:
+ 3209 02a6 43595F42 		.ascii	"CY_BLE_EVT_GAP_CREATE_CONN_CANCEL_COMPLETE\000"
+ 3209      4C455F45 
+ 3209      56545F47 
+ 3209      41505F43 
+ 3209      52454154 
+ 3210              	.LASF359:
+ 3211 02d1 6970635F 		.ascii	"ipc_msg_t\000"
+ 3211      6D73675F 
+ 3211      7400
+ 3212              	.LASF49:
+ 3213 02db 736D6966 		.ascii	"smifDeviceNr\000"
+ 3213      44657669 
+ 3213      63654E72 
+ 3213      00
+ 3214              	.LASF113:
+ 3215 02e8 43595F53 		.ascii	"CY_SAR_RANGE_COND_OUTSIDE\000"
+ 3215      41525F52 
+ 3215      414E4745 
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLZDz0J.s 			page 61
+
+
+ 3215      5F434F4E 
+ 3215      445F4F55 
+ 3216              	.LASF79:
+ 3217 0302 70657269 		.ascii	"periDivCmdPaTypeSelPos\000"
+ 3217      44697643 
+ 3217      6D645061 
+ 3217      54797065 
+ 3217      53656C50 
+ 3218              	.LASF277:
+ 3219 0319 43595F42 		.ascii	"CY_BLE_EVT_GAP_DEVICE_DISCONNECTED\000"
+ 3219      4C455F45 
+ 3219      56545F47 
+ 3219      41505F44 
+ 3219      45564943 
+ 3220              	.LASF167:
+ 3221 033c 74784275 		.ascii	"txBufIdx\000"
+ 3221      66496478 
+ 3221      00
+ 3222              	.LASF195:
+ 3223 0345 73746172 		.ascii	"startInput\000"
+ 3223      74496E70 
+ 3223      757400
+ 3224              	.LASF153:
+ 3225 0350 736C6176 		.ascii	"slaveRxBufferSize\000"
+ 3225      65527842 
+ 3225      75666665 
+ 3225      7253697A 
+ 3225      6500
+ 3226              	.LASF33:
+ 3227 0362 6770696F 		.ascii	"gpioVersion\000"
+ 3227      56657273 
+ 3227      696F6E00 
+ 3228              	.LASF45:
+ 3229 036e 73727373 		.ascii	"srssNumClkpath\000"
+ 3229      4E756D43 
+ 3229      6C6B7061 
+ 3229      746800
+ 3230              	.LASF19:
+ 3231 037d 63707573 		.ascii	"cpussBase\000"
+ 3231      73426173 
+ 3231      6500
+ 3232              	.LASF350:
+ 3233 0387 6368616E 		.ascii	"channelBase\000"
+ 3233      6E656C42 
+ 3233      61736500 
+ 3234              	.LASF152:
+ 3235 0393 736C6176 		.ascii	"slaveRxBuffer\000"
+ 3235      65527842 
+ 3235      75666665 
+ 3235      7200
+ 3236              	.LASF349:
+ 3237 03a1 63795F65 		.ascii	"cy_en_ble_conn_state_t\000"
+ 3237      6E5F626C 
+ 3237      655F636F 
+ 3237      6E6E5F73 
+ 3237      74617465 
+ 3238              	.LASF303:
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLZDz0J.s 			page 62
+
+
+ 3239 03b8 43595F42 		.ascii	"CY_BLE_EVT_GATTC_FIND_INFO_RSP\000"
+ 3239      4C455F45 
+ 3239      56545F47 
+ 3239      41545443 
+ 3239      5F46494E 
+ 3240              	.LASF43:
+ 3241 03d7 63707573 		.ascii	"cpussFmIrq\000"
+ 3241      73466D49 
+ 3241      727100
+ 3242              	.LASF374:
+ 3243 03e2 55415254 		.ascii	"UART_Debug_context\000"
+ 3243      5F446562 
+ 3243      75675F63 
+ 3243      6F6E7465 
+ 3243      787400
+ 3244              	.LASF246:
+ 3245 03f5 43595F42 		.ascii	"CY_BLE_EVT_SET_PRIVACY_MODE_COMPLETE\000"
+ 3245      4C455F45 
+ 3245      56545F53 
+ 3245      45545F50 
+ 3245      52495641 
+ 3246              	.LASF352:
+ 3247 041a 6877436F 		.ascii	"hwConfigStc\000"
+ 3247      6E666967 
+ 3247      53746300 
+ 3248              	.LASF156:
+ 3249 0426 63624164 		.ascii	"cbAddr\000"
+ 3249      647200
+ 3250              	.LASF131:
+ 3251 042d 43595F53 		.ascii	"CY_SCB_I2C_ACK\000"
+ 3251      43425F49 
+ 3251      32435F41 
+ 3251      434B00
+ 3252              	.LASF197:
+ 3253 043c 73746F70 		.ascii	"stopInput\000"
+ 3253      496E7075 
+ 3253      7400
+ 3254              	.LASF175:
+ 3255 0446 72785269 		.ascii	"rxRingBufSize\000"
+ 3255      6E674275 
+ 3255      6653697A 
+ 3255      6500
+ 3256              	.LASF202:
+ 3257 0454 70776D4D 		.ascii	"pwmMode\000"
+ 3257      6F646500 
+ 3258              	.LASF75:
+ 3259 045c 70657269 		.ascii	"periTrGrSize\000"
+ 3259      54724772 
+ 3259      53697A65 
+ 3259      00
+ 3260              	.LASF297:
+ 3261 0469 43595F42 		.ascii	"CY_BLE_EVT_GATT_CONNECT_IND\000"
+ 3261      4C455F45 
+ 3261      56545F47 
+ 3261      4154545F 
+ 3261      434F4E4E 
+ 3262              	.LASF147:
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLZDz0J.s 			page 63
+
+
+ 3263 0485 736C6176 		.ascii	"slaveRdBufEmpty\000"
+ 3263      65526442 
+ 3263      7566456D 
+ 3263      70747900 
+ 3264              	.LASF216:
+ 3265 0495 43595F42 		.ascii	"CY_BLE_EVT_INVALID\000"
+ 3265      4C455F45 
+ 3265      56545F49 
+ 3265      4E56414C 
+ 3265      494400
+ 3266              	.LASF336:
+ 3267 04a8 43595F42 		.ascii	"CY_BLE_ADV_STATE_STOPPED\000"
+ 3267      4C455F41 
+ 3267      44565F53 
+ 3267      54415445 
+ 3267      5F53544F 
+ 3268              	.LASF124:
+ 3269 04c1 73617449 		.ascii	"satIntrMask\000"
+ 3269      6E74724D 
+ 3269      61736B00 
+ 3270              	.LASF101:
+ 3271 04cd 63707573 		.ascii	"cpussRam1Ctl0\000"
+ 3271      7352616D 
+ 3271      3143746C 
+ 3271      3000
+ 3272              	.LASF304:
+ 3273 04db 43595F42 		.ascii	"CY_BLE_EVT_GATTC_FIND_BY_TYPE_VALUE_RSP\000"
+ 3273      4C455F45 
+ 3273      56545F47 
+ 3273      41545443 
+ 3273      5F46494E 
+ 3274              	.LASF103:
+ 3275 0503 69706353 		.ascii	"ipcStructSize\000"
+ 3275      74727563 
+ 3275      7453697A 
+ 3275      6500
+ 3276              	.LASF132:
+ 3277 0511 43595F53 		.ascii	"CY_SCB_I2C_NAK\000"
+ 3277      43425F49 
+ 3277      32435F4E 
+ 3277      414B00
+ 3278              	.LASF244:
+ 3279 0520 43595F42 		.ascii	"CY_BLE_EVT_SET_PHY_COMPLETE\000"
+ 3279      4C455F45 
+ 3279      56545F53 
+ 3279      45545F50 
+ 3279      48595F43 
+ 3280              	.LASF319:
+ 3281 053c 43595F42 		.ascii	"CY_BLE_EVT_GATTS_READ_CHAR_VAL_ACCESS_REQ\000"
+ 3281      4C455F45 
+ 3281      56545F47 
+ 3281      41545453 
+ 3281      5F524541 
+ 3282              	.LASF135:
+ 3283 0566 63795F63 		.ascii	"cy_cb_scb_i2c_handle_addr_t\000"
+ 3283      625F7363 
+ 3283      625F6932 
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLZDz0J.s 			page 64
+
+
+ 3283      635F6861 
+ 3283      6E646C65 
+ 3284              	.LASF186:
+ 3285 0582 636F6D70 		.ascii	"compare0\000"
+ 3285      61726530 
+ 3285      00
+ 3286              	.LASF187:
+ 3287 058b 636F6D70 		.ascii	"compare1\000"
+ 3287      61726531 
+ 3287      00
+ 3288              	.LASF290:
+ 3289 0594 43595F42 		.ascii	"CY_BLE_EVT_GAP_RESOLVE_DEVICE_COMPLETE\000"
+ 3289      4C455F45 
+ 3289      56545F47 
+ 3289      41505F52 
+ 3289      45534F4C 
+ 3290              	.LASF159:
+ 3291 05bb 63795F73 		.ascii	"cy_stc_scb_i2c_context\000"
+ 3291      74635F73 
+ 3291      63625F69 
+ 3291      32635F63 
+ 3291      6F6E7465 
+ 3292              	.LASF110:
+ 3293 05d2 43595F53 		.ascii	"CY_SAR_RANGE_COND_BELOW\000"
+ 3293      41525F52 
+ 3293      414E4745 
+ 3293      5F434F4E 
+ 3293      445F4245 
+ 3294              	.LASF342:
+ 3295 05ea 43595F42 		.ascii	"CY_BLE_CONN_STATE_CLIENT_DISCONNECTED_DISCOVERED\000"
+ 3295      4C455F43 
+ 3295      4F4E4E5F 
+ 3295      53544154 
+ 3295      455F434C 
+ 3296              	.LASF201:
+ 3297 061b 63795F73 		.ascii	"cy_stc_tcpwm_pwm_config\000"
+ 3297      74635F74 
+ 3297      6370776D 
+ 3297      5F70776D 
+ 3297      5F636F6E 
+ 3298              	.LASF77:
+ 3299 0633 70657269 		.ascii	"periDivCmdTypeSelPos\000"
+ 3299      44697643 
+ 3299      6D645479 
+ 3299      70655365 
+ 3299      6C506F73 
+ 3300              	.LASF94:
+ 3301 0648 63707573 		.ascii	"cpussTrimRamCtlOffset\000"
+ 3301      73547269 
+ 3301      6D52616D 
+ 3301      43746C4F 
+ 3301      66667365 
+ 3302              	.LASF300:
+ 3303 065e 43595F42 		.ascii	"CY_BLE_EVT_GATTC_XCHNG_MTU_RSP\000"
+ 3303      4C455F45 
+ 3303      56545F47 
+ 3303      41545443 
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLZDz0J.s 			page 65
+
+
+ 3303      5F584348 
+ 3304              	.LASF378:
+ 3305 067d 50574D5F 		.ascii	"PWM_Buz_config\000"
+ 3305      42757A5F 
+ 3305      636F6E66 
+ 3305      696700
+ 3306              	.LASF316:
+ 3307 068c 43595F42 		.ascii	"CY_BLE_EVT_GATTS_HANDLE_VALUE_CNF\000"
+ 3307      4C455F45 
+ 3307      56545F47 
+ 3307      41545453 
+ 3307      5F48414E 
+ 3308              	.LASF245:
+ 3309 06ae 43595F42 		.ascii	"CY_BLE_EVT_PHY_UPDATE_COMPLETE\000"
+ 3309      4C455F45 
+ 3309      56545F50 
+ 3309      48595F55 
+ 3309      50444154 
+ 3310              	.LASF308:
+ 3311 06cd 43595F42 		.ascii	"CY_BLE_EVT_GATTS_WRITE_REQ\000"
+ 3311      4C455F45 
+ 3311      56545F47 
+ 3311      41545453 
+ 3311      5F575249 
+ 3312              	.LASF148:
+ 3313 06e8 736C6176 		.ascii	"slaveTxBuffer\000"
+ 3313      65547842 
+ 3313      75666665 
+ 3313      7200
+ 3314              	.LASF376:
+ 3315 06f6 436F756E 		.ascii	"Counter_Echo_config\000"
+ 3315      7465725F 
+ 3315      4563686F 
+ 3315      5F636F6E 
+ 3315      66696700 
+ 3316              	.LASF150:
+ 3317 070a 736C6176 		.ascii	"slaveTxBufferIdx\000"
+ 3317      65547842 
+ 3317      75666665 
+ 3317      72496478 
+ 3317      00
+ 3318              	.LASF306:
+ 3319 071b 43595F42 		.ascii	"CY_BLE_EVT_GATTC_READ_BLOB_RSP\000"
+ 3319      4C455F45 
+ 3319      56545F47 
+ 3319      41545443 
+ 3319      5F524541 
+ 3320              	.LASF16:
+ 3321 073a 75696E74 		.ascii	"uint32_t\000"
+ 3321      33325F74 
+ 3321      00
+ 3322              	.LASF236:
+ 3323 0743 43595F42 		.ascii	"CY_BLE_EVT_SET_RPA_ENABLE_COMPLETE\000"
+ 3323      4C455F45 
+ 3323      56545F53 
+ 3323      45545F52 
+ 3323      50415F45 
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLZDz0J.s 			page 66
+
+
+ 3324              	.LASF217:
+ 3325 0766 43595F42 		.ascii	"CY_BLE_EVT_STACK_ON\000"
+ 3325      4C455F45 
+ 3325      56545F53 
+ 3325      5441434B 
+ 3325      5F4F4E00 
+ 3326              	.LASF247:
+ 3327 077a 43595F42 		.ascii	"CY_BLE_EVT_LL_CNTRL_PROC_PENDING_COMPLETE\000"
+ 3327      4C455F45 
+ 3327      56545F4C 
+ 3327      4C5F434E 
+ 3327      54524C5F 
+ 3328              	.LASF87:
+ 3329 07a4 6770696F 		.ascii	"gpioPrtCfgOutOffset\000"
+ 3329      50727443 
+ 3329      66674F75 
+ 3329      744F6666 
+ 3329      73657400 
+ 3330              	.LASF325:
+ 3331 07b8 43595F42 		.ascii	"CY_BLE_EVT_L2CAP_CBFC_CONN_CNF\000"
+ 3331      4C455F45 
+ 3331      56545F4C 
+ 3331      32434150 
+ 3331      5F434246 
+ 3332              	.LASF233:
+ 3333 07d7 43595F42 		.ascii	"CY_BLE_EVT_GET_PEER_RPA_COMPLETE\000"
+ 3333      4C455F45 
+ 3333      56545F47 
+ 3333      45545F50 
+ 3333      4545525F 
+ 3334              	.LASF380:
+ 3335 07f8 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 3335      43313120 
+ 3335      352E342E 
+ 3335      31203230 
+ 3335      31363036 
+ 3336 082b 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m0plus -mthumb -"
+ 3336      20726576 
+ 3336      6973696F 
+ 3336      6E203233 
+ 3336      37373135 
+ 3337 085e 67202D4F 		.ascii	"g -Og -ffunction-sections -ffat-lto-objects\000"
+ 3337      67202D66 
+ 3337      66756E63 
+ 3337      74696F6E 
+ 3337      2D736563 
+ 3338              	.LASF179:
+ 3339 088a 63795F73 		.ascii	"cy_stc_scb_uart_context_t\000"
+ 3339      74635F73 
+ 3339      63625F75 
+ 3339      6172745F 
+ 3339      636F6E74 
+ 3340              	.LASF51:
+ 3341 08a4 65704D6F 		.ascii	"epMonitorNr\000"
+ 3341      6E69746F 
+ 3341      724E7200 
+ 3342              	.LASF171:
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLZDz0J.s 			page 67
+
+
+ 3343 08b0 63795F73 		.ascii	"cy_stc_scb_uart_context\000"
+ 3343      74635F73 
+ 3343      63625F75 
+ 3343      6172745F 
+ 3343      636F6E74 
+ 3344              	.LASF234:
+ 3345 08c8 43595F42 		.ascii	"CY_BLE_EVT_GET_LOCAL_RPA_COMPLETE\000"
+ 3345      4C455F45 
+ 3345      56545F47 
+ 3345      45545F4C 
+ 3345      4F43414C 
+ 3346              	.LASF193:
+ 3347 08ea 72656C6F 		.ascii	"reloadInput\000"
+ 3347      6164496E 
+ 3347      70757400 
+ 3348              	.LASF14:
+ 3349 08f6 696E7431 		.ascii	"int16_t\000"
+ 3349      365F7400 
+ 3350              	.LASF86:
+ 3351 08fe 6770696F 		.ascii	"gpioPrtCfgInOffset\000"
+ 3351      50727443 
+ 3351      6667496E 
+ 3351      4F666673 
+ 3351      657400
+ 3352              	.LASF351:
+ 3353 0911 6E756D43 		.ascii	"numChannels\000"
+ 3353      68616E6E 
+ 3353      656C7300 
+ 3354              	.LASF285:
+ 3355 091d 43595F42 		.ascii	"CY_BLE_EVT_GAP_ENHANCE_CONN_COMPLETE\000"
+ 3355      4C455F45 
+ 3355      56545F47 
+ 3355      41505F45 
+ 3355      4E48414E 
+ 3356              	.LASF11:
+ 3357 0942 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 3357      206C6F6E 
+ 3357      6720756E 
+ 3357      7369676E 
+ 3357      65642069 
+ 3358              	.LASF83:
+ 3359 0959 70657269 		.ascii	"periDiv24_5CtlOffset\000"
+ 3359      44697632 
+ 3359      345F3543 
+ 3359      746C4F66 
+ 3359      66736574 
+ 3360              	.LASF88:
+ 3361 096e 6770696F 		.ascii	"gpioPrtCfgSioOffset\000"
+ 3361      50727443 
+ 3361      66675369 
+ 3361      6F4F6666 
+ 3361      73657400 
+ 3362              	.LASF340:
+ 3363 0982 63795F65 		.ascii	"cy_en_ble_adv_state_t\000"
+ 3363      6E5F626C 
+ 3363      655F6164 
+ 3363      765F7374 
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLZDz0J.s 			page 68
+
+
+ 3363      6174655F 
+ 3364              	.LASF251:
+ 3365 0998 43595F42 		.ascii	"CY_BLE_EVT_GET_RSSI_COMPLETE\000"
+ 3365      4C455F45 
+ 3365      56545F47 
+ 3365      45545F52 
+ 3365      5353495F 
+ 3366              	.LASF42:
+ 3367 09b5 63707573 		.ascii	"cpussIpc0Irq\000"
+ 3367      73497063 
+ 3367      30497271 
+ 3367      00
+ 3368              	.LASF210:
+ 3369 09c2 6B696C6C 		.ascii	"killMode\000"
+ 3369      4D6F6465 
+ 3369      00
+ 3370              	.LASF206:
+ 3371 09cb 70657269 		.ascii	"period1\000"
+ 3371      6F643100 
+ 3372              	.LASF119:
+ 3373 09d3 72616E67 		.ascii	"rangeThres\000"
+ 3373      65546872 
+ 3373      657300
+ 3374              	.LASF337:
+ 3375 09de 43595F42 		.ascii	"CY_BLE_ADV_STATE_ADV_INITIATED\000"
+ 3375      4C455F41 
+ 3375      44565F53 
+ 3375      54415445 
+ 3375      5F414456 
+ 3376              	.LASF22:
+ 3377 09fd 75646242 		.ascii	"udbBase\000"
+ 3377      61736500 
+ 3378              	.LASF149:
+ 3379 0a05 736C6176 		.ascii	"slaveTxBufferSize\000"
+ 3379      65547842 
+ 3379      75666665 
+ 3379      7253697A 
+ 3379      6500
+ 3380              	.LASF111:
+ 3381 0a17 43595F53 		.ascii	"CY_SAR_RANGE_COND_INSIDE\000"
+ 3381      41525F52 
+ 3381      414E4745 
+ 3381      5F434F4E 
+ 3381      445F494E 
+ 3382              	.LASF278:
+ 3383 0a30 43595F42 		.ascii	"CY_BLE_EVT_GAP_ENCRYPT_CHANGE\000"
+ 3383      4C455F45 
+ 3383      56545F47 
+ 3383      41505F45 
+ 3383      4E435259 
+ 3384              	.LASF78:
+ 3385 0a4e 70657269 		.ascii	"periDivCmdPaDivSelPos\000"
+ 3385      44697643 
+ 3385      6D645061 
+ 3385      44697653 
+ 3385      656C506F 
+ 3386              	.LASF249:
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLZDz0J.s 			page 69
+
+
+ 3387 0a64 43595F42 		.ascii	"CY_BLE_EVT_SET_DEVICE_ADDR_COMPLETE\000"
+ 3387      4C455F45 
+ 3387      56545F53 
+ 3387      45545F44 
+ 3387      45564943 
+ 3388              	.LASF130:
+ 3389 0a88 63795F73 		.ascii	"cy_stc_sar_config_t\000"
+ 3389      74635F73 
+ 3389      61725F63 
+ 3389      6F6E6669 
+ 3389      675F7400 
+ 3390              	.LASF334:
+ 3391 0a9c 61747449 		.ascii	"attId\000"
+ 3391      6400
+ 3392              	.LASF115:
+ 3393 0aa2 6374726C 		.ascii	"ctrl\000"
+ 3393      00
+ 3394              	.LASF194:
+ 3395 0aa7 73746172 		.ascii	"startInputMode\000"
+ 3395      74496E70 
+ 3395      75744D6F 
+ 3395      646500
+ 3396              	.LASF345:
+ 3397 0ab6 43595F42 		.ascii	"CY_BLE_CONN_STATE_CLIENT_INCL_DISCOVERING\000"
+ 3397      4C455F43 
+ 3397      4F4E4E5F 
+ 3397      53544154 
+ 3397      455F434C 
+ 3398              	.LASF190:
+ 3399 0ae0 63617074 		.ascii	"captureInputMode\000"
+ 3399      75726549 
+ 3399      6E707574 
+ 3399      4D6F6465 
+ 3399      00
+ 3400              	.LASF270:
+ 3401 0af1 43595F42 		.ascii	"CY_BLE_EVT_GAP_AUTH_REQ\000"
+ 3401      4C455F45 
+ 3401      56545F47 
+ 3401      41505F41 
+ 3401      5554485F 
+ 3402              	.LASF284:
+ 3403 0b09 43595F42 		.ascii	"CY_BLE_EVT_GAP_OOB_GENERATED_NOTIFICATION\000"
+ 3403      4C455F45 
+ 3403      56545F47 
+ 3403      41505F4F 
+ 3403      4F425F47 
+ 3404              	.LASF173:
+ 3405 0b33 72785374 		.ascii	"rxStatus\000"
+ 3405      61747573 
+ 3405      00
+ 3406              	.LASF162:
+ 3407 0b3c 72784275 		.ascii	"rxBuf\000"
+ 3407      6600
+ 3408              	.LASF64:
+ 3409 0b42 666C6173 		.ascii	"flashCtlMainWs3Freq\000"
+ 3409      6843746C 
+ 3409      4D61696E 
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLZDz0J.s 			page 70
+
+
+ 3409      57733346 
+ 3409      72657100 
+ 3410              	.LASF276:
+ 3411 0b56 43595F42 		.ascii	"CY_BLE_EVT_GAP_DEVICE_CONNECTED\000"
+ 3411      4C455F45 
+ 3411      56545F47 
+ 3411      41505F44 
+ 3411      45564943 
+ 3412              	.LASF46:
+ 3413 0b76 73727373 		.ascii	"srssNumPll\000"
+ 3413      4E756D50 
+ 3413      6C6C00
+ 3414              	.LASF144:
+ 3415 0b81 6D617374 		.ascii	"masterBufferIdx\000"
+ 3415      65724275 
+ 3415      66666572 
+ 3415      49647800 
+ 3416              	.LASF311:
+ 3417 0b91 43595F42 		.ascii	"CY_BLE_EVT_GATTS_PREP_WRITE_REQ\000"
+ 3417      4C455F45 
+ 3417      56545F47 
+ 3417      41545453 
+ 3417      5F505245 
+ 3418              	.LASF383:
+ 3419 0bb1 434D305F 		.ascii	"CM0_ReleaseCallback\000"
+ 3419      52656C65 
+ 3419      61736543 
+ 3419      616C6C62 
+ 3419      61636B00 
+ 3420              	.LASF6:
+ 3421 0bc5 73686F72 		.ascii	"short unsigned int\000"
+ 3421      7420756E 
+ 3421      7369676E 
+ 3421      65642069 
+ 3421      6E7400
+ 3422              	.LASF57:
+ 3423 0bd8 666C6173 		.ascii	"flashPipeRequired\000"
+ 3423      68506970 
+ 3423      65526571 
+ 3423      75697265 
+ 3423      6400
+ 3424              	.LASF155:
+ 3425 0bea 63624576 		.ascii	"cbEvents\000"
+ 3425      656E7473 
+ 3425      00
+ 3426              	.LASF108:
+ 3427 0bf3 646F7562 		.ascii	"double\000"
+ 3427      6C6500
+ 3428              	.LASF109:
+ 3429 0bfa 5F426F6F 		.ascii	"_Bool\000"
+ 3429      6C00
+ 3430              	.LASF332:
+ 3431 0c00 43595F42 		.ascii	"CY_BLE_EVT_MAX\000"
+ 3431      4C455F45 
+ 3431      56545F4D 
+ 3431      415800
+ 3432              	.LASF61:
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLZDz0J.s 			page 71
+
+
+ 3433 0c0f 666C6173 		.ascii	"flashCtlMainWs0Freq\000"
+ 3433      6843746C 
+ 3433      4D61696E 
+ 3433      57733046 
+ 3433      72657100 
+ 3434              	.LASF327:
+ 3435 0c23 43595F42 		.ascii	"CY_BLE_EVT_L2CAP_CBFC_DISCONN_CNF\000"
+ 3435      4C455F45 
+ 3435      56545F4C 
+ 3435      32434150 
+ 3435      5F434246 
+ 3436              	.LASF136:
+ 3437 0c45 75736552 		.ascii	"useRxFifo\000"
+ 3437      78466966 
+ 3437      6F00
+ 3438              	.LASF356:
+ 3439 0c4f 636C6965 		.ascii	"clientId\000"
+ 3439      6E744964 
+ 3439      00
+ 3440              	.LASF256:
+ 3441 0c58 43595F42 		.ascii	"CY_BLE_EVT_RANDOM_NUM_GEN_COMPLETE\000"
+ 3441      4C455F45 
+ 3441      56545F52 
+ 3441      414E444F 
+ 3441      4D5F4E55 
+ 3442              	.LASF25:
+ 3443 0c7b 6770696F 		.ascii	"gpioBase\000"
+ 3443      42617365 
+ 3443      00
+ 3444              	.LASF338:
+ 3445 0c84 43595F42 		.ascii	"CY_BLE_ADV_STATE_ADVERTISING\000"
+ 3445      4C455F41 
+ 3445      44565F53 
+ 3445      54415445 
+ 3445      5F414456 
+ 3446              	.LASF287:
+ 3447 0ca1 43595F42 		.ascii	"CY_BLE_EVT_GAP_SMP_NEGOTIATED_AUTH_INFO\000"
+ 3447      4C455F45 
+ 3447      56545F47 
+ 3447      41505F53 
+ 3447      4D505F4E 
+ 3448              	.LASF229:
+ 3449 0cc9 43595F42 		.ascii	"CY_BLE_EVT_SET_DATA_LENGTH_COMPLETE\000"
+ 3449      4C455F45 
+ 3449      56545F53 
+ 3449      45545F44 
+ 3449      4154415F 
+ 3450              	.LASF203:
+ 3451 0ced 70776D41 		.ascii	"pwmAlignment\000"
+ 3451      6C69676E 
+ 3451      6D656E74 
+ 3451      00
+ 3452              	.LASF309:
+ 3453 0cfa 43595F42 		.ascii	"CY_BLE_EVT_GATTC_WRITE_RSP\000"
+ 3453      4C455F45 
+ 3453      56545F47 
+ 3453      41545443 
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLZDz0J.s 			page 72
+
+
+ 3453      5F575249 
+ 3454              	.LASF37:
+ 3455 0d15 70726F74 		.ascii	"protVersion\000"
+ 3455      56657273 
+ 3455      696F6E00 
+ 3456              	.LASF58:
+ 3457 0d21 666C6173 		.ascii	"flashWriteDelay\000"
+ 3457      68577269 
+ 3457      74654465 
+ 3457      6C617900 
+ 3458              	.LASF31:
+ 3459 0d31 64775665 		.ascii	"dwVersion\000"
+ 3459      7273696F 
+ 3459      6E00
+ 3460              	.LASF9:
+ 3461 0d3b 6C6F6E67 		.ascii	"long unsigned int\000"
+ 3461      20756E73 
+ 3461      69676E65 
+ 3461      6420696E 
+ 3461      7400
+ 3462              	.LASF219:
+ 3463 0d4d 43595F42 		.ascii	"CY_BLE_EVT_STACK_BUSY_STATUS\000"
+ 3463      4C455F45 
+ 3463      56545F53 
+ 3463      5441434B 
+ 3463      5F425553 
+ 3464              	.LASF52:
+ 3465 0d6a 75646250 		.ascii	"udbPresent\000"
+ 3465      72657365 
+ 3465      6E7400
+ 3466              	.LASF323:
+ 3467 0d75 43595F42 		.ascii	"CY_BLE_EVT_L2CAP_COMMAND_REJ\000"
+ 3467      4C455F45 
+ 3467      56545F4C 
+ 3467      32434150 
+ 3467      5F434F4D 
+ 3468              	.LASF226:
+ 3469 0d92 43595F42 		.ascii	"CY_BLE_EVT_GET_CHANNEL_MAP_COMPLETE\000"
+ 3469      4C455F45 
+ 3469      56545F47 
+ 3469      45545F43 
+ 3469      48414E4E 
+ 3470              	.LASF70:
+ 3471 0db6 64775374 		.ascii	"dwStatusChIdxPos\000"
+ 3471      61747573 
+ 3471      43684964 
+ 3471      78506F73 
+ 3471      00
+ 3472              	.LASF5:
+ 3473 0dc7 5F5F7569 		.ascii	"__uint16_t\000"
+ 3473      6E743136 
+ 3473      5F7400
+ 3474              	.LASF220:
+ 3475 0dd2 43595F42 		.ascii	"CY_BLE_EVT_MEMORY_REQUEST\000"
+ 3475      4C455F45 
+ 3475      56545F4D 
+ 3475      454D4F52 
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLZDz0J.s 			page 73
+
+
+ 3475      595F5245 
+ 3476              	.LASF129:
+ 3477 0dec 76726566 		.ascii	"vrefMvValue\000"
+ 3477      4D765661 
+ 3477      6C756500 
+ 3478              	.LASF28:
+ 3479 0df8 63727970 		.ascii	"cryptoBase\000"
+ 3479      746F4261 
+ 3479      736500
+ 3480              	.LASF267:
+ 3481 0e03 43595F42 		.ascii	"CY_BLE_EVT_SET_CONN_PRIORITY_COMPLETE\000"
+ 3481      4C455F45 
+ 3481      56545F53 
+ 3481      45545F43 
+ 3481      4F4E4E5F 
+ 3482              	.LASF145:
+ 3483 0e29 6D617374 		.ascii	"masterNumBytes\000"
+ 3483      65724E75 
+ 3483      6D427974 
+ 3483      657300
+ 3484              	.LASF339:
+ 3485 0e38 43595F42 		.ascii	"CY_BLE_ADV_STATE_STOP_INITIATED\000"
+ 3485      4C455F41 
+ 3485      44565F53 
+ 3485      54415445 
+ 3485      5F53544F 
+ 3486              	.LASF41:
+ 3487 0e58 63707573 		.ascii	"cpussFlashPaSize\000"
+ 3487      73466C61 
+ 3487      73685061 
+ 3487      53697A65 
+ 3487      00
+ 3488              	.LASF346:
+ 3489 0e69 43595F42 		.ascii	"CY_BLE_CONN_STATE_CLIENT_CHAR_DISCOVERING\000"
+ 3489      4C455F43 
+ 3489      4F4E4E5F 
+ 3489      53544154 
+ 3489      455F434C 
+ 3490              	.LASF191:
+ 3491 0e93 63617074 		.ascii	"captureInput\000"
+ 3491      75726549 
+ 3491      6E707574 
+ 3491      00
+ 3492              	.LASF112:
+ 3493 0ea0 43595F53 		.ascii	"CY_SAR_RANGE_COND_ABOVE\000"
+ 3493      41525F52 
+ 3493      414E4745 
+ 3493      5F434F4E 
+ 3493      445F4142 
+ 3494              	.LASF106:
+ 3495 0eb8 63686172 		.ascii	"char\000"
+ 3495      00
+ 3496              	.LASF258:
+ 3497 0ebd 43595F42 		.ascii	"CY_BLE_EVT_AES_CCM_ENCRYPT_COMPLETE\000"
+ 3497      4C455F45 
+ 3497      56545F41 
+ 3497      45535F43 
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLZDz0J.s 			page 74
+
+
+ 3497      434D5F45 
+ 3498              	.LASF280:
+ 3499 0ee1 43595F42 		.ascii	"CY_BLE_EVT_GAPC_SCAN_START_STOP\000"
+ 3499      4C455F45 
+ 3499      56545F47 
+ 3499      4150435F 
+ 3499      5343414E 
+ 3500              	.LASF121:
+ 3501 0f01 6368616E 		.ascii	"chanEn\000"
+ 3501      456E00
+ 3502              	.LASF177:
+ 3503 0f08 72785269 		.ascii	"rxRingBufTail\000"
+ 3503      6E674275 
+ 3503      66546169 
+ 3503      6C00
+ 3504              	.LASF382:
+ 3505 0f16 443A5C48 		.ascii	"D:\\Hackathon-Infineon\\Hackaton.cydsn\000"
+ 3505      61636B61 
+ 3505      74686F6E 
+ 3505      2D496E66 
+ 3505      696E656F 
+ 3506              	.LASF53:
+ 3507 0f3b 73797350 		.ascii	"sysPmSimoPresent\000"
+ 3507      6D53696D 
+ 3507      6F507265 
+ 3507      73656E74 
+ 3507      00
+ 3508              	.LASF143:
+ 3509 0f4c 6D617374 		.ascii	"masterBufferSize\000"
+ 3509      65724275 
+ 3509      66666572 
+ 3509      53697A65 
+ 3509      00
+ 3510              	.LASF55:
+ 3511 0f5d 63727970 		.ascii	"cryptoMemSize\000"
+ 3511      746F4D65 
+ 3511      6D53697A 
+ 3511      6500
+ 3512              	.LASF302:
+ 3513 0f6b 43595F42 		.ascii	"CY_BLE_EVT_GATTC_READ_BY_TYPE_RSP\000"
+ 3513      4C455F45 
+ 3513      56545F47 
+ 3513      41545443 
+ 3513      5F524541 
+ 3514              	.LASF182:
+ 3515 0f8d 636C6F63 		.ascii	"clockPrescaler\000"
+ 3515      6B507265 
+ 3515      7363616C 
+ 3515      657200
+ 3516              	.LASF237:
+ 3517 0f9c 43595F42 		.ascii	"CY_BLE_EVT_SET_HOST_CHANNEL_COMPLETE\000"
+ 3517      4C455F45 
+ 3517      56545F53 
+ 3517      45545F48 
+ 3517      4F53545F 
+ 3518              	.LASF227:
+ 3519 0fc1 43595F42 		.ascii	"CY_BLE_EVT_LE_SET_EVENT_MASK_COMPLETE\000"
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLZDz0J.s 			page 75
+
+
+ 3519      4C455F45 
+ 3519      56545F4C 
+ 3519      455F5345 
+ 3519      545F4556 
+ 3520              	.LASF164:
+ 3521 0fe7 72784275 		.ascii	"rxBufIdx\000"
+ 3521      66496478 
+ 3521      00
+ 3522              	.LASF282:
+ 3523 0ff0 43595F42 		.ascii	"CY_BLE_EVT_GAP_NUMERIC_COMPARISON_REQUEST\000"
+ 3523      4C455F45 
+ 3523      56545F47 
+ 3523      41505F4E 
+ 3523      554D4552 
+ 3524              	.LASF168:
+ 3525 101a 696E6974 		.ascii	"initKey\000"
+ 3525      4B657900 
+ 3526              	.LASF71:
+ 3527 1022 64775374 		.ascii	"dwStatusChIdxMsk\000"
+ 3527      61747573 
+ 3527      43684964 
+ 3527      784D736B 
+ 3527      00
+ 3528              	.LASF13:
+ 3529 1033 75696E74 		.ascii	"uint8_t\000"
+ 3529      385F7400 
+ 3530              	.LASF161:
+ 3531 103b 73746174 		.ascii	"status\000"
+ 3531      757300
+ 3532              	.LASF260:
+ 3533 1042 43595F42 		.ascii	"CY_BLE_EVT_SET_SLAVE_LATENCY_MODE_COMPLETE\000"
+ 3533      4C455F45 
+ 3533      56545F53 
+ 3533      45545F53 
+ 3533      4C415645 
+ 3534              	.LASF151:
+ 3535 106d 736C6176 		.ascii	"slaveTxBufferCnt\000"
+ 3535      65547842 
+ 3535      75666665 
+ 3535      72436E74 
+ 3535      00
+ 3536              	.LASF76:
+ 3537 107e 70657269 		.ascii	"periDivCmdDivSelMsk\000"
+ 3537      44697643 
+ 3537      6D644469 
+ 3537      7653656C 
+ 3537      4D736B00 
+ 3538              	.LASF273:
+ 3539 1092 43595F42 		.ascii	"CY_BLE_EVT_GAP_AUTH_COMPLETE\000"
+ 3539      4C455F45 
+ 3539      56545F47 
+ 3539      41505F41 
+ 3539      5554485F 
+ 3540              	.LASF243:
+ 3541 10af 43595F42 		.ascii	"CY_BLE_EVT_SET_DEFAULT_PHY_COMPLETE\000"
+ 3541      4C455F45 
+ 3541      56545F53 
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLZDz0J.s 			page 76
+
+
+ 3541      45545F44 
+ 3541      45464155 
+ 3542              	.LASF127:
+ 3543 10d3 6D757853 		.ascii	"muxSwitchSqCtrl\000"
+ 3543      77697463 
+ 3543      68537143 
+ 3543      74726C00 
+ 3544              	.LASF368:
+ 3545 10e3 63795F62 		.ascii	"cy_ble_advState\000"
+ 3545      6C655F61 
+ 3545      64765374 
+ 3545      61746500 
+ 3546              	.LASF170:
+ 3547 10f3 63795F63 		.ascii	"cy_cb_scb_uart_handle_events_t\000"
+ 3547      625F7363 
+ 3547      625F7561 
+ 3547      72745F68 
+ 3547      616E646C 
+ 3548              	.LASF120:
+ 3549 1112 72616E67 		.ascii	"rangeCond\000"
+ 3549      65436F6E 
+ 3549      6400
+ 3550              	.LASF322:
+ 3551 111c 43595F42 		.ascii	"CY_BLE_EVT_L2CAP_CONN_PARAM_UPDATE_RSP\000"
+ 3551      4C455F45 
+ 3551      56545F4C 
+ 3551      32434150 
+ 3551      5F434F4E 
+ 3552              	.LASF266:
+ 3553 1143 43595F42 		.ascii	"CY_BLE_EVT_SET_CE_LENGTH_COMPLETE\000"
+ 3553      4C455F45 
+ 3553      56545F53 
+ 3553      45545F43 
+ 3553      455F4C45 
+ 3554              	.LASF265:
+ 3555 1165 43595F42 		.ascii	"CY_BLE_EVT_SET_EVENT_MASK_COMPLETE\000"
+ 3555      4C455F45 
+ 3555      56545F53 
+ 3555      45545F45 
+ 3555      56454E54 
+ 3556              	.LASF100:
+ 3557 1188 63707573 		.ascii	"cpussRam0Ctl0\000"
+ 3557      7352616D 
+ 3557      3043746C 
+ 3557      3000
+ 3558              	.LASF10:
+ 3559 1196 6C6F6E67 		.ascii	"long long int\000"
+ 3559      206C6F6E 
+ 3559      6720696E 
+ 3559      7400
+ 3560              	.LASF27:
+ 3561 11a4 69706342 		.ascii	"ipcBase\000"
+ 3561      61736500 
+ 3562              	.LASF68:
+ 3563 11ac 64774368 		.ascii	"dwChCtlPrioPos\000"
+ 3563      43746C50 
+ 3563      72696F50 
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLZDz0J.s 			page 77
+
+
+ 3563      6F7300
+ 3564              	.LASF207:
+ 3565 11bb 656E6162 		.ascii	"enablePeriodSwap\000"
+ 3565      6C655065 
+ 3565      72696F64 
+ 3565      53776170 
+ 3565      00
+ 3566              	.LASF204:
+ 3567 11cc 64656164 		.ascii	"deadTimeClocks\000"
+ 3567      54696D65 
+ 3567      436C6F63 
+ 3567      6B7300
+ 3568              	.LASF293:
+ 3569 11db 43595F42 		.ascii	"CY_BLE_EVT_GAP_CONN_ESTB\000"
+ 3569      4C455F45 
+ 3569      56545F47 
+ 3569      41505F43 
+ 3569      4F4E4E5F 
+ 3570              	.LASF384:
+ 3571 11f4 434D305F 		.ascii	"CM0_MessageCallback\000"
+ 3571      4D657373 
+ 3571      61676543 
+ 3571      616C6C62 
+ 3571      61636B00 
+ 3572              	.LASF239:
+ 3573 1208 43595F42 		.ascii	"CY_BLE_EVT_REMOVE_DEVICE_FROM_RPA_LIST_COMPLETE\000"
+ 3573      4C455F45 
+ 3573      56545F52 
+ 3573      454D4F56 
+ 3573      455F4445 
+ 3574              	.LASF228:
+ 3575 1238 43595F42 		.ascii	"CY_BLE_EVT_LE_PING_AUTH_TIMEOUT\000"
+ 3575      4C455F45 
+ 3575      56545F4C 
+ 3575      455F5049 
+ 3575      4E475F41 
+ 3576              	.LASF205:
+ 3577 1258 70657269 		.ascii	"period0\000"
+ 3577      6F643000 
+ 3578              	.LASF137:
+ 3579 1260 75736554 		.ascii	"useTxFifo\000"
+ 3579      78466966 
+ 3579      6F00
+ 3580              	.LASF212:
+ 3581 126a 73776170 		.ascii	"swapInput\000"
+ 3581      496E7075 
+ 3581      7400
+ 3582              	.LASF4:
+ 3583 1274 5F5F696E 		.ascii	"__int16_t\000"
+ 3583      7431365F 
+ 3583      7400
+ 3584              	.LASF48:
+ 3585 127e 70657269 		.ascii	"periClockNr\000"
+ 3585      436C6F63 
+ 3585      6B4E7200 
+ 3586              	.LASF208:
+ 3587 128a 696E7665 		.ascii	"invertPWMOut\000"
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLZDz0J.s 			page 78
+
+
+ 3587      72745057 
+ 3587      4D4F7574 
+ 3587      00
+ 3588              	.LASF255:
+ 3589 1297 43595F42 		.ascii	"CY_BLE_EVT_SET_CLK_CONFIG_COMPLETE\000"
+ 3589      4C455F45 
+ 3589      56545F53 
+ 3589      45545F43 
+ 3589      4C4B5F43 
+ 3590              	.LASF24:
+ 3591 12ba 6873696F 		.ascii	"hsiomBase\000"
+ 3591      6D426173 
+ 3591      6500
+ 3592              	.LASF320:
+ 3593 12c4 43595F42 		.ascii	"CY_BLE_EVT_GATTC_LONG_PROCEDURE_END\000"
+ 3593      4C455F45 
+ 3593      56545F47 
+ 3593      41545443 
+ 3593      5F4C4F4E 
+ 3594              	.LASF305:
+ 3595 12e8 43595F42 		.ascii	"CY_BLE_EVT_GATTC_READ_RSP\000"
+ 3595      4C455F45 
+ 3595      56545F47 
+ 3595      41545443 
+ 3595      5F524541 
+ 3596              	.LASF74:
+ 3597 1302 70657269 		.ascii	"periTrGrOffset\000"
+ 3597      54724772 
+ 3597      4F666673 
+ 3597      657400
+ 3598              	.LASF44:
+ 3599 1311 63707573 		.ascii	"cpussNotConnectedIrq\000"
+ 3599      734E6F74 
+ 3599      436F6E6E 
+ 3599      65637465 
+ 3599      64497271 
+ 3600              	.LASF169:
+ 3601 1326 63795F73 		.ascii	"cy_stc_scb_spi_context_t\000"
+ 3601      74635F73 
+ 3601      63625F73 
+ 3601      70695F63 
+ 3601      6F6E7465 
+ 3602              	.LASF248:
+ 3603 133f 43595F42 		.ascii	"CY_BLE_EVT_SOFT_RESET_COMPLETE\000"
+ 3603      4C455F45 
+ 3603      56545F53 
+ 3603      4F46545F 
+ 3603      52455345 
+ 3604              	.LASF176:
+ 3605 135e 72785269 		.ascii	"rxRingBufHead\000"
+ 3605      6E674275 
+ 3605      66486561 
+ 3605      6400
+ 3606              	.LASF40:
+ 3607 136c 63707573 		.ascii	"cpussDwChNr\000"
+ 3607      73447743 
+ 3607      684E7200 
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLZDz0J.s 			page 79
+
+
+ 3608              	.LASF192:
+ 3609 1378 72656C6F 		.ascii	"reloadInputMode\000"
+ 3609      6164496E 
+ 3609      7075744D 
+ 3609      6F646500 
+ 3610              	.LASF232:
+ 3611 1388 43595F42 		.ascii	"CY_BLE_EVT_DATA_LENGTH_CHANGE\000"
+ 3611      4C455F45 
+ 3611      56545F44 
+ 3611      4154415F 
+ 3611      4C454E47 
+ 3612              	.LASF122:
+ 3613 13a6 6368616E 		.ascii	"chanConfig\000"
+ 3613      436F6E66 
+ 3613      696700
+ 3614              	.LASF360:
+ 3615 13b1 434D305F 		.ascii	"CM0_IsCM4Ready\000"
+ 3615      4973434D 
+ 3615      34526561 
+ 3615      647900
+ 3616              	.LASF281:
+ 3617 13c0 43595F42 		.ascii	"CY_BLE_EVT_GAP_KEYINFO_EXCHNGE_CMPLT\000"
+ 3617      4C455F45 
+ 3617      56545F47 
+ 3617      41505F4B 
+ 3617      4559494E 
+ 3618              	.LASF240:
+ 3619 13e5 43595F42 		.ascii	"CY_BLE_EVT_ADD_DEVICE_TO_WHITE_LIST_COMPLETE\000"
+ 3619      4C455F45 
+ 3619      56545F41 
+ 3619      44445F44 
+ 3619      45564943 
+ 3620              	.LASF166:
+ 3621 1412 74784275 		.ascii	"txBufSize\000"
+ 3621      6653697A 
+ 3621      6500
+ 3622              	.LASF38:
+ 3623 141c 63707573 		.ascii	"cpussIpcNr\000"
+ 3623      73497063 
+ 3623      4E7200
+ 3624              	.LASF295:
+ 3625 1427 43595F42 		.ascii	"CY_BLE_EVT_GAP_ADV_TX\000"
+ 3625      4C455F45 
+ 3625      56545F47 
+ 3625      41505F41 
+ 3625      44565F54 
+ 3626              	.LASF331:
+ 3627 143d 43595F42 		.ascii	"CY_BLE_EVT_L2CAP_CBFC_DATA_WRITE_IND\000"
+ 3627      4C455F45 
+ 3627      56545F4C 
+ 3627      32434150 
+ 3627      5F434246 
+ 3628              	.LASF91:
+ 3629 1462 63707573 		.ascii	"cpussCm4StatusOffset\000"
+ 3629      73436D34 
+ 3629      53746174 
+ 3629      75734F66 
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLZDz0J.s 			page 80
+
+
+ 3629      66736574 
+ 3630              	.LASF50:
+ 3631 1477 70617373 		.ascii	"passSarChannels\000"
+ 3631      53617243 
+ 3631      68616E6E 
+ 3631      656C7300 
+ 3632              	.LASF154:
+ 3633 1487 736C6176 		.ascii	"slaveRxBufferIdx\000"
+ 3633      65527842 
+ 3633      75666665 
+ 3633      72496478 
+ 3633      00
+ 3634              	.LASF102:
+ 3635 1498 63707573 		.ascii	"cpussRam2Ctl0\000"
+ 3635      7352616D 
+ 3635      3243746C 
+ 3635      3000
+ 3636              	.LASF140:
+ 3637 14a6 6D617374 		.ascii	"masterPause\000"
+ 3637      65725061 
+ 3637      75736500 
+ 3638              	.LASF387:
+ 3639 14b2 43795F49 		.ascii	"Cy_IPC_Pipe_SendMessage\000"
+ 3639      50435F50 
+ 3639      6970655F 
+ 3639      53656E64 
+ 3639      4D657373 
+ 3640              	.LASF269:
+ 3641 14ca 43595F42 		.ascii	"CY_BLE_EVT_GAPC_SCAN_PROGRESS_RESULT\000"
+ 3641      4C455F45 
+ 3641      56545F47 
+ 3641      4150435F 
+ 3641      5343414E 
+ 3642              	.LASF324:
+ 3643 14ef 43595F42 		.ascii	"CY_BLE_EVT_L2CAP_CBFC_CONN_IND\000"
+ 3643      4C455F45 
+ 3643      56545F4C 
+ 3643      32434150 
+ 3643      5F434246 
+ 3644              	.LASF289:
+ 3645 150e 43595F42 		.ascii	"CY_BLE_EVT_GAP_KEYS_GEN_COMPLETE\000"
+ 3645      4C455F45 
+ 3645      56545F47 
+ 3645      41505F4B 
+ 3645      4559535F 
+ 3646              	.LASF283:
+ 3647 152f 43595F42 		.ascii	"CY_BLE_EVT_GAP_KEYPRESS_NOTIFICATION\000"
+ 3647      4C455F45 
+ 3647      56545F47 
+ 3647      41505F4B 
+ 3647      45595052 
+ 3648              	.LASF347:
+ 3649 1554 43595F42 		.ascii	"CY_BLE_CONN_STATE_CLIENT_DESCR_DISCOVERING\000"
+ 3649      4C455F43 
+ 3649      4F4E4E5F 
+ 3649      53544154 
+ 3649      455F434C 
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLZDz0J.s 			page 81
+
+
+ 3650              	.LASF343:
+ 3651 157f 43595F42 		.ascii	"CY_BLE_CONN_STATE_CONNECTED\000"
+ 3651      4C455F43 
+ 3651      4F4E4E5F 
+ 3651      53544154 
+ 3651      455F434F 
+ 3652              	.LASF165:
+ 3653 159b 74784275 		.ascii	"txBuf\000"
+ 3653      6600
+ 3654              	.LASF59:
+ 3655 15a1 666C6173 		.ascii	"flashProgramDelay\000"
+ 3655      6850726F 
+ 3655      6772616D 
+ 3655      44656C61 
+ 3655      7900
+ 3656              	.LASF81:
+ 3657 15b3 70657269 		.ascii	"periDiv16CtlOffset\000"
+ 3657      44697631 
+ 3657      3643746C 
+ 3657      4F666673 
+ 3657      657400
+ 3658              	.LASF254:
+ 3659 15c6 43595F42 		.ascii	"CY_BLE_EVT_GET_CLK_CONFIG_COMPLETE\000"
+ 3659      4C455F45 
+ 3659      56545F47 
+ 3659      45545F43 
+ 3659      4C4B5F43 
+ 3660              	.LASF174:
+ 3661 15e9 72785269 		.ascii	"rxRingBuf\000"
+ 3661      6E674275 
+ 3661      6600
+ 3662              	.LASF18:
+ 3663 15f3 6C6F6E67 		.ascii	"long double\000"
+ 3663      20646F75 
+ 3663      626C6500 
+ 3664              	.LASF15:
+ 3665 15ff 75696E74 		.ascii	"uint16_t\000"
+ 3665      31365F74 
+ 3665      00
+ 3666              	.LASF215:
+ 3667 1608 63795F73 		.ascii	"cy_stc_tcpwm_pwm_config_t\000"
+ 3667      74635F74 
+ 3667      6370776D 
+ 3667      5F70776D 
+ 3667      5F636F6E 
+ 3668              	.LASF183:
+ 3669 1622 72756E4D 		.ascii	"runMode\000"
+ 3669      6F646500 
+ 3670              	.LASF73:
+ 3671 162a 70657269 		.ascii	"periTrCmdGrSelMsk\000"
+ 3671      5472436D 
+ 3671      64477253 
+ 3671      656C4D73 
+ 3671      6B00
+ 3672              	.LASF142:
+ 3673 163c 6D617374 		.ascii	"masterBuffer\000"
+ 3673      65724275 
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLZDz0J.s 			page 82
+
+
+ 3673      66666572 
+ 3673      00
+ 3674              	.LASF235:
+ 3675 1649 43595F42 		.ascii	"CY_BLE_EVT_SET_RPA_TO_COMPLETE\000"
+ 3675      4C455F45 
+ 3675      56545F53 
+ 3675      45545F52 
+ 3675      50415F54 
+ 3676              	.LASF117:
+ 3677 1668 73616D70 		.ascii	"sampleTime01\000"
+ 3677      6C655469 
+ 3677      6D653031 
+ 3677      00
+ 3678              	.LASF223:
+ 3679 1675 43595F42 		.ascii	"CY_BLE_EVT_HARDWARE_ERROR\000"
+ 3679      4C455F45 
+ 3679      56545F48 
+ 3679      41524457 
+ 3679      4152455F 
+ 3680              	.LASF47:
+ 3681 168f 73727373 		.ascii	"srssNumHfroot\000"
+ 3681      4E756D48 
+ 3681      66726F6F 
+ 3681      7400
+ 3682              	.LASF310:
+ 3683 169d 43595F42 		.ascii	"CY_BLE_EVT_GATTS_WRITE_CMD_REQ\000"
+ 3683      4C455F45 
+ 3683      56545F47 
+ 3683      41545453 
+ 3683      5F575249 
+ 3684              	.LASF200:
+ 3685 16bc 63795F73 		.ascii	"cy_stc_tcpwm_counter_config_t\000"
+ 3685      74635F74 
+ 3685      6370776D 
+ 3685      5F636F75 
+ 3685      6E746572 
+ 3686              	.LASF126:
+ 3687 16da 6D757853 		.ascii	"muxSwitch\000"
+ 3687      77697463 
+ 3687      6800
+ 3688              	.LASF63:
+ 3689 16e4 666C6173 		.ascii	"flashCtlMainWs2Freq\000"
+ 3689      6843746C 
+ 3689      4D61696E 
+ 3689      57733246 
+ 3689      72657100 
+ 3690              	.LASF315:
+ 3691 16f8 43595F42 		.ascii	"CY_BLE_EVT_GATTC_HANDLE_VALUE_IND\000"
+ 3691      4C455F45 
+ 3691      56545F47 
+ 3691      41545443 
+ 3691      5F48414E 
+ 3692              	.LASF296:
+ 3693 171a 43595F42 		.ascii	"CY_BLE_EVT_GATTC_ERROR_RSP\000"
+ 3693      4C455F45 
+ 3693      56545F47 
+ 3693      41545443 
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLZDz0J.s 			page 83
+
+
+ 3693      5F455252 
+ 3694              	.LASF301:
+ 3695 1735 43595F42 		.ascii	"CY_BLE_EVT_GATTC_READ_BY_GROUP_TYPE_RSP\000"
+ 3695      4C455F45 
+ 3695      56545F47 
+ 3695      41545443 
+ 3695      5F524541 
+ 3696              	.LASF238:
+ 3697 175d 43595F42 		.ascii	"CY_BLE_EVT_ADD_DEVICE_TO_RPA_LIST_COMPLETE\000"
+ 3697      4C455F45 
+ 3697      56545F41 
+ 3697      44445F44 
+ 3697      45564943 
+ 3698              	.LASF259:
+ 3699 1788 43595F42 		.ascii	"CY_BLE_EVT_AES_CCM_DECRYPT_COMPLETE\000"
+ 3699      4C455F45 
+ 3699      56545F41 
+ 3699      45535F43 
+ 3699      434D5F44 
+ 3700              	.LASF17:
+ 3701 17ac 73697A65 		.ascii	"sizetype\000"
+ 3701      74797065 
+ 3701      00
+ 3702              	.LASF261:
+ 3703 17b5 43595F42 		.ascii	"CY_BLE_EVT_STACK_SHUTDOWN_COMPLETE\000"
+ 3703      4C455F45 
+ 3703      56545F53 
+ 3703      5441434B 
+ 3703      5F534855 
+ 3704              	.LASF335:
+ 3705 17d8 63795F73 		.ascii	"cy_stc_ble_conn_handle_t\000"
+ 3705      74635F62 
+ 3705      6C655F63 
+ 3705      6F6E6E5F 
+ 3705      68616E64 
+ 3706              	.LASF98:
+ 3707 17f1 63707573 		.ascii	"cpussCm4NmiCtlOffset\000"
+ 3707      73436D34 
+ 3707      4E6D6943 
+ 3707      746C4F66 
+ 3707      66736574 
+ 3708              	.LASF185:
+ 3709 1806 636F6D70 		.ascii	"compareOrCapture\000"
+ 3709      6172654F 
+ 3709      72436170 
+ 3709      74757265 
+ 3709      00
+ 3710              	.LASF80:
+ 3711 1817 70657269 		.ascii	"periDiv8CtlOffset\000"
+ 3711      44697638 
+ 3711      43746C4F 
+ 3711      66667365 
+ 3711      7400
+ 3712              	.LASF294:
+ 3713 1829 43595F42 		.ascii	"CY_BLE_EVT_GAPP_UPDATE_ADV_SCAN_DATA_COMPLETE\000"
+ 3713      4C455F45 
+ 3713      56545F47 
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLZDz0J.s 			page 84
+
+
+ 3713      4150505F 
+ 3713      55504441 
+ 3714              	.LASF377:
+ 3715 1857 49525F63 		.ascii	"IR_context\000"
+ 3715      6F6E7465 
+ 3715      787400
+ 3716              	.LASF1:
+ 3717 1862 73686F72 		.ascii	"short int\000"
+ 3717      7420696E 
+ 3717      7400
+ 3718              	.LASF372:
+ 3719 186c 4144435F 		.ascii	"ADC_allConfigs\000"
+ 3719      616C6C43 
+ 3719      6F6E6669 
+ 3719      677300
+ 3720              	.LASF268:
+ 3721 187b 43595F42 		.ascii	"CY_BLE_EVT_HCI_PKT_RCVD\000"
+ 3721      4C455F45 
+ 3721      56545F48 
+ 3721      43495F50 
+ 3721      4B545F52 
+ 3722              	.LASF189:
+ 3723 1893 696E7465 		.ascii	"interruptSources\000"
+ 3723      72727570 
+ 3723      74536F75 
+ 3723      72636573 
+ 3723      00
+ 3724              	.LASF188:
+ 3725 18a4 656E6162 		.ascii	"enableCompareSwap\000"
+ 3725      6C65436F 
+ 3725      6D706172 
+ 3725      65537761 
+ 3725      7000
+ 3726              	.LASF30:
+ 3727 18b6 63727970 		.ascii	"cryptoVersion\000"
+ 3727      746F5665 
+ 3727      7273696F 
+ 3727      6E00
+ 3728              	.LASF7:
+ 3729 18c4 6C6F6E67 		.ascii	"long int\000"
+ 3729      20696E74 
+ 3729      00
+ 3730              	.LASF29:
+ 3731 18cd 63707573 		.ascii	"cpussVersion\000"
+ 3731      73566572 
+ 3731      73696F6E 
+ 3731      00
+ 3732              	.LASF198:
+ 3733 18da 636F756E 		.ascii	"countInputMode\000"
+ 3733      74496E70 
+ 3733      75744D6F 
+ 3733      646500
+ 3734              	.LASF211:
+ 3735 18e9 73776170 		.ascii	"swapInputMode\000"
+ 3735      496E7075 
+ 3735      744D6F64 
+ 3735      6500
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLZDz0J.s 			page 85
+
+
+ 3736              	.LASF264:
+ 3737 18f7 43595F42 		.ascii	"CY_BLE_EVT_AES_CMAC_GEN_COMPLETE\000"
+ 3737      4C455F45 
+ 3737      56545F41 
+ 3737      45535F43 
+ 3737      4D41435F 
+ 3738              	.LASF32:
+ 3739 1918 666C6173 		.ascii	"flashcVersion\000"
+ 3739      68635665 
+ 3739      7273696F 
+ 3739      6E00
+ 3740              	.LASF54:
+ 3741 1926 70726F74 		.ascii	"protBusMasterMask\000"
+ 3741      4275734D 
+ 3741      61737465 
+ 3741      724D6173 
+ 3741      6B00
+ 3742              	.LASF23:
+ 3743 1938 70726F74 		.ascii	"protBase\000"
+ 3743      42617365 
+ 3743      00
+ 3744              	.LASF307:
+ 3745 1941 43595F42 		.ascii	"CY_BLE_EVT_GATTC_READ_MULTI_RSP\000"
+ 3745      4C455F45 
+ 3745      56545F47 
+ 3745      41545443 
+ 3745      5F524541 
+ 3746              	.LASF184:
+ 3747 1961 636F756E 		.ascii	"countDirection\000"
+ 3747      74446972 
+ 3747      65637469 
+ 3747      6F6E00
+ 3748              	.LASF288:
+ 3749 1970 43595F42 		.ascii	"CY_BLE_EVT_GAP_DEVICE_ADDR_GEN_COMPLETE\000"
+ 3749      4C455F45 
+ 3749      56545F47 
+ 3749      41505F44 
+ 3749      45564943 
+ 3750              	.LASF365:
+ 3751 1998 69734461 		.ascii	"isDataAvailableFromCM4\000"
+ 3751      74614176 
+ 3751      61696C61 
+ 3751      626C6546 
+ 3751      726F6D43 
+ 3752              	.LASF326:
+ 3753 19af 43595F42 		.ascii	"CY_BLE_EVT_L2CAP_CBFC_DISCONN_IND\000"
+ 3753      4C455F45 
+ 3753      56545F4C 
+ 3753      32434150 
+ 3753      5F434246 
+ 3754              	.LASF381:
+ 3755 19d1 636D305F 		.ascii	"cm0_ipc.c\000"
+ 3755      6970632E 
+ 3755      6300
+ 3756              	.LASF298:
+ 3757 19db 43595F42 		.ascii	"CY_BLE_EVT_GATT_DISCONNECT_IND\000"
+ 3757      4C455F45 
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLZDz0J.s 			page 86
+
+
+ 3757      56545F47 
+ 3757      4154545F 
+ 3757      44495343 
+ 3758              	.LASF178:
+ 3759 19fa 74784C65 		.ascii	"txLeftToTransmit\000"
+ 3759      6674546F 
+ 3759      5472616E 
+ 3759      736D6974 
+ 3759      00
+ 3760              	.LASF312:
+ 3761 1a0b 43595F42 		.ascii	"CY_BLE_EVT_GATTS_EXEC_WRITE_REQ\000"
+ 3761      4C455F45 
+ 3761      56545F47 
+ 3761      41545453 
+ 3761      5F455845 
+ 3762              	.LASF224:
+ 3763 1a2b 43595F42 		.ascii	"CY_BLE_EVT_WRITE_AUTH_PAYLOAD_TO_COMPLETE\000"
+ 3763      4C455F45 
+ 3763      56545F57 
+ 3763      52495445 
+ 3763      5F415554 
+ 3764              	.LASF263:
+ 3765 1a55 43595F42 		.ascii	"CY_BLE_EVT_RADIO_VOLTAGE_LEVEL\000"
+ 3765      4C455F45 
+ 3765      56545F52 
+ 3765      4144494F 
+ 3765      5F564F4C 
+ 3766              	.LASF366:
+ 3767 1a74 6970634D 		.ascii	"ipcMsgFromCM4_Local\000"
+ 3767      73674672 
+ 3767      6F6D434D 
+ 3767      345F4C6F 
+ 3767      63616C00 
+ 3768              	.LASF93:
+ 3769 1a88 63707573 		.ascii	"cpussCm4PwrCtlOffset\000"
+ 3769      73436D34 
+ 3769      50777243 
+ 3769      746C4F66 
+ 3769      66736574 
+ 3770              	.LASF3:
+ 3771 1a9d 5F5F7569 		.ascii	"__uint8_t\000"
+ 3771      6E74385F 
+ 3771      7400
+ 3772              	.LASF353:
+ 3773 1aa7 6D697363 		.ascii	"miscConfig\000"
+ 3773      436F6E66 
+ 3773      696700
+ 3774              	.LASF84:
+ 3775 1ab2 6770696F 		.ascii	"gpioPrtIntrCfgOffset\000"
+ 3775      50727449 
+ 3775      6E747243 
+ 3775      66674F66 
+ 3775      66736574 
+ 3776              	.LASF230:
+ 3777 1ac7 43595F42 		.ascii	"CY_BLE_EVT_SET_SUGGESTED_DATA_LENGTH_COMPLETE\000"
+ 3777      4C455F45 
+ 3777      56545F53 
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLZDz0J.s 			page 87
+
+
+ 3777      45545F53 
+ 3777      55474745 
+ 3778              	.LASF97:
+ 3779 1af5 63707573 		.ascii	"cpussCm0NmiCtlOffset\000"
+ 3779      73436D30 
+ 3779      4E6D6943 
+ 3779      746C4F66 
+ 3779      66736574 
+ 3780              	.LASF250:
+ 3781 1b0a 43595F42 		.ascii	"CY_BLE_EVT_GET_DEVICE_ADDR_COMPLETE\000"
+ 3781      4C455F45 
+ 3781      56545F47 
+ 3781      45545F44 
+ 3781      45564943 
+ 3782              	.LASF257:
+ 3783 1b2e 43595F42 		.ascii	"CY_BLE_EVT_AES_ENCRYPT_COMPLETE\000"
+ 3783      4C455F45 
+ 3783      56545F41 
+ 3783      45535F45 
+ 3783      4E435259 
+ 3784              	.LASF90:
+ 3785 1b4e 63707573 		.ascii	"cpussCm4ClockCtlOffset\000"
+ 3785      73436D34 
+ 3785      436C6F63 
+ 3785      6B43746C 
+ 3785      4F666673 
+ 3786              	.LASF252:
+ 3787 1b65 43595F42 		.ascii	"CY_BLE_EVT_GET_TX_PWR_COMPLETE\000"
+ 3787      4C455F45 
+ 3787      56545F47 
+ 3787      45545F54 
+ 3787      585F5057 
+ 3788              	.LASF160:
+ 3789 1b84 63795F73 		.ascii	"cy_stc_scb_spi_context\000"
+ 3789      74635F73 
+ 3789      63625F73 
+ 3789      70695F63 
+ 3789      6F6E7465 
+ 3790              	.LASF214:
+ 3791 1b9b 6B696C6C 		.ascii	"killInput\000"
+ 3791      496E7075 
+ 3791      7400
+ 3792              	.LASF95:
+ 3793 1ba5 63707573 		.ascii	"cpussTrimRomCtlOffset\000"
+ 3793      73547269 
+ 3793      6D526F6D 
+ 3793      43746C4F 
+ 3793      66667365 
+ 3794              	.LASF118:
+ 3795 1bbb 73616D70 		.ascii	"sampleTime23\000"
+ 3795      6C655469 
+ 3795      6D653233 
+ 3795      00
+ 3796              	.LASF213:
+ 3797 1bc8 6B696C6C 		.ascii	"killInputMode\000"
+ 3797      496E7075 
+ 3797      744D6F64 
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLZDz0J.s 			page 88
+
+
+ 3797      6500
+ 3798              	.LASF218:
+ 3799 1bd6 43595F42 		.ascii	"CY_BLE_EVT_TIMEOUT\000"
+ 3799      4C455F45 
+ 3799      56545F54 
+ 3799      494D454F 
+ 3799      555400
+ 3800              	.LASF34:
+ 3801 1be9 6873696F 		.ascii	"hsiomVersion\000"
+ 3801      6D566572 
+ 3801      73696F6E 
+ 3801      00
+ 3802              	.LASF355:
+ 3803 1bf6 4144435F 		.ascii	"ADC_CONFIG_STRUCT\000"
+ 3803      434F4E46 
+ 3803      49475F53 
+ 3803      54525543 
+ 3803      5400
+ 3804              	.LASF364:
+ 3805 1c08 6973434D 		.ascii	"isCM4Ready\000"
+ 3805      34526561 
+ 3805      647900
+ 3806              	.LASF99:
+ 3807 1c13 63707573 		.ascii	"cpussRomCtl\000"
+ 3807      73526F6D 
+ 3807      43746C00 
+ 3808              	.LASF141:
+ 3809 1c1f 6D617374 		.ascii	"masterRdDir\000"
+ 3809      65725264 
+ 3809      44697200 
+ 3810              	.LASF107:
+ 3811 1c2b 666C6F61 		.ascii	"float\000"
+ 3811      7400
+ 3812              	.LASF262:
+ 3813 1c31 43595F42 		.ascii	"CY_BLE_EVT_RADIO_TEMPERATURE\000"
+ 3813      4C455F45 
+ 3813      56545F52 
+ 3813      4144494F 
+ 3813      5F54454D 
+ 3814              	.LASF272:
+ 3815 1c4e 43595F42 		.ascii	"CY_BLE_EVT_GAP_PASSKEY_DISPLAY_REQUEST\000"
+ 3815      4C455F45 
+ 3815      56545F47 
+ 3815      41505F50 
+ 3815      4153534B 
+ 3816              	.LASF92:
+ 3817 1c75 63707573 		.ascii	"cpussCm0StatusOffset\000"
+ 3817      73436D30 
+ 3817      53746174 
+ 3817      75734F66 
+ 3817      66736574 
+ 3818              	.LASF116:
+ 3819 1c8a 73616D70 		.ascii	"sampleCtrl\000"
+ 3819      6C654374 
+ 3819      726C00
+ 3820              	.LASF0:
+ 3821 1c95 756E7369 		.ascii	"unsigned char\000"
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLZDz0J.s 			page 89
+
+
+ 3821      676E6564 
+ 3821      20636861 
+ 3821      7200
+ 3822              	.LASF317:
+ 3823 1ca3 43595F42 		.ascii	"CY_BLE_EVT_GATTS_DATA_SIGNED_CMD_REQ\000"
+ 3823      4C455F45 
+ 3823      56545F47 
+ 3823      41545453 
+ 3823      5F444154 
+ 3824              	.LASF8:
+ 3825 1cc8 5F5F7569 		.ascii	"__uint32_t\000"
+ 3825      6E743332 
+ 3825      5F7400
+ 3826              	.LASF104:
+ 3827 1cd3 6970634C 		.ascii	"ipcLockStatusOffset\000"
+ 3827      6F636B53 
+ 3827      74617475 
+ 3827      734F6666 
+ 3827      73657400 
+ 3828              	.LASF199:
+ 3829 1ce7 636F756E 		.ascii	"countInput\000"
+ 3829      74496E70 
+ 3829      757400
+ 3830              	.LASF357:
+ 3831 1cf2 75736572 		.ascii	"userCode\000"
+ 3831      436F6465 
+ 3831      00
+ 3832              	.LASF241:
+ 3833 1cfb 43595F42 		.ascii	"CY_BLE_EVT_REMOVE_DEVICE_FROM_WHITE_LIST_COMPLETE\000"
+ 3833      4C455F45 
+ 3833      56545F52 
+ 3833      454D4F56 
+ 3833      455F4445 
+ 3834              	.LASF231:
+ 3835 1d2d 43595F42 		.ascii	"CY_BLE_EVT_GET_DATA_LENGTH_COMPLETE\000"
+ 3835      4C455F45 
+ 3835      56545F47 
+ 3835      45545F44 
+ 3835      4154415F 
+ 3836              	.LASF286:
+ 3837 1d51 43595F42 		.ascii	"CY_BLE_EVT_GAPC_DIRECT_ADV_REPORT\000"
+ 3837      4C455F45 
+ 3837      56545F47 
+ 3837      4150435F 
+ 3837      44495245 
+ 3838              	.LASF133:
+ 3839 1d73 63795F65 		.ascii	"cy_en_scb_i2c_command_t\000"
+ 3839      6E5F7363 
+ 3839      625F6932 
+ 3839      635F636F 
+ 3839      6D6D616E 
+ 3840              	.LASF60:
+ 3841 1d8b 666C6173 		.ascii	"flashEraseDelay\000"
+ 3841      68457261 
+ 3841      73654465 
+ 3841      6C617900 
+ 3842              	.LASF354:
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLZDz0J.s 			page 90
+
+
+ 3843 1d9b 636C6B44 		.ascii	"clkDivider\000"
+ 3843      69766964 
+ 3843      657200
+ 3844              	.LASF138:
+ 3845 1da6 73746174 		.ascii	"state\000"
+ 3845      6500
+ 3846              	.LASF385:
+ 3847 1dac 434D305F 		.ascii	"CM0_SendCM4Message\000"
+ 3847      53656E64 
+ 3847      434D344D 
+ 3847      65737361 
+ 3847      676500
+ 3848              	.LASF371:
+ 3849 1dbf 4144435F 		.ascii	"ADC_currentConfig\000"
+ 3849      63757272 
+ 3849      656E7443 
+ 3849      6F6E6669 
+ 3849      6700
+ 3850              	.LASF313:
+ 3851 1dd1 43595F42 		.ascii	"CY_BLE_EVT_GATTC_EXEC_WRITE_RSP\000"
+ 3851      4C455F45 
+ 3851      56545F47 
+ 3851      41545443 
+ 3851      5F455845 
+ 3852              	.LASF299:
+ 3853 1df1 43595F42 		.ascii	"CY_BLE_EVT_GATTS_XCNHG_MTU_REQ\000"
+ 3853      4C455F45 
+ 3853      56545F47 
+ 3853      41545453 
+ 3853      5F58434E 
+ 3854              	.LASF318:
+ 3855 1e10 43595F42 		.ascii	"CY_BLE_EVT_GATTC_STOP_CMD_COMPLETE\000"
+ 3855      4C455F45 
+ 3855      56545F47 
+ 3855      41545443 
+ 3855      5F53544F 
+ 3856              	.LASF56:
+ 3857 1e33 666C6173 		.ascii	"flashRwwRequired\000"
+ 3857      68527777 
+ 3857      52657175 
+ 3857      69726564 
+ 3857      00
+ 3858              	.LASF271:
+ 3859 1e44 43595F42 		.ascii	"CY_BLE_EVT_GAP_PASSKEY_ENTRY_REQUEST\000"
+ 3859      4C455F45 
+ 3859      56545F47 
+ 3859      41505F50 
+ 3859      4153534B 
+ 3860              	.LASF85:
+ 3861 1e69 6770696F 		.ascii	"gpioPrtCfgOffset\000"
+ 3861      50727443 
+ 3861      66674F66 
+ 3861      66736574 
+ 3861      00
+ 3862              	.LASF333:
+ 3863 1e7a 62644861 		.ascii	"bdHandle\000"
+ 3863      6E646C65 
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLZDz0J.s 			page 91
+
+
+ 3863      00
+ 3864              	.LASF2:
+ 3865 1e83 7369676E 		.ascii	"signed char\000"
+ 3865      65642063 
+ 3865      68617200 
+ 3866              	.LASF181:
+ 3867 1e8f 70657269 		.ascii	"period\000"
+ 3867      6F6400
+ 3868              	.LASF66:
+ 3869 1e96 64774368 		.ascii	"dwChOffset\000"
+ 3869      4F666673 
+ 3869      657400
+ 3870              	.LASF39:
+ 3871 1ea1 63707573 		.ascii	"cpussIpcIrqNr\000"
+ 3871      73497063 
+ 3871      4972714E 
+ 3871      7200
+ 3872              	.LASF180:
+ 3873 1eaf 63795F73 		.ascii	"cy_stc_tcpwm_counter_config\000"
+ 3873      74635F74 
+ 3873      6370776D 
+ 3873      5F636F75 
+ 3873      6E746572 
+ 3874              	.LASF69:
+ 3875 1ecb 64774368 		.ascii	"dwChCtlPreemptablePos\000"
+ 3875      43746C50 
+ 3875      7265656D 
+ 3875      70746162 
+ 3875      6C65506F 
+ 3876              	.LASF361:
+ 3877 1ee1 434D305F 		.ascii	"CM0_isDataAvailableFromCM4\000"
+ 3877      69734461 
+ 3877      74614176 
+ 3877      61696C61 
+ 3877      626C6546 
+ 3878              	.LASF386:
+ 3879 1efc 6D656D63 		.ascii	"memcpy\000"
+ 3879      707900
+ 3880              	.LASF105:
+ 3881 1f03 63795F73 		.ascii	"cy_stc_device_t\000"
+ 3881      74635F64 
+ 3881      65766963 
+ 3881      655F7400 
+ 3882              	.LASF379:
+ 3883 1f13 5350495F 		.ascii	"SPI_LEDCTRL_context\000"
+ 3883      4C454443 
+ 3883      54524C5F 
+ 3883      636F6E74 
+ 3883      65787400 
+ 3884              	.LASF36:
+ 3885 1f27 70657269 		.ascii	"periVersion\000"
+ 3885      56657273 
+ 3885      696F6E00 
+ 3886              	.LASF321:
+ 3887 1f33 43595F42 		.ascii	"CY_BLE_EVT_L2CAP_CONN_PARAM_UPDATE_REQ\000"
+ 3887      4C455F45 
+ 3887      56545F4C 
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLZDz0J.s 			page 92
+
+
+ 3887      32434150 
+ 3887      5F434F4E 
+ 3888              	.LASF128:
+ 3889 1f5a 636F6E66 		.ascii	"configRouting\000"
+ 3889      6967526F 
+ 3889      7574696E 
+ 3889      6700
+ 3890              	.LASF26:
+ 3891 1f68 70617373 		.ascii	"passBase\000"
+ 3891      42617365 
+ 3891      00
+ 3892              	.LASF82:
+ 3893 1f71 70657269 		.ascii	"periDiv16_5CtlOffset\000"
+ 3893      44697631 
+ 3893      365F3543 
+ 3893      746C4F66 
+ 3893      66736574 
+ 3894              	.LASF157:
+ 3895 1f86 63795F73 		.ascii	"cy_stc_scb_i2c_context_t\000"
+ 3895      74635F73 
+ 3895      63625F69 
+ 3895      32635F63 
+ 3895      6F6E7465 
+ 3896              	.LASF65:
+ 3897 1f9f 666C6173 		.ascii	"flashCtlMainWs4Freq\000"
+ 3897      6843746C 
+ 3897      4D61696E 
+ 3897      57733446 
+ 3897      72657100 
+ 3898              	.LASF125:
+ 3899 1fb3 72616E67 		.ascii	"rangeIntrMask\000"
+ 3899      65496E74 
+ 3899      724D6173 
+ 3899      6B00
+ 3900              	.LASF114:
+ 3901 1fc1 63795F65 		.ascii	"cy_en_sar_range_detect_condition_t\000"
+ 3901      6E5F7361 
+ 3901      725F7261 
+ 3901      6E67655F 
+ 3901      64657465 
+ 3902              	.LASF222:
+ 3903 1fe4 43595F42 		.ascii	"CY_BLE_EVT_FLASH_CORRUPT\000"
+ 3903      4C455F45 
+ 3903      56545F46 
+ 3903      4C415348 
+ 3903      5F434F52 
+ 3904              	.LASF291:
+ 3905 1ffd 43595F42 		.ascii	"CY_BLE_EVT_GAP_GEN_SET_LOCAL_P256_KEYS_COMPLETE\000"
+ 3905      4C455F45 
+ 3905      56545F47 
+ 3905      41505F47 
+ 3905      454E5F53 
+ 3906              	.LASF274:
+ 3907 202d 43595F42 		.ascii	"CY_BLE_EVT_GAP_AUTH_FAILED\000"
+ 3907      4C455F45 
+ 3907      56545F47 
+ 3907      41505F41 
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccLZDz0J.s 			page 93
+
+
+ 3907      5554485F 
+ 3908              	.LASF341:
+ 3909 2048 43595F42 		.ascii	"CY_BLE_CONN_STATE_DISCONNECTED\000"
+ 3909      4C455F43 
+ 3909      4F4E4E5F 
+ 3909      53544154 
+ 3909      455F4449 
+ 3910              	.LASF35:
+ 3911 2067 69706356 		.ascii	"ipcVersion\000"
+ 3911      65727369 
+ 3911      6F6E00
+ 3912              	.LASF344:
+ 3913 2072 43595F42 		.ascii	"CY_BLE_CONN_STATE_CLIENT_SRVC_DISCOVERING\000"
+ 3913      4C455F43 
+ 3913      4F4E4E5F 
+ 3913      53544154 
+ 3913      455F434C 
+ 3914              	.LASF123:
+ 3915 209c 696E7472 		.ascii	"intrMask\000"
+ 3915      4D61736B 
+ 3915      00
+ 3916              	.LASF72:
+ 3917 20a5 70657269 		.ascii	"periTrCmdOffset\000"
+ 3917      5472436D 
+ 3917      644F6666 
+ 3917      73657400 
+ 3918              	.LASF163:
+ 3919 20b5 72784275 		.ascii	"rxBufSize\000"
+ 3919      6653697A 
+ 3919      6500
+ 3920              	.LASF363:
+ 3921 20bf 6970634D 		.ascii	"ipcMsgFromCM4\000"
+ 3921      73674672 
+ 3921      6F6D434D 
+ 3921      3400
+ 3922              	.LASF279:
+ 3923 20cd 43595F42 		.ascii	"CY_BLE_EVT_GAP_CONNECTION_UPDATE_COMPLETE\000"
+ 3923      4C455F45 
+ 3923      56545F47 
+ 3923      41505F43 
+ 3923      4F4E4E45 
+ 3924              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

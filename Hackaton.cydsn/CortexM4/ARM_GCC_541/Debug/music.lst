@@ -1,0 +1,1207 @@
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccEr8D7e.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m4
+   3              		.eabi_attribute 27, 1
+   4              		.fpu fpv4-sp-d16
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 1
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.thumb
+  15              		.syntax unified
+  16              		.file	"music.c"
+  17              		.text
+  18              	.Ltext0:
+  19              		.cfi_sections	.debug_frame
+  20              		.section	.text.Music_FurElise,"ax",%progbits
+  21              		.align	2
+  22              		.global	Music_FurElise
+  23              		.thumb
+  24              		.thumb_func
+  25              		.type	Music_FurElise, %function
+  26              	Music_FurElise:
+  27              	.LFB0:
+  28              		.file 1 "music.c"
+   1:music.c       **** /* ========================================
+   2:music.c       ****  * music.c
+   3:music.c       ****  * ========================================
+   4:music.c       ****  */
+   5:music.c       **** 
+   6:music.c       **** #include "car.h"
+   7:music.c       **** 
+   8:music.c       **** // Frequencies in Hz for the notes
+   9:music.c       **** #define C4 261
+  10:music.c       **** #define E4 330
+  11:music.c       **** #define G4 392
+  12:music.c       **** #define Ab4 415
+  13:music.c       **** #define A4 440
+  14:music.c       **** #define B4 494
+  15:music.c       **** #define C5 523
+  16:music.c       **** #define D5 587
+  17:music.c       **** #define Eb5 622
+  18:music.c       **** #define E5 659
+  19:music.c       **** #define F5 698
+  20:music.c       **** #define G5 784
+  21:music.c       **** 
+  22:music.c       **** // Duration in milliseconds
+  23:music.c       **** #define D 300   // Waltz beat (dotted quarter)
+  24:music.c       **** #define H 600   // Half note
+  25:music.c       **** #define Q 400   // Quarter note
+  26:music.c       **** #define E 200   // Eighth note
+  27:music.c       **** #define S 100   // Sixteenth note
+  28:music.c       **** 
+  29:music.c       **** void Music_FurElise(void)
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccEr8D7e.s 			page 2
+
+
+  30:music.c       **** {
+  29              		.loc 1 30 0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33 0000 08B5     		push	{r3, lr}
+  34              		.cfi_def_cfa_offset 8
+  35              		.cfi_offset 3, -8
+  36              		.cfi_offset 14, -4
+  31:music.c       ****     Sound_Play(E5, E);
+  37              		.loc 1 31 0
+  38 0002 C821     		movs	r1, #200
+  39 0004 40F29320 		movw	r0, #659
+  40 0008 FFF7FEFF 		bl	Sound_Play
+  41              	.LVL0:
+  32:music.c       ****     Sound_Play(Eb5, E);
+  42              		.loc 1 32 0
+  43 000c C821     		movs	r1, #200
+  44 000e 40F26E20 		movw	r0, #622
+  45 0012 FFF7FEFF 		bl	Sound_Play
+  46              	.LVL1:
+  33:music.c       ****     Sound_Play(E5, E);
+  47              		.loc 1 33 0
+  48 0016 C821     		movs	r1, #200
+  49 0018 40F29320 		movw	r0, #659
+  50 001c FFF7FEFF 		bl	Sound_Play
+  51              	.LVL2:
+  34:music.c       ****     Sound_Play(Eb5, E);
+  52              		.loc 1 34 0
+  53 0020 C821     		movs	r1, #200
+  54 0022 40F26E20 		movw	r0, #622
+  55 0026 FFF7FEFF 		bl	Sound_Play
+  56              	.LVL3:
+  35:music.c       ****     Sound_Play(E5, E);
+  57              		.loc 1 35 0
+  58 002a C821     		movs	r1, #200
+  59 002c 40F29320 		movw	r0, #659
+  60 0030 FFF7FEFF 		bl	Sound_Play
+  61              	.LVL4:
+  36:music.c       ****     Sound_Play(B4, E);
+  62              		.loc 1 36 0
+  63 0034 C821     		movs	r1, #200
+  64 0036 4FF4F770 		mov	r0, #494
+  65 003a FFF7FEFF 		bl	Sound_Play
+  66              	.LVL5:
+  37:music.c       ****     Sound_Play(D5, E);
+  67              		.loc 1 37 0
+  68 003e C821     		movs	r1, #200
+  69 0040 40F24B20 		movw	r0, #587
+  70 0044 FFF7FEFF 		bl	Sound_Play
+  71              	.LVL6:
+  38:music.c       ****     Sound_Play(C5, E);
+  72              		.loc 1 38 0
+  73 0048 C821     		movs	r1, #200
+  74 004a 40F20B20 		movw	r0, #523
+  75 004e FFF7FEFF 		bl	Sound_Play
+  76              	.LVL7:
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccEr8D7e.s 			page 3
+
+
+  39:music.c       ****     Sound_Play(A4, Q);
+  77              		.loc 1 39 0
+  78 0052 4FF4C871 		mov	r1, #400
+  79 0056 4FF4DC70 		mov	r0, #440
+  80 005a FFF7FEFF 		bl	Sound_Play
+  81              	.LVL8:
+  40:music.c       **** 
+  41:music.c       ****     Sound_Play(C4, E);
+  82              		.loc 1 41 0
+  83 005e C821     		movs	r1, #200
+  84 0060 40F20510 		movw	r0, #261
+  85 0064 FFF7FEFF 		bl	Sound_Play
+  86              	.LVL9:
+  42:music.c       ****     Sound_Play(E4, E);
+  87              		.loc 1 42 0
+  88 0068 C821     		movs	r1, #200
+  89 006a 4FF4A570 		mov	r0, #330
+  90 006e FFF7FEFF 		bl	Sound_Play
+  91              	.LVL10:
+  43:music.c       ****     Sound_Play(A4, E);
+  92              		.loc 1 43 0
+  93 0072 C821     		movs	r1, #200
+  94 0074 4FF4DC70 		mov	r0, #440
+  95 0078 FFF7FEFF 		bl	Sound_Play
+  96              	.LVL11:
+  44:music.c       ****     Sound_Play(B4, Q);
+  97              		.loc 1 44 0
+  98 007c 4FF4C871 		mov	r1, #400
+  99 0080 4FF4F770 		mov	r0, #494
+ 100 0084 FFF7FEFF 		bl	Sound_Play
+ 101              	.LVL12:
+  45:music.c       **** 
+  46:music.c       ****     Sound_Play(E4, E);
+ 102              		.loc 1 46 0
+ 103 0088 C821     		movs	r1, #200
+ 104 008a 4FF4A570 		mov	r0, #330
+ 105 008e FFF7FEFF 		bl	Sound_Play
+ 106              	.LVL13:
+  47:music.c       ****     Sound_Play(Ab4, E);
+ 107              		.loc 1 47 0
+ 108 0092 C821     		movs	r1, #200
+ 109 0094 40F29F10 		movw	r0, #415
+ 110 0098 FFF7FEFF 		bl	Sound_Play
+ 111              	.LVL14:
+  48:music.c       ****     Sound_Play(B4, E);
+ 112              		.loc 1 48 0
+ 113 009c C821     		movs	r1, #200
+ 114 009e 4FF4F770 		mov	r0, #494
+ 115 00a2 FFF7FEFF 		bl	Sound_Play
+ 116              	.LVL15:
+  49:music.c       ****     Sound_Play(C5, Q);
+ 117              		.loc 1 49 0
+ 118 00a6 4FF4C871 		mov	r1, #400
+ 119 00aa 40F20B20 		movw	r0, #523
+ 120 00ae FFF7FEFF 		bl	Sound_Play
+ 121              	.LVL16:
+ 122 00b2 08BD     		pop	{r3, pc}
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccEr8D7e.s 			page 4
+
+
+ 123              		.cfi_endproc
+ 124              	.LFE0:
+ 125              		.size	Music_FurElise, .-Music_FurElise
+ 126              		.section	.text.Music_ViennaWaltz,"ax",%progbits
+ 127              		.align	2
+ 128              		.global	Music_ViennaWaltz
+ 129              		.thumb
+ 130              		.thumb_func
+ 131              		.type	Music_ViennaWaltz, %function
+ 132              	Music_ViennaWaltz:
+ 133              	.LFB1:
+  50:music.c       **** }
+  51:music.c       **** 
+  52:music.c       **** void Music_ViennaWaltz(void)
+  53:music.c       **** {
+ 134              		.loc 1 53 0
+ 135              		.cfi_startproc
+ 136              		@ args = 0, pretend = 0, frame = 0
+ 137              		@ frame_needed = 0, uses_anonymous_args = 0
+ 138 0000 08B5     		push	{r3, lr}
+ 139              		.cfi_def_cfa_offset 8
+ 140              		.cfi_offset 3, -8
+ 141              		.cfi_offset 14, -4
+  54:music.c       ****     Sound_Play(G4, D);
+ 142              		.loc 1 54 0
+ 143 0002 4FF49671 		mov	r1, #300
+ 144 0006 4FF4C470 		mov	r0, #392
+ 145 000a FFF7FEFF 		bl	Sound_Play
+ 146              	.LVL17:
+  55:music.c       ****     Sound_Play(B4, D);
+ 147              		.loc 1 55 0
+ 148 000e 4FF49671 		mov	r1, #300
+ 149 0012 4FF4F770 		mov	r0, #494
+ 150 0016 FFF7FEFF 		bl	Sound_Play
+ 151              	.LVL18:
+  56:music.c       ****     Sound_Play(D5, D);
+ 152              		.loc 1 56 0
+ 153 001a 4FF49671 		mov	r1, #300
+ 154 001e 40F24B20 		movw	r0, #587
+ 155 0022 FFF7FEFF 		bl	Sound_Play
+ 156              	.LVL19:
+  57:music.c       **** 
+  58:music.c       ****     Sound_Play(G4, D);
+ 157              		.loc 1 58 0
+ 158 0026 4FF49671 		mov	r1, #300
+ 159 002a 4FF4C470 		mov	r0, #392
+ 160 002e FFF7FEFF 		bl	Sound_Play
+ 161              	.LVL20:
+  59:music.c       ****     Sound_Play(B4, D);
+ 162              		.loc 1 59 0
+ 163 0032 4FF49671 		mov	r1, #300
+ 164 0036 4FF4F770 		mov	r0, #494
+ 165 003a FFF7FEFF 		bl	Sound_Play
+ 166              	.LVL21:
+  60:music.c       ****     Sound_Play(D5, D);
+ 167              		.loc 1 60 0
+ 168 003e 4FF49671 		mov	r1, #300
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccEr8D7e.s 			page 5
+
+
+ 169 0042 40F24B20 		movw	r0, #587
+ 170 0046 FFF7FEFF 		bl	Sound_Play
+ 171              	.LVL22:
+  61:music.c       **** 
+  62:music.c       ****     Sound_Play(C5, D);
+ 172              		.loc 1 62 0
+ 173 004a 4FF49671 		mov	r1, #300
+ 174 004e 40F20B20 		movw	r0, #523
+ 175 0052 FFF7FEFF 		bl	Sound_Play
+ 176              	.LVL23:
+  63:music.c       ****     Sound_Play(E5, D);
+ 177              		.loc 1 63 0
+ 178 0056 4FF49671 		mov	r1, #300
+ 179 005a 40F29320 		movw	r0, #659
+ 180 005e FFF7FEFF 		bl	Sound_Play
+ 181              	.LVL24:
+  64:music.c       ****     Sound_Play(G5, D);
+ 182              		.loc 1 64 0
+ 183 0062 4FF49671 		mov	r1, #300
+ 184 0066 4FF44470 		mov	r0, #784
+ 185 006a FFF7FEFF 		bl	Sound_Play
+ 186              	.LVL25:
+  65:music.c       **** 
+  66:music.c       ****     Sound_Play(B4, D);
+ 187              		.loc 1 66 0
+ 188 006e 4FF49671 		mov	r1, #300
+ 189 0072 4FF4F770 		mov	r0, #494
+ 190 0076 FFF7FEFF 		bl	Sound_Play
+ 191              	.LVL26:
+  67:music.c       ****     Sound_Play(D5, D);
+ 192              		.loc 1 67 0
+ 193 007a 4FF49671 		mov	r1, #300
+ 194 007e 40F24B20 		movw	r0, #587
+ 195 0082 FFF7FEFF 		bl	Sound_Play
+ 196              	.LVL27:
+  68:music.c       ****     Sound_Play(F5, D);
+ 197              		.loc 1 68 0
+ 198 0086 4FF49671 		mov	r1, #300
+ 199 008a 40F2BA20 		movw	r0, #698
+ 200 008e FFF7FEFF 		bl	Sound_Play
+ 201              	.LVL28:
+  69:music.c       **** 
+  70:music.c       ****     Sound_Play(G4, H);
+ 202              		.loc 1 70 0
+ 203 0092 4FF41671 		mov	r1, #600
+ 204 0096 4FF4C470 		mov	r0, #392
+ 205 009a FFF7FEFF 		bl	Sound_Play
+ 206              	.LVL29:
+  71:music.c       ****     Sound_Play(C5, H);
+ 207              		.loc 1 71 0
+ 208 009e 4FF41671 		mov	r1, #600
+ 209 00a2 40F20B20 		movw	r0, #523
+ 210 00a6 FFF7FEFF 		bl	Sound_Play
+ 211              	.LVL30:
+ 212 00aa 08BD     		pop	{r3, pc}
+ 213              		.cfi_endproc
+ 214              	.LFE1:
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccEr8D7e.s 			page 6
+
+
+ 215              		.size	Music_ViennaWaltz, .-Music_ViennaWaltz
+ 216              		.text
+ 217              	.Letext0:
+ 218              		.file 2 "car.h"
+ 219              		.section	.debug_info,"",%progbits
+ 220              	.Ldebug_info0:
+ 221 0000 FB030000 		.4byte	0x3fb
+ 222 0004 0400     		.2byte	0x4
+ 223 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 224 000a 04       		.byte	0x4
+ 225 000b 01       		.uleb128 0x1
+ 226 000c AC000000 		.4byte	.LASF13
+ 227 0010 0C       		.byte	0xc
+ 228 0011 42000000 		.4byte	.LASF14
+ 229 0015 4A000000 		.4byte	.LASF15
+ 230 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 231 001d 00000000 		.4byte	0
+ 232 0021 00000000 		.4byte	.Ldebug_line0
+ 233 0025 02       		.uleb128 0x2
+ 234 0026 01       		.byte	0x1
+ 235 0027 06       		.byte	0x6
+ 236 0028 97010000 		.4byte	.LASF0
+ 237 002c 02       		.uleb128 0x2
+ 238 002d 01       		.byte	0x1
+ 239 002e 08       		.byte	0x8
+ 240 002f 0F000000 		.4byte	.LASF1
+ 241 0033 02       		.uleb128 0x2
+ 242 0034 02       		.byte	0x2
+ 243 0035 05       		.byte	0x5
+ 244 0036 6D010000 		.4byte	.LASF2
+ 245 003a 02       		.uleb128 0x2
+ 246 003b 02       		.byte	0x2
+ 247 003c 07       		.byte	0x7
+ 248 003d 2F000000 		.4byte	.LASF3
+ 249 0041 02       		.uleb128 0x2
+ 250 0042 04       		.byte	0x4
+ 251 0043 05       		.byte	0x5
+ 252 0044 82010000 		.4byte	.LASF4
+ 253 0048 02       		.uleb128 0x2
+ 254 0049 04       		.byte	0x4
+ 255 004a 07       		.byte	0x7
+ 256 004b 1D000000 		.4byte	.LASF5
+ 257 004f 02       		.uleb128 0x2
+ 258 0050 08       		.byte	0x8
+ 259 0051 05       		.byte	0x5
+ 260 0052 5F010000 		.4byte	.LASF6
+ 261 0056 02       		.uleb128 0x2
+ 262 0057 08       		.byte	0x8
+ 263 0058 07       		.byte	0x7
+ 264 0059 95000000 		.4byte	.LASF7
+ 265 005d 03       		.uleb128 0x3
+ 266 005e 04       		.byte	0x4
+ 267 005f 05       		.byte	0x5
+ 268 0060 696E7400 		.ascii	"int\000"
+ 269 0064 02       		.uleb128 0x2
+ 270 0065 04       		.byte	0x4
+ 271 0066 07       		.byte	0x7
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccEr8D7e.s 			page 7
+
+
+ 272 0067 76000000 		.4byte	.LASF8
+ 273 006b 02       		.uleb128 0x2
+ 274 006c 08       		.byte	0x8
+ 275 006d 04       		.byte	0x4
+ 276 006e 8B010000 		.4byte	.LASF9
+ 277 0072 02       		.uleb128 0x2
+ 278 0073 08       		.byte	0x8
+ 279 0074 04       		.byte	0x4
+ 280 0075 6F000000 		.4byte	.LASF10
+ 281 0079 04       		.uleb128 0x4
+ 282 007a 00000000 		.4byte	.LASF11
+ 283 007e 01       		.byte	0x1
+ 284 007f 1D       		.byte	0x1d
+ 285 0080 00000000 		.4byte	.LFB0
+ 286 0084 B4000000 		.4byte	.LFE0-.LFB0
+ 287 0088 01       		.uleb128 0x1
+ 288 0089 9C       		.byte	0x9c
+ 289 008a 59020000 		.4byte	0x259
+ 290 008e 05       		.uleb128 0x5
+ 291 008f 0C000000 		.4byte	.LVL0
+ 292 0093 F3030000 		.4byte	0x3f3
+ 293 0097 A9000000 		.4byte	0xa9
+ 294 009b 06       		.uleb128 0x6
+ 295 009c 01       		.uleb128 0x1
+ 296 009d 50       		.byte	0x50
+ 297 009e 03       		.uleb128 0x3
+ 298 009f 0A       		.byte	0xa
+ 299 00a0 9302     		.2byte	0x293
+ 300 00a2 06       		.uleb128 0x6
+ 301 00a3 01       		.uleb128 0x1
+ 302 00a4 51       		.byte	0x51
+ 303 00a5 02       		.uleb128 0x2
+ 304 00a6 08       		.byte	0x8
+ 305 00a7 C8       		.byte	0xc8
+ 306 00a8 00       		.byte	0
+ 307 00a9 05       		.uleb128 0x5
+ 308 00aa 16000000 		.4byte	.LVL1
+ 309 00ae F3030000 		.4byte	0x3f3
+ 310 00b2 C4000000 		.4byte	0xc4
+ 311 00b6 06       		.uleb128 0x6
+ 312 00b7 01       		.uleb128 0x1
+ 313 00b8 50       		.byte	0x50
+ 314 00b9 03       		.uleb128 0x3
+ 315 00ba 0A       		.byte	0xa
+ 316 00bb 6E02     		.2byte	0x26e
+ 317 00bd 06       		.uleb128 0x6
+ 318 00be 01       		.uleb128 0x1
+ 319 00bf 51       		.byte	0x51
+ 320 00c0 02       		.uleb128 0x2
+ 321 00c1 08       		.byte	0x8
+ 322 00c2 C8       		.byte	0xc8
+ 323 00c3 00       		.byte	0
+ 324 00c4 05       		.uleb128 0x5
+ 325 00c5 20000000 		.4byte	.LVL2
+ 326 00c9 F3030000 		.4byte	0x3f3
+ 327 00cd DF000000 		.4byte	0xdf
+ 328 00d1 06       		.uleb128 0x6
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccEr8D7e.s 			page 8
+
+
+ 329 00d2 01       		.uleb128 0x1
+ 330 00d3 50       		.byte	0x50
+ 331 00d4 03       		.uleb128 0x3
+ 332 00d5 0A       		.byte	0xa
+ 333 00d6 9302     		.2byte	0x293
+ 334 00d8 06       		.uleb128 0x6
+ 335 00d9 01       		.uleb128 0x1
+ 336 00da 51       		.byte	0x51
+ 337 00db 02       		.uleb128 0x2
+ 338 00dc 08       		.byte	0x8
+ 339 00dd C8       		.byte	0xc8
+ 340 00de 00       		.byte	0
+ 341 00df 05       		.uleb128 0x5
+ 342 00e0 2A000000 		.4byte	.LVL3
+ 343 00e4 F3030000 		.4byte	0x3f3
+ 344 00e8 FA000000 		.4byte	0xfa
+ 345 00ec 06       		.uleb128 0x6
+ 346 00ed 01       		.uleb128 0x1
+ 347 00ee 50       		.byte	0x50
+ 348 00ef 03       		.uleb128 0x3
+ 349 00f0 0A       		.byte	0xa
+ 350 00f1 6E02     		.2byte	0x26e
+ 351 00f3 06       		.uleb128 0x6
+ 352 00f4 01       		.uleb128 0x1
+ 353 00f5 51       		.byte	0x51
+ 354 00f6 02       		.uleb128 0x2
+ 355 00f7 08       		.byte	0x8
+ 356 00f8 C8       		.byte	0xc8
+ 357 00f9 00       		.byte	0
+ 358 00fa 05       		.uleb128 0x5
+ 359 00fb 34000000 		.4byte	.LVL4
+ 360 00ff F3030000 		.4byte	0x3f3
+ 361 0103 15010000 		.4byte	0x115
+ 362 0107 06       		.uleb128 0x6
+ 363 0108 01       		.uleb128 0x1
+ 364 0109 50       		.byte	0x50
+ 365 010a 03       		.uleb128 0x3
+ 366 010b 0A       		.byte	0xa
+ 367 010c 9302     		.2byte	0x293
+ 368 010e 06       		.uleb128 0x6
+ 369 010f 01       		.uleb128 0x1
+ 370 0110 51       		.byte	0x51
+ 371 0111 02       		.uleb128 0x2
+ 372 0112 08       		.byte	0x8
+ 373 0113 C8       		.byte	0xc8
+ 374 0114 00       		.byte	0
+ 375 0115 05       		.uleb128 0x5
+ 376 0116 3E000000 		.4byte	.LVL5
+ 377 011a F3030000 		.4byte	0x3f3
+ 378 011e 30010000 		.4byte	0x130
+ 379 0122 06       		.uleb128 0x6
+ 380 0123 01       		.uleb128 0x1
+ 381 0124 50       		.byte	0x50
+ 382 0125 03       		.uleb128 0x3
+ 383 0126 0A       		.byte	0xa
+ 384 0127 EE01     		.2byte	0x1ee
+ 385 0129 06       		.uleb128 0x6
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccEr8D7e.s 			page 9
+
+
+ 386 012a 01       		.uleb128 0x1
+ 387 012b 51       		.byte	0x51
+ 388 012c 02       		.uleb128 0x2
+ 389 012d 08       		.byte	0x8
+ 390 012e C8       		.byte	0xc8
+ 391 012f 00       		.byte	0
+ 392 0130 05       		.uleb128 0x5
+ 393 0131 48000000 		.4byte	.LVL6
+ 394 0135 F3030000 		.4byte	0x3f3
+ 395 0139 4B010000 		.4byte	0x14b
+ 396 013d 06       		.uleb128 0x6
+ 397 013e 01       		.uleb128 0x1
+ 398 013f 50       		.byte	0x50
+ 399 0140 03       		.uleb128 0x3
+ 400 0141 0A       		.byte	0xa
+ 401 0142 4B02     		.2byte	0x24b
+ 402 0144 06       		.uleb128 0x6
+ 403 0145 01       		.uleb128 0x1
+ 404 0146 51       		.byte	0x51
+ 405 0147 02       		.uleb128 0x2
+ 406 0148 08       		.byte	0x8
+ 407 0149 C8       		.byte	0xc8
+ 408 014a 00       		.byte	0
+ 409 014b 05       		.uleb128 0x5
+ 410 014c 52000000 		.4byte	.LVL7
+ 411 0150 F3030000 		.4byte	0x3f3
+ 412 0154 66010000 		.4byte	0x166
+ 413 0158 06       		.uleb128 0x6
+ 414 0159 01       		.uleb128 0x1
+ 415 015a 50       		.byte	0x50
+ 416 015b 03       		.uleb128 0x3
+ 417 015c 0A       		.byte	0xa
+ 418 015d 0B02     		.2byte	0x20b
+ 419 015f 06       		.uleb128 0x6
+ 420 0160 01       		.uleb128 0x1
+ 421 0161 51       		.byte	0x51
+ 422 0162 02       		.uleb128 0x2
+ 423 0163 08       		.byte	0x8
+ 424 0164 C8       		.byte	0xc8
+ 425 0165 00       		.byte	0
+ 426 0166 05       		.uleb128 0x5
+ 427 0167 5E000000 		.4byte	.LVL8
+ 428 016b F3030000 		.4byte	0x3f3
+ 429 016f 82010000 		.4byte	0x182
+ 430 0173 06       		.uleb128 0x6
+ 431 0174 01       		.uleb128 0x1
+ 432 0175 50       		.byte	0x50
+ 433 0176 03       		.uleb128 0x3
+ 434 0177 0A       		.byte	0xa
+ 435 0178 B801     		.2byte	0x1b8
+ 436 017a 06       		.uleb128 0x6
+ 437 017b 01       		.uleb128 0x1
+ 438 017c 51       		.byte	0x51
+ 439 017d 03       		.uleb128 0x3
+ 440 017e 0A       		.byte	0xa
+ 441 017f 9001     		.2byte	0x190
+ 442 0181 00       		.byte	0
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccEr8D7e.s 			page 10
+
+
+ 443 0182 05       		.uleb128 0x5
+ 444 0183 68000000 		.4byte	.LVL9
+ 445 0187 F3030000 		.4byte	0x3f3
+ 446 018b 9D010000 		.4byte	0x19d
+ 447 018f 06       		.uleb128 0x6
+ 448 0190 01       		.uleb128 0x1
+ 449 0191 50       		.byte	0x50
+ 450 0192 03       		.uleb128 0x3
+ 451 0193 0A       		.byte	0xa
+ 452 0194 0501     		.2byte	0x105
+ 453 0196 06       		.uleb128 0x6
+ 454 0197 01       		.uleb128 0x1
+ 455 0198 51       		.byte	0x51
+ 456 0199 02       		.uleb128 0x2
+ 457 019a 08       		.byte	0x8
+ 458 019b C8       		.byte	0xc8
+ 459 019c 00       		.byte	0
+ 460 019d 05       		.uleb128 0x5
+ 461 019e 72000000 		.4byte	.LVL10
+ 462 01a2 F3030000 		.4byte	0x3f3
+ 463 01a6 B8010000 		.4byte	0x1b8
+ 464 01aa 06       		.uleb128 0x6
+ 465 01ab 01       		.uleb128 0x1
+ 466 01ac 50       		.byte	0x50
+ 467 01ad 03       		.uleb128 0x3
+ 468 01ae 0A       		.byte	0xa
+ 469 01af 4A01     		.2byte	0x14a
+ 470 01b1 06       		.uleb128 0x6
+ 471 01b2 01       		.uleb128 0x1
+ 472 01b3 51       		.byte	0x51
+ 473 01b4 02       		.uleb128 0x2
+ 474 01b5 08       		.byte	0x8
+ 475 01b6 C8       		.byte	0xc8
+ 476 01b7 00       		.byte	0
+ 477 01b8 05       		.uleb128 0x5
+ 478 01b9 7C000000 		.4byte	.LVL11
+ 479 01bd F3030000 		.4byte	0x3f3
+ 480 01c1 D3010000 		.4byte	0x1d3
+ 481 01c5 06       		.uleb128 0x6
+ 482 01c6 01       		.uleb128 0x1
+ 483 01c7 50       		.byte	0x50
+ 484 01c8 03       		.uleb128 0x3
+ 485 01c9 0A       		.byte	0xa
+ 486 01ca B801     		.2byte	0x1b8
+ 487 01cc 06       		.uleb128 0x6
+ 488 01cd 01       		.uleb128 0x1
+ 489 01ce 51       		.byte	0x51
+ 490 01cf 02       		.uleb128 0x2
+ 491 01d0 08       		.byte	0x8
+ 492 01d1 C8       		.byte	0xc8
+ 493 01d2 00       		.byte	0
+ 494 01d3 05       		.uleb128 0x5
+ 495 01d4 88000000 		.4byte	.LVL12
+ 496 01d8 F3030000 		.4byte	0x3f3
+ 497 01dc EF010000 		.4byte	0x1ef
+ 498 01e0 06       		.uleb128 0x6
+ 499 01e1 01       		.uleb128 0x1
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccEr8D7e.s 			page 11
+
+
+ 500 01e2 50       		.byte	0x50
+ 501 01e3 03       		.uleb128 0x3
+ 502 01e4 0A       		.byte	0xa
+ 503 01e5 EE01     		.2byte	0x1ee
+ 504 01e7 06       		.uleb128 0x6
+ 505 01e8 01       		.uleb128 0x1
+ 506 01e9 51       		.byte	0x51
+ 507 01ea 03       		.uleb128 0x3
+ 508 01eb 0A       		.byte	0xa
+ 509 01ec 9001     		.2byte	0x190
+ 510 01ee 00       		.byte	0
+ 511 01ef 05       		.uleb128 0x5
+ 512 01f0 92000000 		.4byte	.LVL13
+ 513 01f4 F3030000 		.4byte	0x3f3
+ 514 01f8 0A020000 		.4byte	0x20a
+ 515 01fc 06       		.uleb128 0x6
+ 516 01fd 01       		.uleb128 0x1
+ 517 01fe 50       		.byte	0x50
+ 518 01ff 03       		.uleb128 0x3
+ 519 0200 0A       		.byte	0xa
+ 520 0201 4A01     		.2byte	0x14a
+ 521 0203 06       		.uleb128 0x6
+ 522 0204 01       		.uleb128 0x1
+ 523 0205 51       		.byte	0x51
+ 524 0206 02       		.uleb128 0x2
+ 525 0207 08       		.byte	0x8
+ 526 0208 C8       		.byte	0xc8
+ 527 0209 00       		.byte	0
+ 528 020a 05       		.uleb128 0x5
+ 529 020b 9C000000 		.4byte	.LVL14
+ 530 020f F3030000 		.4byte	0x3f3
+ 531 0213 25020000 		.4byte	0x225
+ 532 0217 06       		.uleb128 0x6
+ 533 0218 01       		.uleb128 0x1
+ 534 0219 50       		.byte	0x50
+ 535 021a 03       		.uleb128 0x3
+ 536 021b 0A       		.byte	0xa
+ 537 021c 9F01     		.2byte	0x19f
+ 538 021e 06       		.uleb128 0x6
+ 539 021f 01       		.uleb128 0x1
+ 540 0220 51       		.byte	0x51
+ 541 0221 02       		.uleb128 0x2
+ 542 0222 08       		.byte	0x8
+ 543 0223 C8       		.byte	0xc8
+ 544 0224 00       		.byte	0
+ 545 0225 05       		.uleb128 0x5
+ 546 0226 A6000000 		.4byte	.LVL15
+ 547 022a F3030000 		.4byte	0x3f3
+ 548 022e 40020000 		.4byte	0x240
+ 549 0232 06       		.uleb128 0x6
+ 550 0233 01       		.uleb128 0x1
+ 551 0234 50       		.byte	0x50
+ 552 0235 03       		.uleb128 0x3
+ 553 0236 0A       		.byte	0xa
+ 554 0237 EE01     		.2byte	0x1ee
+ 555 0239 06       		.uleb128 0x6
+ 556 023a 01       		.uleb128 0x1
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccEr8D7e.s 			page 12
+
+
+ 557 023b 51       		.byte	0x51
+ 558 023c 02       		.uleb128 0x2
+ 559 023d 08       		.byte	0x8
+ 560 023e C8       		.byte	0xc8
+ 561 023f 00       		.byte	0
+ 562 0240 07       		.uleb128 0x7
+ 563 0241 B2000000 		.4byte	.LVL16
+ 564 0245 F3030000 		.4byte	0x3f3
+ 565 0249 06       		.uleb128 0x6
+ 566 024a 01       		.uleb128 0x1
+ 567 024b 50       		.byte	0x50
+ 568 024c 03       		.uleb128 0x3
+ 569 024d 0A       		.byte	0xa
+ 570 024e 0B02     		.2byte	0x20b
+ 571 0250 06       		.uleb128 0x6
+ 572 0251 01       		.uleb128 0x1
+ 573 0252 51       		.byte	0x51
+ 574 0253 03       		.uleb128 0x3
+ 575 0254 0A       		.byte	0xa
+ 576 0255 9001     		.2byte	0x190
+ 577 0257 00       		.byte	0
+ 578 0258 00       		.byte	0
+ 579 0259 04       		.uleb128 0x4
+ 580 025a 83000000 		.4byte	.LASF12
+ 581 025e 01       		.byte	0x1
+ 582 025f 34       		.byte	0x34
+ 583 0260 00000000 		.4byte	.LFB1
+ 584 0264 AC000000 		.4byte	.LFE1-.LFB1
+ 585 0268 01       		.uleb128 0x1
+ 586 0269 9C       		.byte	0x9c
+ 587 026a F3030000 		.4byte	0x3f3
+ 588 026e 05       		.uleb128 0x5
+ 589 026f 0E000000 		.4byte	.LVL17
+ 590 0273 F3030000 		.4byte	0x3f3
+ 591 0277 8A020000 		.4byte	0x28a
+ 592 027b 06       		.uleb128 0x6
+ 593 027c 01       		.uleb128 0x1
+ 594 027d 50       		.byte	0x50
+ 595 027e 03       		.uleb128 0x3
+ 596 027f 0A       		.byte	0xa
+ 597 0280 8801     		.2byte	0x188
+ 598 0282 06       		.uleb128 0x6
+ 599 0283 01       		.uleb128 0x1
+ 600 0284 51       		.byte	0x51
+ 601 0285 03       		.uleb128 0x3
+ 602 0286 0A       		.byte	0xa
+ 603 0287 2C01     		.2byte	0x12c
+ 604 0289 00       		.byte	0
+ 605 028a 05       		.uleb128 0x5
+ 606 028b 1A000000 		.4byte	.LVL18
+ 607 028f F3030000 		.4byte	0x3f3
+ 608 0293 A6020000 		.4byte	0x2a6
+ 609 0297 06       		.uleb128 0x6
+ 610 0298 01       		.uleb128 0x1
+ 611 0299 50       		.byte	0x50
+ 612 029a 03       		.uleb128 0x3
+ 613 029b 0A       		.byte	0xa
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccEr8D7e.s 			page 13
+
+
+ 614 029c EE01     		.2byte	0x1ee
+ 615 029e 06       		.uleb128 0x6
+ 616 029f 01       		.uleb128 0x1
+ 617 02a0 51       		.byte	0x51
+ 618 02a1 03       		.uleb128 0x3
+ 619 02a2 0A       		.byte	0xa
+ 620 02a3 2C01     		.2byte	0x12c
+ 621 02a5 00       		.byte	0
+ 622 02a6 05       		.uleb128 0x5
+ 623 02a7 26000000 		.4byte	.LVL19
+ 624 02ab F3030000 		.4byte	0x3f3
+ 625 02af C2020000 		.4byte	0x2c2
+ 626 02b3 06       		.uleb128 0x6
+ 627 02b4 01       		.uleb128 0x1
+ 628 02b5 50       		.byte	0x50
+ 629 02b6 03       		.uleb128 0x3
+ 630 02b7 0A       		.byte	0xa
+ 631 02b8 4B02     		.2byte	0x24b
+ 632 02ba 06       		.uleb128 0x6
+ 633 02bb 01       		.uleb128 0x1
+ 634 02bc 51       		.byte	0x51
+ 635 02bd 03       		.uleb128 0x3
+ 636 02be 0A       		.byte	0xa
+ 637 02bf 2C01     		.2byte	0x12c
+ 638 02c1 00       		.byte	0
+ 639 02c2 05       		.uleb128 0x5
+ 640 02c3 32000000 		.4byte	.LVL20
+ 641 02c7 F3030000 		.4byte	0x3f3
+ 642 02cb DE020000 		.4byte	0x2de
+ 643 02cf 06       		.uleb128 0x6
+ 644 02d0 01       		.uleb128 0x1
+ 645 02d1 50       		.byte	0x50
+ 646 02d2 03       		.uleb128 0x3
+ 647 02d3 0A       		.byte	0xa
+ 648 02d4 8801     		.2byte	0x188
+ 649 02d6 06       		.uleb128 0x6
+ 650 02d7 01       		.uleb128 0x1
+ 651 02d8 51       		.byte	0x51
+ 652 02d9 03       		.uleb128 0x3
+ 653 02da 0A       		.byte	0xa
+ 654 02db 2C01     		.2byte	0x12c
+ 655 02dd 00       		.byte	0
+ 656 02de 05       		.uleb128 0x5
+ 657 02df 3E000000 		.4byte	.LVL21
+ 658 02e3 F3030000 		.4byte	0x3f3
+ 659 02e7 FA020000 		.4byte	0x2fa
+ 660 02eb 06       		.uleb128 0x6
+ 661 02ec 01       		.uleb128 0x1
+ 662 02ed 50       		.byte	0x50
+ 663 02ee 03       		.uleb128 0x3
+ 664 02ef 0A       		.byte	0xa
+ 665 02f0 EE01     		.2byte	0x1ee
+ 666 02f2 06       		.uleb128 0x6
+ 667 02f3 01       		.uleb128 0x1
+ 668 02f4 51       		.byte	0x51
+ 669 02f5 03       		.uleb128 0x3
+ 670 02f6 0A       		.byte	0xa
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccEr8D7e.s 			page 14
+
+
+ 671 02f7 2C01     		.2byte	0x12c
+ 672 02f9 00       		.byte	0
+ 673 02fa 05       		.uleb128 0x5
+ 674 02fb 4A000000 		.4byte	.LVL22
+ 675 02ff F3030000 		.4byte	0x3f3
+ 676 0303 16030000 		.4byte	0x316
+ 677 0307 06       		.uleb128 0x6
+ 678 0308 01       		.uleb128 0x1
+ 679 0309 50       		.byte	0x50
+ 680 030a 03       		.uleb128 0x3
+ 681 030b 0A       		.byte	0xa
+ 682 030c 4B02     		.2byte	0x24b
+ 683 030e 06       		.uleb128 0x6
+ 684 030f 01       		.uleb128 0x1
+ 685 0310 51       		.byte	0x51
+ 686 0311 03       		.uleb128 0x3
+ 687 0312 0A       		.byte	0xa
+ 688 0313 2C01     		.2byte	0x12c
+ 689 0315 00       		.byte	0
+ 690 0316 05       		.uleb128 0x5
+ 691 0317 56000000 		.4byte	.LVL23
+ 692 031b F3030000 		.4byte	0x3f3
+ 693 031f 32030000 		.4byte	0x332
+ 694 0323 06       		.uleb128 0x6
+ 695 0324 01       		.uleb128 0x1
+ 696 0325 50       		.byte	0x50
+ 697 0326 03       		.uleb128 0x3
+ 698 0327 0A       		.byte	0xa
+ 699 0328 0B02     		.2byte	0x20b
+ 700 032a 06       		.uleb128 0x6
+ 701 032b 01       		.uleb128 0x1
+ 702 032c 51       		.byte	0x51
+ 703 032d 03       		.uleb128 0x3
+ 704 032e 0A       		.byte	0xa
+ 705 032f 2C01     		.2byte	0x12c
+ 706 0331 00       		.byte	0
+ 707 0332 05       		.uleb128 0x5
+ 708 0333 62000000 		.4byte	.LVL24
+ 709 0337 F3030000 		.4byte	0x3f3
+ 710 033b 4E030000 		.4byte	0x34e
+ 711 033f 06       		.uleb128 0x6
+ 712 0340 01       		.uleb128 0x1
+ 713 0341 50       		.byte	0x50
+ 714 0342 03       		.uleb128 0x3
+ 715 0343 0A       		.byte	0xa
+ 716 0344 9302     		.2byte	0x293
+ 717 0346 06       		.uleb128 0x6
+ 718 0347 01       		.uleb128 0x1
+ 719 0348 51       		.byte	0x51
+ 720 0349 03       		.uleb128 0x3
+ 721 034a 0A       		.byte	0xa
+ 722 034b 2C01     		.2byte	0x12c
+ 723 034d 00       		.byte	0
+ 724 034e 05       		.uleb128 0x5
+ 725 034f 6E000000 		.4byte	.LVL25
+ 726 0353 F3030000 		.4byte	0x3f3
+ 727 0357 6A030000 		.4byte	0x36a
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccEr8D7e.s 			page 15
+
+
+ 728 035b 06       		.uleb128 0x6
+ 729 035c 01       		.uleb128 0x1
+ 730 035d 50       		.byte	0x50
+ 731 035e 03       		.uleb128 0x3
+ 732 035f 0A       		.byte	0xa
+ 733 0360 1003     		.2byte	0x310
+ 734 0362 06       		.uleb128 0x6
+ 735 0363 01       		.uleb128 0x1
+ 736 0364 51       		.byte	0x51
+ 737 0365 03       		.uleb128 0x3
+ 738 0366 0A       		.byte	0xa
+ 739 0367 2C01     		.2byte	0x12c
+ 740 0369 00       		.byte	0
+ 741 036a 05       		.uleb128 0x5
+ 742 036b 7A000000 		.4byte	.LVL26
+ 743 036f F3030000 		.4byte	0x3f3
+ 744 0373 86030000 		.4byte	0x386
+ 745 0377 06       		.uleb128 0x6
+ 746 0378 01       		.uleb128 0x1
+ 747 0379 50       		.byte	0x50
+ 748 037a 03       		.uleb128 0x3
+ 749 037b 0A       		.byte	0xa
+ 750 037c EE01     		.2byte	0x1ee
+ 751 037e 06       		.uleb128 0x6
+ 752 037f 01       		.uleb128 0x1
+ 753 0380 51       		.byte	0x51
+ 754 0381 03       		.uleb128 0x3
+ 755 0382 0A       		.byte	0xa
+ 756 0383 2C01     		.2byte	0x12c
+ 757 0385 00       		.byte	0
+ 758 0386 05       		.uleb128 0x5
+ 759 0387 86000000 		.4byte	.LVL27
+ 760 038b F3030000 		.4byte	0x3f3
+ 761 038f A2030000 		.4byte	0x3a2
+ 762 0393 06       		.uleb128 0x6
+ 763 0394 01       		.uleb128 0x1
+ 764 0395 50       		.byte	0x50
+ 765 0396 03       		.uleb128 0x3
+ 766 0397 0A       		.byte	0xa
+ 767 0398 4B02     		.2byte	0x24b
+ 768 039a 06       		.uleb128 0x6
+ 769 039b 01       		.uleb128 0x1
+ 770 039c 51       		.byte	0x51
+ 771 039d 03       		.uleb128 0x3
+ 772 039e 0A       		.byte	0xa
+ 773 039f 2C01     		.2byte	0x12c
+ 774 03a1 00       		.byte	0
+ 775 03a2 05       		.uleb128 0x5
+ 776 03a3 92000000 		.4byte	.LVL28
+ 777 03a7 F3030000 		.4byte	0x3f3
+ 778 03ab BE030000 		.4byte	0x3be
+ 779 03af 06       		.uleb128 0x6
+ 780 03b0 01       		.uleb128 0x1
+ 781 03b1 50       		.byte	0x50
+ 782 03b2 03       		.uleb128 0x3
+ 783 03b3 0A       		.byte	0xa
+ 784 03b4 BA02     		.2byte	0x2ba
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccEr8D7e.s 			page 16
+
+
+ 785 03b6 06       		.uleb128 0x6
+ 786 03b7 01       		.uleb128 0x1
+ 787 03b8 51       		.byte	0x51
+ 788 03b9 03       		.uleb128 0x3
+ 789 03ba 0A       		.byte	0xa
+ 790 03bb 2C01     		.2byte	0x12c
+ 791 03bd 00       		.byte	0
+ 792 03be 05       		.uleb128 0x5
+ 793 03bf 9E000000 		.4byte	.LVL29
+ 794 03c3 F3030000 		.4byte	0x3f3
+ 795 03c7 DA030000 		.4byte	0x3da
+ 796 03cb 06       		.uleb128 0x6
+ 797 03cc 01       		.uleb128 0x1
+ 798 03cd 50       		.byte	0x50
+ 799 03ce 03       		.uleb128 0x3
+ 800 03cf 0A       		.byte	0xa
+ 801 03d0 8801     		.2byte	0x188
+ 802 03d2 06       		.uleb128 0x6
+ 803 03d3 01       		.uleb128 0x1
+ 804 03d4 51       		.byte	0x51
+ 805 03d5 03       		.uleb128 0x3
+ 806 03d6 0A       		.byte	0xa
+ 807 03d7 5802     		.2byte	0x258
+ 808 03d9 00       		.byte	0
+ 809 03da 07       		.uleb128 0x7
+ 810 03db AA000000 		.4byte	.LVL30
+ 811 03df F3030000 		.4byte	0x3f3
+ 812 03e3 06       		.uleb128 0x6
+ 813 03e4 01       		.uleb128 0x1
+ 814 03e5 50       		.byte	0x50
+ 815 03e6 03       		.uleb128 0x3
+ 816 03e7 0A       		.byte	0xa
+ 817 03e8 0B02     		.2byte	0x20b
+ 818 03ea 06       		.uleb128 0x6
+ 819 03eb 01       		.uleb128 0x1
+ 820 03ec 51       		.byte	0x51
+ 821 03ed 03       		.uleb128 0x3
+ 822 03ee 0A       		.byte	0xa
+ 823 03ef 5802     		.2byte	0x258
+ 824 03f1 00       		.byte	0
+ 825 03f2 00       		.byte	0
+ 826 03f3 08       		.uleb128 0x8
+ 827 03f4 77010000 		.4byte	.LASF16
+ 828 03f8 77010000 		.4byte	.LASF16
+ 829 03fc 02       		.byte	0x2
+ 830 03fd 19       		.byte	0x19
+ 831 03fe 00       		.byte	0
+ 832              		.section	.debug_abbrev,"",%progbits
+ 833              	.Ldebug_abbrev0:
+ 834 0000 01       		.uleb128 0x1
+ 835 0001 11       		.uleb128 0x11
+ 836 0002 01       		.byte	0x1
+ 837 0003 25       		.uleb128 0x25
+ 838 0004 0E       		.uleb128 0xe
+ 839 0005 13       		.uleb128 0x13
+ 840 0006 0B       		.uleb128 0xb
+ 841 0007 03       		.uleb128 0x3
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccEr8D7e.s 			page 17
+
+
+ 842 0008 0E       		.uleb128 0xe
+ 843 0009 1B       		.uleb128 0x1b
+ 844 000a 0E       		.uleb128 0xe
+ 845 000b 55       		.uleb128 0x55
+ 846 000c 17       		.uleb128 0x17
+ 847 000d 11       		.uleb128 0x11
+ 848 000e 01       		.uleb128 0x1
+ 849 000f 10       		.uleb128 0x10
+ 850 0010 17       		.uleb128 0x17
+ 851 0011 00       		.byte	0
+ 852 0012 00       		.byte	0
+ 853 0013 02       		.uleb128 0x2
+ 854 0014 24       		.uleb128 0x24
+ 855 0015 00       		.byte	0
+ 856 0016 0B       		.uleb128 0xb
+ 857 0017 0B       		.uleb128 0xb
+ 858 0018 3E       		.uleb128 0x3e
+ 859 0019 0B       		.uleb128 0xb
+ 860 001a 03       		.uleb128 0x3
+ 861 001b 0E       		.uleb128 0xe
+ 862 001c 00       		.byte	0
+ 863 001d 00       		.byte	0
+ 864 001e 03       		.uleb128 0x3
+ 865 001f 24       		.uleb128 0x24
+ 866 0020 00       		.byte	0
+ 867 0021 0B       		.uleb128 0xb
+ 868 0022 0B       		.uleb128 0xb
+ 869 0023 3E       		.uleb128 0x3e
+ 870 0024 0B       		.uleb128 0xb
+ 871 0025 03       		.uleb128 0x3
+ 872 0026 08       		.uleb128 0x8
+ 873 0027 00       		.byte	0
+ 874 0028 00       		.byte	0
+ 875 0029 04       		.uleb128 0x4
+ 876 002a 2E       		.uleb128 0x2e
+ 877 002b 01       		.byte	0x1
+ 878 002c 3F       		.uleb128 0x3f
+ 879 002d 19       		.uleb128 0x19
+ 880 002e 03       		.uleb128 0x3
+ 881 002f 0E       		.uleb128 0xe
+ 882 0030 3A       		.uleb128 0x3a
+ 883 0031 0B       		.uleb128 0xb
+ 884 0032 3B       		.uleb128 0x3b
+ 885 0033 0B       		.uleb128 0xb
+ 886 0034 27       		.uleb128 0x27
+ 887 0035 19       		.uleb128 0x19
+ 888 0036 11       		.uleb128 0x11
+ 889 0037 01       		.uleb128 0x1
+ 890 0038 12       		.uleb128 0x12
+ 891 0039 06       		.uleb128 0x6
+ 892 003a 40       		.uleb128 0x40
+ 893 003b 18       		.uleb128 0x18
+ 894 003c 9742     		.uleb128 0x2117
+ 895 003e 19       		.uleb128 0x19
+ 896 003f 01       		.uleb128 0x1
+ 897 0040 13       		.uleb128 0x13
+ 898 0041 00       		.byte	0
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccEr8D7e.s 			page 18
+
+
+ 899 0042 00       		.byte	0
+ 900 0043 05       		.uleb128 0x5
+ 901 0044 898201   		.uleb128 0x4109
+ 902 0047 01       		.byte	0x1
+ 903 0048 11       		.uleb128 0x11
+ 904 0049 01       		.uleb128 0x1
+ 905 004a 31       		.uleb128 0x31
+ 906 004b 13       		.uleb128 0x13
+ 907 004c 01       		.uleb128 0x1
+ 908 004d 13       		.uleb128 0x13
+ 909 004e 00       		.byte	0
+ 910 004f 00       		.byte	0
+ 911 0050 06       		.uleb128 0x6
+ 912 0051 8A8201   		.uleb128 0x410a
+ 913 0054 00       		.byte	0
+ 914 0055 02       		.uleb128 0x2
+ 915 0056 18       		.uleb128 0x18
+ 916 0057 9142     		.uleb128 0x2111
+ 917 0059 18       		.uleb128 0x18
+ 918 005a 00       		.byte	0
+ 919 005b 00       		.byte	0
+ 920 005c 07       		.uleb128 0x7
+ 921 005d 898201   		.uleb128 0x4109
+ 922 0060 01       		.byte	0x1
+ 923 0061 11       		.uleb128 0x11
+ 924 0062 01       		.uleb128 0x1
+ 925 0063 31       		.uleb128 0x31
+ 926 0064 13       		.uleb128 0x13
+ 927 0065 00       		.byte	0
+ 928 0066 00       		.byte	0
+ 929 0067 08       		.uleb128 0x8
+ 930 0068 2E       		.uleb128 0x2e
+ 931 0069 00       		.byte	0
+ 932 006a 3F       		.uleb128 0x3f
+ 933 006b 19       		.uleb128 0x19
+ 934 006c 3C       		.uleb128 0x3c
+ 935 006d 19       		.uleb128 0x19
+ 936 006e 6E       		.uleb128 0x6e
+ 937 006f 0E       		.uleb128 0xe
+ 938 0070 03       		.uleb128 0x3
+ 939 0071 0E       		.uleb128 0xe
+ 940 0072 3A       		.uleb128 0x3a
+ 941 0073 0B       		.uleb128 0xb
+ 942 0074 3B       		.uleb128 0x3b
+ 943 0075 0B       		.uleb128 0xb
+ 944 0076 00       		.byte	0
+ 945 0077 00       		.byte	0
+ 946 0078 00       		.byte	0
+ 947              		.section	.debug_aranges,"",%progbits
+ 948 0000 24000000 		.4byte	0x24
+ 949 0004 0200     		.2byte	0x2
+ 950 0006 00000000 		.4byte	.Ldebug_info0
+ 951 000a 04       		.byte	0x4
+ 952 000b 00       		.byte	0
+ 953 000c 0000     		.2byte	0
+ 954 000e 0000     		.2byte	0
+ 955 0010 00000000 		.4byte	.LFB0
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccEr8D7e.s 			page 19
+
+
+ 956 0014 B4000000 		.4byte	.LFE0-.LFB0
+ 957 0018 00000000 		.4byte	.LFB1
+ 958 001c AC000000 		.4byte	.LFE1-.LFB1
+ 959 0020 00000000 		.4byte	0
+ 960 0024 00000000 		.4byte	0
+ 961              		.section	.debug_ranges,"",%progbits
+ 962              	.Ldebug_ranges0:
+ 963 0000 00000000 		.4byte	.LFB0
+ 964 0004 B4000000 		.4byte	.LFE0
+ 965 0008 00000000 		.4byte	.LFB1
+ 966 000c AC000000 		.4byte	.LFE1
+ 967 0010 00000000 		.4byte	0
+ 968 0014 00000000 		.4byte	0
+ 969              		.section	.debug_line,"",%progbits
+ 970              	.Ldebug_line0:
+ 971 0000 6A000000 		.section	.debug_str,"MS",%progbits,1
+ 971      02002700 
+ 971      00000201 
+ 971      FB0E0D00 
+ 971      01010101 
+ 972              	.LASF11:
+ 973 0000 4D757369 		.ascii	"Music_FurElise\000"
+ 973      635F4675 
+ 973      72456C69 
+ 973      736500
+ 974              	.LASF1:
+ 975 000f 756E7369 		.ascii	"unsigned char\000"
+ 975      676E6564 
+ 975      20636861 
+ 975      7200
+ 976              	.LASF5:
+ 977 001d 6C6F6E67 		.ascii	"long unsigned int\000"
+ 977      20756E73 
+ 977      69676E65 
+ 977      6420696E 
+ 977      7400
+ 978              	.LASF3:
+ 979 002f 73686F72 		.ascii	"short unsigned int\000"
+ 979      7420756E 
+ 979      7369676E 
+ 979      65642069 
+ 979      6E7400
+ 980              	.LASF14:
+ 981 0042 6D757369 		.ascii	"music.c\000"
+ 981      632E6300 
+ 982              	.LASF15:
+ 983 004a 443A5C48 		.ascii	"D:\\Hackathon-Infineon\\Hackaton.cydsn\000"
+ 983      61636B61 
+ 983      74686F6E 
+ 983      2D496E66 
+ 983      696E656F 
+ 984              	.LASF10:
+ 985 006f 646F7562 		.ascii	"double\000"
+ 985      6C6500
+ 986              	.LASF8:
+ 987 0076 756E7369 		.ascii	"unsigned int\000"
+ 987      676E6564 
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccEr8D7e.s 			page 20
+
+
+ 987      20696E74 
+ 987      00
+ 988              	.LASF12:
+ 989 0083 4D757369 		.ascii	"Music_ViennaWaltz\000"
+ 989      635F5669 
+ 989      656E6E61 
+ 989      57616C74 
+ 989      7A00
+ 990              	.LASF7:
+ 991 0095 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 991      206C6F6E 
+ 991      6720756E 
+ 991      7369676E 
+ 991      65642069 
+ 992              	.LASF13:
+ 993 00ac 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 993      43313120 
+ 993      352E342E 
+ 993      31203230 
+ 993      31363036 
+ 994 00df 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m4 -mfloat-abi=s"
+ 994      20726576 
+ 994      6973696F 
+ 994      6E203233 
+ 994      37373135 
+ 995 0112 6F667466 		.ascii	"oftfp -mfpu=fpv4-sp-d16 -mthumb -g -Og -ffunction-s"
+ 995      70202D6D 
+ 995      6670753D 
+ 995      66707634 
+ 995      2D73702D 
+ 996 0145 65637469 		.ascii	"ections -ffat-lto-objects\000"
+ 996      6F6E7320 
+ 996      2D666661 
+ 996      742D6C74 
+ 996      6F2D6F62 
+ 997              	.LASF6:
+ 998 015f 6C6F6E67 		.ascii	"long long int\000"
+ 998      206C6F6E 
+ 998      6720696E 
+ 998      7400
+ 999              	.LASF2:
+ 1000 016d 73686F72 		.ascii	"short int\000"
+ 1000      7420696E 
+ 1000      7400
+ 1001              	.LASF16:
+ 1002 0177 536F756E 		.ascii	"Sound_Play\000"
+ 1002      645F506C 
+ 1002      617900
+ 1003              	.LASF4:
+ 1004 0182 6C6F6E67 		.ascii	"long int\000"
+ 1004      20696E74 
+ 1004      00
+ 1005              	.LASF9:
+ 1006 018b 6C6F6E67 		.ascii	"long double\000"
+ 1006      20646F75 
+ 1006      626C6500 
+ 1007              	.LASF0:
+ARM GAS  C:\Users\Smaug\AppData\Local\Temp\ccEr8D7e.s 			page 21
+
+
+ 1008 0197 7369676E 		.ascii	"signed char\000"
+ 1008      65642063 
+ 1008      68617200 
+ 1009              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran
