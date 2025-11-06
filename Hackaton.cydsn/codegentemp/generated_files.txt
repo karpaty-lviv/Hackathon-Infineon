@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="us-ascii"?>
+
+<fileSet version="1" anchorPath="C:\Infineon\Hackathon-Infineon\Hackaton.cydsn\codegentemp" xsi:schemaLocation="http://cypress.com/xsd/cypathdictionary cypathdictionary.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://cypress.com/xsd/cypathdictionary">
+  <file name="C:\Infineon\Hackathon-Infineon\Hackaton.cydsn\codegentemp\cyfitter_cfg.h" value="HEADER;;;;;" />
+  <file name="C:\Infineon\Hackathon-Infineon\Hackaton.cydsn\codegentemp\cyfitter_sysint_cfg.h" value="HEADER;;;;;Pins and Interrupts" />
+  <file name="C:\Infineon\Hackathon-Infineon\Hackaton.cydsn\codegentemp\cyfitter_sysint_cfg.c" value="SOURCE_C;CortexM0p,CortexM4;;;;Pins and Interrupts" />
+  <file name="C:\Infineon\Hackathon-Infineon\Hackaton.cydsn\codegentemp\cyfitter_cfg.c" value="SOURCE_C;CortexM0p;;;;" />
+  <file name="C:\Infineon\Hackathon-Infineon\Hackaton.cydsn\codegentemp\cymetadata.c" value="SOURCE_C;CortexM0p,CortexM4;;;;" />
+  <file name="C:\Infineon\Hackathon-Infineon\Hackaton.cydsn\codegentemp\cydevice_trm.h" value="HEADER;;;;;" />
+  <file name="C:\Infineon\Hackathon-Infineon\Hackaton.cydsn\codegentemp\cydevicegnu_trm.inc" value="HEADER;;;;;" />
+  <file name="C:\Infineon\Hackathon-Infineon\Hackaton.cydsn\codegentemp\cydevicerv_trm.inc" value="HEADER;;;;;" />
+  <file name="C:\Infineon\Hackathon-Infineon\Hackaton.cydsn\codegentemp\cydeviceiar_trm.inc" value="HEADER;;;;;" />
+  <file name="C:\Infineon\Hackathon-Infineon\Hackaton.cydsn\codegentemp\cyfitter.h" value="HEADER;;;;;" />
+  <file name="C:\Infineon\Hackathon-Infineon\Hackaton.cydsn\codegentemp\cyfitter_gpio.h" value="HEADER;;;;;Pins and Interrupts" />
+  <file name="C:\Infineon\Hackathon-Infineon\Hackaton.cydsn\codegentemp\cyfitter_sysint.h" value="HEADER;;;;;Pins and Interrupts" />
+  <file name="C:\Infineon\Hackathon-Infineon\Hackaton.cydsn\codegentemp\cydisabledsheets.h" value="HEADER;;;;;" />
+  <file name="C:\Infineon\Hackathon-Infineon\Hackaton.cydsn\codegentemp\ADC.c" value="SOURCE_C;CortexM0p,CortexM4;;;;ADC" />
+  <file name="C:\Infineon\Hackathon-Infineon\Hackaton.cydsn\codegentemp\ADC.h" value="HEADER;;;;;ADC" />
+  <file name="C:\Infineon\Hackathon-Infineon\Hackaton.cydsn\codegentemp\ADC_INT.c" value="SOURCE_C;CortexM0p,CortexM4;;;;ADC" />
+  <file name="C:\Infineon\Hackathon-Infineon\Hackaton.cydsn\codegentemp\ADC_INIT.c" value="SOURCE_C;CortexM0p,CortexM4;;;;ADC" />
+  <file name="C:\Infineon\Hackathon-Infineon\Hackaton.cydsn\codegentemp\ADC_PM.c" value="SOURCE_C;CortexM0p,CortexM4;;;;ADC" />
+  <file name="C:\Infineon\Hackathon-Infineon\Hackaton.cydsn\codegentemp\I2C_Main.c" value="SOURCE_C;CortexM0p,CortexM4;;;;I2C_Main" />
+  <file name="C:\Infineon\Hackathon-Infineon\Hackaton.cydsn\codegentemp\I2C_Main.h" value="HEADER;;;;;I2C_Main" />
+  <file name="C:\Infineon\Hackathon-Infineon\Hackaton.cydsn\codegentemp\UART_Debug.c" value="SOURCE_C;CortexM0p,CortexM4;;;;UART_Debug" />
+  <file name="C:\Infineon\Hackathon-Infineon\Hackaton.cydsn\codegentemp\UART_Debug.h" value="HEADER;;;;;UART_Debug" />
+  <file name="C:\Infineon\Hackathon-Infineon\Hackaton.cydsn\codegentemp\PWM_Trig.c" value="SOURCE_C;CortexM0p,CortexM4;;;;PWM_Trig" />
+  <file name="C:\Infineon\Hackathon-Infineon\Hackaton.cydsn\codegentemp\PWM_Trig.h" value="HEADER;;;;;PWM_Trig" />
+  <file name="C:\Infineon\Hackathon-Infineon\Hackaton.cydsn\codegentemp\Clock.h" value="HEADER;;;;;Clock" />
+  <file name="C:\Infineon\Hackathon-Infineon\Hackaton.cydsn\codegentemp\Counter_Echo.c" value="SOURCE_C;CortexM0p,CortexM4;;;;Counter_Echo" />
+  <file name="C:\Infineon\Hackathon-Infineon\Hackaton.cydsn\codegentemp\Counter_Echo.h" value="HEADER;;;;;Counter_Echo" />
+  <file name="C:\Infineon\Hackathon-Infineon\Hackaton.cydsn\codegentemp\IR.c" value="SOURCE_C;CortexM0p,CortexM4;;;;IR" />
+  <file name="C:\Infineon\Hackathon-Infineon\Hackaton.cydsn\codegentemp\IR.h" value="HEADER;;;;;IR" />
+  <file name="C:\Infineon\Hackathon-Infineon\Hackaton.cydsn\codegentemp\Clock_1.h" value="HEADER;;;;;Clock_1" />
+  <file name="C:\Infineon\Hackathon-Infineon\Hackaton.cydsn\codegentemp\PWM_Buz.c" value="SOURCE_C;CortexM0p,CortexM4;;;;PWM_Buz" />
+  <file name="C:\Infineon\Hackathon-Infineon\Hackaton.cydsn\codegentemp\PWM_Buz.h" value="HEADER;;;;;PWM_Buz" />
+  <file name="C:\Infineon\Hackathon-Infineon\Hackaton.cydsn\codegentemp\BLE.h" value="HEADER;;;;;BLE" />
+  <file name="C:\Infineon\Hackathon-Infineon\Hackaton.cydsn\codegentemp\BLE.c" value="SOURCE_C;CortexM0p,CortexM4;;;;BLE" />
+  <file name="C:\Infineon\Hackathon-Infineon\Hackaton.cydsn\codegentemp\BLE_config.c" value="SOURCE_C;CortexM0p,CortexM4;;;;BLE" />
+  <file name="C:\Infineon\Hackathon-Infineon\Hackaton.cydsn\codegentemp\BLE_config.h" value="HEADER;;;;;BLE" />
+  <file name="C:\Infineon\Hackathon-Infineon\Hackaton.cydsn\codegentemp\BLE_custom_config.c" value="SOURCE_C;CortexM0p,CortexM4;;;;BLE" />
+  <file name="C:\Infineon\Hackathon-Infineon\Hackaton.cydsn\codegentemp\SPI_LEDCTRL.c" value="SOURCE_C;CortexM0p,CortexM4;;;;SPI_LEDCTRL" />
+  <file name="C:\Infineon\Hackathon-Infineon\Hackaton.cydsn\codegentemp\SPI_LEDCTRL.h" value="HEADER;;;;;SPI_LEDCTRL" />
+  <file name="C:\Infineon\Hackathon-Infineon\Hackaton.cydsn\codegentemp\ADC_intSarClock.h" value="HEADER;;;;;ADC_intSarClock" />
+  <file name="C:\Infineon\Hackathon-Infineon\Hackaton.cydsn\codegentemp\I2C_Main_SCBCLK.h" value="HEADER;;;;;I2C_Main_SCBCLK" />
+  <file name="C:\Infineon\Hackathon-Infineon\Hackaton.cydsn\codegentemp\UART_Debug_SCBCLK.h" value="HEADER;;;;;UART_Debug_SCBCLK" />
+  <file name="C:\Infineon\Hackathon-Infineon\Hackaton.cydsn\codegentemp\IR_SCBCLK.h" value="HEADER;;;;;IR_SCBCLK" />
+  <file name="C:\Infineon\Hackathon-Infineon\Hackaton.cydsn\codegentemp\SPI_LEDCTRL_SCBCLK.h" value="HEADER;;;;;SPI_LEDCTRL_SCBCLK" />
+  <file name="C:\Infineon\Hackathon-Infineon\Hackaton.cydsn\codegentemp\project.h" value="OTHER;;;;;" />
+  <file name="C:\Infineon\Hackathon-Infineon\Hackaton.cydsn\codegentemp\cycodeshareimport.ld" value="OTHER;;;;;" />
+  <file name="C:\Infineon\Hackathon-Infineon\Hackaton.cydsn\codegentemp\cycodeshareexport.ld" value="OTHER;;;;;" />
+  <file name="C:\Infineon\Hackathon-Infineon\Hackaton.cydsn\codegentemp\cycodeshareimport.scat" value="OTHER;;;;;" />
+</fileSet>

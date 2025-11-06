@@ -1,0 +1,4932 @@
+ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccgMj3kb.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m0plus
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 0
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"debug.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text.ShowValue,"ax",%progbits
+  20              		.align	2
+  21              		.global	ShowValue
+  22              		.code	16
+  23              		.thumb_func
+  24              		.type	ShowValue, %function
+  25              	ShowValue:
+  26              	.LFB678:
+  27              		.file 1 "debug.c"
+   1:debug.c       **** /*******************************************************************************
+   2:debug.c       **** * File Name: debug.c
+   3:debug.c       **** *
+   4:debug.c       **** * Version: 1.0
+   5:debug.c       **** *
+   6:debug.c       **** * Description:
+   7:debug.c       **** *  This file contains functions for printf functionality.
+   8:debug.c       **** *
+   9:debug.c       **** * Hardware Dependency:
+  10:debug.c       **** *  CY8CKIT-062 PSoC6 BLE Pioneer Kit
+  11:debug.c       **** * 
+  12:debug.c       **** ********************************************************************************
+  13:debug.c       **** * Copyright 2017, Cypress Semiconductor Corporation.  All rights reserved.
+  14:debug.c       **** * You may use this file only in accordance with the license, terms, conditions,
+  15:debug.c       **** * disclaimers, and limitations in the end user license agreement accompanying
+  16:debug.c       **** * the software package with which this file was provided.
+  17:debug.c       **** *******************************************************************************/
+  18:debug.c       **** 
+  19:debug.c       **** #include <project.h>
+  20:debug.c       **** #include "debug.h"
+  21:debug.c       **** 
+  22:debug.c       **** #if (DEBUG_UART_ENABLED == 1)
+  23:debug.c       **** 
+  24:debug.c       **** #if defined(__ARMCC_VERSION)
+  25:debug.c       ****     
+  26:debug.c       **** /* For MDK/RVDS compiler revise fputc function for printf functionality */
+  27:debug.c       **** struct __FILE 
+  28:debug.c       **** {
+  29:debug.c       ****     int handle;  
+  30:debug.c       **** };
+ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccgMj3kb.s 			page 2
+
+
+  31:debug.c       **** 
+  32:debug.c       **** enum 
+  33:debug.c       **** {
+  34:debug.c       ****     STDIN_HANDLE,
+  35:debug.c       ****     STDOUT_HANDLE,
+  36:debug.c       ****     STDERR_HANDLE
+  37:debug.c       **** };
+  38:debug.c       **** 
+  39:debug.c       **** FILE __stdin = {STDIN_HANDLE};
+  40:debug.c       **** FILE __stdout = {STDOUT_HANDLE};
+  41:debug.c       **** FILE __stderr = {STDERR_HANDLE};
+  42:debug.c       **** 
+  43:debug.c       **** int fputc(int ch, FILE *file) 
+  44:debug.c       **** {
+  45:debug.c       ****     int ret = EOF;
+  46:debug.c       **** 
+  47:debug.c       ****     switch( file->handle )
+  48:debug.c       ****     {
+  49:debug.c       ****         case STDOUT_HANDLE:
+  50:debug.c       ****             UART_DEB_PUT_CHAR(ch);
+  51:debug.c       ****             ret = ch ;
+  52:debug.c       ****             break ;
+  53:debug.c       **** 
+  54:debug.c       ****         case STDERR_HANDLE:
+  55:debug.c       ****             ret = ch ;
+  56:debug.c       ****             break ;
+  57:debug.c       **** 
+  58:debug.c       ****         default:
+  59:debug.c       ****             file = file;
+  60:debug.c       ****             break ;
+  61:debug.c       ****     }
+  62:debug.c       ****     return ret ;
+  63:debug.c       **** }
+  64:debug.c       **** 
+  65:debug.c       **** #elif defined (__ICCARM__)      /* IAR */
+  66:debug.c       **** 
+  67:debug.c       **** /* For IAR compiler revise __write() function for printf functionality */
+  68:debug.c       **** size_t __write(int handle, const unsigned char * buffer, size_t size)
+  69:debug.c       **** {
+  70:debug.c       ****     size_t nChars = 0;
+  71:debug.c       **** 
+  72:debug.c       ****     if (buffer == 0)
+  73:debug.c       ****     {
+  74:debug.c       ****         /*
+  75:debug.c       ****          * This means that we should flush internal buffers. Since we
+  76:debug.c       ****          * don't we just return. (Remember, "handle" == -1 means that all
+  77:debug.c       ****          * handles should be flushed.)
+  78:debug.c       ****          */
+  79:debug.c       ****         return (0);
+  80:debug.c       ****     }
+  81:debug.c       **** 
+  82:debug.c       ****     for (/* Empty */; size != 0; --size)
+  83:debug.c       ****     {
+  84:debug.c       ****         UART_DEB_PUT_CHAR(*buffer);
+  85:debug.c       ****         ++buffer;
+  86:debug.c       ****         ++nChars;
+  87:debug.c       ****     }
+ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccgMj3kb.s 			page 3
+
+
+  88:debug.c       **** 
+  89:debug.c       ****     return (nChars);
+  90:debug.c       **** }
+  91:debug.c       **** 
+  92:debug.c       **** #else  /* (__GNUC__)  GCC */
+  93:debug.c       **** 
+  94:debug.c       **** /* For GCC compiler revise _write() function for printf functionality */
+  95:debug.c       **** int _write(int file, char *ptr, int len)
+  96:debug.c       **** {
+  97:debug.c       ****     int i;
+  98:debug.c       ****     file = file;
+  99:debug.c       ****     for (i = 0; i < len; i++)
+ 100:debug.c       ****     {
+ 101:debug.c       ****         UART_DEB_PUT_CHAR(*ptr);
+ 102:debug.c       ****         ++ptr;
+ 103:debug.c       ****     }
+ 104:debug.c       ****     return len;
+ 105:debug.c       **** }
+ 106:debug.c       **** 
+ 107:debug.c       **** 
+ 108:debug.c       **** #endif  /* (__ARMCC_VERSION) */   
+ 109:debug.c       **** 
+ 110:debug.c       **** #endif /* DEBUG_UART_ENABLED == ENABLED */
+ 111:debug.c       **** 
+ 112:debug.c       **** void ShowValue(cy_stc_ble_gatt_value_t *value)
+ 113:debug.c       **** {
+  28              		.loc 1 113 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              		@ link register save eliminated.
+  33              	.LVL0:
+ 114:debug.c       ****     int16_t i;
+ 115:debug.c       ****     
+ 116:debug.c       ****     for(i = 0; i < value->len; i++)
+  34              		.loc 1 116 0
+  35 0000 0023     		movs	r3, #0
+  36 0002 01E0     		b	.L2
+  37              	.LVL1:
+  38              	.L3:
+  39              		.loc 1 116 0 is_stmt 0 discriminator 3
+  40 0004 0133     		adds	r3, r3, #1
+  41              	.LVL2:
+  42 0006 1BB2     		sxth	r3, r3
+  43              	.LVL3:
+  44              	.L2:
+  45              		.loc 1 116 0 discriminator 1
+  46 0008 8288     		ldrh	r2, [r0, #4]
+  47 000a 9342     		cmp	r3, r2
+  48 000c FADB     		blt	.L3
+ 117:debug.c       ****     {
+ 118:debug.c       ****         DBG_PRINTF("%2.2x ", value->val[i]);
+ 119:debug.c       ****     }
+ 120:debug.c       ****     DBG_PRINTF("\r\n");
+ 121:debug.c       **** }
+  49              		.loc 1 121 0 is_stmt 1
+  50              		@ sp needed
+ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccgMj3kb.s 			page 4
+
+
+  51 000e 7047     		bx	lr
+  52              		.cfi_endproc
+  53              	.LFE678:
+  54              		.size	ShowValue, .-ShowValue
+  55              		.section	.text.Set32ByPtr,"ax",%progbits
+  56              		.align	2
+  57              		.global	Set32ByPtr
+  58              		.code	16
+  59              		.thumb_func
+  60              		.type	Set32ByPtr, %function
+  61              	Set32ByPtr:
+  62              	.LFB679:
+ 122:debug.c       **** 
+ 123:debug.c       **** 
+ 124:debug.c       **** void Set32ByPtr(uint8_t ptr[], uint32_t value)
+ 125:debug.c       **** {
+  63              		.loc 1 125 0
+  64              		.cfi_startproc
+  65              		@ args = 0, pretend = 0, frame = 0
+  66              		@ frame_needed = 0, uses_anonymous_args = 0
+  67              		@ link register save eliminated.
+  68              	.LVL4:
+ 126:debug.c       ****     ptr[0u] = (uint8_t) value;
+  69              		.loc 1 126 0
+  70 0000 0170     		strb	r1, [r0]
+ 127:debug.c       ****     ptr[1u] = (uint8_t) (value >> 8u);    
+  71              		.loc 1 127 0
+  72 0002 0B0A     		lsrs	r3, r1, #8
+  73 0004 4370     		strb	r3, [r0, #1]
+ 128:debug.c       ****     ptr[2u] = (uint8_t) (value >> 16u);    
+  74              		.loc 1 128 0
+  75 0006 0B0C     		lsrs	r3, r1, #16
+  76 0008 8370     		strb	r3, [r0, #2]
+ 129:debug.c       ****     ptr[3u] = (uint8_t) (value >> 24u);
+  77              		.loc 1 129 0
+  78 000a 090E     		lsrs	r1, r1, #24
+  79              	.LVL5:
+  80 000c C170     		strb	r1, [r0, #3]
+ 130:debug.c       **** }
+  81              		.loc 1 130 0
+  82              		@ sp needed
+  83 000e 7047     		bx	lr
+  84              		.cfi_endproc
+  85              	.LFE679:
+  86              		.size	Set32ByPtr, .-Set32ByPtr
+  87              		.section	.text.ShowError,"ax",%progbits
+  88              		.align	2
+  89              		.global	ShowError
+  90              		.code	16
+  91              		.thumb_func
+  92              		.type	ShowError, %function
+  93              	ShowError:
+  94              	.LFB680:
+ 131:debug.c       **** 
+ 132:debug.c       **** 
+ 133:debug.c       **** /*******************************************************************************
+ 134:debug.c       **** * Function Name: ShowError
+ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccgMj3kb.s 			page 5
+
+
+ 135:debug.c       **** ********************************************************************************
+ 136:debug.c       **** *
+ 137:debug.c       **** * Summary:
+ 138:debug.c       **** *   Shows error condition: Turn On all LEDs - white color will indicate error.
+ 139:debug.c       **** *
+ 140:debug.c       **** *******************************************************************************/
+ 141:debug.c       **** void ShowError(void)
+ 142:debug.c       **** {
+  95              		.loc 1 142 0
+  96              		.cfi_startproc
+  97              		@ args = 0, pretend = 0, frame = 0
+  98              		@ frame_needed = 0, uses_anonymous_args = 0
+  99 0000 10B5     		push	{r4, lr}
+ 100              		.cfi_def_cfa_offset 8
+ 101              		.cfi_offset 4, -8
+ 102              		.cfi_offset 14, -4
+ 143:debug.c       ****     // EnableAllLeds();
+ 144:debug.c       ****     
+ 145:debug.c       ****     /* Halt CPU in Debug mode */
+ 146:debug.c       ****     CY_ASSERT(0u != 0u);
+ 103              		.loc 1 146 0
+ 104 0002 9221     		movs	r1, #146
+ 105 0004 0148     		ldr	r0, .L6
+ 106 0006 FFF7FEFF 		bl	Cy_SysLib_AssertFailed
+ 107              	.LVL6:
+ 147:debug.c       **** }
+ 108              		.loc 1 147 0
+ 109              		@ sp needed
+ 110 000a 10BD     		pop	{r4, pc}
+ 111              	.L7:
+ 112              		.align	2
+ 113              	.L6:
+ 114 000c 00000000 		.word	.LC0
+ 115              		.cfi_endproc
+ 116              	.LFE680:
+ 117              		.size	ShowError, .-ShowError
+ 118              		.section	.text.HexToAscii,"ax",%progbits
+ 119              		.align	2
+ 120              		.global	HexToAscii
+ 121              		.code	16
+ 122              		.thumb_func
+ 123              		.type	HexToAscii, %function
+ 124              	HexToAscii:
+ 125              	.LFB681:
+ 148:debug.c       **** 
+ 149:debug.c       **** 
+ 150:debug.c       **** /*******************************************************************************
+ 151:debug.c       **** * Function Name: HexToAscii
+ 152:debug.c       **** ********************************************************************************
+ 153:debug.c       **** *
+ 154:debug.c       **** * Summary:
+ 155:debug.c       **** *   Hexadecimal to ASCII converter
+ 156:debug.c       **** *
+ 157:debug.c       **** * Parameters:
+ 158:debug.c       **** *   value: Hexadecimal value
+ 159:debug.c       **** *   digit: Which nibble to be obtained
+ 160:debug.c       **** *
+ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccgMj3kb.s 			page 6
+
+
+ 161:debug.c       **** * Return:
+ 162:debug.c       **** *   char: the ASCII equivalent of that nibble
+ 163:debug.c       **** *
+ 164:debug.c       **** * Theory:
+ 165:debug.c       **** *   Converts hexadecimal to ASCII
+ 166:debug.c       **** *
+ 167:debug.c       **** *******************************************************************************/
+ 168:debug.c       **** char HexToAscii(uint8_t value, uint8_t nibble)
+ 169:debug.c       **** {
+ 126              		.loc 1 169 0
+ 127              		.cfi_startproc
+ 128              		@ args = 0, pretend = 0, frame = 0
+ 129              		@ frame_needed = 0, uses_anonymous_args = 0
+ 130              		@ link register save eliminated.
+ 131              	.LVL7:
+ 170:debug.c       ****     if(nibble == 1)
+ 132              		.loc 1 170 0
+ 133 0000 0129     		cmp	r1, #1
+ 134 0002 06D1     		bne	.L9
+ 135              	.LVL8:
+ 136 0004 0009     		lsrs	r0, r0, #4
+ 137              	.LVL9:
+ 171:debug.c       ****     {
+ 172:debug.c       ****         value = value & 0xf0;
+ 173:debug.c       ****         value = value >> 4;
+ 174:debug.c       ****         
+ 175:debug.c       ****         /* bit-shift the result to the right by four bits (i.e. quickly divides by 16) */
+ 176:debug.c       ****         if (value > 9)
+ 138              		.loc 1 176 0
+ 139 0006 0928     		cmp	r0, #9
+ 140 0008 01D9     		bls	.L10
+ 177:debug.c       ****         {
+ 178:debug.c       ****             value = value - 10 + 'A';
+ 141              		.loc 1 178 0
+ 142 000a 3730     		adds	r0, r0, #55
+ 143              	.LVL10:
+ 144 000c 0CE0     		b	.L11
+ 145              	.L10:
+ 179:debug.c       ****         }
+ 180:debug.c       ****         else
+ 181:debug.c       ****         {
+ 182:debug.c       ****             value = value + '0';
+ 146              		.loc 1 182 0
+ 147 000e 3030     		adds	r0, r0, #48
+ 148              	.LVL11:
+ 149 0010 0AE0     		b	.L11
+ 150              	.L9:
+ 183:debug.c       ****         }
+ 184:debug.c       ****     }
+ 185:debug.c       ****     else if (nibble == 0)
+ 151              		.loc 1 185 0
+ 152 0012 0029     		cmp	r1, #0
+ 153 0014 07D1     		bne	.L13
+ 186:debug.c       ****     {
+ 187:debug.c       ****         /* means use a bitwise AND to take the bottom four bits from the byte,
+ 188:debug.c       ****         0x0F is 00001111 in binary */
+ 189:debug.c       ****         value = value & 0x0F;
+ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccgMj3kb.s 			page 7
+
+
+ 154              		.loc 1 189 0
+ 155 0016 0F23     		movs	r3, #15
+ 156 0018 1840     		ands	r0, r3
+ 157              	.LVL12:
+ 190:debug.c       ****         if (value > 9)
+ 158              		.loc 1 190 0
+ 159 001a 0928     		cmp	r0, #9
+ 160 001c 01D9     		bls	.L12
+ 191:debug.c       ****         {
+ 192:debug.c       ****             value = value - 10 + 'A';
+ 161              		.loc 1 192 0
+ 162 001e 3730     		adds	r0, r0, #55
+ 163              	.LVL13:
+ 164 0020 02E0     		b	.L11
+ 165              	.L12:
+ 193:debug.c       ****         }
+ 194:debug.c       ****         else
+ 195:debug.c       ****         {
+ 196:debug.c       ****             value = value + '0';
+ 166              		.loc 1 196 0
+ 167 0022 3030     		adds	r0, r0, #48
+ 168              	.LVL14:
+ 169 0024 00E0     		b	.L11
+ 170              	.L13:
+ 197:debug.c       ****         }
+ 198:debug.c       ****     }
+ 199:debug.c       ****     else
+ 200:debug.c       ****     {
+ 201:debug.c       ****         value = ' ';    
+ 171              		.loc 1 201 0
+ 172 0026 2020     		movs	r0, #32
+ 173              	.LVL15:
+ 174              	.L11:
+ 202:debug.c       ****     }
+ 203:debug.c       ****     
+ 204:debug.c       ****     return value;
+ 205:debug.c       **** }
+ 175              		.loc 1 205 0
+ 176              		@ sp needed
+ 177 0028 7047     		bx	lr
+ 178              		.cfi_endproc
+ 179              	.LFE681:
+ 180              		.size	HexToAscii, .-HexToAscii
+ 181 002a C046     		.section	.text.PrintStackVersion,"ax",%progbits
+ 182              		.align	2
+ 183              		.global	PrintStackVersion
+ 184              		.code	16
+ 185              		.thumb_func
+ 186              		.type	PrintStackVersion, %function
+ 187              	PrintStackVersion:
+ 188              	.LFB682:
+ 206:debug.c       **** 
+ 207:debug.c       **** /*******************************************************************************
+ 208:debug.c       **** * Function Name: PrintStackVersion
+ 209:debug.c       **** ********************************************************************************
+ 210:debug.c       **** *
+ 211:debug.c       **** * Summary:
+ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccgMj3kb.s 			page 8
+
+
+ 212:debug.c       **** *   Prints the BLE Stack version if the PRINT_STACK_VERSION is defined.
+ 213:debug.c       **** *
+ 214:debug.c       **** *******************************************************************************/
+ 215:debug.c       **** void PrintStackVersion(void)
+ 216:debug.c       **** {
+ 189              		.loc 1 216 0
+ 190              		.cfi_startproc
+ 191              		@ args = 0, pretend = 0, frame = 8
+ 192              		@ frame_needed = 0, uses_anonymous_args = 0
+ 193 0000 00B5     		push	{lr}
+ 194              		.cfi_def_cfa_offset 4
+ 195              		.cfi_offset 14, -4
+ 196 0002 83B0     		sub	sp, sp, #12
+ 197              		.cfi_def_cfa_offset 16
+ 217:debug.c       ****     cy_stc_ble_stack_lib_version_t stackVersion;
+ 218:debug.c       ****     cy_en_ble_api_result_t apiResult;
+ 219:debug.c       ****     
+ 220:debug.c       ****     apiResult = Cy_BLE_GetStackLibraryVersion(&stackVersion);
+ 198              		.loc 1 220 0
+ 199 0004 6846     		mov	r0, sp
+ 200 0006 FFF7FEFF 		bl	Cy_BLE_GetStackLibraryVersion
+ 201              	.LVL16:
+ 221:debug.c       ****     if(apiResult != CY_BLE_SUCCESS)
+ 222:debug.c       ****     {
+ 223:debug.c       ****         DBG_PRINTF("Cy_BLE_GetStackLibraryVersion API Error: ");
+ 224:debug.c       ****         //PrintApiResult(apiResult);
+ 225:debug.c       ****     }
+ 226:debug.c       ****     else
+ 227:debug.c       ****     {
+ 228:debug.c       ****         DBG_PRINTF("BLE Stack Version: %d.%d.%d.%d\r\n", stackVersion.majorVersion, 
+ 229:debug.c       ****                                                          stackVersion.minorVersion,
+ 230:debug.c       ****                                                          stackVersion.patch,
+ 231:debug.c       ****                                                          stackVersion.buildNumber);
+ 232:debug.c       ****     }
+ 233:debug.c       **** }
+ 202              		.loc 1 233 0
+ 203 000a 03B0     		add	sp, sp, #12
+ 204              		@ sp needed
+ 205 000c 00BD     		pop	{pc}
+ 206              		.cfi_endproc
+ 207              	.LFE682:
+ 208              		.size	PrintStackVersion, .-PrintStackVersion
+ 209 000e C046     		.section	.text.PrintApiResult,"ax",%progbits
+ 210              		.align	2
+ 211              		.global	PrintApiResult
+ 212              		.code	16
+ 213              		.thumb_func
+ 214              		.type	PrintApiResult, %function
+ 215              	PrintApiResult:
+ 216              	.LFB683:
+ 234:debug.c       **** 
+ 235:debug.c       **** /*******************************************************************************
+ 236:debug.c       **** * Function Name: PrintApiResult
+ 237:debug.c       **** ********************************************************************************
+ 238:debug.c       **** *
+ 239:debug.c       **** * Summary:
+ 240:debug.c       **** *   Decodes and prints the apiResult global variable value.
+ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccgMj3kb.s 			page 9
+
+
+ 241:debug.c       **** *
+ 242:debug.c       **** *******************************************************************************/
+ 243:debug.c       **** void PrintApiResult(cy_en_ble_api_result_t apiResult)
+ 244:debug.c       **** {
+ 217              		.loc 1 244 0
+ 218              		.cfi_startproc
+ 219              		@ args = 0, pretend = 0, frame = 0
+ 220              		@ frame_needed = 0, uses_anonymous_args = 0
+ 221              		@ link register save eliminated.
+ 222              	.LVL17:
+ 245:debug.c       ****     DBG_PRINTF("0x%2.2x ", apiResult);
+ 246:debug.c       ****     
+ 247:debug.c       ****     switch(apiResult)
+ 248:debug.c       ****     {
+ 249:debug.c       ****         case CY_BLE_SUCCESS:
+ 250:debug.c       ****             DBG_PRINTF("ok\r\n");
+ 251:debug.c       ****             break;
+ 252:debug.c       ****             
+ 253:debug.c       ****         case CY_BLE_ERROR_INVALID_PARAMETER:
+ 254:debug.c       ****             DBG_PRINTF("invalid parameter\r\n");
+ 255:debug.c       ****             break;
+ 256:debug.c       ****             
+ 257:debug.c       ****         case CY_BLE_ERROR_INVALID_OPERATION:
+ 258:debug.c       ****             DBG_PRINTF("invalid operation\r\n");
+ 259:debug.c       ****             break;
+ 260:debug.c       ****             
+ 261:debug.c       ****         case CY_BLE_ERROR_NO_DEVICE_ENTITY:
+ 262:debug.c       ****             DBG_PRINTF("no device entity\r\n");
+ 263:debug.c       ****             break;
+ 264:debug.c       ****             
+ 265:debug.c       ****         case CY_BLE_ERROR_NTF_DISABLED:
+ 266:debug.c       ****             DBG_PRINTF("notification is disabled\r\n");
+ 267:debug.c       ****             break;
+ 268:debug.c       ****             
+ 269:debug.c       ****         case CY_BLE_ERROR_IND_DISABLED:
+ 270:debug.c       ****             DBG_PRINTF("indication is disabled\r\n");
+ 271:debug.c       ****             break;
+ 272:debug.c       ****             
+ 273:debug.c       ****         case CY_BLE_ERROR_CHAR_IS_NOT_DISCOVERED:
+ 274:debug.c       ****             DBG_PRINTF("characteristic is not discovered\r\n");
+ 275:debug.c       ****             break;
+ 276:debug.c       ****             
+ 277:debug.c       ****         case CY_BLE_ERROR_INVALID_STATE:
+ 278:debug.c       ****             DBG_PRINTF("invalid state");
+ 279:debug.c       ****             break;
+ 280:debug.c       ****             
+ 281:debug.c       ****         case CY_BLE_ERROR_GATT_DB_INVALID_ATTR_HANDLE:
+ 282:debug.c       ****             DBG_PRINTF("invalid attribute handle\r\n");
+ 283:debug.c       ****             break;
+ 284:debug.c       ****             
+ 285:debug.c       ****         case CY_BLE_ERROR_FLASH_WRITE_NOT_PERMITED:
+ 286:debug.c       ****             DBG_PRINTF("flash write not permitted\r\n");
+ 287:debug.c       ****             break;
+ 288:debug.c       ****             
+ 289:debug.c       ****         default:
+ 290:debug.c       ****             DBG_PRINTF("other api result\r\n");
+ 291:debug.c       ****             break;
+ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccgMj3kb.s 			page 10
+
+
+ 292:debug.c       ****     }
+ 293:debug.c       **** }
+ 223              		.loc 1 293 0
+ 224              		@ sp needed
+ 225 0000 7047     		bx	lr
+ 226              		.cfi_endproc
+ 227              	.LFE683:
+ 228              		.size	PrintApiResult, .-PrintApiResult
+ 229 0002 C046     		.section	.rodata.str1.4,"aMS",%progbits,1
+ 230              		.align	2
+ 231              	.LC0:
+ 232 0000 64656275 		.ascii	"debug.c\000"
+ 232      672E6300 
+ 233              		.text
+ 234              	.Letext0:
+ 235              		.file 2 "c:\\myapps\\psoc_creator\\psoc creator\\4.4\\psoc creator\\import\\gnu\\arm\\5.4.1\\arm-n
+ 236              		.file 3 "c:\\myapps\\psoc_creator\\psoc creator\\4.4\\psoc creator\\import\\gnu\\arm\\5.4.1\\arm-n
+ 237              		.file 4 "Generated_Source\\PSoC6\\pdl\\drivers/peripheral/device/cy_device.h"
+ 238              		.file 5 "Generated_Source\\PSoC6\\pdl\\drivers/peripheral/syslib/cy_syslib.h"
+ 239              		.file 6 "Generated_Source\\PSoC6\\pdl\\drivers/peripheral/sar/cy_sar.h"
+ 240              		.file 7 "Generated_Source\\PSoC6\\pdl\\drivers/peripheral/scb/cy_scb_i2c.h"
+ 241              		.file 8 "Generated_Source\\PSoC6\\pdl\\drivers/peripheral/scb/cy_scb_spi.h"
+ 242              		.file 9 "Generated_Source\\PSoC6\\pdl\\drivers/peripheral/scb/cy_scb_uart.h"
+ 243              		.file 10 "Generated_Source\\PSoC6\\pdl\\drivers/peripheral/tcpwm/cy_tcpwm_counter.h"
+ 244              		.file 11 "Generated_Source\\PSoC6\\pdl\\drivers/peripheral/tcpwm/cy_tcpwm_pwm.h"
+ 245              		.file 12 "Generated_Source\\PSoC6\\pdl\\middleware/ble/cy_ble_stack.h"
+ 246              		.file 13 "Generated_Source\\PSoC6\\pdl\\middleware/ble/cy_ble_stack_host_main.h"
+ 247              		.file 14 "Generated_Source\\PSoC6\\pdl\\middleware/ble/cy_ble_stack_gatt.h"
+ 248              		.file 15 "Generated_Source\\PSoC6\\pdl\\middleware/ble/cy_ble_gap.h"
+ 249              		.file 16 "Generated_Source\\PSoC6/ADC.h"
+ 250              		.file 17 "Generated_Source\\PSoC6/I2C_Main.h"
+ 251              		.file 18 "Generated_Source\\PSoC6/UART_Debug.h"
+ 252              		.file 19 "Generated_Source\\PSoC6/PWM_Trig.h"
+ 253              		.file 20 "Generated_Source\\PSoC6/Counter_Echo.h"
+ 254              		.file 21 "Generated_Source\\PSoC6/IR.h"
+ 255              		.file 22 "Generated_Source\\PSoC6/PWM_Buz.h"
+ 256              		.file 23 "Generated_Source\\PSoC6/SPI_LEDCTRL.h"
+ 257              		.section	.debug_info,"",%progbits
+ 258              	.Ldebug_info0:
+ 259 0000 5E100000 		.4byte	0x105e
+ 260 0004 0400     		.2byte	0x4
+ 261 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 262 000a 04       		.byte	0x4
+ 263 000b 01       		.uleb128 0x1
+ 264 000c D4040000 		.4byte	.LASF302
+ 265 0010 0C       		.byte	0xc
+ 266 0011 5B100000 		.4byte	.LASF303
+ 267 0015 21070000 		.4byte	.LASF304
+ 268 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 269 001d 00000000 		.4byte	0
+ 270 0021 00000000 		.4byte	.Ldebug_line0
+ 271 0025 02       		.uleb128 0x2
+ 272 0026 02       		.byte	0x2
+ 273 0027 05       		.byte	0x5
+ 274 0028 A90F0000 		.4byte	.LASF0
+ 275 002c 02       		.uleb128 0x2
+ 276 002d 01       		.byte	0x1
+ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccgMj3kb.s 			page 11
+
+
+ 277 002e 08       		.byte	0x8
+ 278 002f 33120000 		.4byte	.LASF1
+ 279 0033 02       		.uleb128 0x2
+ 280 0034 01       		.byte	0x1
+ 281 0035 06       		.byte	0x6
+ 282 0036 64130000 		.4byte	.LASF2
+ 283 003a 03       		.uleb128 0x3
+ 284 003b FD100000 		.4byte	.LASF3
+ 285 003f 02       		.byte	0x2
+ 286 0040 1D       		.byte	0x1d
+ 287 0041 2C000000 		.4byte	0x2c
+ 288 0045 03       		.uleb128 0x3
+ 289 0046 3C0C0000 		.4byte	.LASF4
+ 290 004a 02       		.byte	0x2
+ 291 004b 29       		.byte	0x29
+ 292 004c 25000000 		.4byte	0x25
+ 293 0050 03       		.uleb128 0x3
+ 294 0051 9B090000 		.4byte	.LASF5
+ 295 0055 02       		.byte	0x2
+ 296 0056 2B       		.byte	0x2b
+ 297 0057 5B000000 		.4byte	0x5b
+ 298 005b 02       		.uleb128 0x2
+ 299 005c 02       		.byte	0x2
+ 300 005d 07       		.byte	0x7
+ 301 005e 1B0E0000 		.4byte	.LASF6
+ 302 0062 02       		.uleb128 0x2
+ 303 0063 04       		.byte	0x4
+ 304 0064 05       		.byte	0x5
+ 305 0065 FC0F0000 		.4byte	.LASF7
+ 306 0069 03       		.uleb128 0x3
+ 307 006a 41120000 		.4byte	.LASF8
+ 308 006e 02       		.byte	0x2
+ 309 006f 41       		.byte	0x41
+ 310 0070 74000000 		.4byte	0x74
+ 311 0074 02       		.uleb128 0x2
+ 312 0075 04       		.byte	0x4
+ 313 0076 07       		.byte	0x7
+ 314 0077 B2110000 		.4byte	.LASF9
+ 315 007b 02       		.uleb128 0x2
+ 316 007c 08       		.byte	0x8
+ 317 007d 05       		.byte	0x5
+ 318 007e C70B0000 		.4byte	.LASF10
+ 319 0082 02       		.uleb128 0x2
+ 320 0083 08       		.byte	0x8
+ 321 0084 07       		.byte	0x7
+ 322 0085 16060000 		.4byte	.LASF11
+ 323 0089 04       		.uleb128 0x4
+ 324 008a 04       		.byte	0x4
+ 325 008b 05       		.byte	0x5
+ 326 008c 696E7400 		.ascii	"int\000"
+ 327 0090 02       		.uleb128 0x2
+ 328 0091 04       		.byte	0x4
+ 329 0092 07       		.byte	0x7
+ 330 0093 3E010000 		.4byte	.LASF12
+ 331 0097 03       		.uleb128 0x3
+ 332 0098 0A0B0000 		.4byte	.LASF13
+ 333 009c 03       		.byte	0x3
+ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccgMj3kb.s 			page 12
+
+
+ 334 009d 18       		.byte	0x18
+ 335 009e 3A000000 		.4byte	0x3a
+ 336 00a2 03       		.uleb128 0x3
+ 337 00a3 C8050000 		.4byte	.LASF14
+ 338 00a7 03       		.byte	0x3
+ 339 00a8 20       		.byte	0x20
+ 340 00a9 45000000 		.4byte	0x45
+ 341 00ad 03       		.uleb128 0x3
+ 342 00ae 6E0E0000 		.4byte	.LASF15
+ 343 00b2 03       		.byte	0x3
+ 344 00b3 24       		.byte	0x24
+ 345 00b4 50000000 		.4byte	0x50
+ 346 00b8 03       		.uleb128 0x3
+ 347 00b9 B1040000 		.4byte	.LASF16
+ 348 00bd 03       		.byte	0x3
+ 349 00be 30       		.byte	0x30
+ 350 00bf 69000000 		.4byte	0x69
+ 351 00c3 02       		.uleb128 0x2
+ 352 00c4 04       		.byte	0x4
+ 353 00c5 07       		.byte	0x7
+ 354 00c6 090F0000 		.4byte	.LASF17
+ 355 00ca 05       		.uleb128 0x5
+ 356 00cb B8000000 		.4byte	0xb8
+ 357 00cf 02       		.uleb128 0x2
+ 358 00d0 08       		.byte	0x8
+ 359 00d1 04       		.byte	0x4
+ 360 00d2 380E0000 		.4byte	.LASF18
+ 361 00d6 06       		.uleb128 0x6
+ 362 00d7 B8       		.byte	0xb8
+ 363 00d8 04       		.byte	0x4
+ 364 00d9 34       		.byte	0x34
+ 365 00da E7040000 		.4byte	0x4e7
+ 366 00de 07       		.uleb128 0x7
+ 367 00df 2D020000 		.4byte	.LASF19
+ 368 00e3 04       		.byte	0x4
+ 369 00e4 37       		.byte	0x37
+ 370 00e5 B8000000 		.4byte	0xb8
+ 371 00e9 00       		.byte	0
+ 372 00ea 07       		.uleb128 0x7
+ 373 00eb F7000000 		.4byte	.LASF20
+ 374 00ef 04       		.byte	0x4
+ 375 00f0 38       		.byte	0x38
+ 376 00f1 B8000000 		.4byte	0xb8
+ 377 00f5 04       		.byte	0x4
+ 378 00f6 07       		.uleb128 0x7
+ 379 00f7 EE000000 		.4byte	.LASF21
+ 380 00fb 04       		.byte	0x4
+ 381 00fc 39       		.byte	0x39
+ 382 00fd B8000000 		.4byte	0xb8
+ 383 0101 08       		.byte	0x8
+ 384 0102 07       		.uleb128 0x7
+ 385 0103 D5060000 		.4byte	.LASF22
+ 386 0107 04       		.byte	0x4
+ 387 0108 3A       		.byte	0x3a
+ 388 0109 B8000000 		.4byte	0xb8
+ 389 010d 0C       		.byte	0xc
+ 390 010e 07       		.uleb128 0x7
+ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccgMj3kb.s 			page 13
+
+
+ 391 010f 83100000 		.4byte	.LASF23
+ 392 0113 04       		.byte	0x4
+ 393 0114 3B       		.byte	0x3b
+ 394 0115 B8000000 		.4byte	0xb8
+ 395 0119 10       		.byte	0x10
+ 396 011a 07       		.uleb128 0x7
+ 397 011b 520C0000 		.4byte	.LASF24
+ 398 011f 04       		.byte	0x4
+ 399 0120 3C       		.byte	0x3c
+ 400 0121 B8000000 		.4byte	0xb8
+ 401 0125 14       		.byte	0x14
+ 402 0126 07       		.uleb128 0x7
+ 403 0127 BF080000 		.4byte	.LASF25
+ 404 012b 04       		.byte	0x4
+ 405 012c 3D       		.byte	0x3d
+ 406 012d B8000000 		.4byte	0xb8
+ 407 0131 18       		.byte	0x18
+ 408 0132 07       		.uleb128 0x7
+ 409 0133 370B0000 		.4byte	.LASF26
+ 410 0137 04       		.byte	0x4
+ 411 0138 3E       		.byte	0x3e
+ 412 0139 B8000000 		.4byte	0xb8
+ 413 013d 1C       		.byte	0x1c
+ 414 013e 07       		.uleb128 0x7
+ 415 013f D50B0000 		.4byte	.LASF27
+ 416 0143 04       		.byte	0x4
+ 417 0144 3F       		.byte	0x3f
+ 418 0145 B8000000 		.4byte	0xb8
+ 419 0149 20       		.byte	0x20
+ 420 014a 07       		.uleb128 0x7
+ 421 014b B8090000 		.4byte	.LASF28
+ 422 014f 04       		.byte	0x4
+ 423 0150 40       		.byte	0x40
+ 424 0151 B8000000 		.4byte	0xb8
+ 425 0155 24       		.byte	0x24
+ 426 0156 07       		.uleb128 0x7
+ 427 0157 24100000 		.4byte	.LASF29
+ 428 015b 04       		.byte	0x4
+ 429 015c 43       		.byte	0x43
+ 430 015d 97000000 		.4byte	0x97
+ 431 0161 28       		.byte	0x28
+ 432 0162 07       		.uleb128 0x7
+ 433 0163 EE0F0000 		.4byte	.LASF30
+ 434 0167 04       		.byte	0x4
+ 435 0168 44       		.byte	0x44
+ 436 0169 97000000 		.4byte	0x97
+ 437 016d 29       		.byte	0x29
+ 438 016e 07       		.uleb128 0x7
+ 439 016f 39090000 		.4byte	.LASF31
+ 440 0173 04       		.byte	0x4
+ 441 0174 45       		.byte	0x45
+ 442 0175 97000000 		.4byte	0x97
+ 443 0179 2A       		.byte	0x2a
+ 444 017a 07       		.uleb128 0x7
+ 445 017b 63100000 		.4byte	.LASF32
+ 446 017f 04       		.byte	0x4
+ 447 0180 46       		.byte	0x46
+ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccgMj3kb.s 			page 14
+
+
+ 448 0181 97000000 		.4byte	0x97
+ 449 0185 2B       		.byte	0x2b
+ 450 0186 07       		.uleb128 0x7
+ 451 0187 4F100000 		.4byte	.LASF33
+ 452 018b 04       		.byte	0x4
+ 453 018c 47       		.byte	0x47
+ 454 018d 97000000 		.4byte	0x97
+ 455 0191 2C       		.byte	0x2c
+ 456 0192 07       		.uleb128 0x7
+ 457 0193 A5110000 		.4byte	.LASF34
+ 458 0197 04       		.byte	0x4
+ 459 0198 48       		.byte	0x48
+ 460 0199 97000000 		.4byte	0x97
+ 461 019d 2D       		.byte	0x2d
+ 462 019e 07       		.uleb128 0x7
+ 463 019f 0C150000 		.4byte	.LASF35
+ 464 01a3 04       		.byte	0x4
+ 465 01a4 49       		.byte	0x49
+ 466 01a5 97000000 		.4byte	0x97
+ 467 01a9 2E       		.byte	0x2e
+ 468 01aa 07       		.uleb128 0x7
+ 469 01ab F1130000 		.4byte	.LASF36
+ 470 01af 04       		.byte	0x4
+ 471 01b0 4A       		.byte	0x4a
+ 472 01b1 97000000 		.4byte	0x97
+ 473 01b5 2F       		.byte	0x2f
+ 474 01b6 07       		.uleb128 0x7
+ 475 01b7 97030000 		.4byte	.LASF37
+ 476 01bb 04       		.byte	0x4
+ 477 01bc 4B       		.byte	0x4b
+ 478 01bd 97000000 		.4byte	0x97
+ 479 01c1 30       		.byte	0x30
+ 480 01c2 07       		.uleb128 0x7
+ 481 01c3 030D0000 		.4byte	.LASF38
+ 482 01c7 04       		.byte	0x4
+ 483 01c8 4E       		.byte	0x4e
+ 484 01c9 97000000 		.4byte	0x97
+ 485 01cd 31       		.byte	0x31
+ 486 01ce 07       		.uleb128 0x7
+ 487 01cf 82130000 		.4byte	.LASF39
+ 488 01d3 04       		.byte	0x4
+ 489 01d4 4F       		.byte	0x4f
+ 490 01d5 97000000 		.4byte	0x97
+ 491 01d9 32       		.byte	0x32
+ 492 01da 07       		.uleb128 0x7
+ 493 01db D20C0000 		.4byte	.LASF40
+ 494 01df 04       		.byte	0x4
+ 495 01e0 50       		.byte	0x50
+ 496 01e1 97000000 		.4byte	0x97
+ 497 01e5 33       		.byte	0x33
+ 498 01e6 07       		.uleb128 0x7
+ 499 01e7 F2090000 		.4byte	.LASF41
+ 500 01eb 04       		.byte	0x4
+ 501 01ec 51       		.byte	0x51
+ 502 01ed 97000000 		.4byte	0x97
+ 503 01f1 34       		.byte	0x34
+ 504 01f2 07       		.uleb128 0x7
+ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccgMj3kb.s 			page 15
+
+
+ 505 01f3 7B060000 		.4byte	.LASF42
+ 506 01f7 04       		.byte	0x4
+ 507 01f8 52       		.byte	0x52
+ 508 01f9 A2000000 		.4byte	0xa2
+ 509 01fd 36       		.byte	0x36
+ 510 01fe 07       		.uleb128 0x7
+ 511 01ff 68020000 		.4byte	.LASF43
+ 512 0203 04       		.byte	0x4
+ 513 0204 53       		.byte	0x53
+ 514 0205 A2000000 		.4byte	0xa2
+ 515 0209 38       		.byte	0x38
+ 516 020a 07       		.uleb128 0x7
+ 517 020b 960C0000 		.4byte	.LASF44
+ 518 020f 04       		.byte	0x4
+ 519 0210 54       		.byte	0x54
+ 520 0211 A2000000 		.4byte	0xa2
+ 521 0215 3A       		.byte	0x3a
+ 522 0216 07       		.uleb128 0x7
+ 523 0217 56060000 		.4byte	.LASF45
+ 524 021b 04       		.byte	0x4
+ 525 021c 55       		.byte	0x55
+ 526 021d 97000000 		.4byte	0x97
+ 527 0221 3C       		.byte	0x3c
+ 528 0222 07       		.uleb128 0x7
+ 529 0223 20080000 		.4byte	.LASF46
+ 530 0227 04       		.byte	0x4
+ 531 0228 56       		.byte	0x56
+ 532 0229 97000000 		.4byte	0x97
+ 533 022d 3D       		.byte	0x3d
+ 534 022e 07       		.uleb128 0x7
+ 535 022f BF0E0000 		.4byte	.LASF47
+ 536 0233 04       		.byte	0x4
+ 537 0234 57       		.byte	0x57
+ 538 0235 97000000 		.4byte	0x97
+ 539 0239 3E       		.byte	0x3e
+ 540 023a 07       		.uleb128 0x7
+ 541 023b 460C0000 		.4byte	.LASF48
+ 542 023f 04       		.byte	0x4
+ 543 0240 58       		.byte	0x58
+ 544 0241 97000000 		.4byte	0x97
+ 545 0245 3F       		.byte	0x3f
+ 546 0246 07       		.uleb128 0x7
+ 547 0247 A4010000 		.4byte	.LASF49
+ 548 024b 04       		.byte	0x4
+ 549 024c 59       		.byte	0x59
+ 550 024d 97000000 		.4byte	0x97
+ 551 0251 40       		.byte	0x40
+ 552 0252 07       		.uleb128 0x7
+ 553 0253 230D0000 		.4byte	.LASF50
+ 554 0257 04       		.byte	0x4
+ 555 0258 5A       		.byte	0x5a
+ 556 0259 97000000 		.4byte	0x97
+ 557 025d 41       		.byte	0x41
+ 558 025e 07       		.uleb128 0x7
+ 559 025f 8C050000 		.4byte	.LASF51
+ 560 0263 04       		.byte	0x4
+ 561 0264 5B       		.byte	0x5b
+ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccgMj3kb.s 			page 16
+
+
+ 562 0265 97000000 		.4byte	0x97
+ 563 0269 42       		.byte	0x42
+ 564 026a 07       		.uleb128 0x7
+ 565 026b 59090000 		.4byte	.LASF52
+ 566 026f 04       		.byte	0x4
+ 567 0270 5C       		.byte	0x5c
+ 568 0271 97000000 		.4byte	0x97
+ 569 0275 43       		.byte	0x43
+ 570 0276 07       		.uleb128 0x7
+ 571 0277 A90A0000 		.4byte	.LASF53
+ 572 027b 04       		.byte	0x4
+ 573 027c 5D       		.byte	0x5d
+ 574 027d 97000000 		.4byte	0x97
+ 575 0281 44       		.byte	0x44
+ 576 0282 07       		.uleb128 0x7
+ 577 0283 71100000 		.4byte	.LASF54
+ 578 0287 04       		.byte	0x4
+ 579 0288 5E       		.byte	0x5e
+ 580 0289 B8000000 		.4byte	0xb8
+ 581 028d 48       		.byte	0x48
+ 582 028e 07       		.uleb128 0x7
+ 583 028f CB0A0000 		.4byte	.LASF55
+ 584 0293 04       		.byte	0x4
+ 585 0294 5F       		.byte	0x5f
+ 586 0295 B8000000 		.4byte	0xb8
+ 587 0299 4C       		.byte	0x4c
+ 588 029a 07       		.uleb128 0x7
+ 589 029b 15130000 		.4byte	.LASF56
+ 590 029f 04       		.byte	0x4
+ 591 02a0 60       		.byte	0x60
+ 592 02a1 97000000 		.4byte	0x97
+ 593 02a5 50       		.byte	0x50
+ 594 02a6 07       		.uleb128 0x7
+ 595 02a7 3B080000 		.4byte	.LASF57
+ 596 02ab 04       		.byte	0x4
+ 597 02ac 61       		.byte	0x61
+ 598 02ad 97000000 		.4byte	0x97
+ 599 02b1 51       		.byte	0x51
+ 600 02b2 07       		.uleb128 0x7
+ 601 02b3 1A0C0000 		.4byte	.LASF58
+ 602 02b7 04       		.byte	0x4
+ 603 02b8 62       		.byte	0x62
+ 604 02b9 97000000 		.4byte	0x97
+ 605 02bd 52       		.byte	0x52
+ 606 02be 07       		.uleb128 0x7
+ 607 02bf D70D0000 		.4byte	.LASF59
+ 608 02c3 04       		.byte	0x4
+ 609 02c4 63       		.byte	0x63
+ 610 02c5 97000000 		.4byte	0x97
+ 611 02c9 53       		.byte	0x53
+ 612 02ca 07       		.uleb128 0x7
+ 613 02cb B9120000 		.4byte	.LASF60
+ 614 02cf 04       		.byte	0x4
+ 615 02d0 64       		.byte	0x64
+ 616 02d1 97000000 		.4byte	0x97
+ 617 02d5 54       		.byte	0x54
+ 618 02d6 07       		.uleb128 0x7
+ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccgMj3kb.s 			page 17
+
+
+ 619 02d7 97080000 		.4byte	.LASF61
+ 620 02db 04       		.byte	0x4
+ 621 02dc 65       		.byte	0x65
+ 622 02dd 97000000 		.4byte	0x97
+ 623 02e1 55       		.byte	0x55
+ 624 02e2 07       		.uleb128 0x7
+ 625 02e3 00000000 		.4byte	.LASF62
+ 626 02e7 04       		.byte	0x4
+ 627 02e8 66       		.byte	0x66
+ 628 02e9 97000000 		.4byte	0x97
+ 629 02ed 56       		.byte	0x56
+ 630 02ee 07       		.uleb128 0x7
+ 631 02ef F50E0000 		.4byte	.LASF63
+ 632 02f3 04       		.byte	0x4
+ 633 02f4 67       		.byte	0x67
+ 634 02f5 97000000 		.4byte	0x97
+ 635 02f9 57       		.byte	0x57
+ 636 02fa 07       		.uleb128 0x7
+ 637 02fb 0C080000 		.4byte	.LASF64
+ 638 02ff 04       		.byte	0x4
+ 639 0300 68       		.byte	0x68
+ 640 0301 97000000 		.4byte	0x97
+ 641 0305 58       		.byte	0x58
+ 642 0306 07       		.uleb128 0x7
+ 643 0307 73140000 		.4byte	.LASF65
+ 644 030b 04       		.byte	0x4
+ 645 030c 69       		.byte	0x69
+ 646 030d 97000000 		.4byte	0x97
+ 647 0311 59       		.byte	0x59
+ 648 0312 07       		.uleb128 0x7
+ 649 0313 77130000 		.4byte	.LASF66
+ 650 0317 04       		.byte	0x4
+ 651 0318 6E       		.byte	0x6e
+ 652 0319 AD000000 		.4byte	0xad
+ 653 031d 5A       		.byte	0x5a
+ 654 031e 07       		.uleb128 0x7
+ 655 031f 18010000 		.4byte	.LASF67
+ 656 0323 04       		.byte	0x4
+ 657 0324 6F       		.byte	0x6f
+ 658 0325 AD000000 		.4byte	0xad
+ 659 0329 5C       		.byte	0x5c
+ 660 032a 07       		.uleb128 0x7
+ 661 032b DD0B0000 		.4byte	.LASF68
+ 662 032f 04       		.byte	0x4
+ 663 0330 70       		.byte	0x70
+ 664 0331 97000000 		.4byte	0x97
+ 665 0335 5E       		.byte	0x5e
+ 666 0336 07       		.uleb128 0x7
+ 667 0337 AC130000 		.4byte	.LASF69
+ 668 033b 04       		.byte	0x4
+ 669 033c 71       		.byte	0x71
+ 670 033d 97000000 		.4byte	0x97
+ 671 0341 5F       		.byte	0x5f
+ 672 0342 07       		.uleb128 0x7
+ 673 0343 8A090000 		.4byte	.LASF70
+ 674 0347 04       		.byte	0x4
+ 675 0348 72       		.byte	0x72
+ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccgMj3kb.s 			page 18
+
+
+ 676 0349 97000000 		.4byte	0x97
+ 677 034d 60       		.byte	0x60
+ 678 034e 07       		.uleb128 0x7
+ 679 034f F90A0000 		.4byte	.LASF71
+ 680 0353 04       		.byte	0x4
+ 681 0354 73       		.byte	0x73
+ 682 0355 B8000000 		.4byte	0xb8
+ 683 0359 64       		.byte	0x64
+ 684 035a 07       		.uleb128 0x7
+ 685 035b 55150000 		.4byte	.LASF72
+ 686 035f 04       		.byte	0x4
+ 687 0360 76       		.byte	0x76
+ 688 0361 AD000000 		.4byte	0xad
+ 689 0365 68       		.byte	0x68
+ 690 0366 07       		.uleb128 0x7
+ 691 0367 AE020000 		.4byte	.LASF73
+ 692 036b 04       		.byte	0x4
+ 693 036c 77       		.byte	0x77
+ 694 036d AD000000 		.4byte	0xad
+ 695 0371 6A       		.byte	0x6a
+ 696 0372 07       		.uleb128 0x7
+ 697 0373 680C0000 		.4byte	.LASF74
+ 698 0377 04       		.byte	0x4
+ 699 0378 78       		.byte	0x78
+ 700 0379 AD000000 		.4byte	0xad
+ 701 037d 6C       		.byte	0x6c
+ 702 037e 07       		.uleb128 0x7
+ 703 037f F6020000 		.4byte	.LASF75
+ 704 0383 04       		.byte	0x4
+ 705 0384 79       		.byte	0x79
+ 706 0385 AD000000 		.4byte	0xad
+ 707 0389 6E       		.byte	0x6e
+ 708 038a 07       		.uleb128 0x7
+ 709 038b 400B0000 		.4byte	.LASF76
+ 710 038f 04       		.byte	0x4
+ 711 0390 7B       		.byte	0x7b
+ 712 0391 97000000 		.4byte	0x97
+ 713 0395 70       		.byte	0x70
+ 714 0396 07       		.uleb128 0x7
+ 715 0397 1B040000 		.4byte	.LASF77
+ 716 039b 04       		.byte	0x4
+ 717 039c 7C       		.byte	0x7c
+ 718 039d 97000000 		.4byte	0x97
+ 719 03a1 71       		.byte	0x71
+ 720 03a2 07       		.uleb128 0x7
+ 721 03a3 03030000 		.4byte	.LASF78
+ 722 03a7 04       		.byte	0x4
+ 723 03a8 7D       		.byte	0x7d
+ 724 03a9 97000000 		.4byte	0x97
+ 725 03ad 72       		.byte	0x72
+ 726 03ae 07       		.uleb128 0x7
+ 727 03af CB010000 		.4byte	.LASF79
+ 728 03b3 04       		.byte	0x4
+ 729 03b4 7E       		.byte	0x7e
+ 730 03b5 97000000 		.4byte	0x97
+ 731 03b9 73       		.byte	0x73
+ 732 03ba 07       		.uleb128 0x7
+ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccgMj3kb.s 			page 19
+
+
+ 733 03bb 6F0F0000 		.4byte	.LASF80
+ 734 03bf 04       		.byte	0x4
+ 735 03c0 80       		.byte	0x80
+ 736 03c1 AD000000 		.4byte	0xad
+ 737 03c5 74       		.byte	0x74
+ 738 03c6 07       		.uleb128 0x7
+ 739 03c7 E90D0000 		.4byte	.LASF81
+ 740 03cb 04       		.byte	0x4
+ 741 03cc 81       		.byte	0x81
+ 742 03cd AD000000 		.4byte	0xad
+ 743 03d1 76       		.byte	0x76
+ 744 03d2 07       		.uleb128 0x7
+ 745 03d3 2A140000 		.4byte	.LASF82
+ 746 03d7 04       		.byte	0x4
+ 747 03d8 82       		.byte	0x82
+ 748 03d9 AD000000 		.4byte	0xad
+ 749 03dd 78       		.byte	0x78
+ 750 03de 07       		.uleb128 0x7
+ 751 03df 2D060000 		.4byte	.LASF83
+ 752 03e3 04       		.byte	0x4
+ 753 03e4 83       		.byte	0x83
+ 754 03e5 AD000000 		.4byte	0xad
+ 755 03e9 7A       		.byte	0x7a
+ 756 03ea 07       		.uleb128 0x7
+ 757 03eb 12110000 		.4byte	.LASF84
+ 758 03ef 04       		.byte	0x4
+ 759 03f0 86       		.byte	0x86
+ 760 03f1 97000000 		.4byte	0x97
+ 761 03f5 7C       		.byte	0x7c
+ 762 03f6 07       		.uleb128 0x7
+ 763 03f7 26130000 		.4byte	.LASF85
+ 764 03fb 04       		.byte	0x4
+ 765 03fc 87       		.byte	0x87
+ 766 03fd 97000000 		.4byte	0x97
+ 767 0401 7D       		.byte	0x7d
+ 768 0402 07       		.uleb128 0x7
+ 769 0403 D0050000 		.4byte	.LASF86
+ 770 0407 04       		.byte	0x4
+ 771 0408 88       		.byte	0x88
+ 772 0409 97000000 		.4byte	0x97
+ 773 040d 7E       		.byte	0x7e
+ 774 040e 07       		.uleb128 0x7
+ 775 040f BA040000 		.4byte	.LASF87
+ 776 0413 04       		.byte	0x4
+ 777 0414 89       		.byte	0x89
+ 778 0415 97000000 		.4byte	0x97
+ 779 0419 7F       		.byte	0x7f
+ 780 041a 07       		.uleb128 0x7
+ 781 041b 42060000 		.4byte	.LASF88
+ 782 041f 04       		.byte	0x4
+ 783 0420 8A       		.byte	0x8a
+ 784 0421 97000000 		.4byte	0x97
+ 785 0425 80       		.byte	0x80
+ 786 0426 07       		.uleb128 0x7
+ 787 0427 6C000000 		.4byte	.LASF89
+ 788 042b 04       		.byte	0x4
+ 789 042c 8D       		.byte	0x8d
+ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccgMj3kb.s 			page 20
+
+
+ 790 042d B8000000 		.4byte	0xb8
+ 791 0431 84       		.byte	0x84
+ 792 0432 07       		.uleb128 0x7
+ 793 0433 3C110000 		.4byte	.LASF90
+ 794 0437 04       		.byte	0x4
+ 795 0438 8E       		.byte	0x8e
+ 796 0439 B8000000 		.4byte	0xb8
+ 797 043d 88       		.byte	0x88
+ 798 043e 07       		.uleb128 0x7
+ 799 043f 0E0D0000 		.4byte	.LASF91
+ 800 0443 04       		.byte	0x4
+ 801 0444 8F       		.byte	0x8f
+ 802 0445 B8000000 		.4byte	0xb8
+ 803 0449 8C       		.byte	0x8c
+ 804 044a 07       		.uleb128 0x7
+ 805 044b 13120000 		.4byte	.LASF92
+ 806 044f 04       		.byte	0x4
+ 807 0450 90       		.byte	0x90
+ 808 0451 B8000000 		.4byte	0xb8
+ 809 0455 90       		.byte	0x90
+ 810 0456 07       		.uleb128 0x7
+ 811 0457 E8100000 		.4byte	.LASF93
+ 812 045b 04       		.byte	0x4
+ 813 045c 91       		.byte	0x91
+ 814 045d B8000000 		.4byte	0xb8
+ 815 0461 94       		.byte	0x94
+ 816 0462 07       		.uleb128 0x7
+ 817 0463 3A040000 		.4byte	.LASF94
+ 818 0467 04       		.byte	0x4
+ 819 0468 92       		.byte	0x92
+ 820 0469 B8000000 		.4byte	0xb8
+ 821 046d 98       		.byte	0x98
+ 822 046e 07       		.uleb128 0x7
+ 823 046f 74110000 		.4byte	.LASF95
+ 824 0473 04       		.byte	0x4
+ 825 0474 93       		.byte	0x93
+ 826 0475 B8000000 		.4byte	0xb8
+ 827 0479 9C       		.byte	0x9c
+ 828 047a 07       		.uleb128 0x7
+ 829 047b 43090000 		.4byte	.LASF96
+ 830 047f 04       		.byte	0x4
+ 831 0480 94       		.byte	0x94
+ 832 0481 B8000000 		.4byte	0xb8
+ 833 0485 A0       		.byte	0xa0
+ 834 0486 07       		.uleb128 0x7
+ 835 0487 27110000 		.4byte	.LASF97
+ 836 048b 04       		.byte	0x4
+ 837 048c 95       		.byte	0x95
+ 838 048d AD000000 		.4byte	0xad
+ 839 0491 A4       		.byte	0xa4
+ 840 0492 07       		.uleb128 0x7
+ 841 0493 490F0000 		.4byte	.LASF98
+ 842 0497 04       		.byte	0x4
+ 843 0498 96       		.byte	0x96
+ 844 0499 AD000000 		.4byte	0xad
+ 845 049d A6       		.byte	0xa6
+ 846 049e 07       		.uleb128 0x7
+ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccgMj3kb.s 			page 21
+
+
+ 847 049f E8110000 		.4byte	.LASF99
+ 848 04a3 04       		.byte	0x4
+ 849 04a4 97       		.byte	0x97
+ 850 04a5 AD000000 		.4byte	0xad
+ 851 04a9 A8       		.byte	0xa8
+ 852 04aa 07       		.uleb128 0x7
+ 853 04ab B90B0000 		.4byte	.LASF100
+ 854 04af 04       		.byte	0x4
+ 855 04b0 98       		.byte	0x98
+ 856 04b1 AD000000 		.4byte	0xad
+ 857 04b5 AA       		.byte	0xaa
+ 858 04b6 07       		.uleb128 0x7
+ 859 04b7 3E030000 		.4byte	.LASF101
+ 860 04bb 04       		.byte	0x4
+ 861 04bc 99       		.byte	0x99
+ 862 04bd AD000000 		.4byte	0xad
+ 863 04c1 AC       		.byte	0xac
+ 864 04c2 07       		.uleb128 0x7
+ 865 04c3 560D0000 		.4byte	.LASF102
+ 866 04c7 04       		.byte	0x4
+ 867 04c8 9A       		.byte	0x9a
+ 868 04c9 AD000000 		.4byte	0xad
+ 869 04cd AE       		.byte	0xae
+ 870 04ce 07       		.uleb128 0x7
+ 871 04cf 4C030000 		.4byte	.LASF103
+ 872 04d3 04       		.byte	0x4
+ 873 04d4 9D       		.byte	0x9d
+ 874 04d5 AD000000 		.4byte	0xad
+ 875 04d9 B0       		.byte	0xb0
+ 876 04da 07       		.uleb128 0x7
+ 877 04db 4C120000 		.4byte	.LASF104
+ 878 04df 04       		.byte	0x4
+ 879 04e0 9E       		.byte	0x9e
+ 880 04e1 B8000000 		.4byte	0xb8
+ 881 04e5 B4       		.byte	0xb4
+ 882 04e6 00       		.byte	0
+ 883 04e7 03       		.uleb128 0x3
+ 884 04e8 CD130000 		.4byte	.LASF105
+ 885 04ec 04       		.byte	0x4
+ 886 04ed 9F       		.byte	0x9f
+ 887 04ee D6000000 		.4byte	0xd6
+ 888 04f2 08       		.uleb128 0x8
+ 889 04f3 A8100000 		.4byte	.LASF106
+ 890 04f7 05       		.byte	0x5
+ 891 04f8 F601     		.2byte	0x1f6
+ 892 04fa FE040000 		.4byte	0x4fe
+ 893 04fe 02       		.uleb128 0x2
+ 894 04ff 01       		.byte	0x1
+ 895 0500 08       		.byte	0x8
+ 896 0501 520A0000 		.4byte	.LASF107
+ 897 0505 02       		.uleb128 0x2
+ 898 0506 04       		.byte	0x4
+ 899 0507 04       		.byte	0x4
+ 900 0508 CE040000 		.4byte	.LASF108
+ 901 050c 02       		.uleb128 0x2
+ 902 050d 08       		.byte	0x8
+ 903 050e 04       		.byte	0x4
+ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccgMj3kb.s 			page 22
+
+
+ 904 050f 56080000 		.4byte	.LASF109
+ 905 0513 09       		.uleb128 0x9
+ 906 0514 04       		.byte	0x4
+ 907 0515 02       		.uleb128 0x2
+ 908 0516 01       		.byte	0x1
+ 909 0517 02       		.byte	0x2
+ 910 0518 5D080000 		.4byte	.LASF110
+ 911 051c 0A       		.uleb128 0xa
+ 912 051d 01       		.byte	0x1
+ 913 051e 2C000000 		.4byte	0x2c
+ 914 0522 06       		.byte	0x6
+ 915 0523 1304     		.2byte	0x413
+ 916 0525 42050000 		.4byte	0x542
+ 917 0529 0B       		.uleb128 0xb
+ 918 052a BA030000 		.4byte	.LASF111
+ 919 052e 00       		.byte	0
+ 920 052f 0B       		.uleb128 0xb
+ 921 0530 08070000 		.4byte	.LASF112
+ 922 0534 01       		.byte	0x1
+ 923 0535 0B       		.uleb128 0xb
+ 924 0536 3A0A0000 		.4byte	.LASF113
+ 925 053a 02       		.byte	0x2
+ 926 053b 0B       		.uleb128 0xb
+ 927 053c B1010000 		.4byte	.LASF114
+ 928 0540 03       		.byte	0x3
+ 929 0541 00       		.byte	0
+ 930 0542 08       		.uleb128 0x8
+ 931 0543 95140000 		.4byte	.LASF115
+ 932 0547 06       		.byte	0x6
+ 933 0548 1804     		.2byte	0x418
+ 934 054a 1C050000 		.4byte	0x51c
+ 935 054e 0C       		.uleb128 0xc
+ 936 054f 78       		.byte	0x78
+ 937 0550 06       		.byte	0x6
+ 938 0551 0205     		.2byte	0x502
+ 939 0553 1B060000 		.4byte	0x61b
+ 940 0557 0D       		.uleb128 0xd
+ 941 0558 90070000 		.4byte	.LASF116
+ 942 055c 06       		.byte	0x6
+ 943 055d 0405     		.2byte	0x504
+ 944 055f B8000000 		.4byte	0xb8
+ 945 0563 00       		.byte	0
+ 946 0564 0D       		.uleb128 0xd
+ 947 0565 28120000 		.4byte	.LASF117
+ 948 0569 06       		.byte	0x6
+ 949 056a 0505     		.2byte	0x505
+ 950 056c B8000000 		.4byte	0xb8
+ 951 0570 04       		.byte	0x4
+ 952 0571 0D       		.uleb128 0xd
+ 953 0572 B20E0000 		.4byte	.LASF118
+ 954 0576 06       		.byte	0x6
+ 955 0577 0605     		.2byte	0x506
+ 956 0579 B8000000 		.4byte	0xb8
+ 957 057d 08       		.byte	0x8
+ 958 057e 0D       		.uleb128 0xd
+ 959 057f 8A110000 		.4byte	.LASF119
+ 960 0583 06       		.byte	0x6
+ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccgMj3kb.s 			page 23
+
+
+ 961 0584 0705     		.2byte	0x507
+ 962 0586 B8000000 		.4byte	0xb8
+ 963 058a 0C       		.byte	0xc
+ 964 058b 0D       		.uleb128 0xd
+ 965 058c AB060000 		.4byte	.LASF120
+ 966 0590 06       		.byte	0x6
+ 967 0591 0805     		.2byte	0x508
+ 968 0593 B8000000 		.4byte	0xb8
+ 969 0597 10       		.byte	0x10
+ 970 0598 0D       		.uleb128 0xd
+ 971 0599 A50B0000 		.4byte	.LASF121
+ 972 059d 06       		.byte	0x6
+ 973 059e 0905     		.2byte	0x509
+ 974 05a0 42050000 		.4byte	0x542
+ 975 05a4 14       		.byte	0x14
+ 976 05a5 0D       		.uleb128 0xd
+ 977 05a6 6E0A0000 		.4byte	.LASF122
+ 978 05aa 06       		.byte	0x6
+ 979 05ab 0A05     		.2byte	0x50a
+ 980 05ad B8000000 		.4byte	0xb8
+ 981 05b1 18       		.byte	0x18
+ 982 05b2 0D       		.uleb128 0xd
+ 983 05b3 EE0C0000 		.4byte	.LASF123
+ 984 05b7 06       		.byte	0x6
+ 985 05b8 0B05     		.2byte	0x50b
+ 986 05ba 1B060000 		.4byte	0x61b
+ 987 05be 1C       		.byte	0x1c
+ 988 05bf 0D       		.uleb128 0xd
+ 989 05c0 4C150000 		.4byte	.LASF124
+ 990 05c4 06       		.byte	0x6
+ 991 05c5 0C05     		.2byte	0x50c
+ 992 05c7 B8000000 		.4byte	0xb8
+ 993 05cb 5C       		.byte	0x5c
+ 994 05cc 0D       		.uleb128 0xd
+ 995 05cd 32030000 		.4byte	.LASF125
+ 996 05d1 06       		.byte	0x6
+ 997 05d2 0D05     		.2byte	0x50d
+ 998 05d4 B8000000 		.4byte	0xb8
+ 999 05d8 60       		.byte	0x60
+ 1000 05d9 0D       		.uleb128 0xd
+ 1001 05da 87140000 		.4byte	.LASF126
+ 1002 05de 06       		.byte	0x6
+ 1003 05df 0E05     		.2byte	0x50e
+ 1004 05e1 B8000000 		.4byte	0xb8
+ 1005 05e5 64       		.byte	0x64
+ 1006 05e6 0D       		.uleb128 0xd
+ 1007 05e7 EB0E0000 		.4byte	.LASF127
+ 1008 05eb 06       		.byte	0x6
+ 1009 05ec 0F05     		.2byte	0x50f
+ 1010 05ee B8000000 		.4byte	0xb8
+ 1011 05f2 68       		.byte	0x68
+ 1012 05f3 0D       		.uleb128 0xd
+ 1013 05f4 660B0000 		.4byte	.LASF128
+ 1014 05f8 06       		.byte	0x6
+ 1015 05f9 1005     		.2byte	0x510
+ 1016 05fb B8000000 		.4byte	0xb8
+ 1017 05ff 6C       		.byte	0x6c
+ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccgMj3kb.s 			page 24
+
+
+ 1018 0600 0D       		.uleb128 0xd
+ 1019 0601 FD130000 		.4byte	.LASF129
+ 1020 0605 06       		.byte	0x6
+ 1021 0606 1105     		.2byte	0x511
+ 1022 0608 15050000 		.4byte	0x515
+ 1023 060c 70       		.byte	0x70
+ 1024 060d 0D       		.uleb128 0xd
+ 1025 060e A6090000 		.4byte	.LASF130
+ 1026 0612 06       		.byte	0x6
+ 1027 0613 1205     		.2byte	0x512
+ 1028 0615 B8000000 		.4byte	0xb8
+ 1029 0619 74       		.byte	0x74
+ 1030 061a 00       		.byte	0
+ 1031 061b 0E       		.uleb128 0xe
+ 1032 061c B8000000 		.4byte	0xb8
+ 1033 0620 2B060000 		.4byte	0x62b
+ 1034 0624 0F       		.uleb128 0xf
+ 1035 0625 C3000000 		.4byte	0xc3
+ 1036 0629 0F       		.byte	0xf
+ 1037 062a 00       		.byte	0
+ 1038 062b 08       		.uleb128 0x8
+ 1039 062c 6E070000 		.4byte	.LASF131
+ 1040 0630 06       		.byte	0x6
+ 1041 0631 1305     		.2byte	0x513
+ 1042 0633 4E050000 		.4byte	0x54e
+ 1043 0637 0A       		.uleb128 0xa
+ 1044 0638 01       		.byte	0x1
+ 1045 0639 2C000000 		.4byte	0x2c
+ 1046 063d 07       		.byte	0x7
+ 1047 063e 2402     		.2byte	0x224
+ 1048 0640 51060000 		.4byte	0x651
+ 1049 0644 0B       		.uleb128 0xb
+ 1050 0645 C7020000 		.4byte	.LASF132
+ 1051 0649 00       		.byte	0
+ 1052 064a 0B       		.uleb128 0xb
+ 1053 064b 5A030000 		.4byte	.LASF133
+ 1054 064f 01       		.byte	0x1
+ 1055 0650 00       		.byte	0
+ 1056 0651 08       		.uleb128 0x8
+ 1057 0652 A1120000 		.4byte	.LASF134
+ 1058 0656 07       		.byte	0x7
+ 1059 0657 2702     		.2byte	0x227
+ 1060 0659 37060000 		.4byte	0x637
+ 1061 065d 08       		.uleb128 0x8
+ 1062 065e 74010000 		.4byte	.LASF135
+ 1063 0662 07       		.byte	0x7
+ 1064 0663 3902     		.2byte	0x239
+ 1065 0665 69060000 		.4byte	0x669
+ 1066 0669 10       		.uleb128 0x10
+ 1067 066a 04       		.byte	0x4
+ 1068 066b 6F060000 		.4byte	0x66f
+ 1069 066f 11       		.uleb128 0x11
+ 1070 0670 7A060000 		.4byte	0x67a
+ 1071 0674 12       		.uleb128 0x12
+ 1072 0675 B8000000 		.4byte	0xb8
+ 1073 0679 00       		.byte	0
+ 1074 067a 08       		.uleb128 0x8
+ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccgMj3kb.s 			page 25
+
+
+ 1075 067b 69030000 		.4byte	.LASF136
+ 1076 067f 07       		.byte	0x7
+ 1077 0680 4402     		.2byte	0x244
+ 1078 0682 86060000 		.4byte	0x686
+ 1079 0686 10       		.uleb128 0x10
+ 1080 0687 04       		.byte	0x4
+ 1081 0688 8C060000 		.4byte	0x68c
+ 1082 068c 13       		.uleb128 0x13
+ 1083 068d 51060000 		.4byte	0x651
+ 1084 0691 9B060000 		.4byte	0x69b
+ 1085 0695 12       		.uleb128 0x12
+ 1086 0696 B8000000 		.4byte	0xb8
+ 1087 069a 00       		.byte	0
+ 1088 069b 14       		.uleb128 0x14
+ 1089 069c A3030000 		.4byte	.LASF160
+ 1090 06a0 4C       		.byte	0x4c
+ 1091 06a1 07       		.byte	0x7
+ 1092 06a2 C302     		.2byte	0x2c3
+ 1093 06a4 BA070000 		.4byte	0x7ba
+ 1094 06a8 0D       		.uleb128 0xd
+ 1095 06a9 B5080000 		.4byte	.LASF137
+ 1096 06ad 07       		.byte	0x7
+ 1097 06ae C602     		.2byte	0x2c6
+ 1098 06b0 15050000 		.4byte	0x515
+ 1099 06b4 00       		.byte	0
+ 1100 06b5 0D       		.uleb128 0xd
+ 1101 06b6 320C0000 		.4byte	.LASF138
+ 1102 06ba 07       		.byte	0x7
+ 1103 06bb C702     		.2byte	0x2c7
+ 1104 06bd 15050000 		.4byte	0x515
+ 1105 06c1 01       		.byte	0x1
+ 1106 06c2 0D       		.uleb128 0xd
+ 1107 06c3 D4120000 		.4byte	.LASF139
+ 1108 06c7 07       		.byte	0x7
+ 1109 06c8 C902     		.2byte	0x2c9
+ 1110 06ca CA000000 		.4byte	0xca
+ 1111 06ce 04       		.byte	0x4
+ 1112 06cf 0D       		.uleb128 0xd
+ 1113 06d0 93000000 		.4byte	.LASF140
+ 1114 06d4 07       		.byte	0x7
+ 1115 06d5 CB02     		.2byte	0x2cb
+ 1116 06d7 CA000000 		.4byte	0xca
+ 1117 06db 08       		.byte	0x8
+ 1118 06dc 0D       		.uleb128 0xd
+ 1119 06dd 640D0000 		.4byte	.LASF141
+ 1120 06e1 07       		.byte	0x7
+ 1121 06e2 CC02     		.2byte	0x2cc
+ 1122 06e4 15050000 		.4byte	0x515
+ 1123 06e8 0C       		.byte	0xc
+ 1124 06e9 0D       		.uleb128 0xd
+ 1125 06ea 5C0C0000 		.4byte	.LASF142
+ 1126 06ee 07       		.byte	0x7
+ 1127 06ef CD02     		.2byte	0x2cd
+ 1128 06f1 15050000 		.4byte	0x515
+ 1129 06f5 0D       		.byte	0xd
+ 1130 06f6 0D       		.uleb128 0xd
+ 1131 06f7 A50E0000 		.4byte	.LASF143
+ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccgMj3kb.s 			page 26
+
+
+ 1132 06fb 07       		.byte	0x7
+ 1133 06fc CF02     		.2byte	0x2cf
+ 1134 06fe BA070000 		.4byte	0x7ba
+ 1135 0702 10       		.byte	0x10
+ 1136 0703 0D       		.uleb128 0xd
+ 1137 0704 BA0A0000 		.4byte	.LASF144
+ 1138 0708 07       		.byte	0x7
+ 1139 0709 D002     		.2byte	0x2d0
+ 1140 070b B8000000 		.4byte	0xb8
+ 1141 070f 14       		.byte	0x14
+ 1142 0710 0D       		.uleb128 0xd
+ 1143 0711 2B080000 		.4byte	.LASF145
+ 1144 0715 07       		.byte	0x7
+ 1145 0716 D102     		.2byte	0x2d1
+ 1146 0718 CA000000 		.4byte	0xca
+ 1147 071c 18       		.byte	0x18
+ 1148 071d 0D       		.uleb128 0xd
+ 1149 071e C3090000 		.4byte	.LASF146
+ 1150 0722 07       		.byte	0x7
+ 1151 0723 D202     		.2byte	0x2d2
+ 1152 0725 CA000000 		.4byte	0xca
+ 1153 0729 1C       		.byte	0x1c
+ 1154 072a 0D       		.uleb128 0xd
+ 1155 072b 32010000 		.4byte	.LASF147
+ 1156 072f 07       		.byte	0x7
+ 1157 0730 D402     		.2byte	0x2d4
+ 1158 0732 CA000000 		.4byte	0xca
+ 1159 0736 20       		.byte	0x20
+ 1160 0737 0D       		.uleb128 0xd
+ 1161 0738 5E070000 		.4byte	.LASF148
+ 1162 073c 07       		.byte	0x7
+ 1163 073d D502     		.2byte	0x2d5
+ 1164 073f C0070000 		.4byte	0x7c0
+ 1165 0743 24       		.byte	0x24
+ 1166 0744 0D       		.uleb128 0xd
+ 1167 0745 5F040000 		.4byte	.LASF149
+ 1168 0749 07       		.byte	0x7
+ 1169 074a D702     		.2byte	0x2d7
+ 1170 074c BA070000 		.4byte	0x7ba
+ 1171 0750 28       		.byte	0x28
+ 1172 0751 0D       		.uleb128 0xd
+ 1173 0752 F6060000 		.4byte	.LASF150
+ 1174 0756 07       		.byte	0x7
+ 1175 0757 D802     		.2byte	0x2d8
+ 1176 0759 B8000000 		.4byte	0xb8
+ 1177 075d 2C       		.byte	0x2c
+ 1178 075e 0D       		.uleb128 0xd
+ 1179 075f 81040000 		.4byte	.LASF151
+ 1180 0763 07       		.byte	0x7
+ 1181 0764 D902     		.2byte	0x2d9
+ 1182 0766 CA000000 		.4byte	0xca
+ 1183 076a 30       		.byte	0x30
+ 1184 076b 0D       		.uleb128 0xd
+ 1185 076c 260B0000 		.4byte	.LASF152
+ 1186 0770 07       		.byte	0x7
+ 1187 0771 DA02     		.2byte	0x2da
+ 1188 0773 CA000000 		.4byte	0xca
+ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccgMj3kb.s 			page 27
+
+
+ 1189 0777 34       		.byte	0x34
+ 1190 0778 0D       		.uleb128 0xd
+ 1191 0779 43020000 		.4byte	.LASF153
+ 1192 077d 07       		.byte	0x7
+ 1193 077e DC02     		.2byte	0x2dc
+ 1194 0780 BA070000 		.4byte	0x7ba
+ 1195 0784 38       		.byte	0x38
+ 1196 0785 0D       		.uleb128 0xd
+ 1197 0786 090E0000 		.4byte	.LASF154
+ 1198 078a 07       		.byte	0x7
+ 1199 078b DD02     		.2byte	0x2dd
+ 1200 078d B8000000 		.4byte	0xb8
+ 1201 0791 3C       		.byte	0x3c
+ 1202 0792 0D       		.uleb128 0xd
+ 1203 0793 330D0000 		.4byte	.LASF155
+ 1204 0797 07       		.byte	0x7
+ 1205 0798 DE02     		.2byte	0x2de
+ 1206 079a CA000000 		.4byte	0xca
+ 1207 079e 40       		.byte	0x40
+ 1208 079f 0D       		.uleb128 0xd
+ 1209 07a0 4D080000 		.4byte	.LASF156
+ 1210 07a4 07       		.byte	0x7
+ 1211 07a5 E402     		.2byte	0x2e4
+ 1212 07a7 5D060000 		.4byte	0x65d
+ 1213 07ab 44       		.byte	0x44
+ 1214 07ac 0D       		.uleb128 0xd
+ 1215 07ad C0020000 		.4byte	.LASF157
+ 1216 07b1 07       		.byte	0x7
+ 1217 07b2 EB02     		.2byte	0x2eb
+ 1218 07b4 7A060000 		.4byte	0x67a
+ 1219 07b8 48       		.byte	0x48
+ 1220 07b9 00       		.byte	0
+ 1221 07ba 10       		.uleb128 0x10
+ 1222 07bb 04       		.byte	0x4
+ 1223 07bc 97000000 		.4byte	0x97
+ 1224 07c0 05       		.uleb128 0x5
+ 1225 07c1 15050000 		.4byte	0x515
+ 1226 07c5 08       		.uleb128 0x8
+ 1227 07c6 5A140000 		.4byte	.LASF158
+ 1228 07ca 07       		.byte	0x7
+ 1229 07cb EE02     		.2byte	0x2ee
+ 1230 07cd 9B060000 		.4byte	0x69b
+ 1231 07d1 08       		.uleb128 0x8
+ 1232 07d2 25000000 		.4byte	.LASF159
+ 1233 07d6 08       		.byte	0x8
+ 1234 07d7 F201     		.2byte	0x1f2
+ 1235 07d9 69060000 		.4byte	0x669
+ 1236 07dd 14       		.uleb128 0x14
+ 1237 07de 53110000 		.4byte	.LASF161
+ 1238 07e2 24       		.byte	0x24
+ 1239 07e3 08       		.byte	0x8
+ 1240 07e4 7402     		.2byte	0x274
+ 1241 07e6 60080000 		.4byte	0x860
+ 1242 07ea 0D       		.uleb128 0xd
+ 1243 07eb 120B0000 		.4byte	.LASF162
+ 1244 07ef 08       		.byte	0x8
+ 1245 07f0 7702     		.2byte	0x277
+ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccgMj3kb.s 			page 28
+
+
+ 1246 07f2 CA000000 		.4byte	0xca
+ 1247 07f6 00       		.byte	0
+ 1248 07f7 0D       		.uleb128 0xd
+ 1249 07f8 EE070000 		.4byte	.LASF163
+ 1250 07fc 08       		.byte	0x8
+ 1251 07fd 7902     		.2byte	0x279
+ 1252 07ff 13050000 		.4byte	0x513
+ 1253 0803 04       		.byte	0x4
+ 1254 0804 0D       		.uleb128 0xd
+ 1255 0805 65150000 		.4byte	.LASF164
+ 1256 0809 08       		.byte	0x8
+ 1257 080a 7A02     		.2byte	0x27a
+ 1258 080c B8000000 		.4byte	0xb8
+ 1259 0810 08       		.byte	0x8
+ 1260 0811 0D       		.uleb128 0xd
+ 1261 0812 E80A0000 		.4byte	.LASF165
+ 1262 0816 08       		.byte	0x8
+ 1263 0817 7B02     		.2byte	0x27b
+ 1264 0819 CA000000 		.4byte	0xca
+ 1265 081d 0C       		.byte	0xc
+ 1266 081e 0D       		.uleb128 0xd
+ 1267 081f AD0D0000 		.4byte	.LASF166
+ 1268 0823 08       		.byte	0x8
+ 1269 0824 7D02     		.2byte	0x27d
+ 1270 0826 13050000 		.4byte	0x513
+ 1271 082a 10       		.byte	0x10
+ 1272 082b 0D       		.uleb128 0xd
+ 1273 082c F90C0000 		.4byte	.LASF167
+ 1274 0830 08       		.byte	0x8
+ 1275 0831 7E02     		.2byte	0x27e
+ 1276 0833 B8000000 		.4byte	0xb8
+ 1277 0837 14       		.byte	0x14
+ 1278 0838 0D       		.uleb128 0xd
+ 1279 0839 E2010000 		.4byte	.LASF168
+ 1280 083d 08       		.byte	0x8
+ 1281 083e 7F02     		.2byte	0x27f
+ 1282 0840 CA000000 		.4byte	0xca
+ 1283 0844 18       		.byte	0x18
+ 1284 0845 0D       		.uleb128 0xd
+ 1285 0846 4D080000 		.4byte	.LASF156
+ 1286 084a 08       		.byte	0x8
+ 1287 084b 8502     		.2byte	0x285
+ 1288 084d D1070000 		.4byte	0x7d1
+ 1289 0851 1C       		.byte	0x1c
+ 1290 0852 0D       		.uleb128 0xd
+ 1291 0853 F10A0000 		.4byte	.LASF169
+ 1292 0857 08       		.byte	0x8
+ 1293 0858 8802     		.2byte	0x288
+ 1294 085a B8000000 		.4byte	0xb8
+ 1295 085e 20       		.byte	0x20
+ 1296 085f 00       		.byte	0
+ 1297 0860 08       		.uleb128 0x8
+ 1298 0861 AB0C0000 		.4byte	.LASF170
+ 1299 0865 08       		.byte	0x8
+ 1300 0866 8B02     		.2byte	0x28b
+ 1301 0868 DD070000 		.4byte	0x7dd
+ 1302 086c 08       		.uleb128 0x8
+ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccgMj3kb.s 			page 29
+
+
+ 1303 086d 860B0000 		.4byte	.LASF171
+ 1304 0871 09       		.byte	0x9
+ 1305 0872 D901     		.2byte	0x1d9
+ 1306 0874 69060000 		.4byte	0x669
+ 1307 0878 14       		.uleb128 0x14
+ 1308 0879 A4050000 		.4byte	.LASF172
+ 1309 087d 38       		.byte	0x38
+ 1310 087e 09       		.byte	0x9
+ 1311 087f 7502     		.2byte	0x275
+ 1312 0881 3C090000 		.4byte	0x93c
+ 1313 0885 0D       		.uleb128 0xd
+ 1314 0886 A7000000 		.4byte	.LASF173
+ 1315 088a 09       		.byte	0x9
+ 1316 088b 7802     		.2byte	0x278
+ 1317 088d CA000000 		.4byte	0xca
+ 1318 0891 00       		.byte	0
+ 1319 0892 0D       		.uleb128 0xd
+ 1320 0893 E5070000 		.4byte	.LASF174
+ 1321 0897 09       		.byte	0x9
+ 1322 0898 7902     		.2byte	0x279
+ 1323 089a CA000000 		.4byte	0xca
+ 1324 089e 04       		.byte	0x4
+ 1325 089f 0D       		.uleb128 0xd
+ 1326 08a0 2E0E0000 		.4byte	.LASF175
+ 1327 08a4 09       		.byte	0x9
+ 1328 08a5 7B02     		.2byte	0x27b
+ 1329 08a7 13050000 		.4byte	0x513
+ 1330 08ab 08       		.byte	0x8
+ 1331 08ac 0D       		.uleb128 0xd
+ 1332 08ad E0020000 		.4byte	.LASF176
+ 1333 08b1 09       		.byte	0x9
+ 1334 08b2 7C02     		.2byte	0x27c
+ 1335 08b4 B8000000 		.4byte	0xb8
+ 1336 08b8 0C       		.byte	0xc
+ 1337 08b9 0D       		.uleb128 0xd
+ 1338 08ba C40C0000 		.4byte	.LASF177
+ 1339 08be 09       		.byte	0x9
+ 1340 08bf 7D02     		.2byte	0x27d
+ 1341 08c1 CA000000 		.4byte	0xca
+ 1342 08c5 10       		.byte	0x10
+ 1343 08c6 0D       		.uleb128 0xd
+ 1344 08c7 9B0A0000 		.4byte	.LASF178
+ 1345 08cb 09       		.byte	0x9
+ 1346 08cc 7E02     		.2byte	0x27e
+ 1347 08ce CA000000 		.4byte	0xca
+ 1348 08d2 14       		.byte	0x14
+ 1349 08d3 0D       		.uleb128 0xd
+ 1350 08d4 EE070000 		.4byte	.LASF163
+ 1351 08d8 09       		.byte	0x9
+ 1352 08d9 8002     		.2byte	0x280
+ 1353 08db 13050000 		.4byte	0x513
+ 1354 08df 18       		.byte	0x18
+ 1355 08e0 0D       		.uleb128 0xd
+ 1356 08e1 65150000 		.4byte	.LASF164
+ 1357 08e5 09       		.byte	0x9
+ 1358 08e6 8102     		.2byte	0x281
+ 1359 08e8 B8000000 		.4byte	0xb8
+ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccgMj3kb.s 			page 30
+
+
+ 1360 08ec 1C       		.byte	0x1c
+ 1361 08ed 0D       		.uleb128 0xd
+ 1362 08ee E80A0000 		.4byte	.LASF165
+ 1363 08f2 09       		.byte	0x9
+ 1364 08f3 8202     		.2byte	0x282
+ 1365 08f5 CA000000 		.4byte	0xca
+ 1366 08f9 20       		.byte	0x20
+ 1367 08fa 0D       		.uleb128 0xd
+ 1368 08fb AD0D0000 		.4byte	.LASF166
+ 1369 08ff 09       		.byte	0x9
+ 1370 0900 8402     		.2byte	0x284
+ 1371 0902 13050000 		.4byte	0x513
+ 1372 0906 24       		.byte	0x24
+ 1373 0907 0D       		.uleb128 0xd
+ 1374 0908 F90C0000 		.4byte	.LASF167
+ 1375 090c 09       		.byte	0x9
+ 1376 090d 8502     		.2byte	0x285
+ 1377 090f B8000000 		.4byte	0xb8
+ 1378 0913 28       		.byte	0x28
+ 1379 0914 0D       		.uleb128 0xd
+ 1380 0915 CD100000 		.4byte	.LASF179
+ 1381 0919 09       		.byte	0x9
+ 1382 091a 8602     		.2byte	0x286
+ 1383 091c CA000000 		.4byte	0xca
+ 1384 0920 2C       		.byte	0x2c
+ 1385 0921 0D       		.uleb128 0xd
+ 1386 0922 4D080000 		.4byte	.LASF156
+ 1387 0926 09       		.byte	0x9
+ 1388 0927 8B02     		.2byte	0x28b
+ 1389 0929 6C080000 		.4byte	0x86c
+ 1390 092d 30       		.byte	0x30
+ 1391 092e 0D       		.uleb128 0xd
+ 1392 092f F10A0000 		.4byte	.LASF169
+ 1393 0933 09       		.byte	0x9
+ 1394 0934 8E02     		.2byte	0x28e
+ 1395 0936 B8000000 		.4byte	0xb8
+ 1396 093a 34       		.byte	0x34
+ 1397 093b 00       		.byte	0
+ 1398 093c 08       		.uleb128 0x8
+ 1399 093d 13020000 		.4byte	.LASF180
+ 1400 0941 09       		.byte	0x9
+ 1401 0942 9102     		.2byte	0x291
+ 1402 0944 78080000 		.4byte	0x878
+ 1403 0948 15       		.uleb128 0x15
+ 1404 0949 90130000 		.4byte	.LASF181
+ 1405 094d 4C       		.byte	0x4c
+ 1406 094e 0A       		.byte	0xa
+ 1407 094f 2F       		.byte	0x2f
+ 1408 0950 390A0000 		.4byte	0xa39
+ 1409 0954 07       		.uleb128 0x7
+ 1410 0955 70130000 		.4byte	.LASF182
+ 1411 0959 0A       		.byte	0xa
+ 1412 095a 31       		.byte	0x31
+ 1413 095b B8000000 		.4byte	0xb8
+ 1414 095f 00       		.byte	0
+ 1415 0960 07       		.uleb128 0x7
+ 1416 0961 D90A0000 		.4byte	.LASF183
+ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccgMj3kb.s 			page 31
+
+
+ 1417 0965 0A       		.byte	0xa
+ 1418 0966 33       		.byte	0x33
+ 1419 0967 B8000000 		.4byte	0xb8
+ 1420 096b 04       		.byte	0x4
+ 1421 096c 07       		.uleb128 0x7
+ 1422 096d 910E0000 		.4byte	.LASF184
+ 1423 0971 0A       		.byte	0xa
+ 1424 0972 34       		.byte	0x34
+ 1425 0973 B8000000 		.4byte	0xb8
+ 1426 0977 08       		.byte	0x8
+ 1427 0978 07       		.uleb128 0x7
+ 1428 0979 8C100000 		.4byte	.LASF185
+ 1429 097d 0A       		.byte	0xa
+ 1430 097e 35       		.byte	0x35
+ 1431 097f B8000000 		.4byte	0xb8
+ 1432 0983 0C       		.byte	0xc
+ 1433 0984 07       		.uleb128 0x7
+ 1434 0985 5E0F0000 		.4byte	.LASF186
+ 1435 0989 0A       		.byte	0xa
+ 1436 098a 37       		.byte	0x37
+ 1437 098b B8000000 		.4byte	0xb8
+ 1438 098f 10       		.byte	0x10
+ 1439 0990 07       		.uleb128 0x7
+ 1440 0991 85030000 		.4byte	.LASF187
+ 1441 0995 0A       		.byte	0xa
+ 1442 0996 38       		.byte	0x38
+ 1443 0997 B8000000 		.4byte	0xb8
+ 1444 099b 14       		.byte	0x14
+ 1445 099c 07       		.uleb128 0x7
+ 1446 099d 8E030000 		.4byte	.LASF188
+ 1447 09a1 0A       		.byte	0xa
+ 1448 09a2 39       		.byte	0x39
+ 1449 09a3 B8000000 		.4byte	0xb8
+ 1450 09a7 18       		.byte	0x18
+ 1451 09a8 07       		.uleb128 0x7
+ 1452 09a9 DC0F0000 		.4byte	.LASF189
+ 1453 09ad 0A       		.byte	0xa
+ 1454 09ae 3A       		.byte	0x3a
+ 1455 09af 15050000 		.4byte	0x515
+ 1456 09b3 1C       		.byte	0x1c
+ 1457 09b4 07       		.uleb128 0x7
+ 1458 09b5 CB0F0000 		.4byte	.LASF190
+ 1459 09b9 0A       		.byte	0xa
+ 1460 09ba 3C       		.byte	0x3c
+ 1461 09bb B8000000 		.4byte	0xb8
+ 1462 09bf 20       		.byte	0x20
+ 1463 09c0 07       		.uleb128 0x7
+ 1464 09c1 CE070000 		.4byte	.LASF191
+ 1465 09c5 0A       		.byte	0xa
+ 1466 09c6 3D       		.byte	0x3d
+ 1467 09c7 B8000000 		.4byte	0xb8
+ 1468 09cb 24       		.byte	0x24
+ 1469 09cc 07       		.uleb128 0x7
+ 1470 09cd 2D0A0000 		.4byte	.LASF192
+ 1471 09d1 0A       		.byte	0xa
+ 1472 09d2 3F       		.byte	0x3f
+ 1473 09d3 B8000000 		.4byte	0xb8
+ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccgMj3kb.s 			page 32
+
+
+ 1474 09d7 28       		.byte	0x28
+ 1475 09d8 07       		.uleb128 0x7
+ 1476 09d9 DE0C0000 		.4byte	.LASF193
+ 1477 09dd 0A       		.byte	0xa
+ 1478 09de 40       		.byte	0x40
+ 1479 09df B8000000 		.4byte	0xb8
+ 1480 09e3 2C       		.byte	0x2c
+ 1481 09e4 07       		.uleb128 0x7
+ 1482 09e5 BC050000 		.4byte	.LASF194
+ 1483 09e9 0A       		.byte	0xa
+ 1484 09ea 42       		.byte	0x42
+ 1485 09eb B8000000 		.4byte	0xb8
+ 1486 09ef 30       		.byte	0x30
+ 1487 09f0 07       		.uleb128 0x7
+ 1488 09f1 95070000 		.4byte	.LASF195
+ 1489 09f5 0A       		.byte	0xa
+ 1490 09f6 43       		.byte	0x43
+ 1491 09f7 B8000000 		.4byte	0xb8
+ 1492 09fb 34       		.byte	0x34
+ 1493 09fc 07       		.uleb128 0x7
+ 1494 09fd EB010000 		.4byte	.LASF196
+ 1495 0a01 0A       		.byte	0xa
+ 1496 0a02 45       		.byte	0x45
+ 1497 0a03 B8000000 		.4byte	0xb8
+ 1498 0a07 38       		.byte	0x38
+ 1499 0a08 07       		.uleb128 0x7
+ 1500 0a09 43000000 		.4byte	.LASF197
+ 1501 0a0d 0A       		.byte	0xa
+ 1502 0a0e 46       		.byte	0x46
+ 1503 0a0f B8000000 		.4byte	0xb8
+ 1504 0a13 3C       		.byte	0x3c
+ 1505 0a14 07       		.uleb128 0x7
+ 1506 0a15 D6020000 		.4byte	.LASF198
+ 1507 0a19 0A       		.byte	0xa
+ 1508 0a1a 48       		.byte	0x48
+ 1509 0a1b B8000000 		.4byte	0xb8
+ 1510 0a1f 40       		.byte	0x40
+ 1511 0a20 07       		.uleb128 0x7
+ 1512 0a21 40100000 		.4byte	.LASF199
+ 1513 0a25 0A       		.byte	0xa
+ 1514 0a26 49       		.byte	0x49
+ 1515 0a27 B8000000 		.4byte	0xb8
+ 1516 0a2b 44       		.byte	0x44
+ 1517 0a2c 07       		.uleb128 0x7
+ 1518 0a2d 60120000 		.4byte	.LASF200
+ 1519 0a31 0A       		.byte	0xa
+ 1520 0a32 4B       		.byte	0x4b
+ 1521 0a33 B8000000 		.4byte	0xb8
+ 1522 0a37 48       		.byte	0x48
+ 1523 0a38 00       		.byte	0
+ 1524 0a39 03       		.uleb128 0x3
+ 1525 0a3a CD0E0000 		.4byte	.LASF201
+ 1526 0a3e 0A       		.byte	0xa
+ 1527 0a3f 4C       		.byte	0x4c
+ 1528 0a40 48090000 		.4byte	0x948
+ 1529 0a44 15       		.uleb128 0x15
+ 1530 0a45 03040000 		.4byte	.LASF202
+ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccgMj3kb.s 			page 33
+
+
+ 1531 0a49 64       		.byte	0x64
+ 1532 0a4a 0B       		.byte	0xb
+ 1533 0a4b 2F       		.byte	0x2f
+ 1534 0a4c 7D0B0000 		.4byte	0xb7d
+ 1535 0a50 07       		.uleb128 0x7
+ 1536 0a51 EE020000 		.4byte	.LASF203
+ 1537 0a55 0B       		.byte	0xb
+ 1538 0a56 31       		.byte	0x31
+ 1539 0a57 B8000000 		.4byte	0xb8
+ 1540 0a5b 00       		.byte	0
+ 1541 0a5c 07       		.uleb128 0x7
+ 1542 0a5d D90A0000 		.4byte	.LASF183
+ 1543 0a61 0B       		.byte	0xb
+ 1544 0a62 33       		.byte	0x33
+ 1545 0a63 B8000000 		.4byte	0xb8
+ 1546 0a67 04       		.byte	0x4
+ 1547 0a68 07       		.uleb128 0x7
+ 1548 0a69 E5080000 		.4byte	.LASF204
+ 1549 0a6d 0B       		.byte	0xb
+ 1550 0a6e 34       		.byte	0x34
+ 1551 0a6f B8000000 		.4byte	0xb8
+ 1552 0a73 08       		.byte	0x8
+ 1553 0a74 07       		.uleb128 0x7
+ 1554 0a75 FD0B0000 		.4byte	.LASF205
+ 1555 0a79 0B       		.byte	0xb
+ 1556 0a7a 35       		.byte	0x35
+ 1557 0a7b B8000000 		.4byte	0xb8
+ 1558 0a7f 0C       		.byte	0xc
+ 1559 0a80 07       		.uleb128 0x7
+ 1560 0a81 910E0000 		.4byte	.LASF184
+ 1561 0a85 0B       		.byte	0xb
+ 1562 0a86 36       		.byte	0x36
+ 1563 0a87 B8000000 		.4byte	0xb8
+ 1564 0a8b 10       		.byte	0x10
+ 1565 0a8c 07       		.uleb128 0x7
+ 1566 0a8d 2A0C0000 		.4byte	.LASF206
+ 1567 0a91 0B       		.byte	0xb
+ 1568 0a92 37       		.byte	0x37
+ 1569 0a93 B8000000 		.4byte	0xb8
+ 1570 0a97 14       		.byte	0x14
+ 1571 0a98 07       		.uleb128 0x7
+ 1572 0a99 A3060000 		.4byte	.LASF207
+ 1573 0a9d 0B       		.byte	0xb
+ 1574 0a9e 38       		.byte	0x38
+ 1575 0a9f B8000000 		.4byte	0xb8
+ 1576 0aa3 18       		.byte	0x18
+ 1577 0aa4 07       		.uleb128 0x7
+ 1578 0aa5 EC0B0000 		.4byte	.LASF208
+ 1579 0aa9 0B       		.byte	0xb
+ 1580 0aaa 39       		.byte	0x39
+ 1581 0aab 15050000 		.4byte	0x515
+ 1582 0aaf 1C       		.byte	0x1c
+ 1583 0ab0 07       		.uleb128 0x7
+ 1584 0ab1 85030000 		.4byte	.LASF187
+ 1585 0ab5 0B       		.byte	0xb
+ 1586 0ab6 3A       		.byte	0x3a
+ 1587 0ab7 B8000000 		.4byte	0xb8
+ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccgMj3kb.s 			page 34
+
+
+ 1588 0abb 20       		.byte	0x20
+ 1589 0abc 07       		.uleb128 0x7
+ 1590 0abd 8E030000 		.4byte	.LASF188
+ 1591 0ac1 0B       		.byte	0xb
+ 1592 0ac2 3B       		.byte	0x3b
+ 1593 0ac3 B8000000 		.4byte	0xb8
+ 1594 0ac7 24       		.byte	0x24
+ 1595 0ac8 07       		.uleb128 0x7
+ 1596 0ac9 DC0F0000 		.4byte	.LASF189
+ 1597 0acd 0B       		.byte	0xb
+ 1598 0ace 3C       		.byte	0x3c
+ 1599 0acf 15050000 		.4byte	0x515
+ 1600 0ad3 28       		.byte	0x28
+ 1601 0ad4 07       		.uleb128 0x7
+ 1602 0ad5 CB0F0000 		.4byte	.LASF190
+ 1603 0ad9 0B       		.byte	0xb
+ 1604 0ada 3E       		.byte	0x3e
+ 1605 0adb B8000000 		.4byte	0xb8
+ 1606 0adf 2C       		.byte	0x2c
+ 1607 0ae0 07       		.uleb128 0x7
+ 1608 0ae1 FC0D0000 		.4byte	.LASF209
+ 1609 0ae5 0B       		.byte	0xb
+ 1610 0ae6 3F       		.byte	0x3f
+ 1611 0ae7 B8000000 		.4byte	0xb8
+ 1612 0aeb 30       		.byte	0x30
+ 1613 0aec 07       		.uleb128 0x7
+ 1614 0aed 82070000 		.4byte	.LASF210
+ 1615 0af1 0B       		.byte	0xb
+ 1616 0af2 40       		.byte	0x40
+ 1617 0af3 B8000000 		.4byte	0xb8
+ 1618 0af7 34       		.byte	0x34
+ 1619 0af8 07       		.uleb128 0x7
+ 1620 0af9 C20F0000 		.4byte	.LASF211
+ 1621 0afd 0B       		.byte	0xb
+ 1622 0afe 41       		.byte	0x41
+ 1623 0aff B8000000 		.4byte	0xb8
+ 1624 0b03 38       		.byte	0x38
+ 1625 0b04 07       		.uleb128 0x7
+ 1626 0b05 0C0C0000 		.4byte	.LASF212
+ 1627 0b09 0B       		.byte	0xb
+ 1628 0b0a 42       		.byte	0x42
+ 1629 0b0b B8000000 		.4byte	0xb8
+ 1630 0b0f 3C       		.byte	0x3c
+ 1631 0b10 07       		.uleb128 0x7
+ 1632 0b11 AB080000 		.4byte	.LASF213
+ 1633 0b15 0B       		.byte	0xb
+ 1634 0b16 44       		.byte	0x44
+ 1635 0b17 B8000000 		.4byte	0xb8
+ 1636 0b1b 40       		.byte	0x40
+ 1637 0b1c 07       		.uleb128 0x7
+ 1638 0b1d DE0C0000 		.4byte	.LASF193
+ 1639 0b21 0B       		.byte	0xb
+ 1640 0b22 45       		.byte	0x45
+ 1641 0b23 B8000000 		.4byte	0xb8
+ 1642 0b27 44       		.byte	0x44
+ 1643 0b28 07       		.uleb128 0x7
+ 1644 0b29 BC050000 		.4byte	.LASF194
+ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccgMj3kb.s 			page 35
+
+
+ 1645 0b2d 0B       		.byte	0xb
+ 1646 0b2e 47       		.byte	0x47
+ 1647 0b2f B8000000 		.4byte	0xb8
+ 1648 0b33 48       		.byte	0x48
+ 1649 0b34 07       		.uleb128 0x7
+ 1650 0b35 95070000 		.4byte	.LASF195
+ 1651 0b39 0B       		.byte	0xb
+ 1652 0b3a 48       		.byte	0x48
+ 1653 0b3b B8000000 		.4byte	0xb8
+ 1654 0b3f 4C       		.byte	0x4c
+ 1655 0b40 07       		.uleb128 0x7
+ 1656 0b41 EB010000 		.4byte	.LASF196
+ 1657 0b45 0B       		.byte	0xb
+ 1658 0b46 4A       		.byte	0x4a
+ 1659 0b47 B8000000 		.4byte	0xb8
+ 1660 0b4b 50       		.byte	0x50
+ 1661 0b4c 07       		.uleb128 0x7
+ 1662 0b4d 97110000 		.4byte	.LASF214
+ 1663 0b51 0B       		.byte	0xb
+ 1664 0b52 4B       		.byte	0x4b
+ 1665 0b53 B8000000 		.4byte	0xb8
+ 1666 0b57 54       		.byte	0x54
+ 1667 0b58 07       		.uleb128 0x7
+ 1668 0b59 6A110000 		.4byte	.LASF215
+ 1669 0b5d 0B       		.byte	0xb
+ 1670 0b5e 4D       		.byte	0x4d
+ 1671 0b5f B8000000 		.4byte	0xb8
+ 1672 0b63 58       		.byte	0x58
+ 1673 0b64 07       		.uleb128 0x7
+ 1674 0b65 40100000 		.4byte	.LASF199
+ 1675 0b69 0B       		.byte	0xb
+ 1676 0b6a 4E       		.byte	0x4e
+ 1677 0b6b B8000000 		.4byte	0xb8
+ 1678 0b6f 5C       		.byte	0x5c
+ 1679 0b70 07       		.uleb128 0x7
+ 1680 0b71 60120000 		.4byte	.LASF200
+ 1681 0b75 0B       		.byte	0xb
+ 1682 0b76 50       		.byte	0x50
+ 1683 0b77 B8000000 		.4byte	0xb8
+ 1684 0b7b 60       		.byte	0x60
+ 1685 0b7c 00       		.byte	0
+ 1686 0b7d 03       		.uleb128 0x3
+ 1687 0b7e 770E0000 		.4byte	.LASF216
+ 1688 0b82 0B       		.byte	0xb
+ 1689 0b83 51       		.byte	0x51
+ 1690 0b84 440A0000 		.4byte	0xa44
+ 1691 0b88 0A       		.uleb128 0xa
+ 1692 0b89 04       		.byte	0x4
+ 1693 0b8a 90000000 		.4byte	0x90
+ 1694 0b8e 0C       		.byte	0xc
+ 1695 0b8f E004     		.2byte	0x4e0
+ 1696 0b91 A10C0000 		.4byte	0xca1
+ 1697 0b95 0B       		.uleb128 0xb
+ 1698 0b96 4F070000 		.4byte	.LASF217
+ 1699 0b9a 00       		.byte	0
+ 1700 0b9b 16       		.uleb128 0x16
+ 1701 0b9c C4110000 		.4byte	.LASF218
+ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccgMj3kb.s 			page 36
+
+
+ 1702 0ba0 01001400 		.4byte	0x140001
+ 1703 0ba4 16       		.uleb128 0x16
+ 1704 0ba5 770C0000 		.4byte	.LASF219
+ 1705 0ba9 01001600 		.4byte	0x160001
+ 1706 0bad 16       		.uleb128 0x16
+ 1707 0bae F4110000 		.4byte	.LASF220
+ 1708 0bb2 02001600 		.4byte	0x160002
+ 1709 0bb6 16       		.uleb128 0x16
+ 1710 0bb7 66050000 		.4byte	.LASF221
+ 1711 0bbb 03001600 		.4byte	0x160003
+ 1712 0bbf 16       		.uleb128 0x16
+ 1713 0bc0 15090000 		.4byte	.LASF222
+ 1714 0bc4 04001600 		.4byte	0x160004
+ 1715 0bc8 16       		.uleb128 0x16
+ 1716 0bc9 92040000 		.4byte	.LASF223
+ 1717 0bcd 05001600 		.4byte	0x160005
+ 1718 0bd1 16       		.uleb128 0x16
+ 1719 0bd2 3F140000 		.4byte	.LASF224
+ 1720 0bd6 06001600 		.4byte	0x160006
+ 1721 0bda 16       		.uleb128 0x16
+ 1722 0bdb AF100000 		.4byte	.LASF225
+ 1723 0bdf 07001600 		.4byte	0x160007
+ 1724 0be3 16       		.uleb128 0x16
+ 1725 0be4 F2080000 		.4byte	.LASF226
+ 1726 0be8 08001600 		.4byte	0x160008
+ 1727 0bec 16       		.uleb128 0x16
+ 1728 0bed 05100000 		.4byte	.LASF227
+ 1729 0bf1 09001600 		.4byte	0x160009
+ 1730 0bf5 16       		.uleb128 0x16
+ 1731 0bf6 02010000 		.4byte	.LASF228
+ 1732 0bfa 0A001600 		.4byte	0x16000a
+ 1733 0bfe 16       		.uleb128 0x16
+ 1734 0bff F4070000 		.4byte	.LASF229
+ 1735 0c03 0B001600 		.4byte	0x16000b
+ 1736 0c07 16       		.uleb128 0x16
+ 1737 0c08 64090000 		.4byte	.LASF230
+ 1738 0c0c 0C001600 		.4byte	0x16000c
+ 1739 0c10 16       		.uleb128 0x16
+ 1740 0c11 440E0000 		.4byte	.LASF231
+ 1741 0c15 0D001600 		.4byte	0x16000d
+ 1742 0c19 16       		.uleb128 0x16
+ 1743 0c1a 750A0000 		.4byte	.LASF232
+ 1744 0c1e 0E001600 		.4byte	0x16000e
+ 1745 0c22 16       		.uleb128 0x16
+ 1746 0c23 B8140000 		.4byte	.LASF233
+ 1747 0c27 0F001600 		.4byte	0x16000f
+ 1748 0c2b 16       		.uleb128 0x16
+ 1749 0c2c DA120000 		.4byte	.LASF234
+ 1750 0c30 10001600 		.4byte	0x160010
+ 1751 0c34 16       		.uleb128 0x16
+ 1752 0c35 63080000 		.4byte	.LASF235
+ 1753 0c39 11001600 		.4byte	0x160011
+ 1754 0c3d 16       		.uleb128 0x16
+ 1755 0c3e F0050000 		.4byte	.LASF236
+ 1756 0c42 12001600 		.4byte	0x160012
+ 1757 0c46 16       		.uleb128 0x16
+ 1758 0c47 DD060000 		.4byte	.LASF237
+ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccgMj3kb.s 			page 37
+
+
+ 1759 0c4b 13001600 		.4byte	0x160013
+ 1760 0c4f 16       		.uleb128 0x16
+ 1761 0c50 810F0000 		.4byte	.LASF238
+ 1762 0c54 14001600 		.4byte	0x160014
+ 1763 0c58 16       		.uleb128 0x16
+ 1764 0c59 120F0000 		.4byte	.LASF239
+ 1765 0c5d 15001600 		.4byte	0x160015
+ 1766 0c61 16       		.uleb128 0x16
+ 1767 0c62 4B010000 		.4byte	.LASF240
+ 1768 0c66 16001600 		.4byte	0x160016
+ 1769 0c6a 16       		.uleb128 0x16
+ 1770 0c6b D4000000 		.4byte	.LASF241
+ 1771 0c6f 17001600 		.4byte	0x160017
+ 1772 0c73 16       		.uleb128 0x16
+ 1773 0c74 37130000 		.4byte	.LASF242
+ 1774 0c78 18001600 		.4byte	0x160018
+ 1775 0c7c 16       		.uleb128 0x16
+ 1776 0c7d B30D0000 		.4byte	.LASF243
+ 1777 0c81 19001600 		.4byte	0x160019
+ 1778 0c85 16       		.uleb128 0x16
+ 1779 0c86 F6010000 		.4byte	.LASF244
+ 1780 0c8a FE001600 		.4byte	0x1600fe
+ 1781 0c8e 16       		.uleb128 0x16
+ 1782 0c8f 88060000 		.4byte	.LASF245
+ 1783 0c93 FF001600 		.4byte	0x1600ff
+ 1784 0c97 16       		.uleb128 0x16
+ 1785 0c98 51000000 		.4byte	.LASF246
+ 1786 0c9c FFFF1600 		.4byte	0x16ffff
+ 1787 0ca0 00       		.byte	0
+ 1788 0ca1 08       		.uleb128 0x8
+ 1789 0ca2 FE120000 		.4byte	.LASF247
+ 1790 0ca6 0C       		.byte	0xc
+ 1791 0ca7 4305     		.2byte	0x543
+ 1792 0ca9 880B0000 		.4byte	0xb88
+ 1793 0cad 0C       		.uleb128 0xc
+ 1794 0cae 06       		.byte	0x6
+ 1795 0caf 0C       		.byte	0xc
+ 1796 0cb0 4F05     		.2byte	0x54f
+ 1797 0cb2 EB0C0000 		.4byte	0xceb
+ 1798 0cb6 0D       		.uleb128 0xd
+ 1799 0cb7 9B100000 		.4byte	.LASF248
+ 1800 0cbb 0C       		.byte	0xc
+ 1801 0cbc 5205     		.2byte	0x552
+ 1802 0cbe 97000000 		.4byte	0x97
+ 1803 0cc2 00       		.byte	0
+ 1804 0cc3 0D       		.uleb128 0xd
+ 1805 0cc4 E3050000 		.4byte	.LASF249
+ 1806 0cc8 0C       		.byte	0xc
+ 1807 0cc9 5505     		.2byte	0x555
+ 1808 0ccb 97000000 		.4byte	0x97
+ 1809 0ccf 01       		.byte	0x1
+ 1810 0cd0 0D       		.uleb128 0xd
+ 1811 0cd1 B2090000 		.4byte	.LASF250
+ 1812 0cd5 0C       		.byte	0xc
+ 1813 0cd6 5805     		.2byte	0x558
+ 1814 0cd8 97000000 		.4byte	0x97
+ 1815 0cdc 02       		.byte	0x2
+ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccgMj3kb.s 			page 38
+
+
+ 1816 0cdd 0D       		.uleb128 0xd
+ 1817 0cde 990E0000 		.4byte	.LASF251
+ 1818 0ce2 0C       		.byte	0xc
+ 1819 0ce3 5B05     		.2byte	0x55b
+ 1820 0ce5 AD000000 		.4byte	0xad
+ 1821 0ce9 04       		.byte	0x4
+ 1822 0cea 00       		.byte	0
+ 1823 0ceb 08       		.uleb128 0x8
+ 1824 0cec 0B140000 		.4byte	.LASF252
+ 1825 0cf0 0C       		.byte	0xc
+ 1826 0cf1 5D05     		.2byte	0x55d
+ 1827 0cf3 AD0C0000 		.4byte	0xcad
+ 1828 0cf7 0C       		.uleb128 0xc
+ 1829 0cf8 02       		.byte	0x2
+ 1830 0cf9 0D       		.byte	0xd
+ 1831 0cfa 6401     		.2byte	0x164
+ 1832 0cfc 1B0D0000 		.4byte	0xd1b
+ 1833 0d00 0D       		.uleb128 0xd
+ 1834 0d01 51130000 		.4byte	.LASF253
+ 1835 0d05 0D       		.byte	0xd
+ 1836 0d06 6E01     		.2byte	0x16e
+ 1837 0d08 97000000 		.4byte	0x97
+ 1838 0d0c 00       		.byte	0
+ 1839 0d0d 0D       		.uleb128 0xd
+ 1840 0d0e E7140000 		.4byte	.LASF254
+ 1841 0d12 0D       		.byte	0xd
+ 1842 0d13 7201     		.2byte	0x172
+ 1843 0d15 97000000 		.4byte	0x97
+ 1844 0d19 01       		.byte	0x1
+ 1845 0d1a 00       		.byte	0
+ 1846 0d1b 08       		.uleb128 0x8
+ 1847 0d1c 300F0000 		.4byte	.LASF255
+ 1848 0d20 0D       		.byte	0xd
+ 1849 0d21 7401     		.2byte	0x174
+ 1850 0d23 F70C0000 		.4byte	0xcf7
+ 1851 0d27 0C       		.uleb128 0xc
+ 1852 0d28 08       		.byte	0x8
+ 1853 0d29 0E       		.byte	0xe
+ 1854 0d2a 9401     		.2byte	0x194
+ 1855 0d2c 580D0000 		.4byte	0xd58
+ 1856 0d30 17       		.uleb128 0x17
+ 1857 0d31 76616C00 		.ascii	"val\000"
+ 1858 0d35 0E       		.byte	0xe
+ 1859 0d36 9701     		.2byte	0x197
+ 1860 0d38 BA070000 		.4byte	0x7ba
+ 1861 0d3c 00       		.byte	0
+ 1862 0d3d 17       		.uleb128 0x17
+ 1863 0d3e 6C656E00 		.ascii	"len\000"
+ 1864 0d42 0E       		.byte	0xe
+ 1865 0d43 9A01     		.2byte	0x19a
+ 1866 0d45 AD000000 		.4byte	0xad
+ 1867 0d49 04       		.byte	0x4
+ 1868 0d4a 0D       		.uleb128 0xd
+ 1869 0d4b DE100000 		.4byte	.LASF256
+ 1870 0d4f 0E       		.byte	0xe
+ 1871 0d50 A101     		.2byte	0x1a1
+ 1872 0d52 AD000000 		.4byte	0xad
+ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccgMj3kb.s 			page 39
+
+
+ 1873 0d56 06       		.byte	0x6
+ 1874 0d57 00       		.byte	0
+ 1875 0d58 08       		.uleb128 0x8
+ 1876 0d59 89120000 		.4byte	.LASF257
+ 1877 0d5d 0E       		.byte	0xe
+ 1878 0d5e A301     		.2byte	0x1a3
+ 1879 0d60 270D0000 		.4byte	0xd27
+ 1880 0d64 18       		.uleb128 0x18
+ 1881 0d65 01       		.byte	0x1
+ 1882 0d66 2C000000 		.4byte	0x2c
+ 1883 0d6a 0F       		.byte	0xf
+ 1884 0d6b 7E       		.byte	0x7e
+ 1885 0d6c 890D0000 		.4byte	0xd89
+ 1886 0d70 0B       		.uleb128 0xb
+ 1887 0d71 19030000 		.4byte	.LASF258
+ 1888 0d75 00       		.byte	0
+ 1889 0d76 0B       		.uleb128 0xb
+ 1890 0d77 B6060000 		.4byte	.LASF259
+ 1891 0d7b 01       		.byte	0x1
+ 1892 0d7c 0B       		.uleb128 0xb
+ 1893 0d7d C8080000 		.4byte	.LASF260
+ 1894 0d81 02       		.byte	0x2
+ 1895 0d82 0B       		.uleb128 0xb
+ 1896 0d83 D2090000 		.4byte	.LASF261
+ 1897 0d87 03       		.byte	0x3
+ 1898 0d88 00       		.byte	0
+ 1899 0d89 03       		.uleb128 0x3
+ 1900 0d8a 65060000 		.4byte	.LASF262
+ 1901 0d8e 0F       		.byte	0xf
+ 1902 0d8f 83       		.byte	0x83
+ 1903 0d90 640D0000 		.4byte	0xd64
+ 1904 0d94 18       		.uleb128 0x18
+ 1905 0d95 01       		.byte	0x1
+ 1906 0d96 2C000000 		.4byte	0x2c
+ 1907 0d9a 0F       		.byte	0xf
+ 1908 0d9b 87       		.byte	0x87
+ 1909 0d9c D10D0000 		.4byte	0xdd1
+ 1910 0da0 0B       		.uleb128 0xb
+ 1911 0da1 ED140000 		.4byte	.LASF263
+ 1912 0da5 00       		.byte	0
+ 1913 0da6 0B       		.uleb128 0xb
+ 1914 0da7 D2030000 		.4byte	.LASF264
+ 1915 0dab 01       		.byte	0x1
+ 1916 0dac 0B       		.uleb128 0xb
+ 1917 0dad 86020000 		.4byte	.LASF265
+ 1918 0db1 02       		.byte	0x2
+ 1919 0db2 0B       		.uleb128 0xb
+ 1920 0db3 22150000 		.4byte	.LASF266
+ 1921 0db7 03       		.byte	0x3
+ 1922 0db8 0B       		.uleb128 0xb
+ 1923 0db9 A4070000 		.4byte	.LASF267
+ 1924 0dbd 04       		.byte	0x4
+ 1925 0dbe 0B       		.uleb128 0xb
+ 1926 0dbf 030A0000 		.4byte	.LASF268
+ 1927 0dc3 05       		.byte	0x5
+ 1928 0dc4 0B       		.uleb128 0xb
+ 1929 0dc5 820D0000 		.4byte	.LASF269
+ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccgMj3kb.s 			page 40
+
+
+ 1930 0dc9 06       		.byte	0x6
+ 1931 0dca 0B       		.uleb128 0xb
+ 1932 0dcb B0000000 		.4byte	.LASF270
+ 1933 0dcf 07       		.byte	0x7
+ 1934 0dd0 00       		.byte	0
+ 1935 0dd1 03       		.uleb128 0x3
+ 1936 0dd2 51020000 		.4byte	.LASF271
+ 1937 0dd6 0F       		.byte	0xf
+ 1938 0dd7 90       		.byte	0x90
+ 1939 0dd8 940D0000 		.4byte	0xd94
+ 1940 0ddc 06       		.uleb128 0x6
+ 1941 0ddd 14       		.byte	0x14
+ 1942 0dde 10       		.byte	0x10
+ 1943 0ddf 3B       		.byte	0x3b
+ 1944 0de0 210E0000 		.4byte	0xe21
+ 1945 0de4 07       		.uleb128 0x7
+ 1946 0de5 37020000 		.4byte	.LASF272
+ 1947 0de9 10       		.byte	0x10
+ 1948 0dea 3D       		.byte	0x3d
+ 1949 0deb B8000000 		.4byte	0xb8
+ 1950 0def 00       		.byte	0
+ 1951 0df0 07       		.uleb128 0x7
+ 1952 0df1 98050000 		.4byte	.LASF273
+ 1953 0df5 10       		.byte	0x10
+ 1954 0df6 3E       		.byte	0x3e
+ 1955 0df7 B8000000 		.4byte	0xb8
+ 1956 0dfb 04       		.byte	0x4
+ 1957 0dfc 07       		.uleb128 0x7
+ 1958 0dfd A2020000 		.4byte	.LASF274
+ 1959 0e01 10       		.byte	0x10
+ 1960 0e02 3F       		.byte	0x3f
+ 1961 0e03 210E0000 		.4byte	0xe21
+ 1962 0e07 08       		.byte	0x8
+ 1963 0e08 07       		.uleb128 0x7
+ 1964 0e09 07110000 		.4byte	.LASF275
+ 1965 0e0d 10       		.byte	0x10
+ 1966 0e0e 40       		.byte	0x40
+ 1967 0e0f B8000000 		.4byte	0xb8
+ 1968 0e13 0C       		.byte	0xc
+ 1969 0e14 07       		.uleb128 0x7
+ 1970 0e15 C9120000 		.4byte	.LASF276
+ 1971 0e19 10       		.byte	0x10
+ 1972 0e1a 45       		.byte	0x45
+ 1973 0e1b B8000000 		.4byte	0xb8
+ 1974 0e1f 10       		.byte	0x10
+ 1975 0e20 00       		.byte	0
+ 1976 0e21 10       		.uleb128 0x10
+ 1977 0e22 04       		.byte	0x4
+ 1978 0e23 270E0000 		.4byte	0xe27
+ 1979 0e27 19       		.uleb128 0x19
+ 1980 0e28 2B060000 		.4byte	0x62b
+ 1981 0e2c 03       		.uleb128 0x3
+ 1982 0e2d 540B0000 		.4byte	.LASF277
+ 1983 0e31 10       		.byte	0x10
+ 1984 0e32 48       		.byte	0x48
+ 1985 0e33 DC0D0000 		.4byte	0xddc
+ 1986 0e37 1A       		.uleb128 0x1a
+ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccgMj3kb.s 			page 41
+
+
+ 1987 0e38 30040000 		.4byte	.LASF278
+ 1988 0e3c 01       		.byte	0x1
+ 1989 0e3d 70       		.byte	0x70
+ 1990 0e3e 00000000 		.4byte	.LFB678
+ 1991 0e42 10000000 		.4byte	.LFE678-.LFB678
+ 1992 0e46 01       		.uleb128 0x1
+ 1993 0e47 9C       		.byte	0x9c
+ 1994 0e48 670E0000 		.4byte	0xe67
+ 1995 0e4c 1B       		.uleb128 0x1b
+ 1996 0e4d DF070000 		.4byte	.LASF280
+ 1997 0e51 01       		.byte	0x1
+ 1998 0e52 70       		.byte	0x70
+ 1999 0e53 670E0000 		.4byte	0xe67
+ 2000 0e57 01       		.uleb128 0x1
+ 2001 0e58 50       		.byte	0x50
+ 2002 0e59 1C       		.uleb128 0x1c
+ 2003 0e5a 6900     		.ascii	"i\000"
+ 2004 0e5c 01       		.byte	0x1
+ 2005 0e5d 72       		.byte	0x72
+ 2006 0e5e A2000000 		.4byte	0xa2
+ 2007 0e62 00000000 		.4byte	.LLST0
+ 2008 0e66 00       		.byte	0
+ 2009 0e67 10       		.uleb128 0x10
+ 2010 0e68 04       		.byte	0x4
+ 2011 0e69 580D0000 		.4byte	0xd58
+ 2012 0e6d 1A       		.uleb128 0x1a
+ 2013 0e6e 17150000 		.4byte	.LASF279
+ 2014 0e72 01       		.byte	0x1
+ 2015 0e73 7C       		.byte	0x7c
+ 2016 0e74 00000000 		.4byte	.LFB679
+ 2017 0e78 10000000 		.4byte	.LFE679-.LFB679
+ 2018 0e7c 01       		.uleb128 0x1
+ 2019 0e7d 9C       		.byte	0x9c
+ 2020 0e7e 9F0E0000 		.4byte	0xe9f
+ 2021 0e82 1D       		.uleb128 0x1d
+ 2022 0e83 70747200 		.ascii	"ptr\000"
+ 2023 0e87 01       		.byte	0x1
+ 2024 0e88 7C       		.byte	0x7c
+ 2025 0e89 BA070000 		.4byte	0x7ba
+ 2026 0e8d 01       		.uleb128 0x1
+ 2027 0e8e 50       		.byte	0x50
+ 2028 0e8f 1E       		.uleb128 0x1e
+ 2029 0e90 DF070000 		.4byte	.LASF280
+ 2030 0e94 01       		.byte	0x1
+ 2031 0e95 7C       		.byte	0x7c
+ 2032 0e96 B8000000 		.4byte	0xb8
+ 2033 0e9a 2A000000 		.4byte	.LLST1
+ 2034 0e9e 00       		.byte	0
+ 2035 0e9f 1A       		.uleb128 0x1a
+ 2036 0ea0 5A130000 		.4byte	.LASF281
+ 2037 0ea4 01       		.byte	0x1
+ 2038 0ea5 8D       		.byte	0x8d
+ 2039 0ea6 00000000 		.4byte	.LFB680
+ 2040 0eaa 10000000 		.4byte	.LFE680-.LFB680
+ 2041 0eae 01       		.uleb128 0x1
+ 2042 0eaf 9C       		.byte	0x9c
+ 2043 0eb0 CE0E0000 		.4byte	0xece
+ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccgMj3kb.s 			page 42
+
+
+ 2044 0eb4 1F       		.uleb128 0x1f
+ 2045 0eb5 0A000000 		.4byte	.LVL6
+ 2046 0eb9 49100000 		.4byte	0x1049
+ 2047 0ebd 20       		.uleb128 0x20
+ 2048 0ebe 01       		.uleb128 0x1
+ 2049 0ebf 50       		.byte	0x50
+ 2050 0ec0 05       		.uleb128 0x5
+ 2051 0ec1 03       		.byte	0x3
+ 2052 0ec2 00000000 		.4byte	.LC0
+ 2053 0ec6 20       		.uleb128 0x20
+ 2054 0ec7 01       		.uleb128 0x1
+ 2055 0ec8 51       		.byte	0x51
+ 2056 0ec9 02       		.uleb128 0x2
+ 2057 0eca 08       		.byte	0x8
+ 2058 0ecb 92       		.byte	0x92
+ 2059 0ecc 00       		.byte	0
+ 2060 0ecd 00       		.byte	0
+ 2061 0ece 21       		.uleb128 0x21
+ 2062 0ecf C2130000 		.4byte	.LASF305
+ 2063 0ed3 01       		.byte	0x1
+ 2064 0ed4 A8       		.byte	0xa8
+ 2065 0ed5 FE040000 		.4byte	0x4fe
+ 2066 0ed9 00000000 		.4byte	.LFB681
+ 2067 0edd 2A000000 		.4byte	.LFE681-.LFB681
+ 2068 0ee1 01       		.uleb128 0x1
+ 2069 0ee2 9C       		.byte	0x9c
+ 2070 0ee3 040F0000 		.4byte	0xf04
+ 2071 0ee7 1E       		.uleb128 0x1e
+ 2072 0ee8 DF070000 		.4byte	.LASF280
+ 2073 0eec 01       		.byte	0x1
+ 2074 0eed A8       		.byte	0xa8
+ 2075 0eee 97000000 		.4byte	0x97
+ 2076 0ef2 4B000000 		.4byte	.LLST2
+ 2077 0ef6 1B       		.uleb128 0x1b
+ 2078 0ef7 A0000000 		.4byte	.LASF282
+ 2079 0efb 01       		.byte	0x1
+ 2080 0efc A8       		.byte	0xa8
+ 2081 0efd 97000000 		.4byte	0x97
+ 2082 0f01 01       		.uleb128 0x1
+ 2083 0f02 51       		.byte	0x51
+ 2084 0f03 00       		.byte	0
+ 2085 0f04 1A       		.uleb128 0x1a
+ 2086 0f05 440D0000 		.4byte	.LASF283
+ 2087 0f09 01       		.byte	0x1
+ 2088 0f0a D7       		.byte	0xd7
+ 2089 0f0b 00000000 		.4byte	.LFB682
+ 2090 0f0f 0E000000 		.4byte	.LFE682-.LFB682
+ 2091 0f13 01       		.uleb128 0x1
+ 2092 0f14 9C       		.byte	0x9c
+ 2093 0f15 430F0000 		.4byte	0xf43
+ 2094 0f19 22       		.uleb128 0x22
+ 2095 0f1a 190B0000 		.4byte	.LASF284
+ 2096 0f1e 01       		.byte	0x1
+ 2097 0f1f D9       		.byte	0xd9
+ 2098 0f20 EB0C0000 		.4byte	0xceb
+ 2099 0f24 02       		.uleb128 0x2
+ 2100 0f25 91       		.byte	0x91
+ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccgMj3kb.s 			page 43
+
+
+ 2101 0f26 70       		.sleb128 -16
+ 2102 0f27 23       		.uleb128 0x23
+ 2103 0f28 AF0B0000 		.4byte	.LASF286
+ 2104 0f2c 01       		.byte	0x1
+ 2105 0f2d DA       		.byte	0xda
+ 2106 0f2e A10C0000 		.4byte	0xca1
+ 2107 0f32 1F       		.uleb128 0x1f
+ 2108 0f33 0A000000 		.4byte	.LVL16
+ 2109 0f37 55100000 		.4byte	0x1055
+ 2110 0f3b 20       		.uleb128 0x20
+ 2111 0f3c 01       		.uleb128 0x1
+ 2112 0f3d 50       		.byte	0x50
+ 2113 0f3e 02       		.uleb128 0x2
+ 2114 0f3f 7D       		.byte	0x7d
+ 2115 0f40 00       		.sleb128 0
+ 2116 0f41 00       		.byte	0
+ 2117 0f42 00       		.byte	0
+ 2118 0f43 1A       		.uleb128 0x1a
+ 2119 0f44 31100000 		.4byte	.LASF285
+ 2120 0f48 01       		.byte	0x1
+ 2121 0f49 F3       		.byte	0xf3
+ 2122 0f4a 00000000 		.4byte	.LFB683
+ 2123 0f4e 02000000 		.4byte	.LFE683-.LFB683
+ 2124 0f52 01       		.uleb128 0x1
+ 2125 0f53 9C       		.byte	0x9c
+ 2126 0f54 660F0000 		.4byte	0xf66
+ 2127 0f58 1B       		.uleb128 0x1b
+ 2128 0f59 AF0B0000 		.4byte	.LASF286
+ 2129 0f5d 01       		.byte	0x1
+ 2130 0f5e F3       		.byte	0xf3
+ 2131 0f5f A10C0000 		.4byte	0xca1
+ 2132 0f63 01       		.uleb128 0x1
+ 2133 0f64 50       		.byte	0x50
+ 2134 0f65 00       		.byte	0
+ 2135 0f66 24       		.uleb128 0x24
+ 2136 0f67 62000000 		.4byte	.LASF287
+ 2137 0f6b 04       		.byte	0x4
+ 2138 0f6c A7       		.byte	0xa7
+ 2139 0f6d 710F0000 		.4byte	0xf71
+ 2140 0f71 10       		.uleb128 0x10
+ 2141 0f72 04       		.byte	0x4
+ 2142 0f73 770F0000 		.4byte	0xf77
+ 2143 0f77 19       		.uleb128 0x19
+ 2144 0f78 E7040000 		.4byte	0x4e7
+ 2145 0f7c 25       		.uleb128 0x25
+ 2146 0f7d 760B0000 		.4byte	.LASF288
+ 2147 0f81 0F       		.byte	0xf
+ 2148 0f82 2202     		.2byte	0x222
+ 2149 0f84 890D0000 		.4byte	0xd89
+ 2150 0f88 0E       		.uleb128 0xe
+ 2151 0f89 1B0D0000 		.4byte	0xd1b
+ 2152 0f8d 980F0000 		.4byte	0xf98
+ 2153 0f91 0F       		.uleb128 0xf
+ 2154 0f92 C3000000 		.4byte	0xc3
+ 2155 0f96 00       		.byte	0
+ 2156 0f97 00       		.byte	0
+ 2157 0f98 25       		.uleb128 0x25
+ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccgMj3kb.s 			page 44
+
+
+ 2158 0f99 92010000 		.4byte	.LASF289
+ 2159 0f9d 0F       		.byte	0xf
+ 2160 0f9e 2C02     		.2byte	0x22c
+ 2161 0fa0 880F0000 		.4byte	0xf88
+ 2162 0fa4 0E       		.uleb128 0xe
+ 2163 0fa5 D10D0000 		.4byte	0xdd1
+ 2164 0fa9 B40F0000 		.4byte	0xfb4
+ 2165 0fad 0F       		.uleb128 0xf
+ 2166 0fae C3000000 		.4byte	0xc3
+ 2167 0fb2 00       		.byte	0
+ 2168 0fb3 00       		.byte	0
+ 2169 0fb4 25       		.uleb128 0x25
+ 2170 0fb5 14000000 		.4byte	.LASF290
+ 2171 0fb9 0F       		.byte	0xf
+ 2172 0fba 2D02     		.2byte	0x22d
+ 2173 0fbc A40F0000 		.4byte	0xfa4
+ 2174 0fc0 25       		.uleb128 0x25
+ 2175 0fc1 700D0000 		.4byte	.LASF291
+ 2176 0fc5 10       		.byte	0x10
+ 2177 0fc6 6001     		.2byte	0x160
+ 2178 0fc8 B8000000 		.4byte	0xb8
+ 2179 0fcc 0E       		.uleb128 0xe
+ 2180 0fcd DC0F0000 		.4byte	0xfdc
+ 2181 0fd1 DC0F0000 		.4byte	0xfdc
+ 2182 0fd5 0F       		.uleb128 0xf
+ 2183 0fd6 C3000000 		.4byte	0xc3
+ 2184 0fda 00       		.byte	0
+ 2185 0fdb 00       		.byte	0
+ 2186 0fdc 19       		.uleb128 0x19
+ 2187 0fdd 2C0E0000 		.4byte	0xe2c
+ 2188 0fe1 25       		.uleb128 0x25
+ 2189 0fe2 B30F0000 		.4byte	.LASF292
+ 2190 0fe6 10       		.byte	0x10
+ 2191 0fe7 6401     		.2byte	0x164
+ 2192 0fe9 ED0F0000 		.4byte	0xfed
+ 2193 0fed 19       		.uleb128 0x19
+ 2194 0fee CC0F0000 		.4byte	0xfcc
+ 2195 0ff2 24       		.uleb128 0x24
+ 2196 0ff3 21010000 		.4byte	.LASF293
+ 2197 0ff7 11       		.byte	0x11
+ 2198 0ff8 7F       		.byte	0x7f
+ 2199 0ff9 C5070000 		.4byte	0x7c5
+ 2200 0ffd 24       		.uleb128 0x24
+ 2201 0ffe 73020000 		.4byte	.LASF294
+ 2202 1002 12       		.byte	0x12
+ 2203 1003 87       		.byte	0x87
+ 2204 1004 3C090000 		.4byte	0x93c
+ 2205 1008 24       		.uleb128 0x24
+ 2206 1009 83000000 		.4byte	.LASF295
+ 2207 100d 13       		.byte	0x13
+ 2208 100e 1F       		.byte	0x1f
+ 2209 100f 13100000 		.4byte	0x1013
+ 2210 1013 19       		.uleb128 0x19
+ 2211 1014 7D0B0000 		.4byte	0xb7d
+ 2212 1018 24       		.uleb128 0x24
+ 2213 1019 6D040000 		.4byte	.LASF296
+ 2214 101d 14       		.byte	0x14
+ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccgMj3kb.s 			page 45
+
+
+ 2215 101e 1F       		.byte	0x1f
+ 2216 101f 23100000 		.4byte	0x1023
+ 2217 1023 19       		.uleb128 0x19
+ 2218 1024 390A0000 		.4byte	0xa39
+ 2219 1028 24       		.uleb128 0x24
+ 2220 1029 9E0F0000 		.4byte	.LASF297
+ 2221 102d 15       		.byte	0x15
+ 2222 102e 87       		.byte	0x87
+ 2223 102f 3C090000 		.4byte	0x93c
+ 2224 1033 24       		.uleb128 0x24
+ 2225 1034 50040000 		.4byte	.LASF298
+ 2226 1038 16       		.byte	0x16
+ 2227 1039 1F       		.byte	0x1f
+ 2228 103a 13100000 		.4byte	0x1013
+ 2229 103e 24       		.uleb128 0x24
+ 2230 103f DD130000 		.4byte	.LASF299
+ 2231 1043 17       		.byte	0x17
+ 2232 1044 5E       		.byte	0x5e
+ 2233 1045 60080000 		.4byte	0x860
+ 2234 1049 26       		.uleb128 0x26
+ 2235 104a 570A0000 		.4byte	.LASF300
+ 2236 104e 570A0000 		.4byte	.LASF300
+ 2237 1052 05       		.byte	0x5
+ 2238 1053 9203     		.2byte	0x392
+ 2239 1055 26       		.uleb128 0x26
+ 2240 1056 6B120000 		.4byte	.LASF301
+ 2241 105a 6B120000 		.4byte	.LASF301
+ 2242 105e 0C       		.byte	0xc
+ 2243 105f 9607     		.2byte	0x796
+ 2244 1061 00       		.byte	0
+ 2245              		.section	.debug_abbrev,"",%progbits
+ 2246              	.Ldebug_abbrev0:
+ 2247 0000 01       		.uleb128 0x1
+ 2248 0001 11       		.uleb128 0x11
+ 2249 0002 01       		.byte	0x1
+ 2250 0003 25       		.uleb128 0x25
+ 2251 0004 0E       		.uleb128 0xe
+ 2252 0005 13       		.uleb128 0x13
+ 2253 0006 0B       		.uleb128 0xb
+ 2254 0007 03       		.uleb128 0x3
+ 2255 0008 0E       		.uleb128 0xe
+ 2256 0009 1B       		.uleb128 0x1b
+ 2257 000a 0E       		.uleb128 0xe
+ 2258 000b 55       		.uleb128 0x55
+ 2259 000c 17       		.uleb128 0x17
+ 2260 000d 11       		.uleb128 0x11
+ 2261 000e 01       		.uleb128 0x1
+ 2262 000f 10       		.uleb128 0x10
+ 2263 0010 17       		.uleb128 0x17
+ 2264 0011 00       		.byte	0
+ 2265 0012 00       		.byte	0
+ 2266 0013 02       		.uleb128 0x2
+ 2267 0014 24       		.uleb128 0x24
+ 2268 0015 00       		.byte	0
+ 2269 0016 0B       		.uleb128 0xb
+ 2270 0017 0B       		.uleb128 0xb
+ 2271 0018 3E       		.uleb128 0x3e
+ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccgMj3kb.s 			page 46
+
+
+ 2272 0019 0B       		.uleb128 0xb
+ 2273 001a 03       		.uleb128 0x3
+ 2274 001b 0E       		.uleb128 0xe
+ 2275 001c 00       		.byte	0
+ 2276 001d 00       		.byte	0
+ 2277 001e 03       		.uleb128 0x3
+ 2278 001f 16       		.uleb128 0x16
+ 2279 0020 00       		.byte	0
+ 2280 0021 03       		.uleb128 0x3
+ 2281 0022 0E       		.uleb128 0xe
+ 2282 0023 3A       		.uleb128 0x3a
+ 2283 0024 0B       		.uleb128 0xb
+ 2284 0025 3B       		.uleb128 0x3b
+ 2285 0026 0B       		.uleb128 0xb
+ 2286 0027 49       		.uleb128 0x49
+ 2287 0028 13       		.uleb128 0x13
+ 2288 0029 00       		.byte	0
+ 2289 002a 00       		.byte	0
+ 2290 002b 04       		.uleb128 0x4
+ 2291 002c 24       		.uleb128 0x24
+ 2292 002d 00       		.byte	0
+ 2293 002e 0B       		.uleb128 0xb
+ 2294 002f 0B       		.uleb128 0xb
+ 2295 0030 3E       		.uleb128 0x3e
+ 2296 0031 0B       		.uleb128 0xb
+ 2297 0032 03       		.uleb128 0x3
+ 2298 0033 08       		.uleb128 0x8
+ 2299 0034 00       		.byte	0
+ 2300 0035 00       		.byte	0
+ 2301 0036 05       		.uleb128 0x5
+ 2302 0037 35       		.uleb128 0x35
+ 2303 0038 00       		.byte	0
+ 2304 0039 49       		.uleb128 0x49
+ 2305 003a 13       		.uleb128 0x13
+ 2306 003b 00       		.byte	0
+ 2307 003c 00       		.byte	0
+ 2308 003d 06       		.uleb128 0x6
+ 2309 003e 13       		.uleb128 0x13
+ 2310 003f 01       		.byte	0x1
+ 2311 0040 0B       		.uleb128 0xb
+ 2312 0041 0B       		.uleb128 0xb
+ 2313 0042 3A       		.uleb128 0x3a
+ 2314 0043 0B       		.uleb128 0xb
+ 2315 0044 3B       		.uleb128 0x3b
+ 2316 0045 0B       		.uleb128 0xb
+ 2317 0046 01       		.uleb128 0x1
+ 2318 0047 13       		.uleb128 0x13
+ 2319 0048 00       		.byte	0
+ 2320 0049 00       		.byte	0
+ 2321 004a 07       		.uleb128 0x7
+ 2322 004b 0D       		.uleb128 0xd
+ 2323 004c 00       		.byte	0
+ 2324 004d 03       		.uleb128 0x3
+ 2325 004e 0E       		.uleb128 0xe
+ 2326 004f 3A       		.uleb128 0x3a
+ 2327 0050 0B       		.uleb128 0xb
+ 2328 0051 3B       		.uleb128 0x3b
+ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccgMj3kb.s 			page 47
+
+
+ 2329 0052 0B       		.uleb128 0xb
+ 2330 0053 49       		.uleb128 0x49
+ 2331 0054 13       		.uleb128 0x13
+ 2332 0055 38       		.uleb128 0x38
+ 2333 0056 0B       		.uleb128 0xb
+ 2334 0057 00       		.byte	0
+ 2335 0058 00       		.byte	0
+ 2336 0059 08       		.uleb128 0x8
+ 2337 005a 16       		.uleb128 0x16
+ 2338 005b 00       		.byte	0
+ 2339 005c 03       		.uleb128 0x3
+ 2340 005d 0E       		.uleb128 0xe
+ 2341 005e 3A       		.uleb128 0x3a
+ 2342 005f 0B       		.uleb128 0xb
+ 2343 0060 3B       		.uleb128 0x3b
+ 2344 0061 05       		.uleb128 0x5
+ 2345 0062 49       		.uleb128 0x49
+ 2346 0063 13       		.uleb128 0x13
+ 2347 0064 00       		.byte	0
+ 2348 0065 00       		.byte	0
+ 2349 0066 09       		.uleb128 0x9
+ 2350 0067 0F       		.uleb128 0xf
+ 2351 0068 00       		.byte	0
+ 2352 0069 0B       		.uleb128 0xb
+ 2353 006a 0B       		.uleb128 0xb
+ 2354 006b 00       		.byte	0
+ 2355 006c 00       		.byte	0
+ 2356 006d 0A       		.uleb128 0xa
+ 2357 006e 04       		.uleb128 0x4
+ 2358 006f 01       		.byte	0x1
+ 2359 0070 0B       		.uleb128 0xb
+ 2360 0071 0B       		.uleb128 0xb
+ 2361 0072 49       		.uleb128 0x49
+ 2362 0073 13       		.uleb128 0x13
+ 2363 0074 3A       		.uleb128 0x3a
+ 2364 0075 0B       		.uleb128 0xb
+ 2365 0076 3B       		.uleb128 0x3b
+ 2366 0077 05       		.uleb128 0x5
+ 2367 0078 01       		.uleb128 0x1
+ 2368 0079 13       		.uleb128 0x13
+ 2369 007a 00       		.byte	0
+ 2370 007b 00       		.byte	0
+ 2371 007c 0B       		.uleb128 0xb
+ 2372 007d 28       		.uleb128 0x28
+ 2373 007e 00       		.byte	0
+ 2374 007f 03       		.uleb128 0x3
+ 2375 0080 0E       		.uleb128 0xe
+ 2376 0081 1C       		.uleb128 0x1c
+ 2377 0082 0B       		.uleb128 0xb
+ 2378 0083 00       		.byte	0
+ 2379 0084 00       		.byte	0
+ 2380 0085 0C       		.uleb128 0xc
+ 2381 0086 13       		.uleb128 0x13
+ 2382 0087 01       		.byte	0x1
+ 2383 0088 0B       		.uleb128 0xb
+ 2384 0089 0B       		.uleb128 0xb
+ 2385 008a 3A       		.uleb128 0x3a
+ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccgMj3kb.s 			page 48
+
+
+ 2386 008b 0B       		.uleb128 0xb
+ 2387 008c 3B       		.uleb128 0x3b
+ 2388 008d 05       		.uleb128 0x5
+ 2389 008e 01       		.uleb128 0x1
+ 2390 008f 13       		.uleb128 0x13
+ 2391 0090 00       		.byte	0
+ 2392 0091 00       		.byte	0
+ 2393 0092 0D       		.uleb128 0xd
+ 2394 0093 0D       		.uleb128 0xd
+ 2395 0094 00       		.byte	0
+ 2396 0095 03       		.uleb128 0x3
+ 2397 0096 0E       		.uleb128 0xe
+ 2398 0097 3A       		.uleb128 0x3a
+ 2399 0098 0B       		.uleb128 0xb
+ 2400 0099 3B       		.uleb128 0x3b
+ 2401 009a 05       		.uleb128 0x5
+ 2402 009b 49       		.uleb128 0x49
+ 2403 009c 13       		.uleb128 0x13
+ 2404 009d 38       		.uleb128 0x38
+ 2405 009e 0B       		.uleb128 0xb
+ 2406 009f 00       		.byte	0
+ 2407 00a0 00       		.byte	0
+ 2408 00a1 0E       		.uleb128 0xe
+ 2409 00a2 01       		.uleb128 0x1
+ 2410 00a3 01       		.byte	0x1
+ 2411 00a4 49       		.uleb128 0x49
+ 2412 00a5 13       		.uleb128 0x13
+ 2413 00a6 01       		.uleb128 0x1
+ 2414 00a7 13       		.uleb128 0x13
+ 2415 00a8 00       		.byte	0
+ 2416 00a9 00       		.byte	0
+ 2417 00aa 0F       		.uleb128 0xf
+ 2418 00ab 21       		.uleb128 0x21
+ 2419 00ac 00       		.byte	0
+ 2420 00ad 49       		.uleb128 0x49
+ 2421 00ae 13       		.uleb128 0x13
+ 2422 00af 2F       		.uleb128 0x2f
+ 2423 00b0 0B       		.uleb128 0xb
+ 2424 00b1 00       		.byte	0
+ 2425 00b2 00       		.byte	0
+ 2426 00b3 10       		.uleb128 0x10
+ 2427 00b4 0F       		.uleb128 0xf
+ 2428 00b5 00       		.byte	0
+ 2429 00b6 0B       		.uleb128 0xb
+ 2430 00b7 0B       		.uleb128 0xb
+ 2431 00b8 49       		.uleb128 0x49
+ 2432 00b9 13       		.uleb128 0x13
+ 2433 00ba 00       		.byte	0
+ 2434 00bb 00       		.byte	0
+ 2435 00bc 11       		.uleb128 0x11
+ 2436 00bd 15       		.uleb128 0x15
+ 2437 00be 01       		.byte	0x1
+ 2438 00bf 27       		.uleb128 0x27
+ 2439 00c0 19       		.uleb128 0x19
+ 2440 00c1 01       		.uleb128 0x1
+ 2441 00c2 13       		.uleb128 0x13
+ 2442 00c3 00       		.byte	0
+ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccgMj3kb.s 			page 49
+
+
+ 2443 00c4 00       		.byte	0
+ 2444 00c5 12       		.uleb128 0x12
+ 2445 00c6 05       		.uleb128 0x5
+ 2446 00c7 00       		.byte	0
+ 2447 00c8 49       		.uleb128 0x49
+ 2448 00c9 13       		.uleb128 0x13
+ 2449 00ca 00       		.byte	0
+ 2450 00cb 00       		.byte	0
+ 2451 00cc 13       		.uleb128 0x13
+ 2452 00cd 15       		.uleb128 0x15
+ 2453 00ce 01       		.byte	0x1
+ 2454 00cf 27       		.uleb128 0x27
+ 2455 00d0 19       		.uleb128 0x19
+ 2456 00d1 49       		.uleb128 0x49
+ 2457 00d2 13       		.uleb128 0x13
+ 2458 00d3 01       		.uleb128 0x1
+ 2459 00d4 13       		.uleb128 0x13
+ 2460 00d5 00       		.byte	0
+ 2461 00d6 00       		.byte	0
+ 2462 00d7 14       		.uleb128 0x14
+ 2463 00d8 13       		.uleb128 0x13
+ 2464 00d9 01       		.byte	0x1
+ 2465 00da 03       		.uleb128 0x3
+ 2466 00db 0E       		.uleb128 0xe
+ 2467 00dc 0B       		.uleb128 0xb
+ 2468 00dd 0B       		.uleb128 0xb
+ 2469 00de 3A       		.uleb128 0x3a
+ 2470 00df 0B       		.uleb128 0xb
+ 2471 00e0 3B       		.uleb128 0x3b
+ 2472 00e1 05       		.uleb128 0x5
+ 2473 00e2 01       		.uleb128 0x1
+ 2474 00e3 13       		.uleb128 0x13
+ 2475 00e4 00       		.byte	0
+ 2476 00e5 00       		.byte	0
+ 2477 00e6 15       		.uleb128 0x15
+ 2478 00e7 13       		.uleb128 0x13
+ 2479 00e8 01       		.byte	0x1
+ 2480 00e9 03       		.uleb128 0x3
+ 2481 00ea 0E       		.uleb128 0xe
+ 2482 00eb 0B       		.uleb128 0xb
+ 2483 00ec 0B       		.uleb128 0xb
+ 2484 00ed 3A       		.uleb128 0x3a
+ 2485 00ee 0B       		.uleb128 0xb
+ 2486 00ef 3B       		.uleb128 0x3b
+ 2487 00f0 0B       		.uleb128 0xb
+ 2488 00f1 01       		.uleb128 0x1
+ 2489 00f2 13       		.uleb128 0x13
+ 2490 00f3 00       		.byte	0
+ 2491 00f4 00       		.byte	0
+ 2492 00f5 16       		.uleb128 0x16
+ 2493 00f6 28       		.uleb128 0x28
+ 2494 00f7 00       		.byte	0
+ 2495 00f8 03       		.uleb128 0x3
+ 2496 00f9 0E       		.uleb128 0xe
+ 2497 00fa 1C       		.uleb128 0x1c
+ 2498 00fb 06       		.uleb128 0x6
+ 2499 00fc 00       		.byte	0
+ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccgMj3kb.s 			page 50
+
+
+ 2500 00fd 00       		.byte	0
+ 2501 00fe 17       		.uleb128 0x17
+ 2502 00ff 0D       		.uleb128 0xd
+ 2503 0100 00       		.byte	0
+ 2504 0101 03       		.uleb128 0x3
+ 2505 0102 08       		.uleb128 0x8
+ 2506 0103 3A       		.uleb128 0x3a
+ 2507 0104 0B       		.uleb128 0xb
+ 2508 0105 3B       		.uleb128 0x3b
+ 2509 0106 05       		.uleb128 0x5
+ 2510 0107 49       		.uleb128 0x49
+ 2511 0108 13       		.uleb128 0x13
+ 2512 0109 38       		.uleb128 0x38
+ 2513 010a 0B       		.uleb128 0xb
+ 2514 010b 00       		.byte	0
+ 2515 010c 00       		.byte	0
+ 2516 010d 18       		.uleb128 0x18
+ 2517 010e 04       		.uleb128 0x4
+ 2518 010f 01       		.byte	0x1
+ 2519 0110 0B       		.uleb128 0xb
+ 2520 0111 0B       		.uleb128 0xb
+ 2521 0112 49       		.uleb128 0x49
+ 2522 0113 13       		.uleb128 0x13
+ 2523 0114 3A       		.uleb128 0x3a
+ 2524 0115 0B       		.uleb128 0xb
+ 2525 0116 3B       		.uleb128 0x3b
+ 2526 0117 0B       		.uleb128 0xb
+ 2527 0118 01       		.uleb128 0x1
+ 2528 0119 13       		.uleb128 0x13
+ 2529 011a 00       		.byte	0
+ 2530 011b 00       		.byte	0
+ 2531 011c 19       		.uleb128 0x19
+ 2532 011d 26       		.uleb128 0x26
+ 2533 011e 00       		.byte	0
+ 2534 011f 49       		.uleb128 0x49
+ 2535 0120 13       		.uleb128 0x13
+ 2536 0121 00       		.byte	0
+ 2537 0122 00       		.byte	0
+ 2538 0123 1A       		.uleb128 0x1a
+ 2539 0124 2E       		.uleb128 0x2e
+ 2540 0125 01       		.byte	0x1
+ 2541 0126 3F       		.uleb128 0x3f
+ 2542 0127 19       		.uleb128 0x19
+ 2543 0128 03       		.uleb128 0x3
+ 2544 0129 0E       		.uleb128 0xe
+ 2545 012a 3A       		.uleb128 0x3a
+ 2546 012b 0B       		.uleb128 0xb
+ 2547 012c 3B       		.uleb128 0x3b
+ 2548 012d 0B       		.uleb128 0xb
+ 2549 012e 27       		.uleb128 0x27
+ 2550 012f 19       		.uleb128 0x19
+ 2551 0130 11       		.uleb128 0x11
+ 2552 0131 01       		.uleb128 0x1
+ 2553 0132 12       		.uleb128 0x12
+ 2554 0133 06       		.uleb128 0x6
+ 2555 0134 40       		.uleb128 0x40
+ 2556 0135 18       		.uleb128 0x18
+ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccgMj3kb.s 			page 51
+
+
+ 2557 0136 9742     		.uleb128 0x2117
+ 2558 0138 19       		.uleb128 0x19
+ 2559 0139 01       		.uleb128 0x1
+ 2560 013a 13       		.uleb128 0x13
+ 2561 013b 00       		.byte	0
+ 2562 013c 00       		.byte	0
+ 2563 013d 1B       		.uleb128 0x1b
+ 2564 013e 05       		.uleb128 0x5
+ 2565 013f 00       		.byte	0
+ 2566 0140 03       		.uleb128 0x3
+ 2567 0141 0E       		.uleb128 0xe
+ 2568 0142 3A       		.uleb128 0x3a
+ 2569 0143 0B       		.uleb128 0xb
+ 2570 0144 3B       		.uleb128 0x3b
+ 2571 0145 0B       		.uleb128 0xb
+ 2572 0146 49       		.uleb128 0x49
+ 2573 0147 13       		.uleb128 0x13
+ 2574 0148 02       		.uleb128 0x2
+ 2575 0149 18       		.uleb128 0x18
+ 2576 014a 00       		.byte	0
+ 2577 014b 00       		.byte	0
+ 2578 014c 1C       		.uleb128 0x1c
+ 2579 014d 34       		.uleb128 0x34
+ 2580 014e 00       		.byte	0
+ 2581 014f 03       		.uleb128 0x3
+ 2582 0150 08       		.uleb128 0x8
+ 2583 0151 3A       		.uleb128 0x3a
+ 2584 0152 0B       		.uleb128 0xb
+ 2585 0153 3B       		.uleb128 0x3b
+ 2586 0154 0B       		.uleb128 0xb
+ 2587 0155 49       		.uleb128 0x49
+ 2588 0156 13       		.uleb128 0x13
+ 2589 0157 02       		.uleb128 0x2
+ 2590 0158 17       		.uleb128 0x17
+ 2591 0159 00       		.byte	0
+ 2592 015a 00       		.byte	0
+ 2593 015b 1D       		.uleb128 0x1d
+ 2594 015c 05       		.uleb128 0x5
+ 2595 015d 00       		.byte	0
+ 2596 015e 03       		.uleb128 0x3
+ 2597 015f 08       		.uleb128 0x8
+ 2598 0160 3A       		.uleb128 0x3a
+ 2599 0161 0B       		.uleb128 0xb
+ 2600 0162 3B       		.uleb128 0x3b
+ 2601 0163 0B       		.uleb128 0xb
+ 2602 0164 49       		.uleb128 0x49
+ 2603 0165 13       		.uleb128 0x13
+ 2604 0166 02       		.uleb128 0x2
+ 2605 0167 18       		.uleb128 0x18
+ 2606 0168 00       		.byte	0
+ 2607 0169 00       		.byte	0
+ 2608 016a 1E       		.uleb128 0x1e
+ 2609 016b 05       		.uleb128 0x5
+ 2610 016c 00       		.byte	0
+ 2611 016d 03       		.uleb128 0x3
+ 2612 016e 0E       		.uleb128 0xe
+ 2613 016f 3A       		.uleb128 0x3a
+ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccgMj3kb.s 			page 52
+
+
+ 2614 0170 0B       		.uleb128 0xb
+ 2615 0171 3B       		.uleb128 0x3b
+ 2616 0172 0B       		.uleb128 0xb
+ 2617 0173 49       		.uleb128 0x49
+ 2618 0174 13       		.uleb128 0x13
+ 2619 0175 02       		.uleb128 0x2
+ 2620 0176 17       		.uleb128 0x17
+ 2621 0177 00       		.byte	0
+ 2622 0178 00       		.byte	0
+ 2623 0179 1F       		.uleb128 0x1f
+ 2624 017a 898201   		.uleb128 0x4109
+ 2625 017d 01       		.byte	0x1
+ 2626 017e 11       		.uleb128 0x11
+ 2627 017f 01       		.uleb128 0x1
+ 2628 0180 31       		.uleb128 0x31
+ 2629 0181 13       		.uleb128 0x13
+ 2630 0182 00       		.byte	0
+ 2631 0183 00       		.byte	0
+ 2632 0184 20       		.uleb128 0x20
+ 2633 0185 8A8201   		.uleb128 0x410a
+ 2634 0188 00       		.byte	0
+ 2635 0189 02       		.uleb128 0x2
+ 2636 018a 18       		.uleb128 0x18
+ 2637 018b 9142     		.uleb128 0x2111
+ 2638 018d 18       		.uleb128 0x18
+ 2639 018e 00       		.byte	0
+ 2640 018f 00       		.byte	0
+ 2641 0190 21       		.uleb128 0x21
+ 2642 0191 2E       		.uleb128 0x2e
+ 2643 0192 01       		.byte	0x1
+ 2644 0193 3F       		.uleb128 0x3f
+ 2645 0194 19       		.uleb128 0x19
+ 2646 0195 03       		.uleb128 0x3
+ 2647 0196 0E       		.uleb128 0xe
+ 2648 0197 3A       		.uleb128 0x3a
+ 2649 0198 0B       		.uleb128 0xb
+ 2650 0199 3B       		.uleb128 0x3b
+ 2651 019a 0B       		.uleb128 0xb
+ 2652 019b 27       		.uleb128 0x27
+ 2653 019c 19       		.uleb128 0x19
+ 2654 019d 49       		.uleb128 0x49
+ 2655 019e 13       		.uleb128 0x13
+ 2656 019f 11       		.uleb128 0x11
+ 2657 01a0 01       		.uleb128 0x1
+ 2658 01a1 12       		.uleb128 0x12
+ 2659 01a2 06       		.uleb128 0x6
+ 2660 01a3 40       		.uleb128 0x40
+ 2661 01a4 18       		.uleb128 0x18
+ 2662 01a5 9742     		.uleb128 0x2117
+ 2663 01a7 19       		.uleb128 0x19
+ 2664 01a8 01       		.uleb128 0x1
+ 2665 01a9 13       		.uleb128 0x13
+ 2666 01aa 00       		.byte	0
+ 2667 01ab 00       		.byte	0
+ 2668 01ac 22       		.uleb128 0x22
+ 2669 01ad 34       		.uleb128 0x34
+ 2670 01ae 00       		.byte	0
+ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccgMj3kb.s 			page 53
+
+
+ 2671 01af 03       		.uleb128 0x3
+ 2672 01b0 0E       		.uleb128 0xe
+ 2673 01b1 3A       		.uleb128 0x3a
+ 2674 01b2 0B       		.uleb128 0xb
+ 2675 01b3 3B       		.uleb128 0x3b
+ 2676 01b4 0B       		.uleb128 0xb
+ 2677 01b5 49       		.uleb128 0x49
+ 2678 01b6 13       		.uleb128 0x13
+ 2679 01b7 02       		.uleb128 0x2
+ 2680 01b8 18       		.uleb128 0x18
+ 2681 01b9 00       		.byte	0
+ 2682 01ba 00       		.byte	0
+ 2683 01bb 23       		.uleb128 0x23
+ 2684 01bc 34       		.uleb128 0x34
+ 2685 01bd 00       		.byte	0
+ 2686 01be 03       		.uleb128 0x3
+ 2687 01bf 0E       		.uleb128 0xe
+ 2688 01c0 3A       		.uleb128 0x3a
+ 2689 01c1 0B       		.uleb128 0xb
+ 2690 01c2 3B       		.uleb128 0x3b
+ 2691 01c3 0B       		.uleb128 0xb
+ 2692 01c4 49       		.uleb128 0x49
+ 2693 01c5 13       		.uleb128 0x13
+ 2694 01c6 00       		.byte	0
+ 2695 01c7 00       		.byte	0
+ 2696 01c8 24       		.uleb128 0x24
+ 2697 01c9 34       		.uleb128 0x34
+ 2698 01ca 00       		.byte	0
+ 2699 01cb 03       		.uleb128 0x3
+ 2700 01cc 0E       		.uleb128 0xe
+ 2701 01cd 3A       		.uleb128 0x3a
+ 2702 01ce 0B       		.uleb128 0xb
+ 2703 01cf 3B       		.uleb128 0x3b
+ 2704 01d0 0B       		.uleb128 0xb
+ 2705 01d1 49       		.uleb128 0x49
+ 2706 01d2 13       		.uleb128 0x13
+ 2707 01d3 3F       		.uleb128 0x3f
+ 2708 01d4 19       		.uleb128 0x19
+ 2709 01d5 3C       		.uleb128 0x3c
+ 2710 01d6 19       		.uleb128 0x19
+ 2711 01d7 00       		.byte	0
+ 2712 01d8 00       		.byte	0
+ 2713 01d9 25       		.uleb128 0x25
+ 2714 01da 34       		.uleb128 0x34
+ 2715 01db 00       		.byte	0
+ 2716 01dc 03       		.uleb128 0x3
+ 2717 01dd 0E       		.uleb128 0xe
+ 2718 01de 3A       		.uleb128 0x3a
+ 2719 01df 0B       		.uleb128 0xb
+ 2720 01e0 3B       		.uleb128 0x3b
+ 2721 01e1 05       		.uleb128 0x5
+ 2722 01e2 49       		.uleb128 0x49
+ 2723 01e3 13       		.uleb128 0x13
+ 2724 01e4 3F       		.uleb128 0x3f
+ 2725 01e5 19       		.uleb128 0x19
+ 2726 01e6 3C       		.uleb128 0x3c
+ 2727 01e7 19       		.uleb128 0x19
+ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccgMj3kb.s 			page 54
+
+
+ 2728 01e8 00       		.byte	0
+ 2729 01e9 00       		.byte	0
+ 2730 01ea 26       		.uleb128 0x26
+ 2731 01eb 2E       		.uleb128 0x2e
+ 2732 01ec 00       		.byte	0
+ 2733 01ed 3F       		.uleb128 0x3f
+ 2734 01ee 19       		.uleb128 0x19
+ 2735 01ef 3C       		.uleb128 0x3c
+ 2736 01f0 19       		.uleb128 0x19
+ 2737 01f1 6E       		.uleb128 0x6e
+ 2738 01f2 0E       		.uleb128 0xe
+ 2739 01f3 03       		.uleb128 0x3
+ 2740 01f4 0E       		.uleb128 0xe
+ 2741 01f5 3A       		.uleb128 0x3a
+ 2742 01f6 0B       		.uleb128 0xb
+ 2743 01f7 3B       		.uleb128 0x3b
+ 2744 01f8 05       		.uleb128 0x5
+ 2745 01f9 00       		.byte	0
+ 2746 01fa 00       		.byte	0
+ 2747 01fb 00       		.byte	0
+ 2748              		.section	.debug_loc,"",%progbits
+ 2749              	.Ldebug_loc0:
+ 2750              	.LLST0:
+ 2751 0000 00000000 		.4byte	.LVL0
+ 2752 0004 04000000 		.4byte	.LVL1
+ 2753 0008 0200     		.2byte	0x2
+ 2754 000a 30       		.byte	0x30
+ 2755 000b 9F       		.byte	0x9f
+ 2756 000c 04000000 		.4byte	.LVL1
+ 2757 0010 06000000 		.4byte	.LVL2
+ 2758 0014 0100     		.2byte	0x1
+ 2759 0016 53       		.byte	0x53
+ 2760 0017 08000000 		.4byte	.LVL3
+ 2761 001b 10000000 		.4byte	.LFE678
+ 2762 001f 0100     		.2byte	0x1
+ 2763 0021 53       		.byte	0x53
+ 2764 0022 00000000 		.4byte	0
+ 2765 0026 00000000 		.4byte	0
+ 2766              	.LLST1:
+ 2767 002a 00000000 		.4byte	.LVL4
+ 2768 002e 0C000000 		.4byte	.LVL5
+ 2769 0032 0100     		.2byte	0x1
+ 2770 0034 51       		.byte	0x51
+ 2771 0035 0C000000 		.4byte	.LVL5
+ 2772 0039 10000000 		.4byte	.LFE679
+ 2773 003d 0400     		.2byte	0x4
+ 2774 003f F3       		.byte	0xf3
+ 2775 0040 01       		.uleb128 0x1
+ 2776 0041 51       		.byte	0x51
+ 2777 0042 9F       		.byte	0x9f
+ 2778 0043 00000000 		.4byte	0
+ 2779 0047 00000000 		.4byte	0
+ 2780              	.LLST2:
+ 2781 004b 00000000 		.4byte	.LVL7
+ 2782 004f 04000000 		.4byte	.LVL8
+ 2783 0053 0100     		.2byte	0x1
+ 2784 0055 50       		.byte	0x50
+ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccgMj3kb.s 			page 55
+
+
+ 2785 0056 04000000 		.4byte	.LVL8
+ 2786 005a 06000000 		.4byte	.LVL9
+ 2787 005e 0600     		.2byte	0x6
+ 2788 0060 70       		.byte	0x70
+ 2789 0061 00       		.sleb128 0
+ 2790 0062 09       		.byte	0x9
+ 2791 0063 F0       		.byte	0xf0
+ 2792 0064 1A       		.byte	0x1a
+ 2793 0065 9F       		.byte	0x9f
+ 2794 0066 06000000 		.4byte	.LVL9
+ 2795 006a 2A000000 		.4byte	.LFE681
+ 2796 006e 0100     		.2byte	0x1
+ 2797 0070 50       		.byte	0x50
+ 2798 0071 00000000 		.4byte	0
+ 2799 0075 00000000 		.4byte	0
+ 2800              		.section	.debug_aranges,"",%progbits
+ 2801 0000 44000000 		.4byte	0x44
+ 2802 0004 0200     		.2byte	0x2
+ 2803 0006 00000000 		.4byte	.Ldebug_info0
+ 2804 000a 04       		.byte	0x4
+ 2805 000b 00       		.byte	0
+ 2806 000c 0000     		.2byte	0
+ 2807 000e 0000     		.2byte	0
+ 2808 0010 00000000 		.4byte	.LFB678
+ 2809 0014 10000000 		.4byte	.LFE678-.LFB678
+ 2810 0018 00000000 		.4byte	.LFB679
+ 2811 001c 10000000 		.4byte	.LFE679-.LFB679
+ 2812 0020 00000000 		.4byte	.LFB680
+ 2813 0024 10000000 		.4byte	.LFE680-.LFB680
+ 2814 0028 00000000 		.4byte	.LFB681
+ 2815 002c 2A000000 		.4byte	.LFE681-.LFB681
+ 2816 0030 00000000 		.4byte	.LFB682
+ 2817 0034 0E000000 		.4byte	.LFE682-.LFB682
+ 2818 0038 00000000 		.4byte	.LFB683
+ 2819 003c 02000000 		.4byte	.LFE683-.LFB683
+ 2820 0040 00000000 		.4byte	0
+ 2821 0044 00000000 		.4byte	0
+ 2822              		.section	.debug_ranges,"",%progbits
+ 2823              	.Ldebug_ranges0:
+ 2824 0000 00000000 		.4byte	.LFB678
+ 2825 0004 10000000 		.4byte	.LFE678
+ 2826 0008 00000000 		.4byte	.LFB679
+ 2827 000c 10000000 		.4byte	.LFE679
+ 2828 0010 00000000 		.4byte	.LFB680
+ 2829 0014 10000000 		.4byte	.LFE680
+ 2830 0018 00000000 		.4byte	.LFB681
+ 2831 001c 2A000000 		.4byte	.LFE681
+ 2832 0020 00000000 		.4byte	.LFB682
+ 2833 0024 0E000000 		.4byte	.LFE682
+ 2834 0028 00000000 		.4byte	.LFB683
+ 2835 002c 02000000 		.4byte	.LFE683
+ 2836 0030 00000000 		.4byte	0
+ 2837 0034 00000000 		.4byte	0
+ 2838              		.section	.debug_line,"",%progbits
+ 2839              	.Ldebug_line0:
+ 2840 0000 20040000 		.section	.debug_str,"MS",%progbits,1
+ 2840      02009303 
+ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccgMj3kb.s 			page 56
+
+
+ 2840      00000201 
+ 2840      FB0E0D00 
+ 2840      01010101 
+ 2841              	.LASF62:
+ 2842 0000 666C6173 		.ascii	"flashCtlMainWs1Freq\000"
+ 2842      6843746C 
+ 2842      4D61696E 
+ 2842      57733146 
+ 2842      72657100 
+ 2843              	.LASF290:
+ 2844 0014 63795F62 		.ascii	"cy_ble_connState\000"
+ 2844      6C655F63 
+ 2844      6F6E6E53 
+ 2844      74617465 
+ 2844      00
+ 2845              	.LASF159:
+ 2846 0025 63795F63 		.ascii	"cy_cb_scb_spi_handle_events_t\000"
+ 2846      625F7363 
+ 2846      625F7370 
+ 2846      695F6861 
+ 2846      6E646C65 
+ 2847              	.LASF197:
+ 2848 0043 73746F70 		.ascii	"stopInputMode\000"
+ 2848      496E7075 
+ 2848      744D6F64 
+ 2848      6500
+ 2849              	.LASF246:
+ 2850 0051 43595F42 		.ascii	"CY_BLE_ERROR_MAX\000"
+ 2850      4C455F45 
+ 2850      52524F52 
+ 2850      5F4D4158 
+ 2850      00
+ 2851              	.LASF287:
+ 2852 0062 63795F64 		.ascii	"cy_device\000"
+ 2852      65766963 
+ 2852      6500
+ 2853              	.LASF89:
+ 2854 006c 63707573 		.ascii	"cpussCm0ClockCtlOffset\000"
+ 2854      73436D30 
+ 2854      436C6F63 
+ 2854      6B43746C 
+ 2854      4F666673 
+ 2855              	.LASF295:
+ 2856 0083 50574D5F 		.ascii	"PWM_Trig_config\000"
+ 2856      54726967 
+ 2856      5F636F6E 
+ 2856      66696700 
+ 2857              	.LASF140:
+ 2858 0093 6D617374 		.ascii	"masterStatus\000"
+ 2858      65725374 
+ 2858      61747573 
+ 2858      00
+ 2859              	.LASF282:
+ 2860 00a0 6E696262 		.ascii	"nibble\000"
+ 2860      6C6500
+ 2861              	.LASF173:
+ 2862 00a7 74785374 		.ascii	"txStatus\000"
+ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccgMj3kb.s 			page 57
+
+
+ 2862      61747573 
+ 2862      00
+ 2863              	.LASF270:
+ 2864 00b0 43595F42 		.ascii	"CY_BLE_CONN_STATE_CLIENT_DISCOVERED\000"
+ 2864      4C455F43 
+ 2864      4F4E4E5F 
+ 2864      53544154 
+ 2864      455F434C 
+ 2865              	.LASF241:
+ 2866 00d4 43595F42 		.ascii	"CY_BLE_ERROR_NTF_DISABLED\000"
+ 2866      4C455F45 
+ 2866      52524F52 
+ 2866      5F4E5446 
+ 2866      5F444953 
+ 2867              	.LASF21:
+ 2868 00ee 70657269 		.ascii	"periBase\000"
+ 2868      42617365 
+ 2868      00
+ 2869              	.LASF20:
+ 2870 00f7 666C6173 		.ascii	"flashcBase\000"
+ 2870      68634261 
+ 2870      736500
+ 2871              	.LASF228:
+ 2872 0102 43595F42 		.ascii	"CY_BLE_ERROR_GAP_ROLE\000"
+ 2872      4C455F45 
+ 2872      52524F52 
+ 2872      5F474150 
+ 2872      5F524F4C 
+ 2873              	.LASF67:
+ 2874 0118 64774368 		.ascii	"dwChSize\000"
+ 2874      53697A65 
+ 2874      00
+ 2875              	.LASF293:
+ 2876 0121 4932435F 		.ascii	"I2C_Main_context\000"
+ 2876      4D61696E 
+ 2876      5F636F6E 
+ 2876      74657874 
+ 2876      00
+ 2877              	.LASF147:
+ 2878 0132 736C6176 		.ascii	"slaveStatus\000"
+ 2878      65537461 
+ 2878      74757300 
+ 2879              	.LASF12:
+ 2880 013e 756E7369 		.ascii	"unsigned int\000"
+ 2880      676E6564 
+ 2880      20696E74 
+ 2880      00
+ 2881              	.LASF240:
+ 2882 014b 43595F42 		.ascii	"CY_BLE_ERROR_GATT_DB_INVALID_ATTR_HANDLE\000"
+ 2882      4C455F45 
+ 2882      52524F52 
+ 2882      5F474154 
+ 2882      545F4442 
+ 2883              	.LASF135:
+ 2884 0174 63795F63 		.ascii	"cy_cb_scb_i2c_handle_events_t\000"
+ 2884      625F7363 
+ 2884      625F6932 
+ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccgMj3kb.s 			page 58
+
+
+ 2884      635F6861 
+ 2884      6E646C65 
+ 2885              	.LASF289:
+ 2886 0192 63795F62 		.ascii	"cy_ble_connHandle\000"
+ 2886      6C655F63 
+ 2886      6F6E6E48 
+ 2886      616E646C 
+ 2886      6500
+ 2887              	.LASF49:
+ 2888 01a4 736D6966 		.ascii	"smifDeviceNr\000"
+ 2888      44657669 
+ 2888      63654E72 
+ 2888      00
+ 2889              	.LASF114:
+ 2890 01b1 43595F53 		.ascii	"CY_SAR_RANGE_COND_OUTSIDE\000"
+ 2890      41525F52 
+ 2890      414E4745 
+ 2890      5F434F4E 
+ 2890      445F4F55 
+ 2891              	.LASF79:
+ 2892 01cb 70657269 		.ascii	"periDivCmdPaTypeSelPos\000"
+ 2892      44697643 
+ 2892      6D645061 
+ 2892      54797065 
+ 2892      53656C50 
+ 2893              	.LASF168:
+ 2894 01e2 74784275 		.ascii	"txBufIdx\000"
+ 2894      66496478 
+ 2894      00
+ 2895              	.LASF196:
+ 2896 01eb 73746172 		.ascii	"startInput\000"
+ 2896      74496E70 
+ 2896      757400
+ 2897              	.LASF244:
+ 2898 01f6 43595F42 		.ascii	"CY_BLE_ERROR_CONTROLLER_BUSY\000"
+ 2898      4C455F45 
+ 2898      52524F52 
+ 2898      5F434F4E 
+ 2898      54524F4C 
+ 2899              	.LASF180:
+ 2900 0213 63795F73 		.ascii	"cy_stc_scb_uart_context_t\000"
+ 2900      74635F73 
+ 2900      63625F75 
+ 2900      6172745F 
+ 2900      636F6E74 
+ 2901              	.LASF19:
+ 2902 022d 63707573 		.ascii	"cpussBase\000"
+ 2902      73426173 
+ 2902      6500
+ 2903              	.LASF272:
+ 2904 0237 6368616E 		.ascii	"channelBase\000"
+ 2904      6E656C42 
+ 2904      61736500 
+ 2905              	.LASF153:
+ 2906 0243 736C6176 		.ascii	"slaveRxBuffer\000"
+ 2906      65527842 
+ 2906      75666665 
+ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccgMj3kb.s 			page 59
+
+
+ 2906      7200
+ 2907              	.LASF271:
+ 2908 0251 63795F65 		.ascii	"cy_en_ble_conn_state_t\000"
+ 2908      6E5F626C 
+ 2908      655F636F 
+ 2908      6E6E5F73 
+ 2908      74617465 
+ 2909              	.LASF43:
+ 2910 0268 63707573 		.ascii	"cpussFmIrq\000"
+ 2910      73466D49 
+ 2910      727100
+ 2911              	.LASF294:
+ 2912 0273 55415254 		.ascii	"UART_Debug_context\000"
+ 2912      5F446562 
+ 2912      75675F63 
+ 2912      6F6E7465 
+ 2912      787400
+ 2913              	.LASF265:
+ 2914 0286 43595F42 		.ascii	"CY_BLE_CONN_STATE_CONNECTED\000"
+ 2914      4C455F43 
+ 2914      4F4E4E5F 
+ 2914      53544154 
+ 2914      455F434F 
+ 2915              	.LASF274:
+ 2916 02a2 6877436F 		.ascii	"hwConfigStc\000"
+ 2916      6E666967 
+ 2916      53746300 
+ 2917              	.LASF73:
+ 2918 02ae 70657269 		.ascii	"periTrCmdGrSelMsk\000"
+ 2918      5472436D 
+ 2918      64477253 
+ 2918      656C4D73 
+ 2918      6B00
+ 2919              	.LASF157:
+ 2920 02c0 63624164 		.ascii	"cbAddr\000"
+ 2920      647200
+ 2921              	.LASF132:
+ 2922 02c7 43595F53 		.ascii	"CY_SCB_I2C_ACK\000"
+ 2922      43425F49 
+ 2922      32435F41 
+ 2922      434B00
+ 2923              	.LASF198:
+ 2924 02d6 73746F70 		.ascii	"stopInput\000"
+ 2924      496E7075 
+ 2924      7400
+ 2925              	.LASF176:
+ 2926 02e0 72785269 		.ascii	"rxRingBufSize\000"
+ 2926      6E674275 
+ 2926      6653697A 
+ 2926      6500
+ 2927              	.LASF203:
+ 2928 02ee 70776D4D 		.ascii	"pwmMode\000"
+ 2928      6F646500 
+ 2929              	.LASF75:
+ 2930 02f6 70657269 		.ascii	"periTrGrSize\000"
+ 2930      54724772 
+ 2930      53697A65 
+ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccgMj3kb.s 			page 60
+
+
+ 2930      00
+ 2931              	.LASF78:
+ 2932 0303 70657269 		.ascii	"periDivCmdPaDivSelPos\000"
+ 2932      44697643 
+ 2932      6D645061 
+ 2932      44697653 
+ 2932      656C506F 
+ 2933              	.LASF258:
+ 2934 0319 43595F42 		.ascii	"CY_BLE_ADV_STATE_STOPPED\000"
+ 2934      4C455F41 
+ 2934      44565F53 
+ 2934      54415445 
+ 2934      5F53544F 
+ 2935              	.LASF125:
+ 2936 0332 73617449 		.ascii	"satIntrMask\000"
+ 2936      6E74724D 
+ 2936      61736B00 
+ 2937              	.LASF101:
+ 2938 033e 63707573 		.ascii	"cpussRam1Ctl0\000"
+ 2938      7352616D 
+ 2938      3143746C 
+ 2938      3000
+ 2939              	.LASF103:
+ 2940 034c 69706353 		.ascii	"ipcStructSize\000"
+ 2940      74727563 
+ 2940      7453697A 
+ 2940      6500
+ 2941              	.LASF133:
+ 2942 035a 43595F53 		.ascii	"CY_SCB_I2C_NAK\000"
+ 2942      43425F49 
+ 2942      32435F4E 
+ 2942      414B00
+ 2943              	.LASF136:
+ 2944 0369 63795F63 		.ascii	"cy_cb_scb_i2c_handle_addr_t\000"
+ 2944      625F7363 
+ 2944      625F6932 
+ 2944      635F6861 
+ 2944      6E646C65 
+ 2945              	.LASF187:
+ 2946 0385 636F6D70 		.ascii	"compare0\000"
+ 2946      61726530 
+ 2946      00
+ 2947              	.LASF188:
+ 2948 038e 636F6D70 		.ascii	"compare1\000"
+ 2948      61726531 
+ 2948      00
+ 2949              	.LASF37:
+ 2950 0397 70726F74 		.ascii	"protVersion\000"
+ 2950      56657273 
+ 2950      696F6E00 
+ 2951              	.LASF160:
+ 2952 03a3 63795F73 		.ascii	"cy_stc_scb_i2c_context\000"
+ 2952      74635F73 
+ 2952      63625F69 
+ 2952      32635F63 
+ 2952      6F6E7465 
+ 2953              	.LASF111:
+ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccgMj3kb.s 			page 61
+
+
+ 2954 03ba 43595F53 		.ascii	"CY_SAR_RANGE_COND_BELOW\000"
+ 2954      41525F52 
+ 2954      414E4745 
+ 2954      5F434F4E 
+ 2954      445F4245 
+ 2955              	.LASF264:
+ 2956 03d2 43595F42 		.ascii	"CY_BLE_CONN_STATE_CLIENT_DISCONNECTED_DISCOVERED\000"
+ 2956      4C455F43 
+ 2956      4F4E4E5F 
+ 2956      53544154 
+ 2956      455F434C 
+ 2957              	.LASF202:
+ 2958 0403 63795F73 		.ascii	"cy_stc_tcpwm_pwm_config\000"
+ 2958      74635F74 
+ 2958      6370776D 
+ 2958      5F70776D 
+ 2958      5F636F6E 
+ 2959              	.LASF77:
+ 2960 041b 70657269 		.ascii	"periDivCmdTypeSelPos\000"
+ 2960      44697643 
+ 2960      6D645479 
+ 2960      70655365 
+ 2960      6C506F73 
+ 2961              	.LASF278:
+ 2962 0430 53686F77 		.ascii	"ShowValue\000"
+ 2962      56616C75 
+ 2962      6500
+ 2963              	.LASF94:
+ 2964 043a 63707573 		.ascii	"cpussTrimRamCtlOffset\000"
+ 2964      73547269 
+ 2964      6D52616D 
+ 2964      43746C4F 
+ 2964      66667365 
+ 2965              	.LASF298:
+ 2966 0450 50574D5F 		.ascii	"PWM_Buz_config\000"
+ 2966      42757A5F 
+ 2966      636F6E66 
+ 2966      696700
+ 2967              	.LASF149:
+ 2968 045f 736C6176 		.ascii	"slaveTxBuffer\000"
+ 2968      65547842 
+ 2968      75666665 
+ 2968      7200
+ 2969              	.LASF296:
+ 2970 046d 436F756E 		.ascii	"Counter_Echo_config\000"
+ 2970      7465725F 
+ 2970      4563686F 
+ 2970      5F636F6E 
+ 2970      66696700 
+ 2971              	.LASF151:
+ 2972 0481 736C6176 		.ascii	"slaveTxBufferIdx\000"
+ 2972      65547842 
+ 2972      75666665 
+ 2972      72496478 
+ 2972      00
+ 2973              	.LASF223:
+ 2974 0492 43595F42 		.ascii	"CY_BLE_ERROR_OOB_NOT_AVAILABLE\000"
+ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccgMj3kb.s 			page 62
+
+
+ 2974      4C455F45 
+ 2974      52524F52 
+ 2974      5F4F4F42 
+ 2974      5F4E4F54 
+ 2975              	.LASF16:
+ 2976 04b1 75696E74 		.ascii	"uint32_t\000"
+ 2976      33325F74 
+ 2976      00
+ 2977              	.LASF87:
+ 2978 04ba 6770696F 		.ascii	"gpioPrtCfgOutOffset\000"
+ 2978      50727443 
+ 2978      66674F75 
+ 2978      744F6666 
+ 2978      73657400 
+ 2979              	.LASF108:
+ 2980 04ce 666C6F61 		.ascii	"float\000"
+ 2980      7400
+ 2981              	.LASF302:
+ 2982 04d4 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 2982      43313120 
+ 2982      352E342E 
+ 2982      31203230 
+ 2982      31363036 
+ 2983 0507 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m0plus -mthumb -"
+ 2983      20726576 
+ 2983      6973696F 
+ 2983      6E203233 
+ 2983      37373135 
+ 2984 053a 67202D4F 		.ascii	"g -Og -ffunction-sections -ffat-lto-objects\000"
+ 2984      67202D66 
+ 2984      66756E63 
+ 2984      74696F6E 
+ 2984      2D736563 
+ 2985              	.LASF221:
+ 2986 0566 43595F42 		.ascii	"CY_BLE_ERROR_MEMORY_ALLOCATION_FAILED\000"
+ 2986      4C455F45 
+ 2986      52524F52 
+ 2986      5F4D454D 
+ 2986      4F52595F 
+ 2987              	.LASF51:
+ 2988 058c 65704D6F 		.ascii	"epMonitorNr\000"
+ 2988      6E69746F 
+ 2988      724E7200 
+ 2989              	.LASF273:
+ 2990 0598 6E756D43 		.ascii	"numChannels\000"
+ 2990      68616E6E 
+ 2990      656C7300 
+ 2991              	.LASF172:
+ 2992 05a4 63795F73 		.ascii	"cy_stc_scb_uart_context\000"
+ 2992      74635F73 
+ 2992      63625F75 
+ 2992      6172745F 
+ 2992      636F6E74 
+ 2993              	.LASF194:
+ 2994 05bc 72656C6F 		.ascii	"reloadInput\000"
+ 2994      6164496E 
+ 2994      70757400 
+ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccgMj3kb.s 			page 63
+
+
+ 2995              	.LASF14:
+ 2996 05c8 696E7431 		.ascii	"int16_t\000"
+ 2996      365F7400 
+ 2997              	.LASF86:
+ 2998 05d0 6770696F 		.ascii	"gpioPrtCfgInOffset\000"
+ 2998      50727443 
+ 2998      6667496E 
+ 2998      4F666673 
+ 2998      657400
+ 2999              	.LASF249:
+ 3000 05e3 6D696E6F 		.ascii	"minorVersion\000"
+ 3000      72566572 
+ 3000      73696F6E 
+ 3000      00
+ 3001              	.LASF236:
+ 3002 05f0 43595F42 		.ascii	"CY_BLE_ERROR_FLASH_WRITE_NOT_PERMITED\000"
+ 3002      4C455F45 
+ 3002      52524F52 
+ 3002      5F464C41 
+ 3002      53485F57 
+ 3003              	.LASF11:
+ 3004 0616 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 3004      206C6F6E 
+ 3004      6720756E 
+ 3004      7369676E 
+ 3004      65642069 
+ 3005              	.LASF83:
+ 3006 062d 70657269 		.ascii	"periDiv24_5CtlOffset\000"
+ 3006      44697632 
+ 3006      345F3543 
+ 3006      746C4F66 
+ 3006      66736574 
+ 3007              	.LASF88:
+ 3008 0642 6770696F 		.ascii	"gpioPrtCfgSioOffset\000"
+ 3008      50727443 
+ 3008      66675369 
+ 3008      6F4F6666 
+ 3008      73657400 
+ 3009              	.LASF45:
+ 3010 0656 73727373 		.ascii	"srssNumClkpath\000"
+ 3010      4E756D43 
+ 3010      6C6B7061 
+ 3010      746800
+ 3011              	.LASF262:
+ 3012 0665 63795F65 		.ascii	"cy_en_ble_adv_state_t\000"
+ 3012      6E5F626C 
+ 3012      655F6164 
+ 3012      765F7374 
+ 3012      6174655F 
+ 3013              	.LASF42:
+ 3014 067b 63707573 		.ascii	"cpussIpc0Irq\000"
+ 3014      73497063 
+ 3014      30497271 
+ 3014      00
+ 3015              	.LASF245:
+ 3016 0688 43595F42 		.ascii	"CY_BLE_ERROR_INVALID_STATE\000"
+ 3016      4C455F45 
+ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccgMj3kb.s 			page 64
+
+
+ 3016      52524F52 
+ 3016      5F494E56 
+ 3016      414C4944 
+ 3017              	.LASF207:
+ 3018 06a3 70657269 		.ascii	"period1\000"
+ 3018      6F643100 
+ 3019              	.LASF120:
+ 3020 06ab 72616E67 		.ascii	"rangeThres\000"
+ 3020      65546872 
+ 3020      657300
+ 3021              	.LASF259:
+ 3022 06b6 43595F42 		.ascii	"CY_BLE_ADV_STATE_ADV_INITIATED\000"
+ 3022      4C455F41 
+ 3022      44565F53 
+ 3022      54415445 
+ 3022      5F414456 
+ 3023              	.LASF22:
+ 3024 06d5 75646242 		.ascii	"udbBase\000"
+ 3024      61736500 
+ 3025              	.LASF237:
+ 3026 06dd 43595F42 		.ascii	"CY_BLE_ERROR_FLASH_WRITE\000"
+ 3026      4C455F45 
+ 3026      52524F52 
+ 3026      5F464C41 
+ 3026      53485F57 
+ 3027              	.LASF150:
+ 3028 06f6 736C6176 		.ascii	"slaveTxBufferSize\000"
+ 3028      65547842 
+ 3028      75666665 
+ 3028      7253697A 
+ 3028      6500
+ 3029              	.LASF112:
+ 3030 0708 43595F53 		.ascii	"CY_SAR_RANGE_COND_INSIDE\000"
+ 3030      41525F52 
+ 3030      414E4745 
+ 3030      5F434F4E 
+ 3030      445F494E 
+ 3031              	.LASF304:
+ 3032 0721 433A5C49 		.ascii	"C:\\Infineon\\Hackathon-Infineon\\Hackaton.cydsn\000"
+ 3032      6E66696E 
+ 3032      656F6E5C 
+ 3032      4861636B 
+ 3032      6174686F 
+ 3033              	.LASF217:
+ 3034 074f 43595F42 		.ascii	"CY_BLE_SUCCESS\000"
+ 3034      4C455F53 
+ 3034      55434345 
+ 3034      535300
+ 3035              	.LASF148:
+ 3036 075e 736C6176 		.ascii	"slaveRdBufEmpty\000"
+ 3036      65526442 
+ 3036      7566456D 
+ 3036      70747900 
+ 3037              	.LASF131:
+ 3038 076e 63795F73 		.ascii	"cy_stc_sar_config_t\000"
+ 3038      74635F73 
+ 3038      61725F63 
+ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccgMj3kb.s 			page 65
+
+
+ 3038      6F6E6669 
+ 3038      675F7400 
+ 3039              	.LASF210:
+ 3040 0782 696E7665 		.ascii	"invertPWMOutN\000"
+ 3040      72745057 
+ 3040      4D4F7574 
+ 3040      4E00
+ 3041              	.LASF116:
+ 3042 0790 6374726C 		.ascii	"ctrl\000"
+ 3042      00
+ 3043              	.LASF195:
+ 3044 0795 73746172 		.ascii	"startInputMode\000"
+ 3044      74496E70 
+ 3044      75744D6F 
+ 3044      646500
+ 3045              	.LASF267:
+ 3046 07a4 43595F42 		.ascii	"CY_BLE_CONN_STATE_CLIENT_INCL_DISCOVERING\000"
+ 3046      4C455F43 
+ 3046      4F4E4E5F 
+ 3046      53544154 
+ 3046      455F434C 
+ 3047              	.LASF191:
+ 3048 07ce 63617074 		.ascii	"captureInputMode\000"
+ 3048      75726549 
+ 3048      6E707574 
+ 3048      4D6F6465 
+ 3048      00
+ 3049              	.LASF280:
+ 3050 07df 76616C75 		.ascii	"value\000"
+ 3050      6500
+ 3051              	.LASF174:
+ 3052 07e5 72785374 		.ascii	"rxStatus\000"
+ 3052      61747573 
+ 3052      00
+ 3053              	.LASF163:
+ 3054 07ee 72784275 		.ascii	"rxBuf\000"
+ 3054      6600
+ 3055              	.LASF229:
+ 3056 07f4 43595F42 		.ascii	"CY_BLE_ERROR_SEC_FAILED\000"
+ 3056      4C455F45 
+ 3056      52524F52 
+ 3056      5F534543 
+ 3056      5F464149 
+ 3057              	.LASF64:
+ 3058 080c 666C6173 		.ascii	"flashCtlMainWs3Freq\000"
+ 3058      6843746C 
+ 3058      4D61696E 
+ 3058      57733346 
+ 3058      72657100 
+ 3059              	.LASF46:
+ 3060 0820 73727373 		.ascii	"srssNumPll\000"
+ 3060      4E756D50 
+ 3060      6C6C00
+ 3061              	.LASF145:
+ 3062 082b 6D617374 		.ascii	"masterBufferIdx\000"
+ 3062      65724275 
+ 3062      66666572 
+ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccgMj3kb.s 			page 66
+
+
+ 3062      49647800 
+ 3063              	.LASF57:
+ 3064 083b 666C6173 		.ascii	"flashPipeRequired\000"
+ 3064      68506970 
+ 3064      65526571 
+ 3064      75697265 
+ 3064      6400
+ 3065              	.LASF156:
+ 3066 084d 63624576 		.ascii	"cbEvents\000"
+ 3066      656E7473 
+ 3066      00
+ 3067              	.LASF109:
+ 3068 0856 646F7562 		.ascii	"double\000"
+ 3068      6C6500
+ 3069              	.LASF110:
+ 3070 085d 5F426F6F 		.ascii	"_Bool\000"
+ 3070      6C00
+ 3071              	.LASF235:
+ 3072 0863 43595F42 		.ascii	"CY_BLE_ERROR_UNSUPPORTED_FEATURE_OR_PARAMETER_VALUE"
+ 3072      4C455F45 
+ 3072      52524F52 
+ 3072      5F554E53 
+ 3072      5550504F 
+ 3073 0896 00       		.ascii	"\000"
+ 3074              	.LASF61:
+ 3075 0897 666C6173 		.ascii	"flashCtlMainWs0Freq\000"
+ 3075      6843746C 
+ 3075      4D61696E 
+ 3075      57733046 
+ 3075      72657100 
+ 3076              	.LASF213:
+ 3077 08ab 73776170 		.ascii	"swapInput\000"
+ 3077      496E7075 
+ 3077      7400
+ 3078              	.LASF137:
+ 3079 08b5 75736552 		.ascii	"useRxFifo\000"
+ 3079      78466966 
+ 3079      6F00
+ 3080              	.LASF25:
+ 3081 08bf 6770696F 		.ascii	"gpioBase\000"
+ 3081      42617365 
+ 3081      00
+ 3082              	.LASF260:
+ 3083 08c8 43595F42 		.ascii	"CY_BLE_ADV_STATE_ADVERTISING\000"
+ 3083      4C455F41 
+ 3083      44565F53 
+ 3083      54415445 
+ 3083      5F414456 
+ 3084              	.LASF204:
+ 3085 08e5 70776D41 		.ascii	"pwmAlignment\000"
+ 3085      6C69676E 
+ 3085      6D656E74 
+ 3085      00
+ 3086              	.LASF226:
+ 3087 08f2 43595F42 		.ascii	"CY_BLE_ERROR_DEVICE_ALREADY_EXISTS\000"
+ 3087      4C455F45 
+ 3087      52524F52 
+ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccgMj3kb.s 			page 67
+
+
+ 3087      5F444556 
+ 3087      4943455F 
+ 3088              	.LASF222:
+ 3089 0915 43595F42 		.ascii	"CY_BLE_ERROR_INSUFFICIENT_RESOURCES\000"
+ 3089      4C455F45 
+ 3089      52524F52 
+ 3089      5F494E53 
+ 3089      55464649 
+ 3090              	.LASF31:
+ 3091 0939 64775665 		.ascii	"dwVersion\000"
+ 3091      7273696F 
+ 3091      6E00
+ 3092              	.LASF96:
+ 3093 0943 63707573 		.ascii	"cpussSysTickCtlOffset\000"
+ 3093      73537973 
+ 3093      5469636B 
+ 3093      43746C4F 
+ 3093      66667365 
+ 3094              	.LASF52:
+ 3095 0959 75646250 		.ascii	"udbPresent\000"
+ 3095      72657365 
+ 3095      6E7400
+ 3096              	.LASF230:
+ 3097 0964 43595F42 		.ascii	"CY_BLE_ERROR_L2CAP_PSM_WRONG_ENCODING\000"
+ 3097      4C455F45 
+ 3097      52524F52 
+ 3097      5F4C3243 
+ 3097      41505F50 
+ 3098              	.LASF70:
+ 3099 098a 64775374 		.ascii	"dwStatusChIdxPos\000"
+ 3099      61747573 
+ 3099      43684964 
+ 3099      78506F73 
+ 3099      00
+ 3100              	.LASF5:
+ 3101 099b 5F5F7569 		.ascii	"__uint16_t\000"
+ 3101      6E743136 
+ 3101      5F7400
+ 3102              	.LASF130:
+ 3103 09a6 76726566 		.ascii	"vrefMvValue\000"
+ 3103      4D765661 
+ 3103      6C756500 
+ 3104              	.LASF250:
+ 3105 09b2 70617463 		.ascii	"patch\000"
+ 3105      6800
+ 3106              	.LASF28:
+ 3107 09b8 63727970 		.ascii	"cryptoBase\000"
+ 3107      746F4261 
+ 3107      736500
+ 3108              	.LASF146:
+ 3109 09c3 6D617374 		.ascii	"masterNumBytes\000"
+ 3109      65724E75 
+ 3109      6D427974 
+ 3109      657300
+ 3110              	.LASF261:
+ 3111 09d2 43595F42 		.ascii	"CY_BLE_ADV_STATE_STOP_INITIATED\000"
+ 3111      4C455F41 
+ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccgMj3kb.s 			page 68
+
+
+ 3111      44565F53 
+ 3111      54415445 
+ 3111      5F53544F 
+ 3112              	.LASF41:
+ 3113 09f2 63707573 		.ascii	"cpussFlashPaSize\000"
+ 3113      73466C61 
+ 3113      73685061 
+ 3113      53697A65 
+ 3113      00
+ 3114              	.LASF268:
+ 3115 0a03 43595F42 		.ascii	"CY_BLE_CONN_STATE_CLIENT_CHAR_DISCOVERING\000"
+ 3115      4C455F43 
+ 3115      4F4E4E5F 
+ 3115      53544154 
+ 3115      455F434C 
+ 3116              	.LASF192:
+ 3117 0a2d 63617074 		.ascii	"captureInput\000"
+ 3117      75726549 
+ 3117      6E707574 
+ 3117      00
+ 3118              	.LASF113:
+ 3119 0a3a 43595F53 		.ascii	"CY_SAR_RANGE_COND_ABOVE\000"
+ 3119      41525F52 
+ 3119      414E4745 
+ 3119      5F434F4E 
+ 3119      445F4142 
+ 3120              	.LASF107:
+ 3121 0a52 63686172 		.ascii	"char\000"
+ 3121      00
+ 3122              	.LASF300:
+ 3123 0a57 43795F53 		.ascii	"Cy_SysLib_AssertFailed\000"
+ 3123      79734C69 
+ 3123      625F4173 
+ 3123      73657274 
+ 3123      4661696C 
+ 3124              	.LASF122:
+ 3125 0a6e 6368616E 		.ascii	"chanEn\000"
+ 3125      456E00
+ 3126              	.LASF232:
+ 3127 0a75 43595F42 		.ascii	"CY_BLE_ERROR_L2CAP_PSM_NOT_REGISTERED\000"
+ 3127      4C455F45 
+ 3127      52524F52 
+ 3127      5F4C3243 
+ 3127      41505F50 
+ 3128              	.LASF178:
+ 3129 0a9b 72785269 		.ascii	"rxRingBufTail\000"
+ 3129      6E674275 
+ 3129      66546169 
+ 3129      6C00
+ 3130              	.LASF53:
+ 3131 0aa9 73797350 		.ascii	"sysPmSimoPresent\000"
+ 3131      6D53696D 
+ 3131      6F507265 
+ 3131      73656E74 
+ 3131      00
+ 3132              	.LASF144:
+ 3133 0aba 6D617374 		.ascii	"masterBufferSize\000"
+ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccgMj3kb.s 			page 69
+
+
+ 3133      65724275 
+ 3133      66666572 
+ 3133      53697A65 
+ 3133      00
+ 3134              	.LASF55:
+ 3135 0acb 63727970 		.ascii	"cryptoMemSize\000"
+ 3135      746F4D65 
+ 3135      6D53697A 
+ 3135      6500
+ 3136              	.LASF183:
+ 3137 0ad9 636C6F63 		.ascii	"clockPrescaler\000"
+ 3137      6B507265 
+ 3137      7363616C 
+ 3137      657200
+ 3138              	.LASF165:
+ 3139 0ae8 72784275 		.ascii	"rxBufIdx\000"
+ 3139      66496478 
+ 3139      00
+ 3140              	.LASF169:
+ 3141 0af1 696E6974 		.ascii	"initKey\000"
+ 3141      4B657900 
+ 3142              	.LASF71:
+ 3143 0af9 64775374 		.ascii	"dwStatusChIdxMsk\000"
+ 3143      61747573 
+ 3143      43684964 
+ 3143      784D736B 
+ 3143      00
+ 3144              	.LASF13:
+ 3145 0b0a 75696E74 		.ascii	"uint8_t\000"
+ 3145      385F7400 
+ 3146              	.LASF162:
+ 3147 0b12 73746174 		.ascii	"status\000"
+ 3147      757300
+ 3148              	.LASF284:
+ 3149 0b19 73746163 		.ascii	"stackVersion\000"
+ 3149      6B566572 
+ 3149      73696F6E 
+ 3149      00
+ 3150              	.LASF152:
+ 3151 0b26 736C6176 		.ascii	"slaveTxBufferCnt\000"
+ 3151      65547842 
+ 3151      75666665 
+ 3151      72436E74 
+ 3151      00
+ 3152              	.LASF26:
+ 3153 0b37 70617373 		.ascii	"passBase\000"
+ 3153      42617365 
+ 3153      00
+ 3154              	.LASF76:
+ 3155 0b40 70657269 		.ascii	"periDivCmdDivSelMsk\000"
+ 3155      44697643 
+ 3155      6D644469 
+ 3155      7653656C 
+ 3155      4D736B00 
+ 3156              	.LASF277:
+ 3157 0b54 4144435F 		.ascii	"ADC_CONFIG_STRUCT\000"
+ 3157      434F4E46 
+ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccgMj3kb.s 			page 70
+
+
+ 3157      49475F53 
+ 3157      54525543 
+ 3157      5400
+ 3158              	.LASF128:
+ 3159 0b66 6D757853 		.ascii	"muxSwitchSqCtrl\000"
+ 3159      77697463 
+ 3159      68537143 
+ 3159      74726C00 
+ 3160              	.LASF288:
+ 3161 0b76 63795F62 		.ascii	"cy_ble_advState\000"
+ 3161      6C655F61 
+ 3161      64765374 
+ 3161      61746500 
+ 3162              	.LASF171:
+ 3163 0b86 63795F63 		.ascii	"cy_cb_scb_uart_handle_events_t\000"
+ 3163      625F7363 
+ 3163      625F7561 
+ 3163      72745F68 
+ 3163      616E646C 
+ 3164              	.LASF121:
+ 3165 0ba5 72616E67 		.ascii	"rangeCond\000"
+ 3165      65436F6E 
+ 3165      6400
+ 3166              	.LASF286:
+ 3167 0baf 61706952 		.ascii	"apiResult\000"
+ 3167      6573756C 
+ 3167      7400
+ 3168              	.LASF100:
+ 3169 0bb9 63707573 		.ascii	"cpussRam0Ctl0\000"
+ 3169      7352616D 
+ 3169      3043746C 
+ 3169      3000
+ 3170              	.LASF10:
+ 3171 0bc7 6C6F6E67 		.ascii	"long long int\000"
+ 3171      206C6F6E 
+ 3171      6720696E 
+ 3171      7400
+ 3172              	.LASF27:
+ 3173 0bd5 69706342 		.ascii	"ipcBase\000"
+ 3173      61736500 
+ 3174              	.LASF68:
+ 3175 0bdd 64774368 		.ascii	"dwChCtlPrioPos\000"
+ 3175      43746C50 
+ 3175      72696F50 
+ 3175      6F7300
+ 3176              	.LASF208:
+ 3177 0bec 656E6162 		.ascii	"enablePeriodSwap\000"
+ 3177      6C655065 
+ 3177      72696F64 
+ 3177      53776170 
+ 3177      00
+ 3178              	.LASF205:
+ 3179 0bfd 64656164 		.ascii	"deadTimeClocks\000"
+ 3179      54696D65 
+ 3179      436C6F63 
+ 3179      6B7300
+ 3180              	.LASF212:
+ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccgMj3kb.s 			page 71
+
+
+ 3181 0c0c 73776170 		.ascii	"swapInputMode\000"
+ 3181      496E7075 
+ 3181      744D6F64 
+ 3181      6500
+ 3182              	.LASF58:
+ 3183 0c1a 666C6173 		.ascii	"flashWriteDelay\000"
+ 3183      68577269 
+ 3183      74654465 
+ 3183      6C617900 
+ 3184              	.LASF206:
+ 3185 0c2a 70657269 		.ascii	"period0\000"
+ 3185      6F643000 
+ 3186              	.LASF138:
+ 3187 0c32 75736554 		.ascii	"useTxFifo\000"
+ 3187      78466966 
+ 3187      6F00
+ 3188              	.LASF4:
+ 3189 0c3c 5F5F696E 		.ascii	"__int16_t\000"
+ 3189      7431365F 
+ 3189      7400
+ 3190              	.LASF48:
+ 3191 0c46 70657269 		.ascii	"periClockNr\000"
+ 3191      436C6F63 
+ 3191      6B4E7200 
+ 3192              	.LASF24:
+ 3193 0c52 6873696F 		.ascii	"hsiomBase\000"
+ 3193      6D426173 
+ 3193      6500
+ 3194              	.LASF142:
+ 3195 0c5c 6D617374 		.ascii	"masterRdDir\000"
+ 3195      65725264 
+ 3195      44697200 
+ 3196              	.LASF74:
+ 3197 0c68 70657269 		.ascii	"periTrGrOffset\000"
+ 3197      54724772 
+ 3197      4F666673 
+ 3197      657400
+ 3198              	.LASF219:
+ 3199 0c77 43595F42 		.ascii	"CY_BLE_ERROR_INVALID_PARAMETER\000"
+ 3199      4C455F45 
+ 3199      52524F52 
+ 3199      5F494E56 
+ 3199      414C4944 
+ 3200              	.LASF44:
+ 3201 0c96 63707573 		.ascii	"cpussNotConnectedIrq\000"
+ 3201      734E6F74 
+ 3201      436F6E6E 
+ 3201      65637465 
+ 3201      64497271 
+ 3202              	.LASF170:
+ 3203 0cab 63795F73 		.ascii	"cy_stc_scb_spi_context_t\000"
+ 3203      74635F73 
+ 3203      63625F73 
+ 3203      70695F63 
+ 3203      6F6E7465 
+ 3204              	.LASF177:
+ 3205 0cc4 72785269 		.ascii	"rxRingBufHead\000"
+ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccgMj3kb.s 			page 72
+
+
+ 3205      6E674275 
+ 3205      66486561 
+ 3205      6400
+ 3206              	.LASF40:
+ 3207 0cd2 63707573 		.ascii	"cpussDwChNr\000"
+ 3207      73447743 
+ 3207      684E7200 
+ 3208              	.LASF193:
+ 3209 0cde 72656C6F 		.ascii	"reloadInputMode\000"
+ 3209      6164496E 
+ 3209      7075744D 
+ 3209      6F646500 
+ 3210              	.LASF123:
+ 3211 0cee 6368616E 		.ascii	"chanConfig\000"
+ 3211      436F6E66 
+ 3211      696700
+ 3212              	.LASF167:
+ 3213 0cf9 74784275 		.ascii	"txBufSize\000"
+ 3213      6653697A 
+ 3213      6500
+ 3214              	.LASF38:
+ 3215 0d03 63707573 		.ascii	"cpussIpcNr\000"
+ 3215      73497063 
+ 3215      4E7200
+ 3216              	.LASF91:
+ 3217 0d0e 63707573 		.ascii	"cpussCm4StatusOffset\000"
+ 3217      73436D34 
+ 3217      53746174 
+ 3217      75734F66 
+ 3217      66736574 
+ 3218              	.LASF50:
+ 3219 0d23 70617373 		.ascii	"passSarChannels\000"
+ 3219      53617243 
+ 3219      68616E6E 
+ 3219      656C7300 
+ 3220              	.LASF155:
+ 3221 0d33 736C6176 		.ascii	"slaveRxBufferIdx\000"
+ 3221      65527842 
+ 3221      75666665 
+ 3221      72496478 
+ 3221      00
+ 3222              	.LASF283:
+ 3223 0d44 5072696E 		.ascii	"PrintStackVersion\000"
+ 3223      74537461 
+ 3223      636B5665 
+ 3223      7273696F 
+ 3223      6E00
+ 3224              	.LASF102:
+ 3225 0d56 63707573 		.ascii	"cpussRam2Ctl0\000"
+ 3225      7352616D 
+ 3225      3243746C 
+ 3225      3000
+ 3226              	.LASF141:
+ 3227 0d64 6D617374 		.ascii	"masterPause\000"
+ 3227      65725061 
+ 3227      75736500 
+ 3228              	.LASF291:
+ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccgMj3kb.s 			page 73
+
+
+ 3229 0d70 4144435F 		.ascii	"ADC_currentConfig\000"
+ 3229      63757272 
+ 3229      656E7443 
+ 3229      6F6E6669 
+ 3229      6700
+ 3230              	.LASF269:
+ 3231 0d82 43595F42 		.ascii	"CY_BLE_CONN_STATE_CLIENT_DESCR_DISCOVERING\000"
+ 3231      4C455F43 
+ 3231      4F4E4E5F 
+ 3231      53544154 
+ 3231      455F434C 
+ 3232              	.LASF166:
+ 3233 0dad 74784275 		.ascii	"txBuf\000"
+ 3233      6600
+ 3234              	.LASF243:
+ 3235 0db3 43595F42 		.ascii	"CY_BLE_ERROR_CHAR_IS_NOT_DISCOVERED\000"
+ 3235      4C455F45 
+ 3235      52524F52 
+ 3235      5F434841 
+ 3235      525F4953 
+ 3236              	.LASF59:
+ 3237 0dd7 666C6173 		.ascii	"flashProgramDelay\000"
+ 3237      6850726F 
+ 3237      6772616D 
+ 3237      44656C61 
+ 3237      7900
+ 3238              	.LASF81:
+ 3239 0de9 70657269 		.ascii	"periDiv16CtlOffset\000"
+ 3239      44697631 
+ 3239      3643746C 
+ 3239      4F666673 
+ 3239      657400
+ 3240              	.LASF209:
+ 3241 0dfc 696E7665 		.ascii	"invertPWMOut\000"
+ 3241      72745057 
+ 3241      4D4F7574 
+ 3241      00
+ 3242              	.LASF154:
+ 3243 0e09 736C6176 		.ascii	"slaveRxBufferSize\000"
+ 3243      65527842 
+ 3243      75666665 
+ 3243      7253697A 
+ 3243      6500
+ 3244              	.LASF6:
+ 3245 0e1b 73686F72 		.ascii	"short unsigned int\000"
+ 3245      7420756E 
+ 3245      7369676E 
+ 3245      65642069 
+ 3245      6E7400
+ 3246              	.LASF175:
+ 3247 0e2e 72785269 		.ascii	"rxRingBuf\000"
+ 3247      6E674275 
+ 3247      6600
+ 3248              	.LASF18:
+ 3249 0e38 6C6F6E67 		.ascii	"long double\000"
+ 3249      20646F75 
+ 3249      626C6500 
+ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccgMj3kb.s 			page 74
+
+
+ 3250              	.LASF231:
+ 3251 0e44 43595F42 		.ascii	"CY_BLE_ERROR_L2CAP_PSM_ALREADY_REGISTERED\000"
+ 3251      4C455F45 
+ 3251      52524F52 
+ 3251      5F4C3243 
+ 3251      41505F50 
+ 3252              	.LASF15:
+ 3253 0e6e 75696E74 		.ascii	"uint16_t\000"
+ 3253      31365F74 
+ 3253      00
+ 3254              	.LASF216:
+ 3255 0e77 63795F73 		.ascii	"cy_stc_tcpwm_pwm_config_t\000"
+ 3255      74635F74 
+ 3255      6370776D 
+ 3255      5F70776D 
+ 3255      5F636F6E 
+ 3256              	.LASF184:
+ 3257 0e91 72756E4D 		.ascii	"runMode\000"
+ 3257      6F646500 
+ 3258              	.LASF251:
+ 3259 0e99 6275696C 		.ascii	"buildNumber\000"
+ 3259      644E756D 
+ 3259      62657200 
+ 3260              	.LASF143:
+ 3261 0ea5 6D617374 		.ascii	"masterBuffer\000"
+ 3261      65724275 
+ 3261      66666572 
+ 3261      00
+ 3262              	.LASF118:
+ 3263 0eb2 73616D70 		.ascii	"sampleTime01\000"
+ 3263      6C655469 
+ 3263      6D653031 
+ 3263      00
+ 3264              	.LASF47:
+ 3265 0ebf 73727373 		.ascii	"srssNumHfroot\000"
+ 3265      4E756D48 
+ 3265      66726F6F 
+ 3265      7400
+ 3266              	.LASF201:
+ 3267 0ecd 63795F73 		.ascii	"cy_stc_tcpwm_counter_config_t\000"
+ 3267      74635F74 
+ 3267      6370776D 
+ 3267      5F636F75 
+ 3267      6E746572 
+ 3268              	.LASF127:
+ 3269 0eeb 6D757853 		.ascii	"muxSwitch\000"
+ 3269      77697463 
+ 3269      6800
+ 3270              	.LASF63:
+ 3271 0ef5 666C6173 		.ascii	"flashCtlMainWs2Freq\000"
+ 3271      6843746C 
+ 3271      4D61696E 
+ 3271      57733246 
+ 3271      72657100 
+ 3272              	.LASF17:
+ 3273 0f09 73697A65 		.ascii	"sizetype\000"
+ 3273      74797065 
+ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccgMj3kb.s 			page 75
+
+
+ 3273      00
+ 3274              	.LASF239:
+ 3275 0f12 43595F42 		.ascii	"CY_BLE_ERROR_HARDWARE_FAILURE\000"
+ 3275      4C455F45 
+ 3275      52524F52 
+ 3275      5F484152 
+ 3275      44574152 
+ 3276              	.LASF255:
+ 3277 0f30 63795F73 		.ascii	"cy_stc_ble_conn_handle_t\000"
+ 3277      74635F62 
+ 3277      6C655F63 
+ 3277      6F6E6E5F 
+ 3277      68616E64 
+ 3278              	.LASF98:
+ 3279 0f49 63707573 		.ascii	"cpussCm4NmiCtlOffset\000"
+ 3279      73436D34 
+ 3279      4E6D6943 
+ 3279      746C4F66 
+ 3279      66736574 
+ 3280              	.LASF186:
+ 3281 0f5e 636F6D70 		.ascii	"compareOrCapture\000"
+ 3281      6172654F 
+ 3281      72436170 
+ 3281      74757265 
+ 3281      00
+ 3282              	.LASF80:
+ 3283 0f6f 70657269 		.ascii	"periDiv8CtlOffset\000"
+ 3283      44697638 
+ 3283      43746C4F 
+ 3283      66667365 
+ 3283      7400
+ 3284              	.LASF238:
+ 3285 0f81 43595F42 		.ascii	"CY_BLE_ERROR_MIC_AUTH_FAILED\000"
+ 3285      4C455F45 
+ 3285      52524F52 
+ 3285      5F4D4943 
+ 3285      5F415554 
+ 3286              	.LASF297:
+ 3287 0f9e 49525F63 		.ascii	"IR_context\000"
+ 3287      6F6E7465 
+ 3287      787400
+ 3288              	.LASF0:
+ 3289 0fa9 73686F72 		.ascii	"short int\000"
+ 3289      7420696E 
+ 3289      7400
+ 3290              	.LASF292:
+ 3291 0fb3 4144435F 		.ascii	"ADC_allConfigs\000"
+ 3291      616C6C43 
+ 3291      6F6E6669 
+ 3291      677300
+ 3292              	.LASF211:
+ 3293 0fc2 6B696C6C 		.ascii	"killMode\000"
+ 3293      4D6F6465 
+ 3293      00
+ 3294              	.LASF190:
+ 3295 0fcb 696E7465 		.ascii	"interruptSources\000"
+ 3295      72727570 
+ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccgMj3kb.s 			page 76
+
+
+ 3295      74536F75 
+ 3295      72636573 
+ 3295      00
+ 3296              	.LASF189:
+ 3297 0fdc 656E6162 		.ascii	"enableCompareSwap\000"
+ 3297      6C65436F 
+ 3297      6D706172 
+ 3297      65537761 
+ 3297      7000
+ 3298              	.LASF30:
+ 3299 0fee 63727970 		.ascii	"cryptoVersion\000"
+ 3299      746F5665 
+ 3299      7273696F 
+ 3299      6E00
+ 3300              	.LASF7:
+ 3301 0ffc 6C6F6E67 		.ascii	"long int\000"
+ 3301      20696E74 
+ 3301      00
+ 3302              	.LASF227:
+ 3303 1005 43595F42 		.ascii	"CY_BLE_ERROR_REPEATED_ATTEMPTS\000"
+ 3303      4C455F45 
+ 3303      52524F52 
+ 3303      5F524550 
+ 3303      45415445 
+ 3304              	.LASF29:
+ 3305 1024 63707573 		.ascii	"cpussVersion\000"
+ 3305      73566572 
+ 3305      73696F6E 
+ 3305      00
+ 3306              	.LASF285:
+ 3307 1031 5072696E 		.ascii	"PrintApiResult\000"
+ 3307      74417069 
+ 3307      52657375 
+ 3307      6C7400
+ 3308              	.LASF199:
+ 3309 1040 636F756E 		.ascii	"countInputMode\000"
+ 3309      74496E70 
+ 3309      75744D6F 
+ 3309      646500
+ 3310              	.LASF33:
+ 3311 104f 6770696F 		.ascii	"gpioVersion\000"
+ 3311      56657273 
+ 3311      696F6E00 
+ 3312              	.LASF303:
+ 3313 105b 64656275 		.ascii	"debug.c\000"
+ 3313      672E6300 
+ 3314              	.LASF32:
+ 3315 1063 666C6173 		.ascii	"flashcVersion\000"
+ 3315      68635665 
+ 3315      7273696F 
+ 3315      6E00
+ 3316              	.LASF54:
+ 3317 1071 70726F74 		.ascii	"protBusMasterMask\000"
+ 3317      4275734D 
+ 3317      61737465 
+ 3317      724D6173 
+ 3317      6B00
+ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccgMj3kb.s 			page 77
+
+
+ 3318              	.LASF23:
+ 3319 1083 70726F74 		.ascii	"protBase\000"
+ 3319      42617365 
+ 3319      00
+ 3320              	.LASF185:
+ 3321 108c 636F756E 		.ascii	"countDirection\000"
+ 3321      74446972 
+ 3321      65637469 
+ 3321      6F6E00
+ 3322              	.LASF248:
+ 3323 109b 6D616A6F 		.ascii	"majorVersion\000"
+ 3323      72566572 
+ 3323      73696F6E 
+ 3323      00
+ 3324              	.LASF106:
+ 3325 10a8 63686172 		.ascii	"char_t\000"
+ 3325      5F7400
+ 3326              	.LASF225:
+ 3327 10af 43595F42 		.ascii	"CY_BLE_ERROR_NO_DEVICE_ENTITY\000"
+ 3327      4C455F45 
+ 3327      52524F52 
+ 3327      5F4E4F5F 
+ 3327      44455649 
+ 3328              	.LASF179:
+ 3329 10cd 74784C65 		.ascii	"txLeftToTransmit\000"
+ 3329      6674546F 
+ 3329      5472616E 
+ 3329      736D6974 
+ 3329      00
+ 3330              	.LASF256:
+ 3331 10de 61637475 		.ascii	"actualLen\000"
+ 3331      616C4C65 
+ 3331      6E00
+ 3332              	.LASF93:
+ 3333 10e8 63707573 		.ascii	"cpussCm4PwrCtlOffset\000"
+ 3333      73436D34 
+ 3333      50777243 
+ 3333      746C4F66 
+ 3333      66736574 
+ 3334              	.LASF3:
+ 3335 10fd 5F5F7569 		.ascii	"__uint8_t\000"
+ 3335      6E74385F 
+ 3335      7400
+ 3336              	.LASF275:
+ 3337 1107 6D697363 		.ascii	"miscConfig\000"
+ 3337      436F6E66 
+ 3337      696700
+ 3338              	.LASF84:
+ 3339 1112 6770696F 		.ascii	"gpioPrtIntrCfgOffset\000"
+ 3339      50727449 
+ 3339      6E747243 
+ 3339      66674F66 
+ 3339      66736574 
+ 3340              	.LASF97:
+ 3341 1127 63707573 		.ascii	"cpussCm0NmiCtlOffset\000"
+ 3341      73436D30 
+ 3341      4E6D6943 
+ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccgMj3kb.s 			page 78
+
+
+ 3341      746C4F66 
+ 3341      66736574 
+ 3342              	.LASF90:
+ 3343 113c 63707573 		.ascii	"cpussCm4ClockCtlOffset\000"
+ 3343      73436D34 
+ 3343      436C6F63 
+ 3343      6B43746C 
+ 3343      4F666673 
+ 3344              	.LASF161:
+ 3345 1153 63795F73 		.ascii	"cy_stc_scb_spi_context\000"
+ 3345      74635F73 
+ 3345      63625F73 
+ 3345      70695F63 
+ 3345      6F6E7465 
+ 3346              	.LASF215:
+ 3347 116a 6B696C6C 		.ascii	"killInput\000"
+ 3347      496E7075 
+ 3347      7400
+ 3348              	.LASF95:
+ 3349 1174 63707573 		.ascii	"cpussTrimRomCtlOffset\000"
+ 3349      73547269 
+ 3349      6D526F6D 
+ 3349      43746C4F 
+ 3349      66667365 
+ 3350              	.LASF119:
+ 3351 118a 73616D70 		.ascii	"sampleTime23\000"
+ 3351      6C655469 
+ 3351      6D653233 
+ 3351      00
+ 3352              	.LASF214:
+ 3353 1197 6B696C6C 		.ascii	"killInputMode\000"
+ 3353      496E7075 
+ 3353      744D6F64 
+ 3353      6500
+ 3354              	.LASF34:
+ 3355 11a5 6873696F 		.ascii	"hsiomVersion\000"
+ 3355      6D566572 
+ 3355      73696F6E 
+ 3355      00
+ 3356              	.LASF9:
+ 3357 11b2 6C6F6E67 		.ascii	"long unsigned int\000"
+ 3357      20756E73 
+ 3357      69676E65 
+ 3357      6420696E 
+ 3357      7400
+ 3358              	.LASF218:
+ 3359 11c4 43595F42 		.ascii	"CY_BLE_INFO_FLASH_WRITE_IN_PROGRESS\000"
+ 3359      4C455F49 
+ 3359      4E464F5F 
+ 3359      464C4153 
+ 3359      485F5752 
+ 3360              	.LASF99:
+ 3361 11e8 63707573 		.ascii	"cpussRomCtl\000"
+ 3361      73526F6D 
+ 3361      43746C00 
+ 3362              	.LASF220:
+ 3363 11f4 43595F42 		.ascii	"CY_BLE_ERROR_INVALID_OPERATION\000"
+ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccgMj3kb.s 			page 79
+
+
+ 3363      4C455F45 
+ 3363      52524F52 
+ 3363      5F494E56 
+ 3363      414C4944 
+ 3364              	.LASF92:
+ 3365 1213 63707573 		.ascii	"cpussCm0StatusOffset\000"
+ 3365      73436D30 
+ 3365      53746174 
+ 3365      75734F66 
+ 3365      66736574 
+ 3366              	.LASF117:
+ 3367 1228 73616D70 		.ascii	"sampleCtrl\000"
+ 3367      6C654374 
+ 3367      726C00
+ 3368              	.LASF1:
+ 3369 1233 756E7369 		.ascii	"unsigned char\000"
+ 3369      676E6564 
+ 3369      20636861 
+ 3369      7200
+ 3370              	.LASF8:
+ 3371 1241 5F5F7569 		.ascii	"__uint32_t\000"
+ 3371      6E743332 
+ 3371      5F7400
+ 3372              	.LASF104:
+ 3373 124c 6970634C 		.ascii	"ipcLockStatusOffset\000"
+ 3373      6F636B53 
+ 3373      74617475 
+ 3373      734F6666 
+ 3373      73657400 
+ 3374              	.LASF200:
+ 3375 1260 636F756E 		.ascii	"countInput\000"
+ 3375      74496E70 
+ 3375      757400
+ 3376              	.LASF301:
+ 3377 126b 43795F42 		.ascii	"Cy_BLE_GetStackLibraryVersion\000"
+ 3377      4C455F47 
+ 3377      65745374 
+ 3377      61636B4C 
+ 3377      69627261 
+ 3378              	.LASF257:
+ 3379 1289 63795F73 		.ascii	"cy_stc_ble_gatt_value_t\000"
+ 3379      74635F62 
+ 3379      6C655F67 
+ 3379      6174745F 
+ 3379      76616C75 
+ 3380              	.LASF134:
+ 3381 12a1 63795F65 		.ascii	"cy_en_scb_i2c_command_t\000"
+ 3381      6E5F7363 
+ 3381      625F6932 
+ 3381      635F636F 
+ 3381      6D6D616E 
+ 3382              	.LASF60:
+ 3383 12b9 666C6173 		.ascii	"flashEraseDelay\000"
+ 3383      68457261 
+ 3383      73654465 
+ 3383      6C617900 
+ 3384              	.LASF276:
+ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccgMj3kb.s 			page 80
+
+
+ 3385 12c9 636C6B44 		.ascii	"clkDivider\000"
+ 3385      69766964 
+ 3385      657200
+ 3386              	.LASF139:
+ 3387 12d4 73746174 		.ascii	"state\000"
+ 3387      6500
+ 3388              	.LASF234:
+ 3389 12da 43595F42 		.ascii	"CY_BLE_ERROR_L2CAP_PSM_NOT_IN_RANGE\000"
+ 3389      4C455F45 
+ 3389      52524F52 
+ 3389      5F4C3243 
+ 3389      41505F50 
+ 3390              	.LASF247:
+ 3391 12fe 63795F65 		.ascii	"cy_en_ble_api_result_t\000"
+ 3391      6E5F626C 
+ 3391      655F6170 
+ 3391      695F7265 
+ 3391      73756C74 
+ 3392              	.LASF56:
+ 3393 1315 666C6173 		.ascii	"flashRwwRequired\000"
+ 3393      68527777 
+ 3393      52657175 
+ 3393      69726564 
+ 3393      00
+ 3394              	.LASF85:
+ 3395 1326 6770696F 		.ascii	"gpioPrtCfgOffset\000"
+ 3395      50727443 
+ 3395      66674F66 
+ 3395      66736574 
+ 3395      00
+ 3396              	.LASF242:
+ 3397 1337 43595F42 		.ascii	"CY_BLE_ERROR_IND_DISABLED\000"
+ 3397      4C455F45 
+ 3397      52524F52 
+ 3397      5F494E44 
+ 3397      5F444953 
+ 3398              	.LASF253:
+ 3399 1351 62644861 		.ascii	"bdHandle\000"
+ 3399      6E646C65 
+ 3399      00
+ 3400              	.LASF281:
+ 3401 135a 53686F77 		.ascii	"ShowError\000"
+ 3401      4572726F 
+ 3401      7200
+ 3402              	.LASF2:
+ 3403 1364 7369676E 		.ascii	"signed char\000"
+ 3403      65642063 
+ 3403      68617200 
+ 3404              	.LASF182:
+ 3405 1370 70657269 		.ascii	"period\000"
+ 3405      6F6400
+ 3406              	.LASF66:
+ 3407 1377 64774368 		.ascii	"dwChOffset\000"
+ 3407      4F666673 
+ 3407      657400
+ 3408              	.LASF39:
+ 3409 1382 63707573 		.ascii	"cpussIpcIrqNr\000"
+ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccgMj3kb.s 			page 81
+
+
+ 3409      73497063 
+ 3409      4972714E 
+ 3409      7200
+ 3410              	.LASF181:
+ 3411 1390 63795F73 		.ascii	"cy_stc_tcpwm_counter_config\000"
+ 3411      74635F74 
+ 3411      6370776D 
+ 3411      5F636F75 
+ 3411      6E746572 
+ 3412              	.LASF69:
+ 3413 13ac 64774368 		.ascii	"dwChCtlPreemptablePos\000"
+ 3413      43746C50 
+ 3413      7265656D 
+ 3413      70746162 
+ 3413      6C65506F 
+ 3414              	.LASF305:
+ 3415 13c2 48657854 		.ascii	"HexToAscii\000"
+ 3415      6F417363 
+ 3415      696900
+ 3416              	.LASF105:
+ 3417 13cd 63795F73 		.ascii	"cy_stc_device_t\000"
+ 3417      74635F64 
+ 3417      65766963 
+ 3417      655F7400 
+ 3418              	.LASF299:
+ 3419 13dd 5350495F 		.ascii	"SPI_LEDCTRL_context\000"
+ 3419      4C454443 
+ 3419      54524C5F 
+ 3419      636F6E74 
+ 3419      65787400 
+ 3420              	.LASF36:
+ 3421 13f1 70657269 		.ascii	"periVersion\000"
+ 3421      56657273 
+ 3421      696F6E00 
+ 3422              	.LASF129:
+ 3423 13fd 636F6E66 		.ascii	"configRouting\000"
+ 3423      6967526F 
+ 3423      7574696E 
+ 3423      6700
+ 3424              	.LASF252:
+ 3425 140b 63795F73 		.ascii	"cy_stc_ble_stack_lib_version_t\000"
+ 3425      74635F62 
+ 3425      6C655F73 
+ 3425      7461636B 
+ 3425      5F6C6962 
+ 3426              	.LASF82:
+ 3427 142a 70657269 		.ascii	"periDiv16_5CtlOffset\000"
+ 3427      44697631 
+ 3427      365F3543 
+ 3427      746C4F66 
+ 3427      66736574 
+ 3428              	.LASF224:
+ 3429 143f 43595F42 		.ascii	"CY_BLE_ERROR_NO_CONNECTION\000"
+ 3429      4C455F45 
+ 3429      52524F52 
+ 3429      5F4E4F5F 
+ 3429      434F4E4E 
+ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccgMj3kb.s 			page 82
+
+
+ 3430              	.LASF158:
+ 3431 145a 63795F73 		.ascii	"cy_stc_scb_i2c_context_t\000"
+ 3431      74635F73 
+ 3431      63625F69 
+ 3431      32635F63 
+ 3431      6F6E7465 
+ 3432              	.LASF65:
+ 3433 1473 666C6173 		.ascii	"flashCtlMainWs4Freq\000"
+ 3433      6843746C 
+ 3433      4D61696E 
+ 3433      57733446 
+ 3433      72657100 
+ 3434              	.LASF126:
+ 3435 1487 72616E67 		.ascii	"rangeIntrMask\000"
+ 3435      65496E74 
+ 3435      724D6173 
+ 3435      6B00
+ 3436              	.LASF115:
+ 3437 1495 63795F65 		.ascii	"cy_en_sar_range_detect_condition_t\000"
+ 3437      6E5F7361 
+ 3437      725F7261 
+ 3437      6E67655F 
+ 3437      64657465 
+ 3438              	.LASF233:
+ 3439 14b8 43595F42 		.ascii	"CY_BLE_ERROR_L2CAP_CONNECTION_ENTITY_NOT_FOUND\000"
+ 3439      4C455F45 
+ 3439      52524F52 
+ 3439      5F4C3243 
+ 3439      41505F43 
+ 3440              	.LASF254:
+ 3441 14e7 61747449 		.ascii	"attId\000"
+ 3441      6400
+ 3442              	.LASF263:
+ 3443 14ed 43595F42 		.ascii	"CY_BLE_CONN_STATE_DISCONNECTED\000"
+ 3443      4C455F43 
+ 3443      4F4E4E5F 
+ 3443      53544154 
+ 3443      455F4449 
+ 3444              	.LASF35:
+ 3445 150c 69706356 		.ascii	"ipcVersion\000"
+ 3445      65727369 
+ 3445      6F6E00
+ 3446              	.LASF279:
+ 3447 1517 53657433 		.ascii	"Set32ByPtr\000"
+ 3447      32427950 
+ 3447      747200
+ 3448              	.LASF266:
+ 3449 1522 43595F42 		.ascii	"CY_BLE_CONN_STATE_CLIENT_SRVC_DISCOVERING\000"
+ 3449      4C455F43 
+ 3449      4F4E4E5F 
+ 3449      53544154 
+ 3449      455F434C 
+ 3450              	.LASF124:
+ 3451 154c 696E7472 		.ascii	"intrMask\000"
+ 3451      4D61736B 
+ 3451      00
+ 3452              	.LASF72:
+ARM GAS  C:\Users\Nazar\AppData\Local\Temp\ccgMj3kb.s 			page 83
+
+
+ 3453 1555 70657269 		.ascii	"periTrCmdOffset\000"
+ 3453      5472436D 
+ 3453      644F6666 
+ 3453      73657400 
+ 3454              	.LASF164:
+ 3455 1565 72784275 		.ascii	"rxBufSize\000"
+ 3455      6653697A 
+ 3455      6500
+ 3456              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

@@ -1,0 +1,6 @@
+C:\Infineon\Hackathon-Infineon\Hackaton.cydsn\Hackaton.cyprj|0bd52e1b-a790-4e5d-8ffa-c9e0e60cf4f3
+C:\MyApps\PSoC_Creator\PSoC Creator\4.4\PSoC Creator\psoc\content\default\CyAnnotationLibrary\CyAnnotationLibrary.cylib\CyAnnotationLibrary.cyprj|5585eb76-5579-40f1-b767-7182ad79c4cb
+C:\Users\Nazar\Documents\PSoC Creator\4.4\Downloads ( 4.4).cylib\Downloads ( 4.4).cyprj|5754b208-3e12-4e02-ad85-931578c4b49e
+C:\MyApps\PSoC_Creator\PSoC Creator\4.4\PSoC Creator\psoc\content\cycomponentlibraryupdates\CyComponentLibraryUpdates.cylib\CyComponentLibraryUpdates.cyprj|7afbd5eb-3a2a-4097-bd66-1f20b0fbd7d7
+C:\MyApps\PSoC_Creator\PSoC Creator\4.4\PSoC Creator\psoc\content\cycomponentlibrary\CyComponentLibrary.cylib\CyComponentLibrary.cyprj|69404a2d-e390-4cf0-a8af-c25b52ef0992
+C:\MyApps\PSoC_Creator\PSoC Creator\4.4\PSoC Creator\psoc\content\cyprimitives\CyPrimitives.cylib\CyPrimitives.cyprj|69baf45f-45ef-4c97-907b-4b4398f4ed6f
